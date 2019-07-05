@@ -20,8 +20,7 @@ public class GamePlaySceneController : MonoBehaviour
     public Sprite[] s_coins;
     public Sprite[] s_points;
     public Sprite[] s_sounds;
-    
-
+  
     private bool gameover;
     private bool animPlaying;
     private bool panelShowing;
@@ -44,10 +43,10 @@ public class GamePlaySceneController : MonoBehaviour
         }
 
         newGameLevel();
-        EventDispatcher.Instance.RegisterListener(EventID.OnCoinChange, (param) => onCoinChange());
-        EventDispatcher.Instance.RegisterListener(EventID.OnPointChange, (param) => onPointChange());
-        EventDispatcher.Instance.RegisterListener(EventID.OnLevelSelectChange, (param) => onLevelSelectChange());
-        EventDispatcher.Instance.RegisterListener(EventID.PipeAnimationEnd, (param) => endGame());
+        EventDispatcher.Instance.RegisterListener(EventID.OnCoinChange, onCoinChange);
+        EventDispatcher.Instance.RegisterListener(EventID.OnPointChange, onPointChange);
+        EventDispatcher.Instance.RegisterListener(EventID.OnLevelSelectChange, onLevelSelectChange);
+        EventDispatcher.Instance.RegisterListener(EventID.PipeAnimationEnd, endGame);
     }
 
     // Start is called before the first frame update
@@ -125,7 +124,7 @@ public class GamePlaySceneController : MonoBehaviour
         list_results[0].GetComponentsInChildren<Animator>()[1].Play("valvebg", -1, 1 - game.getStar() / 3f);
     }
 
-    private void endGame()
+    private void endGame(object param)
     {
         gameover = true;
         if(GameData.Instance.mode == 0)
@@ -163,19 +162,19 @@ public class GamePlaySceneController : MonoBehaviour
         }
     }
         
-    private void onLevelSelectChange()
+    private void onLevelSelectChange(object param)
     {
         txtLevel.text = "Level " + GameData.Instance.level_selected.ToString();
     }
 
-    private void onCoinChange()
+    private void onCoinChange(object param)
     {
         txtCoins.text = GameData.Instance.coins.ToString();
         if (GameData.Instance.coins < 50) btnRemove.interactable = false;
         if (GameData.Instance.coins < 25) btnConstruct.interactable = false;
     }
 
-    private void onPointChange()
+    private void onPointChange(object param)
     {
         txtPoints.text = GameData.Instance.points.ToString();
     }
@@ -257,5 +256,12 @@ public class GamePlaySceneController : MonoBehaviour
         nextLevel();
         panelShowing = false;
     }
-    
+
+    private void OnDestroy()
+    {
+        EventDispatcher.Instance.RemoveListener(EventID.OnCoinChange, onCoinChange);
+        EventDispatcher.Instance.RemoveListener(EventID.OnLevelSelectChange, onLevelSelectChange);
+        EventDispatcher.Instance.RemoveListener(EventID.OnPointChange, onPointChange);
+        EventDispatcher.Instance.RemoveListener(EventID.PipeAnimationEnd, endGame);
+    }
 }
