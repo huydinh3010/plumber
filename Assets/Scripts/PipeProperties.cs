@@ -8,9 +8,11 @@ public class PipeProperties : MonoBehaviour
     public int col;
     public int rotation;
     public int n_line;
-    public bool isCorrect;
     public int[] line;
     public string[] anim_state;
     public int[] anim_rotation;
+    public int i;
+    public GameObject[] next;
+    public int[] next_in;
 }
 

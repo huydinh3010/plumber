@@ -2481,6 +2481,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1051676748}
   - component: {fileID: 1051676747}
+  - component: {fileID: 1051676749}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -2501,10 +2502,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f32ef3e3952430344bf324dc898cc52c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  texture: {fileID: 2800000, guid: a45326333e398b54cbfdbdf96029c407, type: 3}
   btnDailyChallenge: {fileID: 1000905556}
   btnRemoveAds: {fileID: 1947212555}
   btnMoreGame: {fileID: 2064831027}
+  sceneController: {fileID: 1051676749}
   panelRate: {fileID: 1596036892}
   panelPlayServices: {fileID: 1704041367}
   panelDailyReward: {fileID: 1987173920}
@@ -2523,6 +2524,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1051676749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051676746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fabcaed2c00355d4cb3b277b98906c71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  transitionTexture: {fileID: 2800000, guid: a45326333e398b54cbfdbdf96029c407, type: 3}
 --- !u!1 &1056194785
 GameObject:
   m_ObjectHideFlags: 0
@@ -4783,7 +4798,7 @@ PrefabInstance:
     - target: {fileID: 5230313830312926952, guid: 369bc71793e791c41af8ed0642b086c8,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -11821.3955
+      value: -14008.16
       objectReference: {fileID: 0}
     - target: {fileID: 5230313830661770082, guid: 369bc71793e791c41af8ed0642b086c8,
         type: 3}

@@ -4,33 +4,24 @@ using UnityEngine;
 
 public class PipeAnimationEvent : MonoBehaviour
 {
-    public void stopAnimation()
-    {
-        
-        GetComponent<Animator>().enabled = false;
-    }
+   
 
     public void startNextAnimation()
     {
-        GameController gameController = GameObject.Find("ScriptController").GetComponent<GameController>();
-        gameController.index++;
-        int next_in = gameController.list_dir[gameController.index];
-        GameObject nextObj = gameController.result[gameController.index];
-        PipeProperties pp = nextObj.GetComponent<PipeProperties>();
-        int anim_rotation = pp.anim_rotation[pp.n_line * 4 + (next_in - pp.rotation + 4) % 4];
-        string anim_state = pp.anim_state[pp.n_line * 4 + (next_in - pp.rotation + 4) % 4];
-        pp.n_line++;
-        
-        nextObj.GetComponent<Animator>().Play(anim_state);
-        
-        nextObj.GetComponent<Animator>().enabled = true;
-        nextObj.transform.eulerAngles -= new Vector3(0f, 0f, anim_rotation * 90);
-        pp.rotation = (pp.rotation - anim_rotation) % 4;
+        PipeProperties c_p = GetComponent<PipeProperties>();
+        if (c_p == null) c_p = GetComponentInParent<PipeProperties>();
+        PipeProperties n_p = c_p.next[c_p.i].GetComponent<PipeProperties>();
+        int anim_rotation = n_p.anim_rotation[n_p.n_line * 4 + (c_p.next_in[c_p.i] - n_p.rotation + 4) % 4];
+        string anim_state = n_p.anim_state[n_p.n_line * 4 + (c_p.next_in[c_p.i] - n_p.rotation + 4) % 4];
+        n_p.n_line++;
+        c_p.i++;
+        n_p.GetComponent<Animator>().Play(anim_state);
+        n_p.transform.eulerAngles -= new Vector3(0f, 0f, anim_rotation * 90);
+        n_p.rotation = (n_p.rotation - anim_rotation) % 4;
     }
 
     public void endOfPipeLines()
     {
-        GetComponent<Animator>().enabled = false;
-        GameObject.Find("ScriptController").GetComponent<GameController>().game_over = true;
+        EventDispatcher.Instance.PostEvent(EventID.PipeAnimationEnd, null);
     }
 }

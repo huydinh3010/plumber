@@ -15,7 +15,7 @@ public class ScrollLevelController : MonoBehaviour, IBeginDragHandler, IEndDragH
     private ScrollRect scroll;
     private int currentPage;
     private bool isMoving;
-    private Vector2 mousePos;
+    
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -134,23 +134,6 @@ public class ScrollLevelController : MonoBehaviour, IBeginDragHandler, IEndDragH
             material.color = new Color(1f, 1f, 1f, 0.7f);
         }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            Vector2 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Debug.Log("mouse x = " + mousePos.x + " mouse y = " + mousePos.y);
-            if(position == mousePos)
-            {
-                RaycastHit2D raycast = Physics2D.Raycast(mousePos, Vector2.zero);
-                if (raycast.collider != null)
-                {
-                    Debug.Log(raycast.collider.GetComponentInChildren<Text>().text);
-                    // chuyen scene
-                }
-            }
-        }
+        
     }
 }

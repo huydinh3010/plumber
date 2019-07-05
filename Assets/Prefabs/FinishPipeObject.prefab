@@ -90,7 +90,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1820926538423632151}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 185c6a468ba6a9e49ad55629d7d9a16d, type: 2}
   m_CullingMode: 0
@@ -117,6 +117,7 @@ MonoBehaviour:
   col: 0
   rotation: 0
   n_line: 0
+  isCorrect: 0
   line: ffffffffffffffffffffffffffffffff
   anim_state:
   - finish_up
@@ -124,6 +125,11 @@ MonoBehaviour:
   - finish_down
   - finish_left
   anim_rotation: 00000000000000000000000000000000
+  i: 0
+  next:
+  - {fileID: 0}
+  - {fileID: 0}
+  next_in: 0000000000000000
 --- !u!114 &6547175225482135430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,4 +142,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f261de8cb49d5746b224a16ea8c2628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameController: {fileID: 0}

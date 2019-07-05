@@ -18,14 +18,55 @@ public class GameData
     public int completed;
     public int reward_coins;
     public bool ads_on;
+    public bool sound_on;
 
     public bool firstMenuLoad;
-    private void LoadDataFromFile()
+    public int level_selected;
+    public int pack_selected;
+    public int mode;
+
+    public void increaseCoin(int value)
+    {
+        coins += value;
+        EventDispatcher.Instance.PostEvent(EventID.OnCoinChange, null);
+    }
+
+    public bool decreaseCoin(int value)
+    {
+        if (coins > value)
+        {
+            coins -= value;
+            EventDispatcher.Instance.PostEvent(EventID.OnCoinChange, null);
+            return true;
+        }
+        return false;
+    }
+
+    public void increasePoint(int value)
+    {
+        points += value;
+        EventDispatcher.Instance.PostEvent(EventID.OnPointChange, null);
+    }
+
+    public bool decreasePoint(int value)
+    {
+        if (points > value)
+        {
+            points -= value;
+            EventDispatcher.Instance.PostEvent(EventID.OnPointChange, null);
+            return true;
+        }
+        return false;
+    }
+
+    
+
+    public void LoadDataFromFile()
     {
         // test game
         unlock_level = 10;
-        points = 250;
-        coins = 235;
+        points = 2500;
+        coins = 1000;
         level_stars = new int[560];
         System.Random rd = new System.Random();
         for (int i = 0; i < level_stars.Length; i++)

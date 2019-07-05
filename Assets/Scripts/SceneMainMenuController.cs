@@ -6,50 +6,50 @@ using UnityEngine.SceneManagement;
 
 public class SceneMainMenuController : MonoBehaviour
 {
-    public Texture2D texture;
+    //public Texture2D texture;
     public GameObject btnDailyChallenge;
     public GameObject btnRemoveAds;
     public GameObject btnMoreGame;
+    public SceneController sceneController;
 
     public GameObject panelRate;
     public GameObject panelPlayServices;
     public GameObject panelDailyReward;
-    private bool transition;
-    private float speed;
-    private float alpha;
+    
+    
     private void Awake()
     {
-        //if (GameData.Instance.firstMenuLoad)
-        //{
-            
-        //    GameData.Instance.firstMenuLoad = false;
-        //}
-        //else
-        //{
+        
+        if (!GameData.Instance.firstMenuLoad)
+        {
+            GameData.Instance.firstMenuLoad = true;
+            GameData.Instance.LoadDataFromFile();
+        }
+        else
+        {
+            sceneController.openScene();
+        }
 
-        //}
-        
-        
+
     }
     // Start is called before the first frame update
     void Start()
     {
-        alpha = 1f;
-        speed = 1f;
+        //alpha = 1f;
+        //speed = 1f;
     }
 
-    private void OnGUI()
-    {
-        if (transition)
-        {
-            alpha -= speed * Time.deltaTime;
-            if (alpha < 0)
-                GUI.depth = -10;
-            GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, alpha);
-            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), texture);
-            
-        }
-    }
+    //private void CloseScreenEffect()
+    //{
+    //    alpha += speed * Time.deltaTime;
+    //    GUI.depth = -10;
+    //    if (alpha > 0.5) SceneManager.LoadScene("SimpleLevel");
+    //    GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, alpha);
+    //    GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), texture);
+    //}
+
+
+   
 
     // Update is called once per frame
     void Update()
@@ -59,8 +59,8 @@ public class SceneMainMenuController : MonoBehaviour
 
     public void BtnPlayOnClick()
     {
-        SceneManager.LoadScene("SimpleLevel");
-
+        //SceneManager.LoadScene("SimpleLevel");
+        sceneController.loadScene("SimpleLevel");
     }
 
     public void BtnDailyChallengeOnClick()
