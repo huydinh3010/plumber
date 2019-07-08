@@ -76,6 +76,7 @@ public class SceneSimpleLevelController : MonoBehaviour
                     Debug.Log(raycast.collider.GetComponentInChildren<Text>().text);
                     
                     GameData.Instance.level_selected = int.Parse(raycast.collider.GetComponentInChildren<Text>().text);
+                    GameData.Instance.mode = 1;
                     sceneController.loadScene("GamePlay");
                     // chuyen scene
                 }

@@ -122,6 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 151321416}
   - component: {fileID: 151321415}
+  - component: {fileID: 151321417}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -141,6 +142,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5874860ae555c54b816d62e68b489a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneController: {fileID: 151321417}
+  go_levels:
+  - {fileID: 1061451312}
+  - {fileID: 804593801}
+  - {fileID: 1567549425}
+  - {fileID: 1991055187}
+  - {fileID: 1332386315}
+  - {fileID: 441344648}
+  - {fileID: 1874136555}
+  - {fileID: 299270168}
+  go_pool: {fileID: 949559092}
+  s_pools:
+  - {fileID: 21300000, guid: 0887c2ccae3c9ac499a5781a82176bf2, type: 3}
+  - {fileID: 21300000, guid: 71c80722af4339d4a918a7c15c660f20, type: 3}
+  - {fileID: 21300000, guid: aece2bdee826ffb4ba3eeeba020b2949, type: 3}
+  - {fileID: 21300000, guid: 8198080b5a4b40a4fb6a38dfa8ba650c, type: 3}
+  - {fileID: 21300000, guid: 4150b5f98d4659d47b262b6dec2b2198, type: 3}
+  - {fileID: 21300000, guid: d3bb3e19a421a7940a0c8649edf12ebb, type: 3}
+  - {fileID: 21300000, guid: cd975513deaca1e418c179363b3895f7, type: 3}
+  - {fileID: 21300000, guid: ccc680a6cf1486d4daf10ef003ceb053, type: 3}
+  d_levels:
+  - {fileID: 21300000, guid: 91c60851f9610c3468808c55b2f00a45, type: 3}
+  - {fileID: 21300000, guid: 242767e4646d45d4cadf70e070eb8afb, type: 3}
+  - {fileID: 21300000, guid: 9fe99c2dd6a68844bae1b407d6c323fc, type: 3}
+  - {fileID: 21300000, guid: e4bd61288be82254d9dc3e204a0c9d7d, type: 3}
+  - {fileID: 21300000, guid: 641691728d3ec65489b59e263dac57ae, type: 3}
+  - {fileID: 21300000, guid: 2c8f3d3c9271e7f40bb5f5d40e09f22b, type: 3}
+  - {fileID: 21300000, guid: afbfe41bbe84a8d478beaccee3437c88, type: 3}
+  - {fileID: 21300000, guid: 587a181b469658a45b296c30e280fb2c, type: 3}
+  text: {fileID: 164728550}
 --- !u!4 &151321416
 Transform:
   m_ObjectHideFlags: 0
@@ -155,6 +186,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &151321417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151321414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fabcaed2c00355d4cb3b277b98906c71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  transitionTexture: {fileID: 2800000, guid: a45326333e398b54cbfdbdf96029c407, type: 3}
 --- !u!1 &164728548
 GameObject:
   m_ObjectHideFlags: 0

@@ -98,7 +98,7 @@ public abstract class GameController : MonoBehaviour
 
     }
 
-    public IEnumerator removePipe(GameObject gameObject)
+    public virtual IEnumerator removePipe(GameObject gameObject)
     {
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
         float speed = 2f;
@@ -121,7 +121,7 @@ public abstract class GameController : MonoBehaviour
     }
 
 
-    public IEnumerator rotatePipe(GameObject gameObject, int k, float speed)
+    public virtual IEnumerator rotatePipe(GameObject gameObject, int k, float speed)
     {
         if (k < 4 && k > -4)
         {
@@ -170,7 +170,7 @@ public abstract class GameController : MonoBehaviour
         }
     }
 
-    public bool checkPipes(out List<GameObject> list_results, out List<int> list_ds)
+    public virtual bool checkPipes(out List<GameObject> list_results, out List<int> list_ds)
     {
         list_results = new List<GameObject>();
         list_ds = new List<int>();
@@ -215,7 +215,7 @@ public abstract class GameController : MonoBehaviour
 
     public abstract int getStar();
 
-    public void destroy()
+    public virtual void destroy()
     {
         for (int i = 0; i < row; i++)
         {

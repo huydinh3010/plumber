@@ -112,6 +112,9 @@ public class ScrollLevelController : MonoBehaviour, IBeginDragHandler, IEndDragH
         if (speed_movement <= 0) speed_movement = 5000f;
         btnArrowRight.onClick.AddListener(() => { btnArrowRightOnClick(); });
         btnArrowLeft.onClick.AddListener(() => { btnArrowLeftOnClick(); });
+        currentPage = GameData.Instance.unlock_level / 16;
+        content.localPosition = new Vector3(-currentPage * 750 - 400, 0, 0);
+        txtPackNumber.text = "PACK " + (currentPage + 1).ToString() + "/35";
     }
 
     // Update is called once per frame

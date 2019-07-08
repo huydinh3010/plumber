@@ -43,6 +43,7 @@ public class EventDispatcher : MonoBehaviour
     {
         if (_listeners.ContainsKey(eventID))
         {
+            Debug.Log("remove: " + eventID.ToString());
             _listeners[eventID] -= callback;
         }
     }

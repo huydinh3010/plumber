@@ -15,7 +15,7 @@ public class GameData
     public int coins;
     public int[] level_stars;
     public int day;
-    public int completed;
+    public int[] completed;
     public int reward_coins;
     public bool ads_on;
     public bool sound_on;
@@ -64,22 +64,22 @@ public class GameData
     public void LoadDataFromFile()
     {
         // test game
-        unlock_level = 10;
+        unlock_level = 558;
         points = 2500;
         coins = 1000;
         level_stars = new int[560];
         System.Random rd = new System.Random();
         for (int i = 0; i < level_stars.Length; i++)
         {
-            if (i > unlock_level) level_stars[i] = -1;
-            else if (i == unlock_level) level_stars[i] = 0;
+            if (i >= unlock_level) level_stars[i] = -1;
+            else if (i == unlock_level - 1) level_stars[i] = 0;
             else
             {
                 level_stars[i] = rd.Next(1, 3);
             }
         }
         day = 2;
-        completed = 4;
+        completed = new int[8] {0,1,0,0,0,0,0,0};
         reward_coins = 100;
         ads_on = true;
         firstMenuLoad = true;

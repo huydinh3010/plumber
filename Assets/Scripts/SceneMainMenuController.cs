@@ -65,7 +65,7 @@ public class SceneMainMenuController : MonoBehaviour
 
     public void BtnDailyChallengeOnClick()
     {
-        SceneManager.LoadScene("ChallengeLevel");
+        sceneController.loadScene("ChallengeLevel");
     }
 
     public void BtnRemoveAdsOnClick()
@@ -86,7 +86,9 @@ public class SceneMainMenuController : MonoBehaviour
 
     public void BtnHelpOnClick()
     {
-
+        GameData.Instance.level_selected = 1;
+        GameData.Instance.mode = 0;
+        sceneController.loadScene("GamePlay");
     }
 
     public void BtnMoreGameOnClick()
