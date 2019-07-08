@@ -11,6 +11,7 @@ public class SceneController : MonoBehaviour
     private bool closing;
     private bool opening;
     private string nextSceneName;
+    private bool loading;
 
     public void loadScene(string name)
     {
@@ -30,9 +31,14 @@ public class SceneController : MonoBehaviour
         alpha += speed * Time.deltaTime;
         if (alpha > 1f)
         {
-            SceneManager.LoadScene(nextSceneName);
+            if (!loading)
+            {
+                loading = true;
+                SceneManager.LoadScene(nextSceneName);
+            }
             GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, 1);
             //closing = false;
+           
         }
         else
         {

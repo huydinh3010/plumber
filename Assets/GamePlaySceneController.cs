@@ -160,9 +160,11 @@ public class GamePlaySceneController : MonoBehaviour
         }
         else if(GameData.Instance.mode == 1)
         {
-            if (GameData.Instance.level_stars[GameData.Instance.level_selected - 1] > 0)
+            if (GameData.Instance.level_stars.Count > GameData.Instance.level_selected)
             {
-                GameData.Instance.level_stars[GameData.Instance.level_selected - 1] = game.getStar();
+                int c_star = GameData.Instance.level_stars[GameData.Instance.level_selected - 1];
+                int n_star = game.getStar();
+                if (n_star > c_star) GameData.Instance.level_stars[GameData.Instance.level_selected - 1] = n_star;
                 panelNextLevel.GetComponent<Animator>().Play("Show");
                 panelShowing = true;
             }
@@ -176,7 +178,7 @@ public class GamePlaySceneController : MonoBehaviour
                 panelPassedLevel.transform.Find("Points").GetComponent<Image>().sprite = s_points[star - 1];
                 if (GameData.Instance.unlock_level < 560)
                 {
-                    GameData.Instance.level_stars[GameData.Instance.level_selected] = 0;
+                    GameData.Instance.level_stars.Add(0);
                     GameData.Instance.unlock_level++;
                 }
                 //else
@@ -238,7 +240,7 @@ public class GamePlaySceneController : MonoBehaviour
             {
                 GameData.Instance.level_selected++;
                 game.destroy();
-                newGameLevel(game);
+                newGameLevel(GetComponent<SimpleModeController>());
             }
         }
         else if(GameData.Instance.mode == 2)
@@ -251,7 +253,7 @@ public class GamePlaySceneController : MonoBehaviour
             {
                 GameData.Instance.level_selected++;
                 game.destroy();
-                newGameLevel(game);
+                newGameLevel(GetComponent<ChallengeModeController>());
             }
         }
     }

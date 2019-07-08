@@ -365,6 +365,7 @@ MonoBehaviour:
     type: 3}
   LockLv: {fileID: 5698312392018378782, guid: 72a1f9d2a75abef408ced03ba515f900, type: 3}
   ListLevels: {fileID: 1422385615}
+  txtCoins: {fileID: 7529134554072322419}
 --- !u!4 &443406633
 Transform:
   m_ObjectHideFlags: 0
@@ -1779,6 +1780,18 @@ PrefabInstance:
       objectReference: {fileID: 443406632}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63c87c22752f0844bb46fb9a6bf3c6c3, type: 3}
+--- !u!114 &7529134554072322419 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7529134552568933626, guid: 63c87c22752f0844bb46fb9a6bf3c6c3,
+    type: 3}
+  m_PrefabInstance: {fileID: 7529134554072322418}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8727996326589249543
 PrefabInstance:
   m_ObjectHideFlags: 0

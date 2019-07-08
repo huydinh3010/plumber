@@ -15,22 +15,33 @@ public class SceneMainMenuController : MonoBehaviour
     public GameObject panelRate;
     public GameObject panelPlayServices;
     public GameObject panelDailyReward;
+
     
     
     private void Awake()
     {
-        
-        if (!GameData.Instance.firstMenuLoad)
+
+        //if (!GameData.Instance.firstMenuLoad)
+        //{
+        //    GameData.Instance.firstMenuLoad = true;
+        //    GameData.Instance.LoadDataFromFile();
+        //}
+        //else
+        //{
+        //    sceneController.openScene();
+        //}
+        if (GameData.Instance.firstMenuLoad)
         {
-            GameData.Instance.firstMenuLoad = true;
             GameData.Instance.LoadDataFromFile();
+            GameData.Instance.firstMenuLoad = false;
+            
         }
         else
         {
             sceneController.openScene();
         }
-
-
+        
+       
     }
     // Start is called before the first frame update
     void Start()
@@ -103,7 +114,9 @@ public class SceneMainMenuController : MonoBehaviour
 
     public void BtnRateOnPanelOnClick()
     {
-        
+        //test
+        GameData.Instance.SaveDataToFile();
+        //test
     }
 
     
@@ -111,6 +124,7 @@ public class SceneMainMenuController : MonoBehaviour
     private void OnDestroy()
     {
         Debug.Log("Main Scene Destroyed");
+        //GameData.Instance.SaveDataToFile();
     }
 
 

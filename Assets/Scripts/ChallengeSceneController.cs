@@ -28,7 +28,7 @@ public class ChallengeSceneController : MonoBehaviour
                 go_levels[i].GetComponent<SpriteRenderer>().sprite = d_levels[i];
             }
         }
-        go_pool.GetComponent<SpriteRenderer>().sprite = s_pools[total - 1];
+        if(total > 0) go_pool.GetComponent<SpriteRenderer>().sprite = s_pools[total - 1];
         if (total == 8) text_tutorial.text = str[1];
         else text_tutorial.text = str[0];
         txtCoins.text = GameData.Instance.coins.ToString();

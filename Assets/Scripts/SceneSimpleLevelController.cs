@@ -12,11 +12,13 @@ public class SceneSimpleLevelController : MonoBehaviour
     public GameObject UnlockLv;
     public GameObject LockLv;
     public GameObject ListLevels;
+    public Text txtCoins;
     private Vector2 mousePos;
+
     private void Awake()
     {
         sceneController.openScene();
-        
+        txtCoins.text = GameData.Instance.coins.ToString();
         for(int p = 0; p < 35; p++)
         {
             for (int i = 0; i < 4; i++)
@@ -24,27 +26,34 @@ public class SceneSimpleLevelController : MonoBehaviour
                 for (int j = 0; j < 4; j++)
                 {
                     GameObject go;
-                    switch (GameData.Instance.level_stars[p*16 + i * 4 + j])
+                    if (p * 16 + i * 4 + j < GameData.Instance.level_stars.Count)
                     {
-                        case 0:
-                            go = Instantiate(UnlockLv, new Vector3((p*750 + j * 150 - 225) / 90f, (175 - i * 150) / 90f, 0), Quaternion.identity, ListLevels.transform);
-                            go.GetComponentInChildren<Text>().text = (p * 16 + i * 4 + j + 1).ToString();
-                            break;
-                        case 1:
-                            go = Instantiate(OneStarLv, new Vector3((p*750 + j * 150 - 225) / 90f, (175 - i * 150) / 90f, 0), Quaternion.identity, ListLevels.transform);
-                            go.GetComponentInChildren<Text>().text = (p * 16 + i * 4 + j + 1).ToString();
-                            break;
-                        case 2:
-                            go = Instantiate(TwoStarsLv, new Vector3((p*750 + j * 150 - 225) / 90f, (175 - i * 150) / 90f, 0), Quaternion.identity, ListLevels.transform);
-                            go.GetComponentInChildren<Text>().text = (p * 16 + i * 4 + j + 1).ToString();
-                            break;
-                        case 3:
-                            go = Instantiate(ThreeStarsLv, new Vector3((p*750 + j * 150 - 225) / 90f, (175 - i * 150) / 90f, 0), Quaternion.identity, ListLevels.transform);
-                            go.GetComponentInChildren<Text>().text = (p * 16 + i * 4 + j + 1).ToString();
-                            break;
-                        default:
-                            go = Instantiate(LockLv, new Vector3((p*750 + j * 150 - 225) / 90f, (175 - i * 150) / 90f, 0), Quaternion.identity, ListLevels.transform);
-                            break;
+                        switch (GameData.Instance.level_stars[p * 16 + i * 4 + j])
+                        {
+                            case 0:
+                                go = Instantiate(UnlockLv, new Vector3((p * 750 + j * 150 - 225) / 90f, (175 - i * 150) / 90f, 0), Quaternion.identity, ListLevels.transform);
+                                go.GetComponentInChildren<Text>().text = (p * 16 + i * 4 + j + 1).ToString();
+                                break;
+                            case 1:
+                                go = Instantiate(OneStarLv, new Vector3((p * 750 + j * 150 - 225) / 90f, (175 - i * 150) / 90f, 0), Quaternion.identity, ListLevels.transform);
+                                go.GetComponentInChildren<Text>().text = (p * 16 + i * 4 + j + 1).ToString();
+                                break;
+                            case 2:
+                                go = Instantiate(TwoStarsLv, new Vector3((p * 750 + j * 150 - 225) / 90f, (175 - i * 150) / 90f, 0), Quaternion.identity, ListLevels.transform);
+                                go.GetComponentInChildren<Text>().text = (p * 16 + i * 4 + j + 1).ToString();
+                                break;
+                            case 3:
+                                go = Instantiate(ThreeStarsLv, new Vector3((p * 750 + j * 150 - 225) / 90f, (175 - i * 150) / 90f, 0), Quaternion.identity, ListLevels.transform);
+                                go.GetComponentInChildren<Text>().text = (p * 16 + i * 4 + j + 1).ToString();
+                                break;
+                            default:
+                                
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        go = Instantiate(LockLv, new Vector3((p * 750 + j * 150 - 225) / 90f, (175 - i * 150) / 90f, 0), Quaternion.identity, ListLevels.transform);
                     }
                 }
             }
