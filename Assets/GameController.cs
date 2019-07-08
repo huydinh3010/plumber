@@ -75,10 +75,10 @@ public abstract class GameController : MonoBehaviour
     {
         int c_len = (str_results.Length - 1) / 3 + 1;
         int i;
-        Debug.Log(c_len);
+        //Debug.Log(c_len);
         for (i = k * c_len; i < c_len * (k + 1) && i < str_results.Length - 1; i++)
         {
-            Debug.Log(str_results[i]);
+            //Debug.Log(str_results[i]);
             string[] pairs = str_results[i].Split(' ');
             int y = int.Parse(pairs[0]);
             int x = int.Parse(pairs[1]);

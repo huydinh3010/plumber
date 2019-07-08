@@ -75,7 +75,7 @@ public class SimpleModeController : GameController
                             valve = go;
                             //go.transform.GetChild(1).eulerAngles += new Vector3(0f, 0f, angle * 90);
                             valvebg = go.transform.Find("Valve_bg").gameObject;
-                            valvebg.transform.eulerAngles += new Vector3(0f, 0f, angle * 90);
+                            valvebg.transform.eulerAngles = Vector3.zero;
                         }
                     }
                     else

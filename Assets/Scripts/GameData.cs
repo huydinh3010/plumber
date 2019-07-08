@@ -22,7 +22,7 @@ public class GameData
 
     public bool firstMenuLoad;
     public int level_selected;
-    public int pack_selected;
+
     public int mode;
 
     public void increaseCoin(int value)
@@ -65,6 +65,7 @@ public class GameData
     {
         // test game
         unlock_level = 558;
+        level_selected = unlock_level;
         points = 2500;
         coins = 1000;
         level_stars = new int[560];

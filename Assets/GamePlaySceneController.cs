@@ -27,6 +27,7 @@ public class GamePlaySceneController : MonoBehaviour
     private bool animPlaying;
     private bool panelShowing;
     private int construct_part;
+    private bool tutorial;
 
     private void Awake()
     {
@@ -36,9 +37,10 @@ public class GamePlaySceneController : MonoBehaviour
         EventDispatcher.Instance.RegisterListener(EventID.OnLevelSelectChange, onLevelSelectChange);
         EventDispatcher.Instance.RegisterListener(EventID.PipeAnimationEnd, endGame);
 
-        if (GameData.Instance.mode == 0 || GameData.Instance.level_selected == 1) // help
+        if (GameData.Instance.mode == 0 || (GameData.Instance.level_selected == 1 && GameData.Instance.mode == 1)) // help
         {
-            createHelpLevel();
+            newGameLevel(GetComponent<HelpLevelController>());
+            tutorial = true;
         }
         else if (GameData.Instance.mode == 1) // simple
         {
@@ -48,11 +50,12 @@ public class GamePlaySceneController : MonoBehaviour
             //game.loadLevelData();
             //game.setupLevel();
             
-            newGameLevel();
+            newGameLevel(GetComponent<SimpleModeController>());
         }
         else if (GameData.Instance.mode == 2) // challenge
         {
             //game = new ChallengeModeController();
+            newGameLevel(GetComponent<ChallengeModeController>());
         }
     }
 
@@ -91,10 +94,10 @@ public class GamePlaySceneController : MonoBehaviour
         }
     }
 
-    private void newGameLevel()
+    private void newGameLevel(GameController game)
     {
         // UI
-        game = GetComponent<SimpleModeController>();
+        this.game = game;
         btnRemove.interactable = GameData.Instance.coins >= 50;
         btnConstruct.interactable = GameData.Instance.coins >= 25;
         if (GameData.Instance.sound_on) btnSound.GetComponent<Image>().sprite = s_sounds[1];
@@ -103,28 +106,27 @@ public class GamePlaySceneController : MonoBehaviour
         txtPoints.text = GameData.Instance.points.ToString();
         txtLevel.text = "Level " + GameData.Instance.level_selected.ToString();
         // Game logic
-        
-        gameover = animPlaying = panelShowing = false;
+        gameover = animPlaying = panelShowing = tutorial = false;
         construct_part = 0;
         game.loadLevelData();
         game.setupLevel();
     }
 
-    private void createHelpLevel()
-    {
-        game = GetComponent<HelpLevelController>();
-        btnRemove.interactable = GameData.Instance.coins >= 50;
-        btnConstruct.interactable = GameData.Instance.coins >= 25;
-        if (GameData.Instance.sound_on) btnSound.GetComponent<Image>().sprite = s_sounds[1];
-        else btnSound.GetComponent<Image>().sprite = s_sounds[0];
-        txtCoins.text = GameData.Instance.coins.ToString();
-        txtPoints.text = GameData.Instance.points.ToString();
-        txtLevel.text = "Level " + GameData.Instance.level_selected.ToString();
-        gameover = animPlaying = panelShowing = false;
-        construct_part = 0;
-        game.loadLevelData();
-        game.setupLevel();
-    }
+    //private void createHelpLevel()
+    //{
+    //    game = GetComponent<HelpLevelController>();
+    //    btnRemove.interactable = GameData.Instance.coins >= 50;
+    //    btnConstruct.interactable = GameData.Instance.coins >= 25;
+    //    if (GameData.Instance.sound_on) btnSound.GetComponent<Image>().sprite = s_sounds[1];
+    //    else btnSound.GetComponent<Image>().sprite = s_sounds[0];
+    //    txtCoins.text = GameData.Instance.coins.ToString();
+    //    txtPoints.text = GameData.Instance.points.ToString();
+    //    txtLevel.text = "Level " + GameData.Instance.level_selected.ToString();
+    //    gameover = animPlaying = panelShowing = false;
+    //    construct_part = 0;
+    //    game.loadLevelData();
+    //    game.setupLevel();
+    //}
 
     private void playAnimation(List<GameObject> list_results, List<int> list_ds)
     {
@@ -188,7 +190,22 @@ public class GamePlaySceneController : MonoBehaviour
         }
         else if (GameData.Instance.mode == 2)
         {
-
+            if(GameData.Instance.completed[GameData.Instance.level_selected - 1] == 1)
+            {
+                panelNextLevel.GetComponent<Animator>().Play("Show");
+                panelShowing = true;
+            }
+            else
+            {
+                int star = game.getStar();
+                GameData.Instance.completed[GameData.Instance.level_selected - 1] = 1;
+                GameData.Instance.increaseCoin(star);
+                GameData.Instance.increasePoint(star * 10);
+                panelPassedLevel.transform.Find("Coins").GetComponent<Image>().sprite = s_coins[star - 1];
+                panelPassedLevel.transform.Find("Points").GetComponent<Image>().sprite = s_points[star - 1];
+                panelPassedLevel.GetComponent<Animator>().Play("Show");
+                panelShowing = true;
+            }
         }
     }
         
@@ -221,12 +238,21 @@ public class GamePlaySceneController : MonoBehaviour
             {
                 GameData.Instance.level_selected++;
                 game.destroy();
-                newGameLevel();
+                newGameLevel(game);
             }
         }
         else if(GameData.Instance.mode == 2)
         {
-
+            if(GameData.Instance.level_selected == 8)
+            {
+                sceneController.loadScene("ChallengeLevel");
+            }
+            else
+            {
+                GameData.Instance.level_selected++;
+                game.destroy();
+                newGameLevel(game);
+            }
         }
     }
 
@@ -239,7 +265,7 @@ public class GamePlaySceneController : MonoBehaviour
 
     public void btnRemoveOnClick()
     {
-        if (GameData.Instance.level_selected != 1 && GameData.Instance.decreaseCoin(50))
+        if (!tutorial && GameData.Instance.decreaseCoin(50))
         {
             game.removeIncorrectPipes();
             btnRemove.interactable = false;
@@ -248,7 +274,7 @@ public class GamePlaySceneController : MonoBehaviour
 
     public void btnConstructOnClick()
     {
-        if (GameData.Instance.level_selected != 1 && GameData.Instance.decreaseCoin(25))
+        if (!tutorial && GameData.Instance.decreaseCoin(25))
         {
             if (game.constructPipes(construct_part++))
             {
@@ -259,7 +285,7 @@ public class GamePlaySceneController : MonoBehaviour
 
     public void btnAddCoinOnClick()
     {
-        if (GameData.Instance.level_selected != 1 && !animPlaying)
+        if (!tutorial && !animPlaying)
         {
             panelAddCoin.GetComponent<Animator>().Play("Show");
             panelShowing = true;

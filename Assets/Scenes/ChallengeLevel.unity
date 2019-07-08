@@ -171,7 +171,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2c8f3d3c9271e7f40bb5f5d40e09f22b, type: 3}
   - {fileID: 21300000, guid: afbfe41bbe84a8d478beaccee3437c88, type: 3}
   - {fileID: 21300000, guid: 587a181b469658a45b296c30e280fb2c, type: 3}
-  text: {fileID: 164728550}
+  text_tutorial: {fileID: 164728550}
+  txtCoins: {fileID: 1435773483}
 --- !u!4 &151321416
 Transform:
   m_ObjectHideFlags: 0
@@ -212,7 +213,7 @@ GameObject:
   - component: {fileID: 164728551}
   - component: {fileID: 164728550}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TextTutorial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1552,6 +1553,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1435773481}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1435773483 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7529134552568933626, guid: 63c87c22752f0844bb46fb9a6bf3c6c3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1435773481}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1567549425
 GameObject:
   m_ObjectHideFlags: 0

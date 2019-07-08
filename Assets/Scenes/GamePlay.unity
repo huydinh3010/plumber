@@ -819,7 +819,7 @@ PrefabInstance:
     - target: {fileID: 5230313830312926952, guid: 369bc71793e791c41af8ed0642b086c8,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -117219.85
+      value: -117809.2
       objectReference: {fileID: 0}
     - target: {fileID: 5230313830661770082, guid: 369bc71793e791c41af8ed0642b086c8,
         type: 3}
@@ -4202,6 +4202,7 @@ GameObject:
   - component: {fileID: 2084200697}
   - component: {fileID: 2084200694}
   - component: {fileID: 2084200698}
+  - component: {fileID: 2084200699}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -4321,6 +4322,27 @@ MonoBehaviour:
   rotate_speed: 5
   hand: {fileID: 5380729859762908493, guid: 3bb1d43e459e5434d810aa19cae37911, type: 3}
   h_text: {fileID: 1021819565}
+--- !u!114 &2084200699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2084200693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e251826c27f092742ae069528dddd881, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  s_valves: []
+  pipes:
+  - {fileID: 8913634226539356029, guid: bad8b37a07be7af4da1813ee36793532, type: 3}
+  - {fileID: 5107127645869513209, guid: 37f8546131567ab42a6aca9c0bf590d0, type: 3}
+  - {fileID: 63848569797121596, guid: 653d5bfca948d544bbfd17ad34602799, type: 3}
+  - {fileID: 5360797924207126836, guid: fa72b8c6cfe8ae749aa5ce3e85a3ea12, type: 3}
+  - {fileID: 5478066982943287771, guid: a3c1ef2bd2648c94f9707d7828e078c5, type: 3}
+  - {fileID: 1820926538423632151, guid: 1e7b8732a49382346a53018da67b8f49, type: 3}
+  rotate_speed: 5
 --- !u!1 &2087101478
 GameObject:
   m_ObjectHideFlags: 0

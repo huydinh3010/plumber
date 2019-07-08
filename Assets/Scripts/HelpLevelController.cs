@@ -87,7 +87,7 @@ public class HelpLevelController : GameController
             if (i == 0)
             {
                 valve = m_clones[y, x];
-                valve.GetComponentsInChildren<Transform>()[2].eulerAngles += new Vector3(0f, 0f, angle * 90);
+                valve.GetComponentsInChildren<Transform>()[2].eulerAngles = Vector3.zero;
             }
         }
         for (int i = 0; i < pos_x.Length - 1; i++)
