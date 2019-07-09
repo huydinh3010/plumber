@@ -5,15 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class Init : MonoBehaviour
 {
+    [SerializeField] SceneController sceneController;
     private void Awake()
     {
-        //GameData.Instance.LoadDataFromFile();
-
-        //Application.LoadLevelAdditive("MainMenu");
-
+        DontDestroyOnLoad(this);
+        GameData.Instance.LoadDataFromFile();
+        SceneManager.LoadScene("MainMenu");
     }
 
-   
     // Start is called before the first frame update
     void Start()
     {
@@ -26,10 +25,17 @@ public class Init : MonoBehaviour
         
     }
 
-    private void OnDestroy()
+    private void OnApplicationPause(bool pause)
     {
         //GameData.Instance.SaveDataToFile();
-        //Debug.Log("OneLoad Destroyed");
-        
+        if (pause)
+        {
+            GameData.Instance.SaveDataToFile();
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        GameData.Instance.SaveDataToFile();
     }
 }

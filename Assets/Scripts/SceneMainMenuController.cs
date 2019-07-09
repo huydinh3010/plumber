@@ -30,18 +30,18 @@ public class SceneMainMenuController : MonoBehaviour
         //{
         //    sceneController.openScene();
         //}
-        if (GameData.Instance.firstMenuLoad)
-        {
-            GameData.Instance.LoadDataFromFile();
-            GameData.Instance.firstMenuLoad = false;
-            
-        }
-        else
-        {
-            sceneController.openScene();
-        }
-        
-       
+        //if (GameData.Instance.firstMenuLoad)
+        //{
+        //    GameData.Instance.LoadDataFromFile();
+        //    GameData.Instance.firstMenuLoad = false;
+
+        //}
+        //else
+        //{
+        //    sceneController.openScene();
+        //}
+
+        sceneController.openScene();
     }
     // Start is called before the first frame update
     void Start()
@@ -59,13 +59,13 @@ public class SceneMainMenuController : MonoBehaviour
     //    GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), texture);
     //}
 
-
+    
    
 
     // Update is called once per frame
     void Update()
     {
-        
+            
     }
 
     public void BtnPlayOnClick()
@@ -115,7 +115,7 @@ public class SceneMainMenuController : MonoBehaviour
     public void BtnRateOnPanelOnClick()
     {
         //test
-        GameData.Instance.SaveDataToFile();
+        //GameData.Instance.SaveDataToFile();
         //test
     }
 
