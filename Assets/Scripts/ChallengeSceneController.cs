@@ -70,50 +70,50 @@ public class ChallengeSceneController : MonoBehaviour
             {
                 if(selected.name == "Lv1")
                 {
-                    GameData.Instance.mode = 2;
-                    GameData.Instance.level_selected = 1;
+                    GameCache.Instance.mode = 2;
+                    GameCache.Instance.level_selected = 1;
                     sceneController.loadScene("GamePlay");
                 }
                 else if(selected.name == "Lv2")
                 {
-                    GameData.Instance.mode = 2;
-                    GameData.Instance.level_selected = 2;
+                    GameCache.Instance.mode = 2;
+                    GameCache.Instance.level_selected = 2;
                     sceneController.loadScene("GamePlay");
                 }
                 else if (selected.name == "Lv3")
                 {
-                    GameData.Instance.mode = 2;
-                    GameData.Instance.level_selected = 3;
+                    GameCache.Instance.mode = 2;
+                    GameCache.Instance.level_selected = 3;
                     sceneController.loadScene("GamePlay");
                 }
                 else if (selected.name == "Lv4")
                 {
-                    GameData.Instance.mode = 2;
-                    GameData.Instance.level_selected = 4;
+                    GameCache.Instance.mode = 2;
+                    GameCache.Instance.level_selected = 4;
                     sceneController.loadScene("GamePlay");
                 }
                 else if (selected.name == "Lv5")
                 {
-                    GameData.Instance.mode = 2;
-                    GameData.Instance.level_selected = 5;
+                    GameCache.Instance.mode = 2;
+                    GameCache.Instance.level_selected = 5;
                     sceneController.loadScene("GamePlay");
                 }
                 else if (selected.name == "Lv6")
                 {
-                    GameData.Instance.mode = 2;
-                    GameData.Instance.level_selected = 6;
+                    GameCache.Instance.mode = 2;
+                    GameCache.Instance.level_selected = 6;
                     sceneController.loadScene("GamePlay");
                 }
                 else if (selected.name == "Lv7")
                 {
-                    GameData.Instance.mode = 2;
-                    GameData.Instance.level_selected = 7;
+                    GameCache.Instance.mode = 2;
+                    GameCache.Instance.level_selected = 7;
                     sceneController.loadScene("GamePlay");
                 }
                 else if (selected.name == "Lv8")
                 {
-                    GameData.Instance.mode = 2;
-                    GameData.Instance.level_selected = 8;
+                    GameCache.Instance.mode = 2;
+                    GameCache.Instance.level_selected = 8;
                     sceneController.loadScene("GamePlay");
                 }
                 else if (selected.name == "Pool")

@@ -37,22 +37,22 @@ public class GamePlaySceneController : MonoBehaviour
         EventDispatcher.Instance.RegisterListener(EventID.OnLevelSelectChange, onLevelSelectChange);
         EventDispatcher.Instance.RegisterListener(EventID.PipeAnimationEnd, endGame);
 
-        if (GameData.Instance.mode == 0 || (GameData.Instance.level_selected == 1 && GameData.Instance.mode == 1)) // help
+        if (GameCache.Instance.mode == 0 || (GameCache.Instance.level_selected == 1 && GameCache.Instance.mode == 1)) // help
         {
             newGameLevel(GetComponent<HelpLevelController>());
             tutorial = true;
         }
-        else if (GameData.Instance.mode == 1) // simple
+        else if (GameCache.Instance.mode == 1) // simple
         {
             // test
             //GameData.Instance.level_selected = 2;
             // test
             //game.loadLevelData();
             //game.setupLevel();
-            
+
             newGameLevel(GetComponent<SimpleModeController>());
         }
-        else if (GameData.Instance.mode == 2) // challenge
+        else if (GameCache.Instance.mode == 2) // challenge
         {
             //game = new ChallengeModeController();
             newGameLevel(GetComponent<ChallengeModeController>());
@@ -62,7 +62,7 @@ public class GamePlaySceneController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -79,7 +79,7 @@ public class GamePlaySceneController : MonoBehaviour
             RaycastHit2D raycastHit = Physics2D.Raycast(position, Vector2.zero);
             if (raycastHit.collider != null)
             {
-                if(raycastHit.collider.tag == "pipe")
+                if (raycastHit.collider.tag == "pipe")
                 {
                     GameObject go = raycastHit.collider.gameObject;
                     StartCoroutine(game.rotatePipe(go, 1, game.rotate_speed));
@@ -104,9 +104,9 @@ public class GamePlaySceneController : MonoBehaviour
         else btnSound.GetComponent<Image>().sprite = s_sounds[0];
         txtCoins.text = GameData.Instance.coins.ToString();
         txtPoints.text = GameData.Instance.points.ToString();
-        txtLevel.text = "Level " + GameData.Instance.level_selected.ToString();
+        txtLevel.text = "Level " + GameCache.Instance.level_selected.ToString();
         // Game logic
-        gameover = animPlaying = panelShowing = tutorial = false;
+        gameover = animPlaying = tutorial = false;
         construct_part = 0;
         game.loadLevelData();
         game.setupLevel();
@@ -134,9 +134,9 @@ public class GamePlaySceneController : MonoBehaviour
         btnConstruct.interactable = false;
         btnRemove.interactable = false;
         game.stopDecreaseTime();
-        for(int i = 0; i < list_results.Count - 1; i++)
+        for (int i = 0; i < list_results.Count - 1; i++)
         {
-            
+
             PipeProperties pp = list_results[i].GetComponent<PipeProperties>();
             pp.next[pp.i] = list_results[i + 1];
             pp.next_in[pp.i] = list_ds[i + 1];
@@ -154,24 +154,24 @@ public class GamePlaySceneController : MonoBehaviour
     private void endGame(object param)
     {
         gameover = true;
-        if(GameData.Instance.mode == 0)
+        if (GameCache.Instance.mode == 0)
         {
             sceneController.loadScene("MainMenu");
         }
-        else if(GameData.Instance.mode == 1)
+        else if (GameCache.Instance.mode == 1)
         {
-            if (GameData.Instance.level_stars.Count > GameData.Instance.level_selected)
+            if (GameData.Instance.level_stars.Count > GameCache.Instance.level_selected)
             {
-                int c_star = GameData.Instance.level_stars[GameData.Instance.level_selected - 1];
+                int c_star = GameData.Instance.level_stars[GameCache.Instance.level_selected - 1];
                 int n_star = game.getStar();
-                if (n_star > c_star) GameData.Instance.level_stars[GameData.Instance.level_selected - 1] = n_star;
+                if (n_star > c_star) GameData.Instance.level_stars[GameCache.Instance.level_selected - 1] = n_star;
                 panelNextLevel.GetComponent<Animator>().Play("Show");
                 panelShowing = true;
             }
-            else 
+            else
             {
                 int star = game.getStar();
-                GameData.Instance.level_stars[GameData.Instance.level_selected - 1] = star;
+                GameData.Instance.level_stars[GameCache.Instance.level_selected - 1] = star;
                 GameData.Instance.increaseCoin(star);
                 GameData.Instance.increasePoint(star * 10);
                 panelPassedLevel.transform.Find("Coins").GetComponent<Image>().sprite = s_coins[star - 1];
@@ -190,9 +190,9 @@ public class GamePlaySceneController : MonoBehaviour
                 panelShowing = true;
             }
         }
-        else if (GameData.Instance.mode == 2)
+        else if (GameCache.Instance.mode == 2)
         {
-            if(GameData.Instance.completed[GameData.Instance.level_selected - 1] == 1)
+            if (GameData.Instance.completed[GameCache.Instance.level_selected - 1] == 1)
             {
                 panelNextLevel.GetComponent<Animator>().Play("Show");
                 panelShowing = true;
@@ -200,7 +200,7 @@ public class GamePlaySceneController : MonoBehaviour
             else
             {
                 int star = game.getStar();
-                GameData.Instance.completed[GameData.Instance.level_selected - 1] = 1;
+                GameData.Instance.completed[GameCache.Instance.level_selected - 1] = 1;
                 GameData.Instance.increaseCoin(star);
                 GameData.Instance.increasePoint(star * 10);
                 panelPassedLevel.transform.Find("Coins").GetComponent<Image>().sprite = s_coins[star - 1];
@@ -210,10 +210,10 @@ public class GamePlaySceneController : MonoBehaviour
             }
         }
     }
-        
+
     private void onLevelSelectChange(object param)
     {
-        txtLevel.text = "Level " + GameData.Instance.level_selected.ToString();
+        txtLevel.text = "Level " + GameCache.Instance.level_selected.ToString();
     }
 
     private void onCoinChange(object param)
@@ -227,33 +227,60 @@ public class GamePlaySceneController : MonoBehaviour
     {
         txtPoints.text = GameData.Instance.points.ToString();
     }
-    
+
     private void nextLevel()
     {
-        if (GameData.Instance.mode == 1)
+        if (GameCache.Instance.mode == 1)
         {
-            if(GameData.Instance.level_selected == 560)
+            if (GameCache.Instance.level_selected == 560)
             {
                 sceneController.loadScene("SimpleLevel");
             }
             else
             {
-                GameData.Instance.level_selected++;
-                game.destroy();
-                newGameLevel(GetComponent<SimpleModeController>());
+                if (GameCache.Instance.canShowAds())
+                {
+                    Debug.Log("Ads showing"); // show Ads
+                    OnAdsClose();
+                }
+                else if (GameCache.Instance.canShowRatePanel())
+                {
+                    panelRate.GetComponent<Animator>().Play("Show");
+                    panelShowing = true;
+                }
+                else
+                {
+                    GameCache.Instance.level_selected++;
+                    game.destroy();
+                    newGameLevel(GetComponent<SimpleModeController>());
+                }
             }
         }
-        else if(GameData.Instance.mode == 2)
+        else if (GameCache.Instance.mode == 2)
         {
-            if(GameData.Instance.level_selected == 8)
+            if (GameCache.Instance.level_selected == 8)
             {
                 sceneController.loadScene("ChallengeLevel");
             }
             else
             {
-                GameData.Instance.level_selected++;
-                game.destroy();
-                newGameLevel(GetComponent<ChallengeModeController>());
+                if (GameCache.Instance.canShowAds())
+                {
+                    Debug.Log("Ads showing"); // show Ads
+                    OnAdsClose();
+                }
+                else if (GameCache.Instance.canShowRatePanel())
+                {
+                    
+                    panelRate.GetComponent<Animator>().Play("Show");
+                    panelShowing = true;
+                }
+                else
+                {
+                    GameCache.Instance.level_selected++;
+                    game.destroy();
+                    newGameLevel(GetComponent<ChallengeModeController>());
+                }
             }
         }
     }
@@ -296,7 +323,7 @@ public class GamePlaySceneController : MonoBehaviour
 
     public void btnBackOnClick()
     {
-        switch (GameData.Instance.mode)
+        switch (GameCache.Instance.mode)
         {
             case 0:
                 sceneController.loadScene("MainMenu");
@@ -308,21 +335,29 @@ public class GamePlaySceneController : MonoBehaviour
                 sceneController.loadScene("ChallengeLevel");
                 break;
         }
-        
+
+    }
+    public void btnCloseOnPanelRateOnClick()
+    {
+        panelRate.GetComponent<Animator>().Play("Close");
+        panelShowing = false;
+        GameCache.Instance.level_selected++;
+        game.destroy();
+        if (GameCache.Instance.mode == 1) newGameLevel(GetComponent<SimpleModeController>());
+        else if (GameCache.Instance.mode == 2) newGameLevel(GetComponent<ChallengeModeController>());
     }
 
     public void btnClose1OnPanelOnClick(GameObject target)
     {
         target.GetComponent<Animator>().Play("Close");
         panelShowing = false;
-        
     }
 
     public void btnClose2OnPanelOnClick(GameObject target)
     {
         target.GetComponent<Animator>().Play("Close");
         panelShowing = false;
-        switch (GameData.Instance.mode)
+        switch (GameCache.Instance.mode)
         {
             case 1:
                 sceneController.loadScene("SimpleLevel");
@@ -333,7 +368,13 @@ public class GamePlaySceneController : MonoBehaviour
         }
     }
 
-
+    public void OnAdsClose()
+    {
+        GameCache.Instance.level_selected++;
+        game.destroy();
+        if (GameCache.Instance.mode == 1) newGameLevel(GetComponent<SimpleModeController>());
+        else if (GameCache.Instance.mode == 2) newGameLevel(GetComponent<ChallengeModeController>());
+    }
 
     public void btnWatchVideoOnPanelOnClick(int type)
     {

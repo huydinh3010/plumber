@@ -97,8 +97,8 @@ public class SceneMainMenuController : MonoBehaviour
 
     public void BtnHelpOnClick()
     {
-        GameData.Instance.level_selected = 1;
-        GameData.Instance.mode = 0;
+        GameCache.Instance.level_selected = 1;
+        GameCache.Instance.mode = 0;
         sceneController.loadScene("GamePlay");
     }
 
@@ -123,7 +123,7 @@ public class SceneMainMenuController : MonoBehaviour
 
     private void OnDestroy()
     {
-        Debug.Log("Main Scene Destroyed");
+        //Debug.Log("Main Scene Destroyed");
         //GameData.Instance.SaveDataToFile();
     }
 

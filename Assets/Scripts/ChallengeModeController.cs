@@ -15,8 +15,8 @@ public class ChallengeModeController : GameController
 
     public override void loadLevelData()
     {
-        string path = "Assets/Resources/levels/daily/" + GameData.Instance.level_selected + "/" + GameData.Instance.day + ".txt";
-        Debug.Log(path);
+        string path = "Assets/Resources/levels/daily/" + GameCache.Instance.level_selected + "/" + GameData.Instance.day + ".txt";
+        //Debug.Log(path);
         StreamReader reader = new StreamReader(path, true);
         int.Parse(reader.ReadLine());
         

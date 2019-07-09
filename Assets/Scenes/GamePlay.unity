@@ -819,7 +819,7 @@ PrefabInstance:
     - target: {fileID: 5230313830312926952, guid: 369bc71793e791c41af8ed0642b086c8,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -117809.2
+      value: -1215.6652
       objectReference: {fileID: 0}
     - target: {fileID: 5230313830661770082, guid: 369bc71793e791c41af8ed0642b086c8,
         type: 3}
@@ -829,23 +829,23 @@ PrefabInstance:
     - target: {fileID: 5230313830661770082, guid: 369bc71793e791c41af8ed0642b086c8,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: btnCloseOnPanelOnClick
+      value: btnCloseOnPanelRateOnClick
       objectReference: {fileID: 0}
     - target: {fileID: 5230313830661770082, guid: 369bc71793e791c41af8ed0642b086c8,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5230313830661770082, guid: 369bc71793e791c41af8ed0642b086c8,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5230313830661770082, guid: 369bc71793e791c41af8ed0642b086c8,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 2077381906}
+      objectReference: {fileID: 0}
     - target: {fileID: 5230313831036290111, guid: 369bc71793e791c41af8ed0642b086c8,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -854,23 +854,23 @@ PrefabInstance:
     - target: {fileID: 5230313831036290111, guid: 369bc71793e791c41af8ed0642b086c8,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: btnCloseOnPanelOnClick
+      value: btnCloseOnPanelRateOnClick
       objectReference: {fileID: 0}
     - target: {fileID: 5230313831036290111, guid: 369bc71793e791c41af8ed0642b086c8,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5230313831036290111, guid: 369bc71793e791c41af8ed0642b086c8,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5230313831036290111, guid: 369bc71793e791c41af8ed0642b086c8,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 2077381906}
+      objectReference: {fileID: 0}
     - target: {fileID: 5230313831407820498, guid: 369bc71793e791c41af8ed0642b086c8,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

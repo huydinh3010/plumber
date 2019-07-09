@@ -15,10 +15,10 @@ public class SimpleModeController : GameController
 
     public override void loadLevelData()
     {
-        string path = "Assets/Resources/levels/simple/" + GameData.Instance.level_selected + ".txt";
+        string path = "Assets/Resources/levels/simple/" + GameCache.Instance.level_selected + ".txt";
         StreamReader reader = new StreamReader(path, true);
         timer = int.Parse(reader.ReadLine());
-        Debug.Log(timer);
+        //Debug.Log(timer);
         row = int.Parse(reader.ReadLine());
         col = int.Parse(reader.ReadLine());
         m_pipes = new int[row, col];
@@ -119,14 +119,14 @@ public class SimpleModeController : GameController
             timer -= Time.deltaTime;
             if (timer < t_stars[2] && star == 3)
             {
-                Debug.Log("Change1");
+                //Debug.Log("Change1");
                 star = 2;
                 valvebg.GetComponent<Animator>().Play("Idle1");
                 
             }
             else if (timer < t_stars[1] && star == 2)
             {
-                Debug.Log("Change2");
+               // Debug.Log("Change2");
                 star = 1;
                 valvebg.GetComponent<Animator>().Play("Idle2");
             }

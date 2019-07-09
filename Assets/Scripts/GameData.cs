@@ -24,14 +24,16 @@ public class GameData
     public bool sound_on;
 
     public bool firstMenuLoad;
-    public int level_selected;
-
-    public int mode;
+    public bool rate;
+    //public int level_selected;
+    //public int mode;
+    
 
     public void increaseCoin(int value)
     {
         coins += value;
         EventDispatcher.Instance.PostEvent(EventID.OnCoinChange, null);
+        
     }
 
     public bool decreaseCoin(int value)
@@ -80,7 +82,7 @@ public class GameData
         {
             Debug.Log("New data");
             unlock_level = 1;
-            level_selected = unlock_level;
+            GameCache.Instance.level_selected = unlock_level;
             points = 0;
             coins = 200;
             level_stars.Add(0);
@@ -88,7 +90,7 @@ public class GameData
             completed = new int[8];
             reward_coins = 100;
             ads_on = true;
-            
+            rate = true;
         }
 
         //// test game

@@ -82,10 +82,10 @@ public class SceneSimpleLevelController : MonoBehaviour
                 RaycastHit2D raycast = Physics2D.Raycast(mousePos, Vector2.zero);
                 if (raycast.collider != null)
                 {
-                    Debug.Log(raycast.collider.GetComponentInChildren<Text>().text);
-                    
-                    GameData.Instance.level_selected = int.Parse(raycast.collider.GetComponentInChildren<Text>().text);
-                    GameData.Instance.mode = 1;
+                    //Debug.Log(raycast.collider.GetComponentInChildren<Text>().text);
+
+                    GameCache.Instance.level_selected = int.Parse(raycast.collider.GetComponentInChildren<Text>().text);
+                    GameCache.Instance.mode = 1;
                     sceneController.loadScene("GamePlay");
                     // chuyen scene
                 }
