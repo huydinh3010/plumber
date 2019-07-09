@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Init : MonoBehaviour
 {
-    [SerializeField] SceneController sceneController;
+   
     private void Awake()
     {
         DontDestroyOnLoad(this);

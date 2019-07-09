@@ -16,51 +16,34 @@ public class SceneMainMenuController : MonoBehaviour
     public GameObject panelPlayServices;
     public GameObject panelDailyReward;
 
-    
-    
+    public Button[] btnDays;
+    public Sprite[] btnDaysActive;
+    public Sprite[] btnDaysPassed;
+    private int[] rewards = { 10, 25, 50, 75, 100 };
+
     private void Awake()
     {
-
-        //if (!GameData.Instance.firstMenuLoad)
-        //{
-        //    GameData.Instance.firstMenuLoad = true;
-        //    GameData.Instance.LoadDataFromFile();
-        //}
-        //else
-        //{
-        //    sceneController.openScene();
-        //}
-        //if (GameData.Instance.firstMenuLoad)
-        //{
-        //    GameData.Instance.LoadDataFromFile();
-        //    GameData.Instance.firstMenuLoad = false;
-
-        //}
-        //else
-        //{
-        //    sceneController.openScene();
-        //}
-
         sceneController.openScene();
+        if(!GameCache.Instance.firstGameLoad && !GameData.Instance.clampDailyReward && GameData.Instance.continueDay > 0)
+        {
+            int i;
+            for(i = 0; i < GameData.Instance.continueDay - 1; i++)
+            {
+                btnDays[i].GetComponent<Image>().sprite = btnDaysPassed[i];
+            }
+            btnDays[i].GetComponent<Image>().sprite = btnDaysActive[i];
+            btnDays[i].enabled = true;
+            panelDailyReward.GetComponent<Animator>().Play("Show");
+        } 
     }
+
+    
+
     // Start is called before the first frame update
     void Start()
     {
-        //alpha = 1f;
-        //speed = 1f;
+        
     }
-
-    //private void CloseScreenEffect()
-    //{
-    //    alpha += speed * Time.deltaTime;
-    //    GUI.depth = -10;
-    //    if (alpha > 0.5) SceneManager.LoadScene("SimpleLevel");
-    //    GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, alpha);
-    //    GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), texture);
-    //}
-
-    
-   
 
     // Update is called once per frame
     void Update()
@@ -70,7 +53,6 @@ public class SceneMainMenuController : MonoBehaviour
 
     public void BtnPlayOnClick()
     {
-        //SceneManager.LoadScene("SimpleLevel");
         sceneController.loadScene("SimpleLevel");
     }
 
@@ -89,6 +71,23 @@ public class SceneMainMenuController : MonoBehaviour
         panelRate.GetComponent<Animator>().Play("Show");
     }
 
+    public void BtnDayOnPanelDailyRewardOnClick(int k)
+    {
+        if(k == GameData.Instance.continueDay - 1)
+        {
+            btnDays[k].GetComponent<Image>().sprite = btnDaysPassed[k];
+            GameData.Instance.increaseCoin(rewards[k]);
+            btnDays[k].enabled = false;
+            GameData.Instance.clampDailyReward = true;
+            StartCoroutine(WaitForClosePanel());
+        }
+    }
+
+    private IEnumerator WaitForClosePanel()
+    {
+        yield return new WaitForSeconds(1);
+        panelDailyReward.GetComponent<Animator>().Play("Close");
+    }
 
     public void BtnPlayServicesOnClick()
     {
@@ -114,17 +113,14 @@ public class SceneMainMenuController : MonoBehaviour
 
     public void BtnRateOnPanelOnClick()
     {
-        //test
-        //GameData.Instance.SaveDataToFile();
-        //test
+        
     }
 
     
 
     private void OnDestroy()
     {
-        //Debug.Log("Main Scene Destroyed");
-        //GameData.Instance.SaveDataToFile();
+        
     }
 
 

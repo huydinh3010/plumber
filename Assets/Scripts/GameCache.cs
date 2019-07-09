@@ -11,8 +11,11 @@ public class GameCache
     }
     public int level_selected;
     public int mode;
+    //public bool isNextDay;
+    public bool firstGameLoad;
     private int rate_c;
     private int ads_c;
+
     public bool canShowRatePanel()
     {
         if (!GameData.Instance.rate) return false;

@@ -4,14 +4,19 @@ using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
+
 [System.Serializable]
 public class GameData
 {
     public static GameData Instance = new GameData();
     private GameData()
     {
-        firstMenuLoad = true;
-        level_stars = new List<int>();
+        //firstMenuLoad = true;
+        
+        
+        //test
+        //GameCache.Instance.isNextDay = true;
+        //
     }
     public int unlock_level;
     public int points;
@@ -22,18 +27,19 @@ public class GameData
     public int reward_coins;
     public bool ads_on;
     public bool sound_on;
-
-    public bool firstMenuLoad;
+    public long lastDayAccess;
+    public int continueDay;
+    public bool clampDailyReward;
     public bool rate;
+    
     //public int level_selected;
     //public int mode;
-    
+
 
     public void increaseCoin(int value)
     {
         coins += value;
         EventDispatcher.Instance.PostEvent(EventID.OnCoinChange, null);
-        
     }
 
     public bool decreaseCoin(int value)
@@ -64,7 +70,20 @@ public class GameData
         return false;
     }
 
-    
+    private void updateDay()
+    {
+        int diff = (System.DateTime.Now.Date - System.DateTime.FromFileTime(lastDayAccess)).Days;
+        if(diff > 0)
+        {
+            if (diff == 1 && continueDay < 5) continueDay++;
+            else continueDay = 1;
+            clampDailyReward = false;
+            day = day + diff;
+            if (day > 366) day = day % 367 + 1;
+            lastDayAccess = System.DateTime.Now.Date.ToFileTime();
+        }
+        
+    }
 
     public void LoadDataFromFile()
     {
@@ -76,23 +95,28 @@ public class GameData
             string data = binaryFormatter.Deserialize(fileStream) as string;
             fileStream.Close();
             Instance = JsonUtility.FromJson<GameData>(data);
-            Debug.Log("Load data: " + data);
+            Instance.updateDay();
         }
         else
         {
             Debug.Log("New data");
+            level_stars = new List<int>();
+            level_stars.Add(0);
+            //Debug.Log("New data");
             unlock_level = 1;
-            GameCache.Instance.level_selected = unlock_level;
             points = 0;
             coins = 200;
-            level_stars.Add(0);
             day = 1;
+            continueDay = 1;
             completed = new int[8];
             reward_coins = 100;
             ads_on = true;
             rate = true;
+            lastDayAccess = System.DateTime.Now.Date.ToFileTime();
+            clampDailyReward = false;
+            GameCache.Instance.firstGameLoad = true;
         }
-
+        GameCache.Instance.level_selected = unlock_level;
         //// test game
         //unlock_level = 558;
         //level_selected = unlock_level;
