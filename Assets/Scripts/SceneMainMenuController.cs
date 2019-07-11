@@ -113,7 +113,9 @@ public class SceneMainMenuController : MonoBehaviour
 
     public void BtnRateOnPanelOnClick()
     {
-        
+        // test
+        //AdManager.Instance.ShowRewardedVideo();
+        //
     }
 
     

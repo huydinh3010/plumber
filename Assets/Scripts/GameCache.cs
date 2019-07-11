@@ -20,7 +20,7 @@ public class GameCache
     {
         if (!GameData.Instance.rate) return false;
         rate_c++;
-        if(rate_c == 3)
+        if(rate_c == 8)
         {
             rate_c = 0;
             return true;
@@ -31,7 +31,7 @@ public class GameCache
     {
         if (!GameData.Instance.ads_on) return false;
         ads_c++;
-        if(ads_c == 2)
+        if(ads_c == 6)
         {
             ads_c = 0;
             return true;

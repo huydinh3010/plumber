@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EventDispatcher : MonoBehaviour
+public class EventDispatcher 
 {
 
     public static EventDispatcher Instance = new EventDispatcher();
