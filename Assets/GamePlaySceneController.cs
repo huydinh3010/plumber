@@ -31,8 +31,7 @@ public class GamePlaySceneController : MonoBehaviour
     private bool panelShowing;
     private int construct_part;
     private bool tutorial;
-    private int reward_type;
-
+    private bool en_rmbtn;
     private void Awake()
     {
         
@@ -106,6 +105,7 @@ public class GamePlaySceneController : MonoBehaviour
         txtLevel.text = "Level " + GameCache.Instance.level_selected.ToString();
         // Game logic
         gameover = animPlaying = tutorial = false;
+        en_rmbtn = true;
         construct_part = 0;
         game.loadLevelData();
         game.setupLevel();
@@ -203,8 +203,10 @@ public class GamePlaySceneController : MonoBehaviour
     private void onCoinChange(object param)
     {
         txtCoins.text = GameData.Instance.coins.ToString();
-        if (GameData.Instance.coins < 50) btnRemove.interactable = false;
-        if (GameData.Instance.coins < 25) btnConstruct.interactable = false;
+        btnRemove.interactable = GameData.Instance.coins >= 50;
+        btnConstruct.interactable = GameData.Instance.coins >= 25;
+        if (!en_rmbtn) btnRemove.interactable = false;
+        if (construct_part < 0) btnConstruct.interactable = false;
     }
 
     private void onPointChange(object param)
@@ -281,6 +283,7 @@ public class GamePlaySceneController : MonoBehaviour
         {
             game.removeIncorrectPipes();
             btnRemove.interactable = false;
+            en_rmbtn = true;
         }
     }
 
@@ -291,6 +294,7 @@ public class GamePlaySceneController : MonoBehaviour
             if (game.constructPipes(construct_part++))
             {
                 btnConstruct.interactable = false;
+                construct_part = -1;
             }
         }
     }
