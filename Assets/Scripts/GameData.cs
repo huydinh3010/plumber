@@ -30,6 +30,7 @@ public class GameData
     public long lastDayAccess;
     public int continueDay;
     public bool clampDailyReward;
+    public bool clampChallengeReward;
     public bool rate;
     
     //public int level_selected;
@@ -78,6 +79,7 @@ public class GameData
             if (diff == 1 && continueDay < 5) continueDay++;
             else continueDay = 1;
             clampDailyReward = false;
+            clampChallengeReward = false;
             day = day + diff;
             if (day > 366) day = day % 367 + 1;
             lastDayAccess = System.DateTime.Now.Date.ToFileTime();
@@ -114,6 +116,7 @@ public class GameData
             rate = true;
             lastDayAccess = System.DateTime.Now.Date.ToFileTime();
             clampDailyReward = false;
+            clampChallengeReward = false;
             GameCache.Instance.firstGameLoad = true;
         }
         GameCache.Instance.level_selected = unlock_level;

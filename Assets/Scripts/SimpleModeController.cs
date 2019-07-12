@@ -48,6 +48,7 @@ public class SimpleModeController : GameController
         timer = timer * 3;
         stopTime = false;
         m_clones = new GameObject[row, col];
+        PlayZone.transform.localScale = new Vector3(1f, 1f, 1f);
         System.Random rd = new System.Random();
         for (int i = 0; i < row; i++)
         {
@@ -97,7 +98,7 @@ public class SimpleModeController : GameController
         }
         scale = 4.0f / col;
         PlayZone.transform.localScale = new Vector3(scale, scale, scale);
-        Debug.Log(scale);
+        
     }
 
     public override void stopDecreaseTime()

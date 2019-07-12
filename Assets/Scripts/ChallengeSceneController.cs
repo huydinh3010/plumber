@@ -14,7 +14,7 @@ public class ChallengeSceneController : MonoBehaviour
     public Text txtCoins;
     private int total;
     private GameObject selected;
-    private string[] str = {"Complete all levels and get 100 coins!", "Congratulations! You have completed daily challenge.Claim your reward." };
+    private string[] str = {"Complete all levels and get 100 coins!", "Congratulations! You have completed daily challenge.Claim your reward.", "You clamped the reward!" };
     // Start is called before the first frame update
     private void Awake()
     {
@@ -29,7 +29,15 @@ public class ChallengeSceneController : MonoBehaviour
             }
         }
         if(total > 0) go_pool.GetComponent<SpriteRenderer>().sprite = s_pools[total - 1];
-        if (total == 8) text_tutorial.text = str[1];
+        if (total == 8 && !GameData.Instance.clampChallengeReward)
+        {
+            text_tutorial.text = str[1];
+        }
+        else if(total == 8 && GameData.Instance.clampChallengeReward)
+        {
+            text_tutorial.text = str[2];
+            go_pool.GetComponent<BoxCollider2D>().enabled = false;
+        }
         else text_tutorial.text = str[0];
         txtCoins.text = GameData.Instance.coins.ToString();
     }
@@ -118,12 +126,11 @@ public class ChallengeSceneController : MonoBehaviour
                 }
                 else if (selected.name == "Pool")
                 {
-                    if(total == 8)
+                    if (total == 8)
                     {
                         GameData.Instance.increaseCoin(100);
-                        // x
                         go_pool.GetComponent<BoxCollider2D>().enabled = false;
-                        //
+                        GameData.Instance.clampChallengeReward = true;
                     }
                 }
             }

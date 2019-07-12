@@ -65,7 +65,7 @@ public class HelpLevelController : GameController
         h_text.enabled = true;
         h_text.text = text_content[0];
 
-
+        PlayZone.transform.localScale = new Vector3(1f, 1f, 1f);
         for (int i = 0; i < str_results.Length; i++)
         {
             string[] pairs = str_results[i].Split(' ');
@@ -98,7 +98,6 @@ public class HelpLevelController : GameController
         m_clones[pos_y[0], pos_x[0]].GetComponent<BoxCollider2D>().enabled = true;
         scale = 4.0f / col;
         PlayZone.transform.localScale = new Vector3(scale, scale, scale);
-        Debug.Log(scale);
     }
 
     public override IEnumerator rotatePipe(GameObject gameObject, int k, float speed)
