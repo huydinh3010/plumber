@@ -6,14 +6,14 @@ using UnityEngine.UI;
 public class SceneSimpleLevelController : MonoBehaviour
 {
     public SceneController sceneController;
+    public GameObject Grid;
     public GameObject OneStarLv;
     public GameObject TwoStarsLv;
     public GameObject ThreeStarsLv;
     public GameObject UnlockLv;
     public GameObject LockLv;
-    public GameObject ListLevels;
+    public GameObject ContentObj;
     public Text txtCoins;
-    private Vector2 mousePos;
 
     private void Awake()
     {
@@ -21,40 +21,42 @@ public class SceneSimpleLevelController : MonoBehaviour
         txtCoins.text = GameData.Instance.coins.ToString();
         for(int p = 0; p < 35; p++)
         {
+
+            GameObject goGridClone = Instantiate(Grid, Vector3.zero, Quaternion.identity, ContentObj.transform);
+            goGridClone.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(-10200 + 600 * p, 0, 0);
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    GameObject go;
+                    GameObject go = null;
                     if (p * 16 + i * 4 + j < GameData.Instance.level_stars.Count)
                     {
+                        int level = p * 16 + i * 4 + j + 1;
                         switch (GameData.Instance.level_stars[p * 16 + i * 4 + j])
                         {
                             case 0:
-                                go = Instantiate(UnlockLv, new Vector3((p * 750 + j * 150 - 225) / 90f, (175 - i * 150) / 90f, 0), Quaternion.identity, ListLevels.transform);
-                                go.GetComponentInChildren<Text>().text = (p * 16 + i * 4 + j + 1).ToString();
+                                go = Instantiate(UnlockLv, new Vector3(), Quaternion.identity, goGridClone.transform);
                                 break;
                             case 1:
-                                go = Instantiate(OneStarLv, new Vector3((p * 750 + j * 150 - 225) / 90f, (175 - i * 150) / 90f, 0), Quaternion.identity, ListLevels.transform);
-                                go.GetComponentInChildren<Text>().text = (p * 16 + i * 4 + j + 1).ToString();
+                                go = Instantiate(OneStarLv, new Vector3(), Quaternion.identity, goGridClone.transform);
                                 break;
                             case 2:
-                                go = Instantiate(TwoStarsLv, new Vector3((p * 750 + j * 150 - 225) / 90f, (175 - i * 150) / 90f, 0), Quaternion.identity, ListLevels.transform);
-                                go.GetComponentInChildren<Text>().text = (p * 16 + i * 4 + j + 1).ToString();
+                                go = Instantiate(TwoStarsLv, new Vector3(), Quaternion.identity, goGridClone.transform);
                                 break;
                             case 3:
-                                go = Instantiate(ThreeStarsLv, new Vector3((p * 750 + j * 150 - 225) / 90f, (175 - i * 150) / 90f, 0), Quaternion.identity, ListLevels.transform);
-                                go.GetComponentInChildren<Text>().text = (p * 16 + i * 4 + j + 1).ToString();
+                                go = Instantiate(ThreeStarsLv, new Vector3(), Quaternion.identity, goGridClone.transform);
                                 break;
                             default:
-                                
                                 break;
                         }
+                        go.GetComponentInChildren<Text>().text = level.ToString();
+                        go.GetComponent<Button>().onClick.AddListener(() => { BtnLevelOnScrollViewOnClick(level); });
                     }
                     else
                     {
-                        go = Instantiate(LockLv, new Vector3((p * 750 + j * 150 - 225) / 90f, (175 - i * 150) / 90f, 0), Quaternion.identity, ListLevels.transform);
+                        go = Instantiate(LockLv, new Vector3(), Quaternion.identity, goGridClone.transform);
                     }
+                    go.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
                 }
             }
         }
@@ -69,36 +71,22 @@ public class SceneSimpleLevelController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            Vector2 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //Debug.Log("mouse x = " + mousePos.x + " mouse y = " + mousePos.y);
-            if (position == mousePos)
-            {
-                RaycastHit2D raycast = Physics2D.Raycast(mousePos, Vector2.zero);
-                if (raycast.collider != null)
-                {
-                    //Debug.Log(raycast.collider.GetComponentInChildren<Text>().text);
-
-                    GameCache.Instance.level_selected = int.Parse(raycast.collider.GetComponentInChildren<Text>().text);
-                    GameCache.Instance.mode = 1;
-                    sceneController.loadScene("GamePlay");
-                    // chuyen scene
-                }
-            }
-        }
+        
     }
+
+
 
     public void BtnBackOnClick()
     {
         sceneController.loadScene("MainMenu");
     }
 
-    
+    public void BtnLevelOnScrollViewOnClick(int level)
+    {
+        GameCache.Instance.level_selected = level;
+        GameCache.Instance.mode = 1;
+        sceneController.loadScene("GamePlay");
+    }
 
     public void BtnAddCoinOnClick()
     {

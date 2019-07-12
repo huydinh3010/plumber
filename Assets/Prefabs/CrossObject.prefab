@@ -144,7 +144,6 @@ MonoBehaviour:
   col: 0
   rotation: 0
   n_line: 0
-  correctPipe: 0
   line: 02000000030000000000000001000000
   anim_state:
   - cross_back

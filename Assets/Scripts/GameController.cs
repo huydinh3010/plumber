@@ -7,10 +7,12 @@ using System;
 
 public abstract class GameController : MonoBehaviour
 {
+    
+    public GameObject PlayZone;
     public Sprite[] s_valves;
     public GameObject[] pipes;
     public int rotate_speed;
-
+    
 
     protected GameObject valve;
     protected GameObject[,] m_clones;
@@ -52,7 +54,6 @@ public abstract class GameController : MonoBehaviour
     {
 
     }
-
 
     public void removeIncorrectPipes()
     {

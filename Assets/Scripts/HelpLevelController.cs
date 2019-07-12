@@ -24,27 +24,28 @@ public class HelpLevelController : GameController
 
     public override void loadLevelData()
     {
-        string path = "Assets/Resources/levels/simple/1.txt";
-        StreamReader reader = new StreamReader(path, true);
-        int timer = int.Parse(reader.ReadLine());
+        var textAsset = Resources.Load<TextAsset>("levels/simple/1") ;
+        Debug.Log(textAsset.text);
+        string[] arr = textAsset.text.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+        int k = 0;
+        int timer = int.Parse(arr[k++]);
 
-        row = int.Parse(reader.ReadLine());
-        col = int.Parse(reader.ReadLine());
+        row = int.Parse(arr[k++]);
+        col = int.Parse(arr[k++]);
         m_pipes = new int[row, col];
         for (int i = 0; i < row; i++)
         {
             for (int j = 0; j < col; j++)
             {
-                m_pipes[i, j] = int.Parse(reader.ReadLine());
+                m_pipes[i, j] = int.Parse(arr[k++]);
             }
         }
-        int len = int.Parse(reader.ReadLine());
+        int len = int.Parse(arr[k++]);
         str_results = new string[len];
         for (int i = 0; i < len; i++)
         {
-            str_results[i] = reader.ReadLine();
+            str_results[i] = arr[k++];
         }
-        reader.Close();
     }
 
     public override void setupLevel()
@@ -55,7 +56,8 @@ public class HelpLevelController : GameController
         pos_y[0] = 2; pos_x[0] = 0;
         pos_y[1] = 2; pos_x[1] = 2;
         pos_y[2] = 0; pos_x[2] = 0;
-        scale = 6.0f / row;
+
+        
         m_clones = new GameObject[row, col];
         // hand
         hand = Instantiate(hand, new Vector3(((pos_x[0] - col / 2) + 0.5f) * 1.4f, ((row / 2 - pos_y[0]) - 0.5f) * 1.4f, 0), Quaternion.identity);
@@ -72,10 +74,9 @@ public class HelpLevelController : GameController
             int angle = int.Parse(pairs[2]);
             Vector3 position;
             position.z = 0;
-            position.y = ((row / 2 - y) - 0.5f) * 1.4f * scale;
-            position.x = ((x - col / 2) + 0.5f) * 1.4f * scale;
-            m_clones[y, x] = Instantiate(pipes[m_pipes[y, x] / 10 % 7 - 1], position, Quaternion.identity);
-            m_clones[y, x].transform.localScale = new Vector3(scale, scale, scale);
+            position.y = ((row / 2 - y) - 0.5f) * 1.4f;
+            position.x = ((x - col / 2) + 0.5f) * 1.4f;
+            m_clones[y, x] = Instantiate(pipes[m_pipes[y, x] / 10 % 7 - 1], position, Quaternion.identity, PlayZone.transform);
             m_clones[y, x].transform.eulerAngles = new Vector3(0f, 0f, -angle * 90);
             if (m_clones[y, x].GetComponent<BoxCollider2D>() != null)
             {
@@ -95,7 +96,9 @@ public class HelpLevelController : GameController
             m_clones[pos_y[i], pos_x[i]].transform.eulerAngles += new Vector3(0f, 0f, 90f);
         }
         m_clones[pos_y[0], pos_x[0]].GetComponent<BoxCollider2D>().enabled = true;
-
+        scale = 4.0f / col;
+        PlayZone.transform.localScale = new Vector3(scale, scale, scale);
+        Debug.Log(scale);
     }
 
     public override IEnumerator rotatePipe(GameObject gameObject, int k, float speed)

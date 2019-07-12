@@ -23,8 +23,6 @@ public class GamePlaySceneController : MonoBehaviour
     public Sprite[] s_coins;
     public Sprite[] s_points;
     public Sprite[] s_sounds;
-    public GameObject hand;
-
    
     private bool gameover;
     private bool animPlaying;
