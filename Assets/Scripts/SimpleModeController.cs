@@ -17,7 +17,6 @@ public class SimpleModeController : GameController
     public override void loadLevelData()
     {
         var textAsset = Resources.Load<TextAsset>("levels/simple/" + GameCache.Instance.level_selected);
-        Debug.Log(textAsset.text);
         string[] arr = textAsset.text.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
         int k = 0;
         timer = int.Parse(arr[k++]);
@@ -124,14 +123,12 @@ public class SimpleModeController : GameController
             timer -= Time.deltaTime;
             if (timer < t_stars[2] && star == 3)
             {
-                //Debug.Log("Change1");
                 star = 2;
                 valvebg.GetComponent<Animator>().Play("Idle1");
                 
             }
             else if (timer < t_stars[1] && star == 2)
             {
-               // Debug.Log("Change2");
                 star = 1;
                 valvebg.GetComponent<Animator>().Play("Idle2");
             }

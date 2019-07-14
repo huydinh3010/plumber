@@ -37,7 +37,6 @@ public class SceneController : MonoBehaviour
                 SceneManager.LoadScene(nextSceneName);
             }
             GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, 1);
-            //closing = false;
            
         }
         else

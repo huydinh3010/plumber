@@ -23,7 +23,7 @@ public class GamePlaySceneController : MonoBehaviour
     public Sprite[] s_coins;
     public Sprite[] s_points;
     public Sprite[] s_sounds;
-   
+
     private bool gameover;
     private bool animPlaying;
     private bool panelShowing;
@@ -32,7 +32,7 @@ public class GamePlaySceneController : MonoBehaviour
     private bool en_rmbtn;
     private void Awake()
     {
-        
+
         sceneController.openScene();
         EventDispatcher.Instance.RegisterListener(EventID.OnCoinChange, onCoinChange);
         EventDispatcher.Instance.RegisterListener(EventID.OnPointChange, onPointChange);
@@ -69,22 +69,31 @@ public class GamePlaySceneController : MonoBehaviour
 
     public void checkPipesClicked()
     {
-        if (Input.GetMouseButtonDown(0) && !animPlaying && !gameover && !panelShowing)
+        if (Input.GetMouseButtonDown(0) && !gameover && !panelShowing)
         {
             Vector2 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D raycastHit = Physics2D.Raycast(position, Vector2.zero);
             if (raycastHit.collider != null)
             {
-                if (raycastHit.collider.tag == "pipe")
+                if (!animPlaying)
                 {
-                    GameObject go = raycastHit.collider.gameObject;
-                    StartCoroutine(game.rotatePipe(go, 1, game.rotate_speed));
+                    if (raycastHit.collider.tag == "pipe")
+                    {
+                        GameObject go = raycastHit.collider.gameObject;
+                        StartCoroutine(game.rotatePipe(go, 1, game.rotate_speed));
+                    }
+                    else if (raycastHit.collider.tag == "valve")
+                    {
+                        List<GameObject> list_results;
+                        List<int> list_ds;
+                        if (game.checkPipes(out list_results, out list_ds)) playAnimation(list_results, list_ds);
+                    }
                 }
-                else if (raycastHit.collider.tag == "valve")
+                else
                 {
-                    List<GameObject> list_results;
-                    List<int> list_ds;
-                    if (game.checkPipes(out list_results, out list_ds)) playAnimation(list_results, list_ds);
+                    // skip animation
+                    EventDispatcher.Instance.PostEvent(EventID.StopAnimation, this);
+                    endGame(this);
                 }
             }
         }
@@ -222,22 +231,9 @@ public class GamePlaySceneController : MonoBehaviour
             }
             else
             {
-                if (GameCache.Instance.canShowAds())
-                {
-                    Debug.Log("Ads showing"); // show Ads
-                    AdManager.Instance.ShowInterstitial();
-                }
-                else if (GameCache.Instance.canShowRatePanel())
-                {
-                    panelRate.GetComponent<Animator>().Play("Show");
-                    panelShowing = true;
-                }
-                else
-                {
-                    GameCache.Instance.level_selected++;
-                    game.destroy();
-                    newGameLevel(GetComponent<SimpleModeController>());
-                }
+                GameCache.Instance.level_selected++;
+                game.destroy();
+                newGameLevel(GetComponent<SimpleModeController>());
             }
         }
         else if (GameCache.Instance.mode == 2)
@@ -248,22 +244,9 @@ public class GamePlaySceneController : MonoBehaviour
             }
             else
             {
-                if (GameCache.Instance.canShowAds())
-                {
-                    Debug.Log("Ads showing"); // show Ads
-                    AdManager.Instance.ShowInterstitial();
-                }
-                else if (GameCache.Instance.canShowRatePanel())
-                {
-                    panelRate.GetComponent<Animator>().Play("Show");
-                    panelShowing = true;
-                }
-                else
-                {
-                    GameCache.Instance.level_selected++;
-                    game.destroy();
-                    newGameLevel(GetComponent<ChallengeModeController>());
-                }
+                GameCache.Instance.level_selected++;
+                game.destroy();
+                newGameLevel(GetComponent<ChallengeModeController>());
             }
         }
     }
@@ -326,10 +309,7 @@ public class GamePlaySceneController : MonoBehaviour
     {
         panelRate.GetComponent<Animator>().Play("Close");
         panelShowing = false;
-        GameCache.Instance.level_selected++;
-        game.destroy();
-        if (GameCache.Instance.mode == 1) newGameLevel(GetComponent<SimpleModeController>());
-        else if (GameCache.Instance.mode == 2) newGameLevel(GetComponent<ChallengeModeController>());
+        nextLevel();
     }
 
     public void btnClose1OnPanelOnClick(GameObject target)
@@ -342,39 +322,51 @@ public class GamePlaySceneController : MonoBehaviour
     {
         target.GetComponent<Animator>().Play("Close");
         panelShowing = false;
-        switch (GameCache.Instance.mode)
+        if (GameCache.Instance.canShowAds() && AdManager.Instance.ShowInterstitial(() =>
         {
-            case 1:
-                sceneController.loadScene("SimpleLevel");
-                break;
-            case 2:
-                sceneController.loadScene("ChallengeLevel");
-                break;
+            switch (GameCache.Instance.mode)
+            {
+                case 1:
+                    sceneController.loadScene("SimpleLevel");
+                    break;
+                case 2:
+                    sceneController.loadScene("ChallengeLevel");
+                    break;
+            }
+        }))
+        {
+            Debug.Log("Show Interstitial Ads");
         }
+        else
+        {
+            switch (GameCache.Instance.mode)
+            {
+                case 1:
+                    sceneController.loadScene("SimpleLevel");
+                    break;
+                case 2:
+                    sceneController.loadScene("ChallengeLevel");
+                    break;
+            }
+        }
+
     }
 
-    public void OnAdsInterstitialClose(object param)
-    {
-        GameCache.Instance.level_selected++;
-        game.destroy();
-        if (GameCache.Instance.mode == 1) newGameLevel(GetComponent<SimpleModeController>());
-        else if (GameCache.Instance.mode == 2) newGameLevel(GetComponent<ChallengeModeController>());
-    }
-    
     public void btnWatchVideo10TimesCoinOnPanelOnClick()
     {
-        AdManager.Instance.ShowRewardVideo(() => {
+        AdManager.Instance.ShowRewardVideo(() =>
+        {
             GameData.Instance.increaseCoin(10 * game.getStar());
-            
+            btnWatchVideo10TimesCoin.interactable = false;
+            Debug.Log("Rewarded 10 times coins");
         });
     }
 
     public void btnWatchVideoMoreCoinOnPanelOnClick()
     {
-
-        AdManager.Instance.ShowRewardVideo(() => {
+        AdManager.Instance.ShowRewardVideo(() =>
+        {
             GameData.Instance.increaseCoin(10);
-            panelRate.GetComponent<Animator>().Play("Show");
             Debug.Log("Rewarded 10 coins");
         });
     }
@@ -387,12 +379,33 @@ public class GamePlaySceneController : MonoBehaviour
     public void btnNextOnPanelOnClick(GameObject target)
     {
         target.GetComponent<Animator>().Play("Close");
-        nextLevel();
         panelShowing = false;
+        if (GameCache.Instance.canShowAds())
+        {
+            if(!AdManager.Instance.ShowInterstitial(() => { nextLevel(); }))
+            {
+                nextLevel();
+            }
+            else
+            {
+                Debug.Log("Show Interstitial Ads");
+            }
+        }
+        else if (GameCache.Instance.canShowRatePanel())
+        {
+            panelRate.GetComponent<Animator>().Play("Show");
+            panelShowing = true;
+        }
+        else
+        {
+            nextLevel();
+        }
+
     }
 
     private void OnDestroy()
     {
+        Debug.Log("Destroy Play Scene");
         EventDispatcher.Instance.RemoveListener(EventID.OnCoinChange, onCoinChange);
         EventDispatcher.Instance.RemoveListener(EventID.OnLevelSelectChange, onLevelSelectChange);
         EventDispatcher.Instance.RemoveListener(EventID.OnPointChange, onPointChange);

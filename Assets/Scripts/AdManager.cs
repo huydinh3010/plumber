@@ -10,7 +10,8 @@ public class AdManager : MonoBehaviour
 
     private InterstitialAd interstitial;
     private RewardBasedVideoAd rewardBasedVideo;
-
+    private Action RewardedCallback;
+    private Action ClosedInterstitialCallback;
     private void Awake()
     {
         if (Instance == null)
@@ -29,7 +30,6 @@ public class AdManager : MonoBehaviour
 #else
             string appId = "unexpected_platform";
 #endif
-        Debug.Log(appId);
         // Initialize the Google Mobile Ads SDK.
         MobileAds.Initialize(appId);
 
@@ -87,37 +87,49 @@ public class AdManager : MonoBehaviour
     }
     public void HandleOnAdLoaded(object sender, EventArgs args)
     {
-        MonoBehaviour.print("HandleAdLoaded event received");
+        //MonoBehaviour.print("HandleAdLoaded event received");
+        Debug.Log("HandleAdLoaded event received");
     }
 
     public void HandleOnAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
-        MonoBehaviour.print("HandleFailedToReceiveAd event received with message: "
+        RequestInterstitial();
+        //MonoBehaviour.print("HandleFailedToReceiveAd event received with message: "
+        //                    + args.Message);
+        Debug.Log("HandleFailedToReceiveAd event received with message: "
                             + args.Message);
     }
 
     public void HandleOnAdOpened(object sender, EventArgs args)
     {
-        MonoBehaviour.print("HandleAdOpened event received");
+        //MonoBehaviour.print("HandleAdOpened event received");
+        Debug.Log("HandleAdOpened event received");
     }
 
     public void HandleOnAdClosed(object sender, EventArgs args)
     {
-        MonoBehaviour.print("HandleAdClosed event received");
+        ClosedInterstitialCallback();
+        //MonoBehaviour.print("HandleAdClosed event received");
+        Debug.Log("HandleAdClosed event received");
         this.interstitial.Destroy();
         this.RequestInterstitial();
+        
     }
 
     public void HandleOnAdLeavingApplication(object sender, EventArgs args)
     {
-        MonoBehaviour.print("HandleAdLeavingApplication event received");
+        //MonoBehaviour.print("HandleAdLeavingApplication event received");
+        Debug.Log("HandleAdLeavingApplication event received");
     }
-    public void ShowInterstitial()
+    public bool ShowInterstitial(Action action)
     {
         if (this.interstitial.IsLoaded())
         {
+            ClosedInterstitialCallback = action;
             this.interstitial.Show();
+            return true;
         }
+        return false;
     }
 
     private void RequestRewardBasedVideo()
@@ -129,7 +141,7 @@ public class AdManager : MonoBehaviour
 #else
             string adUnitId = "unexpected_platform";
 #endif
-
+        Debug.Log("Request Reward Video");
         // Create an empty ad request.
         AdRequest request = new AdRequest.Builder().Build();
         // Load the rewarded video ad with the request.
@@ -137,29 +149,36 @@ public class AdManager : MonoBehaviour
     }
     public void HandleRewardBasedVideoLoaded(object sender, EventArgs args)
     {
-        MonoBehaviour.print("HandleRewardBasedVideoLoaded event received");
+        //MonoBehaviour.print("HandleRewardBasedVideoLoaded event received");
+        Debug.Log("HandleRewardBasedVideoLoaded event received");
     }
 
     public void HandleRewardBasedVideoFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
-        MonoBehaviour.print(
-            "HandleRewardBasedVideoFailedToLoad event received with message: "
+        RequestRewardBasedVideo();
+        //MonoBehaviour.print(
+        //    "HandleRewardBasedVideoFailedToLoad event received with message: "
+        //                     + args.Message);
+        Debug.Log("HandleRewardBasedVideoFailedToLoad event received with message: "
                              + args.Message);
     }
 
     public void HandleRewardBasedVideoOpened(object sender, EventArgs args)
     {
-        MonoBehaviour.print("HandleRewardBasedVideoOpened event received");
+        //MonoBehaviour.print("HandleRewardBasedVideoOpened event received");
+        Debug.Log("HandleRewardBasedVideoOpened event received");
     }
 
     public void HandleRewardBasedVideoStarted(object sender, EventArgs args)
     {
-        MonoBehaviour.print("HandleRewardBasedVideoStarted event received");
+        //MonoBehaviour.print("HandleRewardBasedVideoStarted event received");
+        Debug.Log("HandleRewardBasedVideoStarted event received");
     }
 
     public void HandleRewardBasedVideoClosed(object sender, EventArgs args)
     {
-        MonoBehaviour.print("HandleRewardBasedVideoClosed event received");
+        //MonoBehaviour.print("HandleRewardBasedVideoClosed event received");
+        Debug.Log("HandleRewardBasedVideoClosed event received");
         this.RequestRewardBasedVideo();
     }
 
@@ -167,21 +186,28 @@ public class AdManager : MonoBehaviour
     {
         string type = args.Type;
         double amount = args.Amount;
-        MonoBehaviour.print(
-            "HandleRewardBasedVideoRewarded event received for "
+        //MonoBehaviour.print(
+        //    "HandleRewardBasedVideoRewarded event received for "
+        //                + amount.ToString() + " " + type);
+        Debug.Log("HandleRewardBasedVideoRewarded event received for "
                         + amount.ToString() + " " + type);
+        RewardedCallback();
     }
 
     public void HandleRewardBasedVideoLeftApplication(object sender, EventArgs args)
     {
-        MonoBehaviour.print("HandleRewardBasedVideoLeftApplication event received");
+        //MonoBehaviour.print("HandleRewardBasedVideoLeftApplication event received");
+        Debug.Log("HandleRewardBasedVideoLeftApplication event received");
     }
+
+    
 
     public void ShowRewardVideo(Action action)
     {
         if (rewardBasedVideo.IsLoaded())
         {
-            rewardBasedVideo.OnAdRewarded += delegate { action(); };
+            Debug.Log("Show RewardVideo");
+            RewardedCallback = action;
             rewardBasedVideo.Show();
         }
     }

@@ -17,7 +17,6 @@ public class ChallengeModeController : GameController
     public override void loadLevelData()
     {
         var textAsset = Resources.Load<TextAsset>("levels/daily/" + GameCache.Instance.level_selected + "/" + GameData.Instance.day);
-        Debug.Log(textAsset.text);
         string[] arr = textAsset.text.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
         int k = 0;
         int timer = int.Parse(arr[k++]);

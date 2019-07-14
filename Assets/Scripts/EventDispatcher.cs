@@ -43,7 +43,7 @@ public class EventDispatcher
     {
         if (_listeners.ContainsKey(eventID))
         {
-            //Debug.Log("remove: " + eventID.ToString());
+
             _listeners[eventID] -= callback;
         }
     }

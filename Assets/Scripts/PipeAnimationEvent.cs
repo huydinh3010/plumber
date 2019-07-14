@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class PipeAnimationEvent : MonoBehaviour
 {
-   
+    private void Start()
+    {
+        EventDispatcher.Instance.RegisterListener(EventID.StopAnimation, stopAnimation);
+    }
 
     public void startNextAnimation()
     {
@@ -23,5 +26,15 @@ public class PipeAnimationEvent : MonoBehaviour
     public void endOfPipeLines()
     {
         EventDispatcher.Instance.PostEvent(EventID.PipeAnimationEnd, null);
+    }
+
+    private void stopAnimation(object param)
+    {
+        GetComponent<Animator>().enabled = false;
+    }
+
+    private void OnDestroy()
+    {
+        EventDispatcher.Instance.RemoveListener(EventID.StopAnimation, stopAnimation);
     }
 }

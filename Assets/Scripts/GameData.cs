@@ -45,7 +45,7 @@ public class GameData
 
     public bool decreaseCoin(int value)
     {
-        if (coins > value)
+        if (coins >= value)
         {
             coins -= value;
             EventDispatcher.Instance.PostEvent(EventID.OnCoinChange, null);
@@ -73,13 +73,14 @@ public class GameData
 
     private void updateDay()
     {
-        int diff = (System.DateTime.Now.Date - System.DateTime.FromFileTime(lastDayAccess)).Days;
+        int diff = (System.DateTime.Now.Date - System.DateTime.FromFileTime(lastDayAccess).Date).Days;
         if(diff > 0)
         {
             if (diff == 1 && continueDay < 5) continueDay++;
             else continueDay = 1;
             clampDailyReward = false;
             clampChallengeReward = false;
+            completed = new int[8];
             day = day + diff;
             if (day > 366) day = day % 367 + 1;
             lastDayAccess = System.DateTime.Now.Date.ToFileTime();
@@ -101,10 +102,8 @@ public class GameData
         }
         else
         {
-            Debug.Log("New data");
             level_stars = new List<int>();
             level_stars.Add(0);
-            //Debug.Log("New data");
             unlock_level = 1;
             points = 0;
             coins = 200;
@@ -120,28 +119,6 @@ public class GameData
             GameCache.Instance.firstGameLoad = true;
         }
         GameCache.Instance.level_selected = unlock_level;
-        //// test game
-        //unlock_level = 558;
-        //level_selected = unlock_level;
-        //points = 2500;
-        //coins = 1000;
-        //level_stars = new int[560];
-        //System.Random rd = new System.Random();
-        //for (int i = 0; i < level_stars.Length; i++)
-        //{
-        //    if (i >= unlock_level) level_stars[i] = -1;
-        //    else if (i == unlock_level - 1) level_stars[i] = 0;
-        //    else
-        //    {
-        //        level_stars[i] = rd.Next(1, 3);
-        //    }
-        //}
-        //day = 2;
-        //completed = new int[8] {0,1,0,0,0,0,0,0};
-        //reward_coins = 100;
-        //ads_on = true;
-        //firstMenuLoad = true;
-        //
     }
 
     public void SaveDataToFile()

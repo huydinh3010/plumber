@@ -859,7 +859,7 @@ PrefabInstance:
     - target: {fileID: 5230313830312926952, guid: 369bc71793e791c41af8ed0642b086c8,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -72002.28
+      value: -72381.914
       objectReference: {fileID: 0}
     - target: {fileID: 5230313830661770082, guid: 369bc71793e791c41af8ed0642b086c8,
         type: 3}
@@ -4468,7 +4468,7 @@ MonoBehaviour:
   - {fileID: 5360797924207126836, guid: fa72b8c6cfe8ae749aa5ce3e85a3ea12, type: 3}
   - {fileID: 5478066982943287771, guid: a3c1ef2bd2648c94f9707d7828e078c5, type: 3}
   - {fileID: 1820926538423632151, guid: 1e7b8732a49382346a53018da67b8f49, type: 3}
-  rotate_speed: 5
+  rotate_speed: 300
 --- !u!4 &2084200695
 Transform:
   m_ObjectHideFlags: 0
@@ -4555,7 +4555,7 @@ MonoBehaviour:
   - {fileID: 5360797924207126836, guid: fa72b8c6cfe8ae749aa5ce3e85a3ea12, type: 3}
   - {fileID: 5478066982943287771, guid: a3c1ef2bd2648c94f9707d7828e078c5, type: 3}
   - {fileID: 1820926538423632151, guid: 1e7b8732a49382346a53018da67b8f49, type: 3}
-  rotate_speed: 5
+  rotate_speed: 300
   hand: {fileID: 5380729859762908493, guid: 3bb1d43e459e5434d810aa19cae37911, type: 3}
   h_text: {fileID: 1021819565}
 --- !u!114 &2084200699
@@ -4579,7 +4579,7 @@ MonoBehaviour:
   - {fileID: 5360797924207126836, guid: fa72b8c6cfe8ae749aa5ce3e85a3ea12, type: 3}
   - {fileID: 5478066982943287771, guid: a3c1ef2bd2648c94f9707d7828e078c5, type: 3}
   - {fileID: 1820926538423632151, guid: 1e7b8732a49382346a53018da67b8f49, type: 3}
-  rotate_speed: 5
+  rotate_speed: 300
 --- !u!1 &2087101478
 GameObject:
   m_ObjectHideFlags: 0

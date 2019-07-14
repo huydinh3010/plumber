@@ -76,10 +76,8 @@ public abstract class GameController : MonoBehaviour
     {
         int c_len = (str_results.Length - 1) / 3 + 1;
         int i;
-        //Debug.Log(c_len);
         for (i = k * c_len; i < c_len * (k + 1) && i < str_results.Length - 1; i++)
         {
-            //Debug.Log(str_results[i]);
             string[] pairs = str_results[i].Split(' ');
             int y = int.Parse(pairs[0]);
             int x = int.Parse(pairs[1]);
@@ -92,7 +90,7 @@ public abstract class GameController : MonoBehaviour
             }
             else m_clones[y, x].transform.Find("Valve").GetComponent<Animator>().Play("correct");
             //if(m_clones[y,x].name != "CrossObject(Clone)") 
-            StartCoroutine(rotatePipe(m_clones[y, x], rotation - c_rotation, 10f));
+            StartCoroutine(rotatePipe(m_clones[y, x], rotation - c_rotation, rotate_speed * 2));
         }
         if (i == str_results.Length - 1) return true;
         return false;
@@ -138,16 +136,22 @@ public abstract class GameController : MonoBehaviour
                 {
                     try
                     {
-                        gameObject.transform.eulerAngles -= new Vector3(0f, 0f, speed);
+                        angle += speed * Time.deltaTime;
+                        if(angle < 0)
+                        {
+                            gameObject.transform.eulerAngles -= new Vector3(0f, 0f, speed * Time.deltaTime);
+                        }
+                        else
+                        {
+                            gameObject.transform.eulerAngles -= new Vector3(0f, 0f, speed * Time.deltaTime - angle);
+                        }
                     }
                     catch (Exception e)
                     {
                         Debug.Log(e.Message);
                     }
-                    angle += speed;
                     yield return 0;
                 }
-
             }
             else
             {
@@ -158,13 +162,21 @@ public abstract class GameController : MonoBehaviour
                 {
                     try
                     {
-                        gameObject.transform.eulerAngles += new Vector3(0f, 0f, speed);
+                        angle -= speed * Time.deltaTime;
+                        if(angle > 0)
+                        {
+                            gameObject.transform.eulerAngles += new Vector3(0f, 0f, speed * Time.deltaTime);
+                        }
+                        else
+                        {
+                            gameObject.transform.eulerAngles += new Vector3(0f, 0f, speed * Time.deltaTime + angle);
+                        }
+                        
                     }
                     catch (Exception e)
                     {
                         Debug.Log(e.Message);
                     }
-                    angle -= speed;
                     yield return 0;
                 }
             }

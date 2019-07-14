@@ -25,7 +25,6 @@ public class HelpLevelController : GameController
     public override void loadLevelData()
     {
         var textAsset = Resources.Load<TextAsset>("levels/simple/1") ;
-        Debug.Log(textAsset.text);
         string[] arr = textAsset.text.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
         int k = 0;
         int timer = int.Parse(arr[k++]);
@@ -111,15 +110,22 @@ public class HelpLevelController : GameController
             float angle = -90 * k;
             while (angle < 0)
             {
+                angle += speed * Time.deltaTime;
                 try
                 {
-                    gameObject.transform.eulerAngles -= new Vector3(0f, 0f, speed);
+                    if(angle < 0)
+                    {
+                        gameObject.transform.eulerAngles -= new Vector3(0f, 0f, speed * Time.deltaTime);
+                    }
+                    else
+                    {
+                        gameObject.transform.eulerAngles -= new Vector3(0f, 0f, speed * Time.deltaTime - angle);
+                    }
                 }
                 catch (Exception e)
                 {
                     Debug.Log(e.Message);
                 }
-                angle += speed;
                 yield return 0;
             }
         }
