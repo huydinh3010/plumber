@@ -55,7 +55,6 @@ public class AdManager : MonoBehaviour
         this.RequestInterstitial();
     }
 
-
     private void RequestInterstitial()
     {
 #if UNITY_ANDROID
@@ -201,9 +200,6 @@ public class AdManager : MonoBehaviour
         //MonoBehaviour.print("HandleRewardBasedVideoLeftApplication event received");
         Debug.Log("HandleRewardBasedVideoLeftApplication event received");
     }
-
-    
-
     public void ShowRewardVideo(Action action)
     {
         if (rewardBasedVideo.IsLoaded())
