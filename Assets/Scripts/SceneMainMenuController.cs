@@ -34,7 +34,8 @@ public class SceneMainMenuController : MonoBehaviour
             btnDays[i].GetComponent<Image>().sprite = btnDaysActive[i];
             btnDays[i].enabled = true;
             panelDailyReward.GetComponent<Animator>().Play("Show");
-        } 
+        }
+        btnRemoveAds.SetActive(GameData.Instance.ads_on);
     }
 
     
@@ -63,7 +64,7 @@ public class SceneMainMenuController : MonoBehaviour
 
     public void BtnRemoveAdsOnClick()
     {
-
+        IAPManager.Instance.BuyNoAds();
     }
 
     public void BtnRateOnClick()
@@ -117,8 +118,6 @@ public class SceneMainMenuController : MonoBehaviour
         //AdManager.Instance.ShowRewardedVideo();
         //
     }
-
-    
 
     private void OnDestroy()
     {

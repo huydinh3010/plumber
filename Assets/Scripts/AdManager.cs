@@ -93,7 +93,6 @@ public class AdManager : MonoBehaviour
 
     public void HandleOnAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
-        RequestInterstitial();
         //MonoBehaviour.print("HandleFailedToReceiveAd event received with message: "
         //                    + args.Message);
         Debug.Log("HandleFailedToReceiveAd event received with message: "
@@ -111,9 +110,8 @@ public class AdManager : MonoBehaviour
         ClosedInterstitialCallback();
         //MonoBehaviour.print("HandleAdClosed event received");
         Debug.Log("HandleAdClosed event received");
-        this.interstitial.Destroy();
-        this.RequestInterstitial();
-        
+        interstitial.Destroy();
+        RequestInterstitial();
     }
 
     public void HandleOnAdLeavingApplication(object sender, EventArgs args)
@@ -129,7 +127,12 @@ public class AdManager : MonoBehaviour
             this.interstitial.Show();
             return true;
         }
-        return false;
+        else
+        {
+            RequestInterstitial();
+            return false;
+        }
+        
     }
 
     private void RequestRewardBasedVideo()
@@ -155,7 +158,6 @@ public class AdManager : MonoBehaviour
 
     public void HandleRewardBasedVideoFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
-        RequestRewardBasedVideo();
         //MonoBehaviour.print(
         //    "HandleRewardBasedVideoFailedToLoad event received with message: "
         //                     + args.Message);
@@ -209,6 +211,10 @@ public class AdManager : MonoBehaviour
             Debug.Log("Show RewardVideo");
             RewardedCallback = action;
             rewardBasedVideo.Show();
+        }
+        else
+        {
+            RequestRewardBasedVideo();
         }
     }
 }

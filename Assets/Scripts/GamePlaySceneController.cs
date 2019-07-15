@@ -373,7 +373,9 @@ public class GamePlaySceneController : MonoBehaviour
 
     public void btnShareFbOnPanelOnClick()
     {
-
+        FacebookManager.Instance.ShareWithFriends(() => {
+            GameData.Instance.increaseCoin(50);
+        });
     }
 
     public void btnNextOnPanelOnClick(GameObject target)
