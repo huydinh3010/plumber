@@ -23,7 +23,7 @@ public class SceneSimpleLevelController : MonoBehaviour
         {
 
             GameObject goGridClone = Instantiate(Grid, Vector3.zero, Quaternion.identity, ContentObj.transform);
-            goGridClone.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(-10200 + 600 * p, 0, 0);
+            goGridClone.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(-18700 + 1100 * p, 0, 0);
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)

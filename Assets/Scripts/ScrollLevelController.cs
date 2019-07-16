@@ -30,10 +30,10 @@ public class ScrollLevelController : MonoBehaviour, IBeginDragHandler, IEndDragH
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        float oldx = -currentPage * 600 - 400;
+        float oldx = -currentPage * 1100 - 600;
         if (!isMoving && (currentPage != 0 || content.anchoredPosition.x - oldx <= 0) && (currentPage != 34 || content.anchoredPosition.x - oldx >= 0))
         {
-            if (System.Math.Abs(content.anchoredPosition.x - oldx) < 150)
+            if (System.Math.Abs(content.anchoredPosition.x - oldx) < 200)
             {
                 scroll.StopMovement();
                 StartCoroutine(ChangePage(0)); // back to current page
@@ -68,7 +68,7 @@ public class ScrollLevelController : MonoBehaviour, IBeginDragHandler, IEndDragH
     {
         isMoving = true;
        
-        float dx = -(currentPage + d_page) * 600 - 400  - content.anchoredPosition.x;
+        float dx = -(currentPage + d_page) * 1100 - 600  - content.anchoredPosition.x;
         if (dx > 0)
         {
             while(true)
@@ -76,7 +76,7 @@ public class ScrollLevelController : MonoBehaviour, IBeginDragHandler, IEndDragH
                 dx -= speed_movement*Time.deltaTime;
                 if(dx < 0)
                 {
-                    content.anchoredPosition = new Vector3(-(currentPage + d_page) * 600 - 400, 0);
+                    content.anchoredPosition = new Vector3(-(currentPage + d_page) * 1100 - 600, 0);
                     break;
                 }
                 else content.anchoredPosition += new Vector2(speed_movement * Time.deltaTime, 0);
@@ -90,7 +90,7 @@ public class ScrollLevelController : MonoBehaviour, IBeginDragHandler, IEndDragH
                 dx += speed_movement* Time.deltaTime;
                 if(dx > 0)
                 {
-                    content.anchoredPosition = new Vector3(-(currentPage + d_page) * 600 - 400, 0);
+                    content.anchoredPosition = new Vector3(-(currentPage + d_page) * 1100 - 600, 0);
                     break;
                 }
                 else content.anchoredPosition -= new Vector2(speed_movement * Time.deltaTime, 0);
@@ -98,7 +98,7 @@ public class ScrollLevelController : MonoBehaviour, IBeginDragHandler, IEndDragH
             }
             
         }
-        currentPage = -((int)content.anchoredPosition.x + 400) / 600;
+        currentPage = -((int)content.anchoredPosition.x + 600) / 1100;
         txtPackNumber.text = "PACK " + (currentPage + 1).ToString() + "/35";
         isMoving = false;
         
@@ -113,23 +113,24 @@ public class ScrollLevelController : MonoBehaviour, IBeginDragHandler, IEndDragH
         btnArrowRight.onClick.AddListener(() => { btnArrowRightOnClick(); });
         btnArrowLeft.onClick.AddListener(() => { btnArrowLeftOnClick(); });
         currentPage = (GameCache.Instance.level_selected - 1) / 16;
-        content.anchoredPosition = new Vector3(-currentPage * 600 - 400, 0, 0);
+        content.anchoredPosition = new Vector3(-currentPage * 1100 - 600, 0, 0);
         txtPackNumber.text = "PACK " + (currentPage + 1).ToString() + "/35";
     }
 
     // Update is called once per frame
     void Update()
     {
-        int x = (int)System.Math.Abs(content.anchoredPosition.x + 400) % 600;
-        if (x < 100)
+        Debug.Log("width: " + scroll.GetComponent<RectTransform>().rect.width + "---height: " + scroll.GetComponent<RectTransform>().rect.height); ;
+        int x = (int)System.Math.Abs(content.anchoredPosition.x + 600) % 1100;
+        if (x < 200)
         {
-            scroll.transform.localScale = new Vector3(1 - 0.0015f * x, 1 - 0.0015f * x, 1);
-            material.color = new Color(1f, 1f, 1f, 1 - 0.003f * x);
+            scroll.transform.localScale = new Vector3(1 - 0.00075f * x, 1 - 0.00075f * x, 1);
+            material.color = new Color(1f, 1f, 1f, 1 - 0.0015f * x);
         }
-        else if (x > 500)
+        else if (x > 900)
         {
-            scroll.transform.localScale = new Vector3(0.0015f * x + 0.1f, 0.0015f * x + 0.1f, 1);
-            material.color = new Color(1f, 1f, 1f, 0.003f * x - 0.8f);
+            scroll.transform.localScale = new Vector3(0.00075f * x + 0.175f, 0.00075f * x + 0.175f, 1);
+            material.color = new Color(1f, 1f, 1f, 0.0015f * x - 0.65f);
         }
         else
         {
