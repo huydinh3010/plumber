@@ -49,6 +49,8 @@ public class HelpLevelController : GameController
 
     public override void setupLevel()
     {
+        duration_secs = 0f;
+        stop_time = false;
         h_len = 0;
         pos_x = new int[3];
         pos_y = new int[3];
@@ -137,12 +139,6 @@ public class HelpLevelController : GameController
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public override bool checkPipes(out List<GameObject> list_results, out List<int> list_ds)
     {
         h_text.text = text_content[++h_len];
@@ -161,4 +157,6 @@ public class HelpLevelController : GameController
         }
         h_text.enabled = false;
     }
+
+    
 }

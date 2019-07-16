@@ -7,7 +7,6 @@ using System;
 public class SimpleModeController : GameController
 {
     
-    private bool stopTime;
     private float timer;
     private float[] t_stars = { 0, 0, 0 };
     private int[,] m_pipes;
@@ -41,11 +40,12 @@ public class SimpleModeController : GameController
 
     public override void setupLevel()
     {
+        duration_secs = 0f;
         star = 3;
         t_stars[1] = timer;
         t_stars[2] = timer * 2;
         timer = timer * 3;
-        stopTime = false;
+        stop_time = false;
         m_clones = new GameObject[row, col];
         PlayZone.transform.localScale = new Vector3(1f, 1f, 1f);
         System.Random rd = new System.Random();
@@ -100,11 +100,6 @@ public class SimpleModeController : GameController
         
     }
 
-    public override void stopDecreaseTime()
-    {
-        stopTime = true;
-    }
-
     private void Start()
     {
         
@@ -115,10 +110,10 @@ public class SimpleModeController : GameController
         
     }
 
-    private void Update()
+    protected override void Update()
     {
-        
-        if (timer > 0 && !stopTime)
+        if (!stop_time) duration_secs += Time.deltaTime;
+        if (timer > 0 && !stop_time)
         {
             timer -= Time.deltaTime;
             if (timer < t_stars[2] && star == 3)

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1065651647310",
+    "firebase_url": "https://plumber-d3214.firebaseio.com",
+    "project_id": "plumber-d3214",
+    "storage_bucket": "plumber-d3214.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1065651647310:android:faeaedd41cbb2333",
+        "android_client_info": {
+          "package_name": "com.huydinh.plumbertesttest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1065651647310-40j55l0vdbe8c5m1bj4kb01pilrn3lqt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0Vjpqhy5Ou1-nB1ZHMf3CIun_nqyC12Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1065651647310-40j55l0vdbe8c5m1bj4kb01pilrn3lqt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

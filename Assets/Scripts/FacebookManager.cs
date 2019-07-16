@@ -86,5 +86,41 @@ public class FacebookManager : MonoBehaviour
             SharedCallback();
         }
     }
-    
+
+    public void LogEventLevelStart(int level, string type, int day)
+    {
+        var dictionary = new Dictionary<string, object>();
+        dictionary.Add("level", level);
+        dictionary.Add("type", type);
+        dictionary.Add("day", day);
+        FB.LogAppEvent("level_start", parameters: dictionary);
+    }
+
+    public void LogEventLevelEnd(int level, string type, int day, float duration_secs, int turn_count, int remove_pipe_count, int construct_pipe_count)
+    {
+        var dictionary = new Dictionary<string, object>();
+        dictionary.Add("level", level);
+        dictionary.Add("type", type);
+        dictionary.Add("day", day);
+        dictionary.Add("duration_secs", duration_secs);
+        dictionary.Add("turn_count", turn_count);
+        dictionary.Add("remove_pipe_count", remove_pipe_count);
+        dictionary.Add("construct_pipe_count", construct_pipe_count);
+        FB.LogAppEvent("level_end", parameters: dictionary);
+    }
+
+    public void LogEventRequestRewardedVideo(string purpose, bool has_video, int level)
+    {
+        var dictionary = new Dictionary<string, object>();
+        dictionary.Add("purpose", purpose);
+        dictionary.Add("has_video", has_video);
+        dictionary.Add("level", level);
+        FB.LogAppEvent("start_rewarded_ads", parameters: dictionary);
+    }
+
+    public void LogEventShareFacebook()
+    {
+        FB.LogAppEvent("share_facebook");
+    }
+
 }

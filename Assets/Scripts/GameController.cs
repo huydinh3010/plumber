@@ -12,7 +12,7 @@ public abstract class GameController : MonoBehaviour
     public Sprite[] s_valves;
     public GameObject[] pipes;
     public int rotate_speed;
-    
+    public float duration_secs;
 
     protected GameObject valve;
     protected GameObject[,] m_clones;
@@ -23,12 +23,12 @@ public abstract class GameController : MonoBehaviour
     protected float scale;
     protected string[] str_results;
 
-
+    protected bool stop_time;
 
     public abstract void loadLevelData();
-    public virtual void stopDecreaseTime()
+    public void stopTime()
     {
-
+        stop_time = true;
     }
 
 
@@ -50,9 +50,9 @@ public abstract class GameController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
-
+        if (!stop_time) duration_secs += Time.deltaTime;
     }
 
     public void removeIncorrectPipes()

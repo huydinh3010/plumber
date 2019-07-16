@@ -30,6 +30,8 @@ public class GamePlaySceneController : MonoBehaviour
     private int construct_part;
     private bool tutorial;
     private bool en_rmbtn;
+    private bool en_construct_btn;
+    private int turn_count;
     private void Awake()
     {
 
@@ -41,17 +43,16 @@ public class GamePlaySceneController : MonoBehaviour
 
         if (GameCache.Instance.mode == 0 || (GameCache.Instance.level_selected == 1 && GameCache.Instance.mode == 1)) // help
         {
-            newGameLevel(GetComponent<HelpLevelController>());
-            tutorial = true;
+            newGameLevel(0);
         }
         else if (GameCache.Instance.mode == 1) // simple
         {
-            newGameLevel(GetComponent<SimpleModeController>());
+            newGameLevel(1);
         }
         else if (GameCache.Instance.mode == 2) // challenge
         {
             //game = new ChallengeModeController();
-            newGameLevel(GetComponent<ChallengeModeController>());
+            newGameLevel(2);
         }
     }
 
@@ -81,6 +82,7 @@ public class GamePlaySceneController : MonoBehaviour
                     {
                         GameObject go = raycastHit.collider.gameObject;
                         StartCoroutine(game.rotatePipe(go, 1, game.rotate_speed));
+                        turn_count++;
                     }
                     else if (raycastHit.collider.tag == "valve")
                     {
@@ -99,10 +101,24 @@ public class GamePlaySceneController : MonoBehaviour
         }
     }
 
-    private void newGameLevel(GameController game)
+    private void newGameLevel(int type)
     {
         // UI
-        this.game = game;
+        if(type == 0)
+        {
+            game = GetComponent<HelpLevelController>();
+            tutorial = true;
+        }
+        else if(type == 1)
+        {
+            game = GetComponent<SimpleModeController>();
+            tutorial = false;
+        }
+        else
+        {
+            game = GetComponent<ChallengeModeController>();
+            tutorial = false;
+        }
         btnRemove.interactable = GameData.Instance.coins >= 50;
         btnConstruct.interactable = GameData.Instance.coins >= 25;
         if (GameData.Instance.sound_on) btnSound.GetComponent<Image>().sprite = s_sounds[1];
@@ -111,11 +127,16 @@ public class GamePlaySceneController : MonoBehaviour
         txtPoints.text = GameData.Instance.points.ToString();
         txtLevel.text = "Level " + GameCache.Instance.level_selected.ToString();
         // Game logic
-        gameover = animPlaying = tutorial = false;
+        turn_count = 0;
+        gameover = animPlaying = false;
         en_rmbtn = true;
+        en_construct_btn = true;
         construct_part = 0;
         game.loadLevelData();
         game.setupLevel();
+        string[] str_type = { "tutorial", "simple","daily_challenge" };
+        FirebaseManager.Instance.LogEventLevelStart(GameCache.Instance.level_selected, str_type[type], GameData.Instance.day);
+        FacebookManager.Instance.LogEventLevelStart(GameCache.Instance.level_selected, str_type[type], GameData.Instance.day);
     }
 
     private void playAnimation(List<GameObject> list_results, List<int> list_ds)
@@ -123,7 +144,7 @@ public class GamePlaySceneController : MonoBehaviour
         animPlaying = true;
         btnConstruct.interactable = false;
         btnRemove.interactable = false;
-        game.stopDecreaseTime();
+        game.stopTime();
         for (int i = 0; i < list_results.Count - 1; i++)
         {
 
@@ -170,6 +191,7 @@ public class GamePlaySceneController : MonoBehaviour
                 {
                     GameData.Instance.level_stars.Add(0);
                     GameData.Instance.unlock_level++;
+                    FirebaseManager.Instance.SetUserProperties(GameData.Instance.unlock_level);
                 }
                 //else
                 //{
@@ -200,6 +222,12 @@ public class GamePlaySceneController : MonoBehaviour
                 panelShowing = true;
             }
         }
+        string type = tutorial ? "tutorial" : (GameCache.Instance.mode == 1 ? "simple" : "daily_challenge");
+        int remove_pipe_count = en_rmbtn ? 0 : 1;
+        int construct_pipe_count = construct_part;
+        Debug.Log("Duration: " + game.duration_secs);
+        FirebaseManager.Instance.LogEventLevelEnd(GameCache.Instance.level_selected, type, GameData.Instance.day, game.duration_secs, turn_count, remove_pipe_count, construct_pipe_count);
+        FacebookManager.Instance.LogEventLevelEnd(GameCache.Instance.level_selected, type, GameData.Instance.day, game.duration_secs, turn_count, remove_pipe_count, construct_pipe_count);
     }
 
     private void onLevelSelectChange(object param)
@@ -213,7 +241,7 @@ public class GamePlaySceneController : MonoBehaviour
         btnRemove.interactable = GameData.Instance.coins >= 50;
         btnConstruct.interactable = GameData.Instance.coins >= 25;
         if (!en_rmbtn) btnRemove.interactable = false;
-        if (construct_part < 0) btnConstruct.interactable = false;
+        if (!en_construct_btn) btnConstruct.interactable = false;
     }
 
     private void onPointChange(object param)
@@ -233,7 +261,7 @@ public class GamePlaySceneController : MonoBehaviour
             {
                 GameCache.Instance.level_selected++;
                 game.destroy();
-                newGameLevel(GetComponent<SimpleModeController>());
+                newGameLevel(1);
             }
         }
         else if (GameCache.Instance.mode == 2)
@@ -246,7 +274,7 @@ public class GamePlaySceneController : MonoBehaviour
             {
                 GameCache.Instance.level_selected++;
                 game.destroy();
-                newGameLevel(GetComponent<ChallengeModeController>());
+                newGameLevel(2);
             }
         }
     }
@@ -275,7 +303,7 @@ public class GamePlaySceneController : MonoBehaviour
             if (game.constructPipes(construct_part++))
             {
                 btnConstruct.interactable = false;
-                construct_part = -1;
+                en_construct_btn = false;
             }
         }
     }
@@ -354,27 +382,33 @@ public class GamePlaySceneController : MonoBehaviour
 
     public void btnWatchVideo10TimesCoinOnPanelOnClick()
     {
-        AdManager.Instance.ShowRewardVideo(() =>
+        bool hasVideo = AdManager.Instance.ShowRewardVideo(() =>
         {
             GameData.Instance.increaseCoin(10 * game.getStar());
             btnWatchVideo10TimesCoin.interactable = false;
             Debug.Log("Rewarded 10 times coins");
         });
+        FirebaseManager.Instance.LogEventRequestRewardedVideo("x10_coins", hasVideo, GameCache.Instance.level_selected);
+        FacebookManager.Instance.LogEventRequestRewardedVideo("x10_coins", hasVideo, GameCache.Instance.level_selected);
     }
 
     public void btnWatchVideoMoreCoinOnPanelOnClick()
     {
-        AdManager.Instance.ShowRewardVideo(() =>
+        bool hasVideo = AdManager.Instance.ShowRewardVideo(() =>
         {
             GameData.Instance.increaseCoin(10);
             Debug.Log("Rewarded 10 coins");
         });
+        FirebaseManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.level_selected);
+        FacebookManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.level_selected);
     }
 
     public void btnShareFbOnPanelOnClick()
     {
         FacebookManager.Instance.ShareWithFriends(() => {
             GameData.Instance.increaseCoin(50);
+            FirebaseManager.Instance.LogEventShareFacebook();
+            FacebookManager.Instance.LogEventShareFacebook();
         });
     }
 

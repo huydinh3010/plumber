@@ -39,10 +39,12 @@ public class ChallengeModeController : GameController
         }
     }
 
-
+    
 
     public override void setupLevel()
     {
+        duration_secs = 0f;
+        stop_time = false;
         m_clones = new GameObject[row, col];
         PlayZone.transform.localScale = new Vector3(1f, 1f, 1f);
         System.Random rd = new System.Random();
@@ -91,6 +93,5 @@ public class ChallengeModeController : GameController
         }
         scale = 4.0f / col;
         PlayZone.transform.localScale = new Vector3(scale, scale, scale);
-
     }
 }

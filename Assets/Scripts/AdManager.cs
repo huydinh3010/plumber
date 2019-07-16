@@ -200,17 +200,19 @@ public class AdManager : MonoBehaviour
         //MonoBehaviour.print("HandleRewardBasedVideoLeftApplication event received");
         Debug.Log("HandleRewardBasedVideoLeftApplication event received");
     }
-    public void ShowRewardVideo(Action action)
+    public bool ShowRewardVideo(Action action)
     {
         if (rewardBasedVideo.IsLoaded())
         {
             Debug.Log("Show RewardVideo");
             RewardedCallback = action;
             rewardBasedVideo.Show();
+            return true;
         }
         else
         {
             RequestRewardBasedVideo();
+            return false;
         }
     }
 }

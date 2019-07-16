@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id" xmlns:tools="http://schemas.android.com/tools">
+  <string name="firebase_database_url" translatable="false">https://plumber-d3214.firebaseio.com</string>
+  <string name="gcm_defaultSenderId" translatable="false">1065651647310</string>
+  <string name="google_storage_bucket" translatable="false">plumber-d3214.appspot.com</string>
+  <string name="project_id" translatable="false">plumber-d3214</string>
+  <string name="google_api_key" translatable="false">AIzaSyB0Vjpqhy5Ou1-nB1ZHMf3CIun_nqyC12Y</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyB0Vjpqhy5Ou1-nB1ZHMf3CIun_nqyC12Y</string>
+  <string name="google_app_id" translatable="false">1:1065651647310:android:faeaedd41cbb2333</string>
+  <string name="default_web_client_id" translatable="false">1065651647310-40j55l0vdbe8c5m1bj4kb01pilrn3lqt.apps.googleusercontent.com</string>
+</resources>
