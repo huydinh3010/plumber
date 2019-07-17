@@ -62,82 +62,6 @@ public class ChallengeSceneController : MonoBehaviour
         txtCoins.text = GameData.Instance.coins.ToString();
     }
 
-    //public void onClickGameObject()
-    //{
-    //    if (Input.GetMouseButtonDown(0))
-    //    {
-    //        Vector2 postion = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    //        RaycastHit2D raycast = Physics2D.Raycast(postion, Vector2.zero);
-    //        if (raycast.collider != null) selected = raycast.collider.gameObject;
-    //    }
-    //    else if (Input.GetMouseButtonUp(0))
-    //    {
-    //        Vector2 postion = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    //        RaycastHit2D raycast = Physics2D.Raycast(postion, Vector2.zero);
-    //        if (raycast.collider != null && raycast.collider.gameObject == selected)
-    //        {
-    //            if(selected.name == "Lv1")
-    //            {
-    //                GameCache.Instance.mode = 2;
-    //                GameCache.Instance.level_selected = 1;
-    //                sceneController.loadScene("GamePlay");
-    //            }
-    //            else if(selected.name == "Lv2")
-    //            {
-    //                GameCache.Instance.mode = 2;
-    //                GameCache.Instance.level_selected = 2;
-    //                sceneController.loadScene("GamePlay");
-    //            }
-    //            else if (selected.name == "Lv3")
-    //            {
-    //                GameCache.Instance.mode = 2;
-    //                GameCache.Instance.level_selected = 3;
-    //                sceneController.loadScene("GamePlay");
-    //            }
-    //            else if (selected.name == "Lv4")
-    //            {
-    //                GameCache.Instance.mode = 2;
-    //                GameCache.Instance.level_selected = 4;
-    //                sceneController.loadScene("GamePlay");
-    //            }
-    //            else if (selected.name == "Lv5")
-    //            {
-    //                GameCache.Instance.mode = 2;
-    //                GameCache.Instance.level_selected = 5;
-    //                sceneController.loadScene("GamePlay");
-    //            }
-    //            else if (selected.name == "Lv6")
-    //            {
-    //                GameCache.Instance.mode = 2;
-    //                GameCache.Instance.level_selected = 6;
-    //                sceneController.loadScene("GamePlay");
-    //            }
-    //            else if (selected.name == "Lv7")
-    //            {
-    //                GameCache.Instance.mode = 2;
-    //                GameCache.Instance.level_selected = 7;
-    //                sceneController.loadScene("GamePlay");
-    //            }
-    //            else if (selected.name == "Lv8")
-    //            {
-    //                GameCache.Instance.mode = 2;
-    //                GameCache.Instance.level_selected = 8;
-    //                sceneController.loadScene("GamePlay");
-    //            }
-    //            else if (selected.name == "Pool")
-    //            {
-    //                if (total == 8)
-    //                {
-    //                    GameData.Instance.increaseCoin(100);
-    //                    go_pool.GetComponent<BoxCollider2D>().enabled = false;
-    //                    GameData.Instance.clampChallengeReward = true;
-    //                }
-    //            }
-    //        }
-    //        selected = null;
-    //    }
-    //}
-
     public void btnLevelOnClick(int k)
     {
         GameCache.Instance.mode = 2;
@@ -152,6 +76,7 @@ public class ChallengeSceneController : MonoBehaviour
             GameData.Instance.increaseCoin(100);
             btn_pool.interactable = false;
             GameData.Instance.clampChallengeReward = true;
+            text_tutorial.text = str[2];
         }
     }
 
