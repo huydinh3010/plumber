@@ -9,6 +9,7 @@ public enum EventID
     OnPointChange,
     OnLevelSelectChange,
     OnLevelStarChange,
+    PipeAnimationStart,
     PipeAnimationEnd,
     StopAnimation,
 }

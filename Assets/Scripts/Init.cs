@@ -41,6 +41,15 @@ public class Init : MonoBehaviour
         //AdManager.Instance.Initialize();   
     }
 
+    private void OnDisable()
+    {
+        
+    }
+
+    private void OnEnable()
+    {
+        
+    }
     // Update is called once per frame
     void Update()
     {

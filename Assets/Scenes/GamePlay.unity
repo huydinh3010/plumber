@@ -147,7 +147,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.8507778, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 4.5964966, y: -5.5}
+  m_AnchoredPosition: {x: 4.5965576, y: -5.5}
   m_SizeDelta: {x: 16.112976, y: -3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8764575
@@ -226,7 +226,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8764575}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2084200696}
+        m_MethodName: btnCloseOnPanelRateOnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &27957970
@@ -637,7 +648,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 218228383}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2084200696}
+        m_MethodName: btnCloseOnPanelRateOnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &218228383
@@ -3059,36 +3081,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -230, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1128859817
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1128859818}
-  m_Layer: 0
-  m_Name: PlayZone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1128859818
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1128859817}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1136631125
 GameObject:
   m_ObjectHideFlags: 0
@@ -3273,7 +3265,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 187.59167}
+  m_AnchoredPosition: {x: 0, y: 3864.459}
   m_SizeDelta: {x: 0, y: 400}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1185581689
@@ -3358,6 +3350,41 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -93}
   m_SizeDelta: {x: 0, y: 200}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1229937568
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1229937569}
+  m_Layer: 5
+  m_Name: PlayZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1229937569
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1229937568}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1592425304}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -80, y: -420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1285727123
 GameObject:
@@ -3922,7 +3949,7 @@ RectTransform:
   - {fileID: 565230219}
   - {fileID: 1216708571}
   - {fileID: 426281771}
-  - {fileID: 1897874126}
+  - {fileID: 1229937569}
   - {fileID: 2081402370}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -5078,41 +5105,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1864638408}
   m_CullTransparentMesh: 0
---- !u!1 &1897874125
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1897874126}
-  m_Layer: 5
-  m_Name: Middle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1897874126
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1897874125}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1592425304}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1990379964
 GameObject:
   m_ObjectHideFlags: 0
@@ -5300,7 +5292,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2027172888}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2084200696}
+        m_MethodName: btnAddCoinOnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &2027172888
@@ -5413,7 +5416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8db51d67c7dd4347b4e5e2ed7efce6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayZone: {fileID: 1128859817}
+  PlayZone: {fileID: 1229937569}
   s_valves:
   - {fileID: 21300000, guid: 0df22347e85f3ef4ea5bc49e6a18491b, type: 3}
   - {fileID: 21300000, guid: 96dce4ada2f44d647b9eb11259a11718, type: 3}
@@ -5427,6 +5430,7 @@ MonoBehaviour:
   - {fileID: 1820926538423632151, guid: 1e7b8732a49382346a53018da67b8f49, type: 3}
   rotate_speed: 300
   duration_secs: 0
+  turn_count: 0
 --- !u!4 &2084200695
 Transform:
   m_ObjectHideFlags: 0
@@ -5440,7 +5444,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2084200696
 MonoBehaviour:
@@ -5464,6 +5468,8 @@ MonoBehaviour:
   btnRemove: {fileID: 443246818}
   btnConstruct: {fileID: 986483810}
   btnWatchVideo10TimesCoin: {fileID: 61383470}
+  coinReward: {fileID: 804935169}
+  pointReward: {fileID: 777107931}
   txtCoins: {fileID: 599393755}
   txtPoints: {fileID: 738667882}
   txtLevel: {fileID: 1105619415}
@@ -5504,7 +5510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38c2e60c17140344fae767519ba749cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayZone: {fileID: 1128859817}
+  PlayZone: {fileID: 1229937569}
   s_valves: []
   pipes:
   - {fileID: 8913634226539356029, guid: bad8b37a07be7af4da1813ee36793532, type: 3}
@@ -5515,8 +5521,9 @@ MonoBehaviour:
   - {fileID: 1820926538423632151, guid: 1e7b8732a49382346a53018da67b8f49, type: 3}
   rotate_speed: 300
   duration_secs: 0
-  hand: {fileID: 5380729859762908493, guid: 3bb1d43e459e5434d810aa19cae37911, type: 3}
-  h_text: {fileID: 1021819565}
+  turn_count: 0
+  hand: {fileID: 5380729859762908493, guid: c01f1c6ed78bdaa47b6b2d1944053f0f, type: 3}
+  text_tutorial: {fileID: 1021819565}
 --- !u!114 &2084200699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5529,7 +5536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e251826c27f092742ae069528dddd881, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayZone: {fileID: 1128859817}
+  PlayZone: {fileID: 1229937569}
   s_valves: []
   pipes:
   - {fileID: 8913634226539356029, guid: bad8b37a07be7af4da1813ee36793532, type: 3}
@@ -5540,6 +5547,7 @@ MonoBehaviour:
   - {fileID: 1820926538423632151, guid: 1e7b8732a49382346a53018da67b8f49, type: 3}
   rotate_speed: 300
   duration_secs: 0
+  turn_count: 0
 --- !u!1 &2087101478
 GameObject:
   m_ObjectHideFlags: 0

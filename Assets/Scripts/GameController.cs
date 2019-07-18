@@ -4,15 +4,17 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.Events;
 using System;
+using UnityEngine.UI;
 
 public abstract class GameController : MonoBehaviour
 {
     
-    public GameObject PlayZone;
+    public RectTransform PlayZone;
     public Sprite[] s_valves;
     public GameObject[] pipes;
     public int rotate_speed;
     public float duration_secs;
+    public int turn_count;
 
     protected GameObject valve;
     protected GameObject[,] m_clones;
@@ -20,26 +22,24 @@ public abstract class GameController : MonoBehaviour
     protected int row;
     protected int col;
 
-    protected float scale;
+
     protected string[] str_results;
 
     protected bool stop_time;
+    protected bool animPlaying;
 
     public abstract void loadLevelData();
-    public void stopTime()
-    {
-        stop_time = true;
-    }
+    //public void stopTime()
+    //{
+    //    stop_time = true;
+    //}
 
 
     public abstract void setupLevel();
 
-
-
-
     private void Awake()
     {
-
+        
     }
 
     // Start is called before the first frame update
@@ -72,6 +72,30 @@ public abstract class GameController : MonoBehaviour
         }
     }
 
+    // ok
+    public virtual IEnumerator removePipe(GameObject gameObject)
+    {
+        gameObject.GetComponent<Button>().interactable = false;
+        float speed = 2f;
+        float alpha = 1f;
+        while (true)
+        {
+            if (alpha > 0)
+            {
+                alpha -= speed * Time.deltaTime;
+                gameObject.GetComponent<Image>().color = new Color(1f, 1f, 1f, alpha);
+                yield return 0;
+            }
+            else
+            {
+                gameObject.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
+                break;
+            }
+        }
+        Destroy(gameObject);
+    }
+
+    // ok
     public bool constructPipes(int k)
     {
         int c_len = (str_results.Length - 1) / 3 + 1;
@@ -83,42 +107,21 @@ public abstract class GameController : MonoBehaviour
             int x = int.Parse(pairs[1]);
             int rotation = int.Parse(pairs[2]);
             int c_rotation = m_clones[y, x].GetComponent<PipeProperties>().rotation;
-            if (m_clones[y, x].tag != "valve")
+            if (i == 0)
             {
-                m_clones[y, x].GetComponent<BoxCollider2D>().enabled = false;
-                m_clones[y, x].GetComponent<Animator>().Play("correct");
+                m_clones[y, x].transform.Find("Valve").GetComponent<Animator>().Play("correct");
             }
-            else m_clones[y, x].transform.Find("Valve").GetComponent<Animator>().Play("correct");
-            //if(m_clones[y,x].name != "CrossObject(Clone)") 
+            else
+            {
+                m_clones[y, x].GetComponent<Button>().interactable = false;
+                m_clones[y, x].GetComponent<Animator>().Play("correct");
+            } 
             StartCoroutine(rotatePipe(m_clones[y, x], rotation - c_rotation, rotate_speed * 2));
         }
         if (i == str_results.Length - 1) return true;
         return false;
 
     }
-
-    public virtual IEnumerator removePipe(GameObject gameObject)
-    {
-        gameObject.GetComponent<BoxCollider2D>().enabled = false;
-        float speed = 2f;
-        float alpha = 1f;
-        while (true)
-        {
-            if (alpha > 0)
-            {
-                alpha -= speed * Time.deltaTime;
-                gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, alpha);
-                yield return 0;
-            }
-            else
-            {
-                gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0f);
-                break;
-            }
-        }
-        Destroy(gameObject);
-    }
-
 
     public virtual IEnumerator rotatePipe(GameObject gameObject, int k, float speed)
     {
@@ -182,7 +185,8 @@ public abstract class GameController : MonoBehaviour
             }
         }
     }
-
+    
+    // hold
     public virtual bool checkPipes(out List<GameObject> list_results, out List<int> list_ds)
     {
         list_results = new List<GameObject>();
@@ -224,6 +228,58 @@ public abstract class GameController : MonoBehaviour
             list_ds.Add(dir);
         } while (go.tag != "finish_pipe");
         return true;
+    }
+
+    protected void playAnimation(List<GameObject> list_results, List<int> list_ds)
+    {
+        EventDispatcher.Instance.PostEvent(EventID.PipeAnimationStart, this);
+        animPlaying = true;
+        stop_time = true;
+        for (int i = 0; i < list_results.Count - 1; i++)
+        {
+            PipeProperties pp = list_results[i].GetComponent<PipeProperties>();
+            pp.next[pp.i] = list_results[i + 1];
+            pp.next_in[pp.i] = list_ds[i + 1];
+            pp.i++;
+        }
+        for (int i = 0; i < list_results.Count - 1; i++)
+        {
+            list_results[i].GetComponent<PipeProperties>().i = 0;
+            list_results[i + 1].GetComponent<Animator>().Play("Idle");
+            Button button = list_results[i].GetComponent<Button>();
+            if (button != null) button.interactable = true;
+        }
+        list_results[0].GetComponentsInChildren<Animator>()[0].Play("valvebg", -1, 1 - getStar() / 3f);
+        list_results[0].GetComponentsInChildren<Animator>()[1].Play("valve");
+    }
+
+    protected virtual void OnPipeClick(GameObject go)
+    {
+        if (!animPlaying)
+        {
+            turn_count++;
+            StartCoroutine(rotatePipe(go, 1, rotate_speed));
+        }
+        else
+        {
+            EventDispatcher.Instance.PostEvent(EventID.StopAnimation, this);
+            EventDispatcher.Instance.PostEvent(EventID.PipeAnimationEnd, this);
+        }
+    }
+
+    protected virtual void OnValveClick()
+    {
+        if (!animPlaying)
+        {
+            List<GameObject> list_results;
+            List<int> list_dirs;
+            if (checkPipes(out list_results, out list_dirs)) playAnimation(list_results, list_dirs);
+        }
+        else
+        {
+            EventDispatcher.Instance.PostEvent(EventID.StopAnimation, this);
+            EventDispatcher.Instance.PostEvent(EventID.PipeAnimationEnd, this);
+        }
     }
 
     public abstract int getStar();

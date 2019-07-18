@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
+using UnityEngine.UI;
 
 public class ChallengeModeController : GameController
 {
@@ -39,14 +40,15 @@ public class ChallengeModeController : GameController
         }
     }
 
-    
-
+    // ok
     public override void setupLevel()
     {
+        turn_count = 0;
         duration_secs = 0f;
         stop_time = false;
+        animPlaying = false;
         m_clones = new GameObject[row, col];
-        PlayZone.transform.localScale = new Vector3(1f, 1f, 1f);
+        float pipe_size = Mathf.Min(PlayZone.rect.width / 1000, PlayZone.rect.height / 1500) * 250 * 4 / col;
         System.Random rd = new System.Random();
         for (int i = 0; i < row; i++)
         {
@@ -59,13 +61,13 @@ public class ChallengeModeController : GameController
                     
                     Vector3 position;
                     position.z = 0;
-                    position.y = ((row / 2 - i) - 0.5f) * 1.4f;
-                    position.x = ((j - col / 2) + 0.5f) * 1.4f;
-                    Quaternion rotation;
+                    position.y = ((row / 2 - i) - 0.5f) * pipe_size;
+                    position.x = ((j - col / 2) + 0.5f) * pipe_size;
                     if (index == 4 || index == 5)
                     {
-                        rotation = Quaternion.Euler(0f, 0f, -angle * 90);
-                        GameObject go = Instantiate(pipes[index], position, rotation, PlayZone.transform);
+                        GameObject go = Instantiate(pipes[index], Vector3.zero, Quaternion.Euler(0f, 0f, -angle * 90), PlayZone.transform);
+                        go.GetComponent<RectTransform>().anchoredPosition3D = position;
+                        go.GetComponent<RectTransform>().sizeDelta = new Vector2(pipe_size, pipe_size);
                         go.GetComponent<PipeProperties>().row = i;
                         go.GetComponent<PipeProperties>().col = j;
                         go.GetComponent<PipeProperties>().rotation = angle;
@@ -73,25 +75,25 @@ public class ChallengeModeController : GameController
                         if (index == 4)
                         {
                             valve = go;
-                            valve.GetComponentsInChildren<Transform>()[2].eulerAngles = Vector3.zero;
+                            valve.transform.Find("Valve_bg").eulerAngles = Vector3.zero;
+                            valve.GetComponentInChildren<Button>().onClick.AddListener(()=> { OnValveClick(); });
                         }
                     }
                     else
                     {
                         angle = rd.Next(0, 3);
-                        rotation = Quaternion.Euler(0f, 0f, -angle * 90);
-                        //StartCoroutine(rotatePipe(gameObject));
-                        GameObject go = Instantiate(pipes[index], position, rotation,PlayZone.transform);
+                        GameObject go = Instantiate(pipes[index], Vector3.zero, Quaternion.Euler(0f, 0f, -angle * 90), PlayZone.transform);
+                        go.GetComponent<RectTransform>().anchoredPosition3D = position;
+                        go.GetComponent<RectTransform>().sizeDelta = new Vector2(pipe_size, pipe_size);
                         go.GetComponent<PipeProperties>().row = i;
                         go.GetComponent<PipeProperties>().col = j;
                         go.GetComponent<PipeProperties>().rotation = angle;
+                        go.GetComponent<Button>().onClick.AddListener(()=> { OnPipeClick(go); });
                         m_clones[i, j] = go;
                         StartCoroutine(rotatePipe(go, 1, rotate_speed));
                     }
                 }
             }
         }
-        scale = 4.0f / col;
-        PlayZone.transform.localScale = new Vector3(scale, scale, scale);
     }
 }

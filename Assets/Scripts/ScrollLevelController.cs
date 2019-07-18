@@ -119,8 +119,7 @@ public class ScrollLevelController : MonoBehaviour, IBeginDragHandler, IEndDragH
 
     // Update is called once per frame
     void Update()
-    {
-        Debug.Log("width: " + scroll.GetComponent<RectTransform>().rect.width + "---height: " + scroll.GetComponent<RectTransform>().rect.height); ;
+    { 
         int x = (int)System.Math.Abs(content.anchoredPosition.x + 600) % 1100;
         if (x < 200)
         {

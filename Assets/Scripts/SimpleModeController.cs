@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
+using UnityEngine.UI;
 
 public class SimpleModeController : GameController
 {
-    
     private float timer;
     private float[] t_stars = { 0, 0, 0 };
     private int[,] m_pipes;
@@ -38,16 +38,19 @@ public class SimpleModeController : GameController
         }
     }
 
+    // ok
     public override void setupLevel()
     {
+        turn_count = 0;
         duration_secs = 0f;
         star = 3;
         t_stars[1] = timer;
         t_stars[2] = timer * 2;
         timer = timer * 3;
         stop_time = false;
+        animPlaying = false;
         m_clones = new GameObject[row, col];
-        PlayZone.transform.localScale = new Vector3(1f, 1f, 1f);
+        float pipe_size = Mathf.Min(PlayZone.rect.width / 1000, PlayZone.rect.height / 1500) * 250 * 4 / col;
         System.Random rd = new System.Random();
         for (int i = 0; i < row; i++)
         {
@@ -60,14 +63,14 @@ public class SimpleModeController : GameController
                     
                     Vector3 position;
                     position.z = 0;
-                    position.y = ((row / 2 - i) - 0.5f) * 1.4f;
-                    position.x = ((j - col / 2) + 0.5f) * 1.4f;
-                    Quaternion rotation;
+                    position.y = ((row / 2 - i) - 0.5f) * pipe_size;
+                    position.x = ((j - col / 2) + 0.5f) * pipe_size;
+
                     if (index == 4 || index == 5)
                     {
-                        rotation = Quaternion.Euler(0f, 0f, -angle * 90);
-                        GameObject go = Instantiate(pipes[index], position, rotation, PlayZone.transform);
-                       
+                        GameObject go = Instantiate(pipes[index], Vector3.zero, Quaternion.Euler(0f, 0f, -angle * 90), PlayZone.transform);
+                        go.GetComponent<RectTransform>().anchoredPosition3D = position;
+                        go.GetComponent<RectTransform>().sizeDelta = new Vector2(pipe_size, pipe_size);
                         go.GetComponent<PipeProperties>().row = i;
                         go.GetComponent<PipeProperties>().col = j;
                         go.GetComponent<PipeProperties>().rotation = angle;
@@ -75,29 +78,27 @@ public class SimpleModeController : GameController
                         if (index == 4)
                         {
                             valve = go;
-                            //go.transform.GetChild(1).eulerAngles += new Vector3(0f, 0f, angle * 90);
                             valvebg = go.transform.Find("Valve_bg").gameObject;
                             valvebg.transform.eulerAngles = Vector3.zero;
+                            go.transform.Find("Valve").gameObject.GetComponent<Button>().onClick.AddListener(() => { OnValveClick(); });
                         }
                     }
                     else
                     {
                         angle = rd.Next(0, 3);
-                        rotation = Quaternion.Euler(0f, 0f, -angle * 90);
-                        //StartCoroutine(rotatePipe(gameObject));
-                        GameObject go = Instantiate(pipes[index], position, rotation,PlayZone.transform);
+                        GameObject go = Instantiate(pipes[index], Vector3.zero, Quaternion.Euler(0f, 0f, -angle * 90), PlayZone.transform);
+                        go.GetComponent<RectTransform>().anchoredPosition3D = position;
+                        go.GetComponent<RectTransform>().sizeDelta = new Vector2(pipe_size, pipe_size);
                         go.GetComponent<PipeProperties>().row = i;
                         go.GetComponent<PipeProperties>().col = j;
                         go.GetComponent<PipeProperties>().rotation = angle;
+                        go.GetComponent<Button>().onClick.AddListener(() => { OnPipeClick(go); });
                         m_clones[i, j] = go;
                         StartCoroutine(rotatePipe(go, 1, rotate_speed));
                     }
                 }
             }
         }
-        scale = 4.0f / col;
-        PlayZone.transform.localScale = new Vector3(scale, scale, scale);
-        
     }
 
     private void Start()
