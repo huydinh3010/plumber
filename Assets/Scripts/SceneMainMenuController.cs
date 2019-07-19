@@ -104,7 +104,12 @@ public class SceneMainMenuController : MonoBehaviour
 
     public void BtnMoreGameOnClick()
     {
-
+        // miss id
+#if UNITY_ANDROID
+        Application.OpenURL("market://details?id=YOUR_ID");
+#elif UNITY_IPHONE
+ Application.OpenURL("itms-apps://itunes.apple.com/app/idYOUR_ID");
+#endif
     }
 
     public void BtnCloseOnPanelOnClick(GameObject panel)
@@ -114,9 +119,13 @@ public class SceneMainMenuController : MonoBehaviour
 
     public void BtnRateOnPanelOnClick()
     {
-        // test
-        //AdManager.Instance.ShowRewardedVideo();
-        //
+        GameData.Instance.rate = true;
+        // miss id
+#if UNITY_ANDROID
+        Application.OpenURL("market://details?id=" + Application.productName);
+#elif UNITY_IPHONE
+ Application.OpenURL("itms-apps://itunes.apple.com/app/idYOUR_ID");
+#endif
     }
 
     private void OnDestroy()

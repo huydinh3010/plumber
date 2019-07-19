@@ -15,6 +15,7 @@ public class GamePlaySceneController : MonoBehaviour
     public Button btnSound;
     public Button btnRemove;
     public Button btnConstruct;
+    public Button btnAddCoin;
     public Button btnWatchVideo10TimesCoin;
     public Image coinReward;
     public Image pointReward;
@@ -85,6 +86,7 @@ public class GamePlaySceneController : MonoBehaviour
             game = GetComponent<ChallengeModeController>();
             tutorial = false;
         }
+        btnAddCoin.interactable = true;
         btnRemove.interactable = GameData.Instance.coins >= 50;
         btnConstruct.interactable = GameData.Instance.coins >= 25;
         if (GameData.Instance.sound_on) btnSound.GetComponent<Image>().sprite = s_sounds[1];
@@ -109,6 +111,7 @@ public class GamePlaySceneController : MonoBehaviour
     {
         btnConstruct.interactable = false;
         btnRemove.interactable = false;
+        btnAddCoin.interactable = false;
     }
 
     private void endGame(object param)
@@ -379,6 +382,17 @@ public class GamePlaySceneController : MonoBehaviour
             nextLevel();
         }
 
+    }
+
+    public void btnRateOnPanelOnClick()
+    {
+        GameData.Instance.rate = true;
+        // miss id
+#if UNITY_ANDROID
+        Application.OpenURL("market://details?id=" + Application.productName);
+#elif UNITY_IPHONE
+ Application.OpenURL("itms-apps://itunes.apple.com/app/idYOUR_ID");
+#endif
     }
 
     private void OnDestroy()

@@ -461,6 +461,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 290201641}
+  - component: {fileID: 290201642}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -487,6 +488,18 @@ RectTransform:
   m_AnchoredPosition: {x: -600, y: 0}
   m_SizeDelta: {x: 38600, y: 900}
   m_Pivot: {x: 0, y: 0.5}
+--- !u!225 &290201642
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290201640}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &443406631
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,7 +1214,7 @@ MonoBehaviour:
   btnArrowRight: {fileID: 487363862}
   txtPackNumber: {fileID: 1365202820}
   speed_movement: 5000
-  material: {fileID: 2100000, guid: 7de8c31f202be3148bd95a3768495116, type: 2}
+  canvasContent: {fileID: 290201642}
 --- !u!1 &1365202818
 GameObject:
   m_ObjectHideFlags: 0

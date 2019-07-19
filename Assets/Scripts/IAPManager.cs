@@ -22,17 +22,19 @@ public class IAPManager : MonoBehaviour, IStoreListener
         if(Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            //DontDestroyOnLoad(this.gameObject);
         }
     }
 
     void Start()
     {
-        if (m_StoreController == null && GameData.Instance.ads_on)
-        {
-            InitializePurchasing();
-        }
+        //if (m_StoreController == null && GameData.Instance.ads_on)
+        //{
+        //    InitializePurchasing();
+        //}
     }
+
+    
 
     public void InitializePurchasing()
     {

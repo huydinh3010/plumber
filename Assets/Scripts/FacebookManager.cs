@@ -14,11 +14,16 @@ public class FacebookManager : MonoBehaviour
         if(Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            //DontDestroyOnLoad(this.gameObject);
         }
     }
 
     private void Start()
+    {
+        
+    }
+
+    public void Initialize()
     {
         FB.Init(SetInit, OnHideUnity);
     }

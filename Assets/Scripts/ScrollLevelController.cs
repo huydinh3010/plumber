@@ -10,7 +10,7 @@ public class ScrollLevelController : MonoBehaviour, IBeginDragHandler, IEndDragH
     public Button btnArrowRight;
     public Text txtPackNumber;
     public float speed_movement;
-    public Material material;
+    public CanvasGroup canvasContent;
     private RectTransform content;
     private ScrollRect scroll;
     private int currentPage;
@@ -115,6 +115,7 @@ public class ScrollLevelController : MonoBehaviour, IBeginDragHandler, IEndDragH
         currentPage = (GameCache.Instance.level_selected - 1) / 16;
         content.anchoredPosition = new Vector3(-currentPage * 1100 - 600, 0, 0);
         txtPackNumber.text = "PACK " + (currentPage + 1).ToString() + "/35";
+        
     }
 
     // Update is called once per frame
@@ -124,17 +125,17 @@ public class ScrollLevelController : MonoBehaviour, IBeginDragHandler, IEndDragH
         if (x < 200)
         {
             scroll.transform.localScale = new Vector3(1 - 0.00075f * x, 1 - 0.00075f * x, 1);
-            material.color = new Color(1f, 1f, 1f, 1 - 0.0015f * x);
+            canvasContent.alpha = 1 - 0.0015f * x;
         }
         else if (x > 900)
         {
             scroll.transform.localScale = new Vector3(0.00075f * x + 0.175f, 0.00075f * x + 0.175f, 1);
-            material.color = new Color(1f, 1f, 1f, 0.0015f * x - 0.65f);
+            canvasContent.alpha = 0.0015f * x - 0.65f;
         }
         else
         {
             scroll.transform.localScale = new Vector3(0.85f, 0.85f, 1);
-            material.color = new Color(1f, 1f, 1f, 0.7f);
+            canvasContent.alpha = 0.7f;
         }
     }
 }

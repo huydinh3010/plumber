@@ -1491,7 +1491,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 596110019}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2084200696}
+        m_MethodName: btnRateOnPanelOnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &596110019
@@ -3265,7 +3276,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 3864.459}
+  m_AnchoredPosition: {x: 0, y: 7788.1533}
   m_SizeDelta: {x: 0, y: 400}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1185581689
@@ -5467,6 +5478,7 @@ MonoBehaviour:
   btnSound: {fileID: 899958782}
   btnRemove: {fileID: 443246818}
   btnConstruct: {fileID: 986483810}
+  btnAddCoin: {fileID: 2027172887}
   btnWatchVideo10TimesCoin: {fileID: 61383470}
   coinReward: {fileID: 804935169}
   pointReward: {fileID: 777107931}

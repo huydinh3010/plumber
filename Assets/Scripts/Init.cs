@@ -11,9 +11,6 @@ public class Init : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(this);
-        GameData.Instance.LoadDataFromFile();
-        Application.logMessageReceived += Application_logMessageReceived;
-        SceneManager.LoadScene("MainMenu");
     }
 
     private void Application_logMessageReceived(string condition, string stackTrace, LogType type)
@@ -38,7 +35,14 @@ public class Init : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //AdManager.Instance.Initialize();   
+        //Application.logMessageReceived += Application_logMessageReceived;
+        
+        SceneManager.LoadScene("MainMenu");
+        GameData.Instance.LoadDataFromFile();
+        IAPManager.Instance.InitializePurchasing();
+        FirebaseManager.Instance.Initialize();
+        FacebookManager.Instance.Initialize();
+        AdManager.Instance.Initialize();
     }
 
     private void OnDisable()
@@ -51,10 +55,10 @@ public class Init : MonoBehaviour
         
     }
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    //void Update()
+    //{
+    //    //Debug.Log("Loading");
+    //}
 
     private void OnApplicationPause(bool pause)
     {

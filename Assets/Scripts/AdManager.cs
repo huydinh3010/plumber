@@ -17,11 +17,16 @@ public class AdManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            //DontDestroyOnLoad(this.gameObject);
         }
     }
     // Start is called before the first frame update
     void Start()
+    {
+
+    }
+
+    public void Initialize()
     {
 #if UNITY_ANDROID
         string appId = "ca-app-pub-3940256099942544~3347511713";
