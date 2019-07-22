@@ -2,77 +2,131 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SceneController : MonoBehaviour
 {
     public float speed;
-    public Texture2D transitionTexture;
+    public Image transitionImage;
+    public Canvas canvas;
+    private Image clone;
     private float alpha;
     private bool closing;
     private bool opening;
     private string nextSceneName;
-    private bool loading;
 
     public void loadScene(string name)
     {
-        alpha = 0f;
-        closing = true;
-        nextSceneName = name;
+        if (!closing)
+        {
+            alpha = 0f;
+            closing = true;
+            nextSceneName = name;
+            clone = Instantiate(transitionImage, Vector3.zero, Quaternion.identity, canvas.transform);
+            clone.color = new Color(1, 1, 1, 0);
+            
+            StartCoroutine(playCloseEffect());
+        }
     }
 
     public void openScene()
     {
-        alpha = 1f;
-        opening = true;
+        if (!opening)
+        {
+            alpha = 1f;
+            opening = true;
+            clone = Instantiate(transitionImage, Vector3.zero, Quaternion.identity, canvas.transform);
+            clone.color = new Color(1, 1, 1, 1);
+            
+            StartCoroutine(playOpenEffect());
+        }
     }
 
-    private void playCloseEffect()
+    IEnumerator playCloseEffect()
     {
-        alpha += speed * Time.deltaTime;
-        if (alpha > 1f)
+        while (alpha < 1 )
         {
-            if (!loading)
+            alpha += speed * Time.deltaTime;
+            if(alpha < 1)
             {
-                loading = true;
+                clone.color = new Color(1, 1, 1, alpha);
+            }
+            else
+            {
+                clone.color = new Color(1, 1, 1, 1);
                 SceneManager.LoadScene(nextSceneName);
             }
-            GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, 1);
+            yield return 1;
+        }
+        
+    }
+
+    IEnumerator playOpenEffect()
+    {
+        while (alpha > 0.1f)
+        {
+            alpha -= speed * Time.deltaTime ;
+            if (alpha > 0.1f)
+            {
+                clone.color = new Color(1, 1, 1, alpha);
+            }
+            else
+            {
+                clone.color = new Color(1, 1, 1, 0);
+            }
+            yield return 1;
+        }
+        Destroy(clone);
+    }
+
+    //private void playCloseEffect()
+    //{
+    //    alpha += speed * Time.deltaTime;
+    //    if (alpha > 1f)
+    //    {
+    //        if (!loading)
+    //        {
+    //            loading = true;
+    //            SceneManager.LoadScene(nextSceneName);
+    //        }
+    //        GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, 1);
            
-        }
-        else
-        {
-            GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, alpha);
-        }
-        GUI.depth = -10;
-        GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), transitionTexture);
-    }
+    //    }
+    //    else
+    //    {
+    //        GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, alpha);
+    //    }
+    //    GUI.depth = -10;
+    //    GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), transitionTexture);
+       
+    //}
 
-    private void playOpenEffect()
-    {
-        alpha -= speed * Time.deltaTime;
-        if (alpha < 0)
-        {
-            opening = false;
-        }
-        else
-        {
-            GUI.depth = -10;
-            GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, alpha);
-            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), transitionTexture);
-        }
-    }
+    //private void playOpenEffect()
+    //{
+    //    alpha -= speed * Time.deltaTime;
+    //    if (alpha < 0)
+    //    {
+    //        opening = false;
+    //    }
+    //    else
+    //    {
+    //        GUI.depth = -10;
+    //        GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, alpha);
+    //        GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), transitionTexture);
+    //    }
+    //}
 
-    private void OnGUI()
-    {
-        if (closing)
-        {
-            playCloseEffect();
-        }
-        else if (opening)
-        {
-            playOpenEffect();
-        }
-    }
+    //private void OnGUI()
+    //{
+    //    if (closing)
+    //    {
+    //        playCloseEffect();
+    //    }
+    //    else if (opening)
+    //    {
+    //        playOpenEffect();
+    //    }
+    //}
 
     // Start is called before the first frame update
     void Start()

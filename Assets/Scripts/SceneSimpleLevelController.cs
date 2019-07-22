@@ -13,7 +13,11 @@ public class SceneSimpleLevelController : MonoBehaviour
     public GameObject UnlockLv;
     public GameObject LockLv;
     public GameObject ContentObj;
+    public GameObject panelAddCoin;
+    public GameObject panelLastLevel;
     public Text txtCoins;
+
+    private bool panelShowing;
 
     private void Awake()
     {
@@ -21,7 +25,6 @@ public class SceneSimpleLevelController : MonoBehaviour
         txtCoins.text = GameData.Instance.coins.ToString();
         for(int p = 0; p < 35; p++)
         {
-
             GameObject goGridClone = Instantiate(Grid, Vector3.zero, Quaternion.identity, ContentObj.transform);
             goGridClone.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(-18700 + 1100 * p, 0, 0);
             for (int i = 0; i < 4; i++)
@@ -60,8 +63,19 @@ public class SceneSimpleLevelController : MonoBehaviour
                 }
             }
         }
-        
+        if (GameCache.Instance.lastLevel)
+        {
+            showPanel(panelLastLevel);
+            GameCache.Instance.lastLevel = false;
+        }
+        EventDispatcher.Instance.RegisterListener(EventID.OnCoinChange, OnCoinChange);
     }
+
+    private void OnCoinChange(object param)
+    {
+        txtCoins.text = GameData.Instance.coins.ToString();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -74,7 +88,17 @@ public class SceneSimpleLevelController : MonoBehaviour
         
     }
 
+    private void showPanel(GameObject panel)
+    {
+        panel.GetComponent<Animator>().Play("Show");
+        panelShowing = true;
+    }
 
+    private void closePanel(GameObject panel)
+    {
+        panel.GetComponent<Animator>().Play("Close");
+        panelShowing = false;
+    }
 
     public void BtnBackOnClick()
     {
@@ -90,13 +114,42 @@ public class SceneSimpleLevelController : MonoBehaviour
 
     public void BtnAddCoinOnClick()
     {
-
+        showPanel(panelAddCoin);
     }
     
+    public void BtnCloseOnPanelOnClick(GameObject target)
+    {
+        if (panelShowing) closePanel(target);
+    }
+
+    public void BtnWatchVideoOnPanelOnClick()
+    {
+        if (panelShowing)
+        {
+            bool hasVideo = AdManager.Instance.ShowRewardVideo(() =>
+            {
+                GameData.Instance.increaseCoin(10);
+            });
+            FirebaseManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.level_selected);
+            FacebookManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.level_selected);
+        }
+    }
+
+    public void BtnShareFbOnPanelOnClick()
+    {
+        if (panelShowing)
+        {
+            FacebookManager.Instance.ShareWithFriends(() => {
+                GameData.Instance.increaseCoin(50);
+                FirebaseManager.Instance.LogEventShareFacebook();
+                FacebookManager.Instance.LogEventShareFacebook();
+            });
+        }
+    }
     
 
     private void OnDestroy()
     {
-        
+        EventDispatcher.Instance.RemoveListener(EventID.OnCoinChange, OnCoinChange);
     }
 }

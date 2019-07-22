@@ -15,6 +15,7 @@ public abstract class GameController : MonoBehaviour
     public int rotate_speed;
     public float duration_secs;
     public int turn_count;
+    public bool panelShowing;
 
     protected GameObject valve;
     protected GameObject[,] m_clones;
@@ -27,8 +28,8 @@ public abstract class GameController : MonoBehaviour
 
     protected bool stop_time;
     protected bool animPlaying;
-
     public abstract void loadLevelData();
+
     //public void stopTime()
     //{
     //    stop_time = true;
@@ -37,15 +38,15 @@ public abstract class GameController : MonoBehaviour
 
     public abstract void setupLevel();
 
+
     private void Awake()
     {
-        
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
 
     }
 
@@ -118,7 +119,7 @@ public abstract class GameController : MonoBehaviour
             } 
             StartCoroutine(rotatePipe(m_clones[y, x], rotation - c_rotation, rotate_speed * 2));
         }
-        if (i == str_results.Length - 1) return true;
+        if (i >= str_results.Length - 1) return true;
         return false;
 
     }
@@ -255,7 +256,7 @@ public abstract class GameController : MonoBehaviour
 
     protected virtual void OnPipeClick(GameObject go)
     {
-        if (!animPlaying)
+        if (!animPlaying && !panelShowing)
         {
             turn_count++;
             StartCoroutine(rotatePipe(go, 1, rotate_speed));
@@ -269,7 +270,7 @@ public abstract class GameController : MonoBehaviour
 
     protected virtual void OnValveClick()
     {
-        if (!animPlaying)
+        if (!animPlaying && !panelShowing)
         {
             List<GameObject> list_results;
             List<int> list_dirs;

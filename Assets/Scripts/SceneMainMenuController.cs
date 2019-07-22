@@ -20,6 +20,7 @@ public class SceneMainMenuController : MonoBehaviour
     public Sprite[] btnDaysActive;
     public Sprite[] btnDaysPassed;
     private int[] rewards = { 10, 25, 50, 75, 100 };
+    private bool panelShowing;
 
     private void Awake()
     {
@@ -33,12 +34,10 @@ public class SceneMainMenuController : MonoBehaviour
             }
             btnDays[i].GetComponent<Image>().sprite = btnDaysActive[i];
             btnDays[i].enabled = true;
-            panelDailyReward.GetComponent<Animator>().Play("Show");
+            showPanel(panelDailyReward);
         }
         btnRemoveAds.SetActive(GameData.Instance.ads_on);
     }
-
-    
 
     // Start is called before the first frame update
     void Start()
@@ -69,30 +68,48 @@ public class SceneMainMenuController : MonoBehaviour
 
     public void BtnRateOnClick()
     {
-        panelRate.GetComponent<Animator>().Play("Show");
+        showPanel(panelRate);
     }
 
     public void BtnDayOnPanelDailyRewardOnClick(int k)
     {
-        if(k == GameData.Instance.continueDay - 1)
+        if (panelShowing)
         {
-            btnDays[k].GetComponent<Image>().sprite = btnDaysPassed[k];
-            GameData.Instance.increaseCoin(rewards[k]);
-            btnDays[k].enabled = false;
-            GameData.Instance.clampDailyReward = true;
-            StartCoroutine(WaitForClosePanel());
+            if (k == GameData.Instance.continueDay - 1)
+            {
+                btnDays[k].GetComponent<Image>().sprite = btnDaysPassed[k];
+                GameData.Instance.increaseCoin(rewards[k]);
+                btnDays[k].enabled = false;
+                GameData.Instance.clampDailyReward = true;
+                StartCoroutine(WaitForClosePanel());
+            }
         }
     }
 
     private IEnumerator WaitForClosePanel()
     {
-        yield return new WaitForSeconds(1);
-        panelDailyReward.GetComponent<Animator>().Play("Close");
+        yield return new WaitForSeconds(0.5f);
+        closePanel(panelDailyReward);
+    }
+
+    private void showPanel(GameObject panel)
+    {
+        if (!panelShowing)
+        {
+            panel.GetComponent<Animator>().Play("Show");
+            panelShowing = true;
+        }
+    }
+
+    private void closePanel(GameObject panel)
+    {
+        panel.GetComponent<Animator>().Play("Close");
+        panelShowing = false;
     }
 
     public void BtnPlayServicesOnClick()
     {
-        panelPlayServices.GetComponent<Animator>().Play("Show");
+        showPanel(panelPlayServices);
     }
 
     public void BtnHelpOnClick()
@@ -114,18 +131,21 @@ public class SceneMainMenuController : MonoBehaviour
 
     public void BtnCloseOnPanelOnClick(GameObject panel)
     {
-        panel.GetComponent<Animator>().Play("Close");
+        if(panelShowing) closePanel(panel);
     }
 
     public void BtnRateOnPanelOnClick()
     {
-        GameData.Instance.rate = true;
-        // miss id
+        if (panelShowing)
+        {
+            GameData.Instance.rate = true;
+            // miss id
 #if UNITY_ANDROID
-        Application.OpenURL("market://details?id=" + Application.productName);
+            Application.OpenURL("market://details?id=" + Application.productName);
 #elif UNITY_IPHONE
  Application.OpenURL("itms-apps://itunes.apple.com/app/idYOUR_ID");
 #endif
+        }
     }
 
     private void OnDestroy()

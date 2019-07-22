@@ -13,8 +13,10 @@ public class GameCache
     public int mode;
     //public bool isNextDay;
     public bool firstGameLoad;
+    public bool lastLevel;
     private int rate_c;
     private int ads_c;
+
 
     public bool canShowRatePanel()
     {
