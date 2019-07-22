@@ -128,7 +128,6 @@ public class SimpleModeController : GameController
                 star = 1;
                 valvebg.GetComponent<Animator>().Play("Idle2");
             }
-           
         }
     }
 

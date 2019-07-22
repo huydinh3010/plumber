@@ -197,13 +197,14 @@ public abstract class GameController : MonoBehaviour
         int[] dy = { -1, 0, 1, 0 };
         int[] dd = { 2, 3, 0, 1 };
         GameObject go = valve;
-        int dir = 0;
+        int dir = go.GetComponent<PipeProperties>().rotation;
         int x = go.GetComponent<PipeProperties>().col;
         int y = go.GetComponent<PipeProperties>().row;
         list_results.Add(valve);
         list_ds.Add(dir);
         do
         {
+            Debug.Log("dir: " + dir);
             // dir = dau vao
             PipeProperties pp = go.GetComponent<PipeProperties>();
             dir = (4 + dir - pp.rotation) % 4;
@@ -228,12 +229,15 @@ public abstract class GameController : MonoBehaviour
             list_results.Add(go);
             list_ds.Add(dir);
         } while (go.tag != "finish_pipe");
+        Debug.Log("true");
         return true;
+
     }
 
     protected void playAnimation(List<GameObject> list_results, List<int> list_ds)
     {
         EventDispatcher.Instance.PostEvent(EventID.PipeAnimationStart, this);
+        if (GameData.Instance.sound_on) AudioManager.Instance.Play("water");
         animPlaying = true;
         stop_time = true;
         for (int i = 0; i < list_results.Count - 1; i++)
@@ -256,6 +260,7 @@ public abstract class GameController : MonoBehaviour
 
     protected virtual void OnPipeClick(GameObject go)
     {
+        Debug.Log("Pipe click");
         if (!animPlaying && !panelShowing)
         {
             turn_count++;
@@ -263,13 +268,13 @@ public abstract class GameController : MonoBehaviour
         }
         else
         {
-            EventDispatcher.Instance.PostEvent(EventID.StopAnimation, this);
-            EventDispatcher.Instance.PostEvent(EventID.PipeAnimationEnd, this);
+            EventDispatcher.Instance.PostEvent(EventID.SkipAnimation, this);
         }
     }
 
     protected virtual void OnValveClick()
     {
+        Debug.Log("Valve click");
         if (!animPlaying && !panelShowing)
         {
             List<GameObject> list_results;
@@ -278,8 +283,7 @@ public abstract class GameController : MonoBehaviour
         }
         else
         {
-            EventDispatcher.Instance.PostEvent(EventID.StopAnimation, this);
-            EventDispatcher.Instance.PostEvent(EventID.PipeAnimationEnd, this);
+            EventDispatcher.Instance.PostEvent(EventID.SkipAnimation, this);
         }
     }
 

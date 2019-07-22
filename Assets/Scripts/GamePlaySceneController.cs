@@ -245,7 +245,11 @@ public class GamePlaySceneController : MonoBehaviour
     public void btnSoundOnClick()
     {
         GameData.Instance.sound_on = !GameData.Instance.sound_on;
-        if (GameData.Instance.sound_on) btnSound.GetComponent<Image>().sprite = s_sounds[1];
+        if (GameData.Instance.sound_on)
+        {
+            btnSound.GetComponent<Image>().sprite = s_sounds[1];
+            AudioManager.Instance.Play("button_sound");
+        }
         else btnSound.GetComponent<Image>().sprite = s_sounds[0];
     }
 

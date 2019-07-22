@@ -6,7 +6,7 @@ public class PipeAnimationEvent : MonoBehaviour
 {
     private void Start()
     {
-        EventDispatcher.Instance.RegisterListener(EventID.StopAnimation, stopAnimation);
+        EventDispatcher.Instance.RegisterListener(EventID.SkipAnimation, speedUp);
     }
 
     public void startNextAnimation()
@@ -19,6 +19,7 @@ public class PipeAnimationEvent : MonoBehaviour
         n_p.n_line++;
         c_p.i++;
         n_p.GetComponent<Animator>().Play(anim_state);
+        
         n_p.transform.eulerAngles -= new Vector3(0f, 0f, anim_rotation * 90);
         n_p.rotation = (n_p.rotation - anim_rotation) % 4;
     }
@@ -26,15 +27,16 @@ public class PipeAnimationEvent : MonoBehaviour
     public void endOfPipeLines()
     {
         EventDispatcher.Instance.PostEvent(EventID.PipeAnimationEnd, null);
+        if (GameData.Instance.sound_on) AudioManager.Instance.Stop("water");
     }
 
-    private void stopAnimation(object param)
+    private void speedUp(object param)
     {
-        GetComponent<Animator>().enabled = false;
+        GetComponent<Animator>().speed += 2f;
     }
 
     private void OnDestroy()
     {
-        EventDispatcher.Instance.RemoveListener(EventID.StopAnimation, stopAnimation);
+        EventDispatcher.Instance.RemoveListener(EventID.SkipAnimation, speedUp);
     }
 }

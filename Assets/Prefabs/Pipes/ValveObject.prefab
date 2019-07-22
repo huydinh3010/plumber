@@ -149,7 +149,7 @@ MonoBehaviour:
   col: 0
   rotation: 0
   n_line: 0
-  line: 00000000000000000000000000000000
+  line: 00000000ffffffffffffffffffffffff
   anim_state:
   - valve
   - 

@@ -11,6 +11,6 @@ public enum EventID
     OnLevelStarChange,
     PipeAnimationStart,
     PipeAnimationEnd,
-    StopAnimation,
+    SkipAnimation,
 }
 

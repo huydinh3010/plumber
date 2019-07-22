@@ -49,6 +49,7 @@ public class GameData
         {
             coins -= value;
             EventDispatcher.Instance.PostEvent(EventID.OnCoinChange, null);
+            if(sound_on) AudioManager.Instance.Play("coins_decrease");
             return true;
         }
         return false;
@@ -58,6 +59,7 @@ public class GameData
     {
         points += value;
         EventDispatcher.Instance.PostEvent(EventID.OnPointChange, null);
+        if(sound_on) AudioManager.Instance.Play("coins_reward");
     }
 
     public bool decreasePoint(int value)
