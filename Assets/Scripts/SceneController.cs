@@ -79,55 +79,6 @@ public class SceneController : MonoBehaviour
         Destroy(clone);
     }
 
-    //private void playCloseEffect()
-    //{
-    //    alpha += speed * Time.deltaTime;
-    //    if (alpha > 1f)
-    //    {
-    //        if (!loading)
-    //        {
-    //            loading = true;
-    //            SceneManager.LoadScene(nextSceneName);
-    //        }
-    //        GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, 1);
-           
-    //    }
-    //    else
-    //    {
-    //        GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, alpha);
-    //    }
-    //    GUI.depth = -10;
-    //    GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), transitionTexture);
-       
-    //}
-
-    //private void playOpenEffect()
-    //{
-    //    alpha -= speed * Time.deltaTime;
-    //    if (alpha < 0)
-    //    {
-    //        opening = false;
-    //    }
-    //    else
-    //    {
-    //        GUI.depth = -10;
-    //        GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, alpha);
-    //        GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), transitionTexture);
-    //    }
-    //}
-
-    //private void OnGUI()
-    //{
-    //    if (closing)
-    //    {
-    //        playCloseEffect();
-    //    }
-    //    else if (opening)
-    //    {
-    //        playOpenEffect();
-    //    }
-    //}
-
     // Start is called before the first frame update
     void Start()
     {

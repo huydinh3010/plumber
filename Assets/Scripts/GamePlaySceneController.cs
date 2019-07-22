@@ -125,7 +125,7 @@ public class GamePlaySceneController : MonoBehaviour
         }
         else if (GameCache.Instance.mode == 1)
         {
-            if (GameData.Instance.level_stars.Count > GameCache.Instance.level_selected)
+            if (GameData.Instance.level_stars[GameCache.Instance.level_selected - 1] > 0)
             {
                 int c_star = GameData.Instance.level_stars[GameCache.Instance.level_selected - 1];
                 int n_star = game.getStar();
@@ -146,6 +146,7 @@ public class GamePlaySceneController : MonoBehaviour
                     GameData.Instance.unlock_level++;
                     unlock_level = true;
                 }
+                GameData.Instance.level_durations = 0f;
                 btnWatchVideo10TimesCoin.interactable = true;
                 showPanel(panelPassedLevel);
             }

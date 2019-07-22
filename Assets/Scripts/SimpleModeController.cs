@@ -7,18 +7,17 @@ using UnityEngine.UI;
 
 public class SimpleModeController : GameController
 {
-    private float timer;
-    private float[] t_stars = { 0, 0, 0 };
+    private float star_time;
     private int[,] m_pipes;
-    private int star;
     private GameObject valvebg;
+    private int star;
 
     public override void loadLevelData()
     {
         var textAsset = Resources.Load<TextAsset>("levels/simple/" + GameCache.Instance.level_selected);
         string[] arr = textAsset.text.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
         int k = 0;
-        timer = int.Parse(arr[k++]);
+        star_time = int.Parse(arr[k++]);
 
         row = int.Parse(arr[k++]);
         col = int.Parse(arr[k++]);
@@ -41,12 +40,15 @@ public class SimpleModeController : GameController
     // ok
     public override void setupLevel()
     {
+        if(GameData.Instance.level_stars[GameCache.Instance.level_selected - 1] == 0)
+        {
+            duration_secs = GameData.Instance.level_durations;
+        }
+        else
+        {
+            duration_secs = 0f;
+        }
         turn_count = 0;
-        duration_secs = 0f;
-        star = 3;
-        t_stars[1] = timer;
-        t_stars[2] = timer * 2;
-        timer = timer * 3;
         stop_time = false;
         animPlaying = false;
         m_clones = new GameObject[row, col];
@@ -113,28 +115,36 @@ public class SimpleModeController : GameController
 
     protected override void Update()
     {
-        if (!stop_time) duration_secs += Time.deltaTime;
-        if (timer > 0 && !stop_time)
+        if (!stop_time)
         {
-            timer -= Time.deltaTime;
-            if (timer < t_stars[2] && star == 3)
+            duration_secs += Time.deltaTime;
+            if (duration_secs > star_time && duration_secs <= star_time * 2)
             {
                 star = 2;
                 valvebg.GetComponent<Animator>().Play("Idle1");
-                
             }
-            else if (timer < t_stars[1] && star == 2)
+            else if (duration_secs > star_time * 2)
             {
                 star = 1;
                 valvebg.GetComponent<Animator>().Play("Idle2");
             }
+
+           
         }
+
     }
 
     public override int getStar()
-    {
+    {        
         return star;
     }
 
-    
+    private void OnDestroy()
+    {
+        if (GameData.Instance.level_stars[GameCache.Instance.level_selected - 1] == 0)
+        {
+            GameData.Instance.level_durations = duration_secs;
+        }
+    }
+
 }

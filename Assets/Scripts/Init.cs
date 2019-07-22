@@ -54,11 +54,11 @@ public class Init : MonoBehaviour
     {
         
     }
-    // Update is called once per frame
-    //void Update()
-    //{
-    //    //Debug.Log("Loading");
-    //}
+    
+    private void Update()
+    {
+        
+    }
 
     private void OnApplicationPause(bool pause)
     {

@@ -11,16 +11,12 @@ public class GameData
     public static GameData Instance = new GameData();
     private GameData()
     {
-        //firstMenuLoad = true;
         
-        
-        //test
-        //GameCache.Instance.isNextDay = true;
-        //
     }
     public int unlock_level;
     public int points;
     public int coins;
+    public float level_durations;
     public List<int> level_stars;
     public int day;
     public int[] completed;
@@ -32,15 +28,12 @@ public class GameData
     public bool clampDailyReward;
     public bool clampChallengeReward;
     public bool rate;
-    
-    //public int level_selected;
-    //public int mode;
-
 
     public void increaseCoin(int value)
     {
         coins += value;
         EventDispatcher.Instance.PostEvent(EventID.OnCoinChange, null);
+        if (sound_on) AudioManager.Instance.Play("coins_reward");
     }
 
     public bool decreaseCoin(int value)
@@ -59,7 +52,7 @@ public class GameData
     {
         points += value;
         EventDispatcher.Instance.PostEvent(EventID.OnPointChange, null);
-        if(sound_on) AudioManager.Instance.Play("coins_reward");
+        
     }
 
     public bool decreasePoint(int value)
@@ -115,6 +108,7 @@ public class GameData
             reward_coins = 100;
             ads_on = true;
             rate = true;
+            sound_on = true;
             lastDayAccess = System.DateTime.Now.Date.ToFileTime();
             clampDailyReward = false;
             clampChallengeReward = false;
