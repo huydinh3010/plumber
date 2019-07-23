@@ -322,13 +322,21 @@ public class SimpleModeController : GameController
     public override bool constructPipes()
     {
         bool b = base.constructPipes();
-        GameData.Instance.unlocklv_state.construct_pipe = construct_pipe_count;
+        if (unlockLv)
+        {
+            GameData.Instance.unlocklv_state.construct_pipe = construct_pipe_count;
+        }
+        
         return b;
     }
 
     public override void removeIncorrectPipes()
     {
         base.removeIncorrectPipes();
-        GameData.Instance.unlocklv_state.remove_pipe = remove_pipe_count;
+        if (unlockLv)
+        {
+            GameData.Instance.unlocklv_state.remove_pipe = remove_pipe_count;
+        }
+        
     }
 }
