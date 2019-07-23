@@ -47,6 +47,9 @@ public class ChallengeModeController : GameController
         duration_secs = 0f;
         stop_time = false;
         animPlaying = false;
+        endConstructPipe = false;
+        remove_pipe_count = 0;
+        construct_pipe_count = 0;
         m_clones = new GameObject[row, col];
         float pipe_size = Mathf.Min(PlayZone.rect.width / 1000, PlayZone.rect.height / 1500) * 250 * 4 / col;
         System.Random rd = new System.Random();

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System;
 public class ChallengeSceneController : MonoBehaviour
 {
     public SceneController sceneController;
@@ -54,9 +54,40 @@ public class ChallengeSceneController : MonoBehaviour
         sceneController.loadScene("MainMenu");
     }
 
+    
+
     private void onCoinChange(object param)
     {
-        txtCoins.text = GameData.Instance.coins.ToString();
+        StartCoroutine(coinChangeEffect(txtCoins, Convert.ToInt32(param)));
+    }
+
+    IEnumerator coinChangeEffect(Text text, int value)
+    {
+        int frame = 10;
+        int delta = (Mathf.Abs(value) / frame) + 1;
+        int text_value = int.Parse(text.text);
+        if (value > 0)
+        {
+            while (value > 0)
+            {
+                value -= delta;
+                if (value < 0) text_value += delta + value;
+                else text_value += delta;
+                text.text = (text_value).ToString();
+                yield return 1;
+            }
+        }
+        else
+        {
+            while (value < 0)
+            {
+                value += delta;
+                if (value > 0) text_value = text_value - delta + value;
+                else text_value -= delta;
+                text.text = (text_value).ToString();
+                yield return 1;
+            }
+        }
     }
 
     public void btnLevelOnClick(int k)

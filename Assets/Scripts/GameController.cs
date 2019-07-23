@@ -8,7 +8,6 @@ using UnityEngine.UI;
 
 public abstract class GameController : MonoBehaviour
 {
-    
     public RectTransform PlayZone;
     public Sprite[] s_valves;
     public GameObject[] pipes;
@@ -16,6 +15,10 @@ public abstract class GameController : MonoBehaviour
     public float duration_secs;
     public int turn_count;
     public bool panelShowing;
+    public int remove_pipe_count;
+    public int construct_pipe_count;
+    public bool endConstructPipe;
+    public bool stop_time;
 
     protected GameObject valve;
     protected GameObject[,] m_clones;
@@ -26,18 +29,10 @@ public abstract class GameController : MonoBehaviour
 
     protected string[] str_results;
 
-    protected bool stop_time;
     protected bool animPlaying;
     public abstract void loadLevelData();
 
-    //public void stopTime()
-    //{
-    //    stop_time = true;
-    //}
-
-
     public abstract void setupLevel();
-
 
     private void Awake()
     {
@@ -56,8 +51,9 @@ public abstract class GameController : MonoBehaviour
         if (!stop_time) duration_secs += Time.deltaTime;
     }
 
-    public void removeIncorrectPipes()
+    public virtual void removeIncorrectPipes()
     {
+        remove_pipe_count++;
         bool[,] tmp = new bool[row, col];
         for (int i = 0; i < str_results.Length; i++)
         {
@@ -97,8 +93,9 @@ public abstract class GameController : MonoBehaviour
     }
 
     // ok
-    public bool constructPipes(int k)
+    public virtual bool constructPipes()
     {
+        int k = construct_pipe_count++;
         int c_len = (str_results.Length - 1) / 3 + 1;
         int i;
         for (i = k * c_len; i < c_len * (k + 1) && i < str_results.Length - 1; i++)
@@ -119,9 +116,7 @@ public abstract class GameController : MonoBehaviour
             } 
             StartCoroutine(rotatePipe(m_clones[y, x], rotation - c_rotation, rotate_speed * 2));
         }
-        if (i >= str_results.Length - 1) return true;
-        return false;
-
+        return endConstructPipe = i >= str_results.Length - 1;
     }
 
     public virtual IEnumerator rotatePipe(GameObject gameObject, int k, float speed)
@@ -204,7 +199,6 @@ public abstract class GameController : MonoBehaviour
         list_ds.Add(dir);
         do
         {
-            Debug.Log("dir: " + dir);
             // dir = dau vao
             PipeProperties pp = go.GetComponent<PipeProperties>();
             dir = (4 + dir - pp.rotation) % 4;
@@ -229,15 +223,13 @@ public abstract class GameController : MonoBehaviour
             list_results.Add(go);
             list_ds.Add(dir);
         } while (go.tag != "finish_pipe");
-        Debug.Log("true");
         return true;
-
     }
 
     protected void playAnimation(List<GameObject> list_results, List<int> list_ds)
     {
         EventDispatcher.Instance.PostEvent(EventID.PipeAnimationStart, this);
-        if (GameData.Instance.sound_on) AudioManager.Instance.Play("water");
+        AudioManager.Instance.Play("water");
         animPlaying = true;
         stop_time = true;
         for (int i = 0; i < list_results.Count - 1; i++)
@@ -260,7 +252,6 @@ public abstract class GameController : MonoBehaviour
 
     protected virtual void OnPipeClick(GameObject go)
     {
-        Debug.Log("Pipe click");
         if (!animPlaying && !panelShowing)
         {
             turn_count++;
@@ -274,7 +265,6 @@ public abstract class GameController : MonoBehaviour
 
     protected virtual void OnValveClick()
     {
-        Debug.Log("Valve click");
         if (!animPlaying && !panelShowing)
         {
             List<GameObject> list_results;
@@ -298,5 +288,9 @@ public abstract class GameController : MonoBehaviour
                 Destroy(m_clones[i, j]);
             }
         }
+    }
+    protected virtual void OnDestroy()
+    {
+        
     }
 }

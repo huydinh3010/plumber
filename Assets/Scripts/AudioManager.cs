@@ -10,14 +10,18 @@ public class AudioManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
-        foreach(Sound s in sounds)
+    }
+
+    public void Initialize()
+    {
+        foreach (Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
-            s.source.volume = s.volume;
+            if (GameData.Instance.sound_on) s.source.volume = s.volume;
+            else s.source.volume = 0;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
-            
         }
     }
 
@@ -44,6 +48,16 @@ public class AudioManager : MonoBehaviour
         Sound s = Array.Find(sounds, sound => sound.name == name);
         s.source.Stop();
     }
+
+    public void soundVolume(float volume)
+    {
+        foreach (Sound s in sounds)
+        {
+            s.source.volume = volume;
+        }
+    }
+
+    
 }
 
 

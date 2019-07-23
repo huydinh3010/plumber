@@ -54,6 +54,9 @@ public class HelpLevelController : GameController
         duration_secs = 0f;
         stop_time = false;
         animPlaying = false;
+        remove_pipe_count = 0;
+        construct_pipe_count = 0;
+        endConstructPipe = false;
         h_len = 0;
         pos_x = new int[3];
         pos_y = new int[3];

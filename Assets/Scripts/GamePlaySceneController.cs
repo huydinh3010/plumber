@@ -27,7 +27,6 @@ public class GamePlaySceneController : MonoBehaviour
     public Sprite[] s_sounds;
     private bool gameover;
     private bool animPlaying;
-    private int construct_part;
     private bool tutorial;
     private bool en_rmbtn;
     private bool en_construct_btn;
@@ -87,8 +86,8 @@ public class GamePlaySceneController : MonoBehaviour
             tutorial = false;
         }
         btnAddCoin.interactable = true;
-        btnRemove.interactable = GameData.Instance.coins >= 50;
-        btnConstruct.interactable = GameData.Instance.coins >= 25;
+        //btnRemove.interactable = GameData.Instance.coins >= 50;
+        //btnConstruct.interactable = GameData.Instance.coins >= 25;
         if (GameData.Instance.sound_on) btnSound.GetComponent<Image>().sprite = s_sounds[1];
         else btnSound.GetComponent<Image>().sprite = s_sounds[0];
         txtCoins.text = GameData.Instance.coins.ToString();
@@ -96,11 +95,12 @@ public class GamePlaySceneController : MonoBehaviour
         txtLevel.text = "Level " + GameCache.Instance.level_selected.ToString();
         //Gamelogic
         gameover = animPlaying = false;
-        en_rmbtn = true;
-        en_construct_btn = true;
-        construct_part = 0;
         game.loadLevelData();
         game.setupLevel();
+        en_rmbtn = game.remove_pipe_count == 0;
+        en_construct_btn = !game.endConstructPipe;
+        btnRemove.interactable = en_rmbtn && GameData.Instance.coins >= 50;
+        btnConstruct.interactable = en_construct_btn && GameData.Instance.coins >= 25;
         string[] str_type = { "tutorial", "simple","daily_challenge" };
         FirebaseManager.Instance.LogEventLevelStart(GameCache.Instance.level_selected, str_type[type], GameData.Instance.day);
         FacebookManager.Instance.LogEventLevelStart(GameCache.Instance.level_selected, str_type[type], GameData.Instance.day);
@@ -146,7 +146,7 @@ public class GamePlaySceneController : MonoBehaviour
                     GameData.Instance.unlock_level++;
                     unlock_level = true;
                 }
-                GameData.Instance.level_durations = 0f;
+                GameData.Instance.unlocklv_state.newLevel();
                 btnWatchVideo10TimesCoin.interactable = true;
                 showPanel(panelPassedLevel);
             }
@@ -170,8 +170,8 @@ public class GamePlaySceneController : MonoBehaviour
             }
         }
         string type = tutorial ? "tutorial" : (GameCache.Instance.mode == 1 ? "simple" : "daily_challenge");
-        int remove_pipe_count = en_rmbtn ? 0 : 1;
-        int construct_pipe_count = construct_part;
+        int remove_pipe_count = game.remove_pipe_count;
+        int construct_pipe_count = game.construct_pipe_count;
         Debug.Log("Duration: " + game.duration_secs);
         Debug.Log("Turn: " + game.turn_count);
         FirebaseManager.Instance.LogEventLevelEnd(GameCache.Instance.level_selected, type, GameData.Instance.day, game.duration_secs, game.turn_count, remove_pipe_count, construct_pipe_count);
@@ -186,7 +186,7 @@ public class GamePlaySceneController : MonoBehaviour
 
     private void onCoinChange(object param)
     {
-        txtCoins.text = GameData.Instance.coins.ToString();
+        StartCoroutine(coinChangeEffect(txtCoins, Convert.ToInt32(param)));
         btnRemove.interactable = GameData.Instance.coins >= 50;
         btnConstruct.interactable = GameData.Instance.coins >= 25;
         if (!en_rmbtn) btnRemove.interactable = false;
@@ -195,7 +195,36 @@ public class GamePlaySceneController : MonoBehaviour
 
     private void onPointChange(object param)
     {
-        txtPoints.text = GameData.Instance.points.ToString();
+        StartCoroutine(coinChangeEffect(txtPoints, Convert.ToInt32(param)));
+    }
+
+    IEnumerator coinChangeEffect(Text text, int value)
+    {
+        int frame = 10;
+        int delta = (Mathf.Abs(value) / frame) + 1;
+        int text_value = int.Parse(text.text);
+        if(value > 0)
+        {
+            while (value > 0)
+            {
+                value -= delta;
+                if (value < 0) text_value += delta + value;
+                else text_value += delta;
+                text.text = (text_value).ToString();
+                yield return 1;
+            }
+        }
+        else
+        {
+            while (value < 0)
+            {
+                value += delta;
+                if (value > 0) text_value = text_value - delta + value;
+                else text_value -= delta;
+                text.text = (text_value).ToString();
+                yield return 1;
+            }
+        }
     }
 
     private void nextLevel()
@@ -246,10 +275,11 @@ public class GamePlaySceneController : MonoBehaviour
     public void btnSoundOnClick()
     {
         GameData.Instance.sound_on = !GameData.Instance.sound_on;
+        AudioManager.Instance.soundVolume(GameData.Instance.sound_on ? 1 : 0);
+        AudioManager.Instance.Play("button_sound");
         if (GameData.Instance.sound_on)
         {
             btnSound.GetComponent<Image>().sprite = s_sounds[1];
-            AudioManager.Instance.Play("button_sound");
         }
         else btnSound.GetComponent<Image>().sprite = s_sounds[0];
     }
@@ -268,7 +298,7 @@ public class GamePlaySceneController : MonoBehaviour
     {
         if (!tutorial && !animPlaying && en_construct_btn && GameData.Instance.decreaseCoin(25))
         {
-            if (game.constructPipes(construct_part++))
+            if (game.constructPipes())
             {
                 btnConstruct.interactable = false;
                 en_construct_btn = false;
@@ -286,6 +316,8 @@ public class GamePlaySceneController : MonoBehaviour
 
     public void btnBackOnClick()
     {
+        game.stop_time = true;
+        AudioManager.Instance.Stop("water");
         switch (GameCache.Instance.mode)
         {
             case 0:
@@ -436,7 +468,6 @@ public class GamePlaySceneController : MonoBehaviour
 
     private void OnDestroy()
     {
-        Debug.Log("Destroy Play Scene");
         EventDispatcher.Instance.RemoveListener(EventID.OnCoinChange, onCoinChange);
         EventDispatcher.Instance.RemoveListener(EventID.OnLevelSelectChange, onLevelSelectChange);
         EventDispatcher.Instance.RemoveListener(EventID.OnPointChange, onPointChange);

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PipeProperties : MonoBehaviour
 {
+    public int type;
     public int row;
     public int col;
     public int rotation;

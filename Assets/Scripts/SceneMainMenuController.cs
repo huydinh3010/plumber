@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+using System;
 public class SceneMainMenuController : MonoBehaviour
 {
     //public Texture2D texture;
@@ -21,14 +21,21 @@ public class SceneMainMenuController : MonoBehaviour
     public Sprite[] btnDaysPassed;
     private int[] rewards = { 10, 25, 50, 75, 100 };
     private bool panelShowing;
-
+    private bool firstFrame;
     private void Awake()
     {
+        
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--Main Menu Start() start");
         sceneController.openScene();
-        if(!GameCache.Instance.firstGameLoad && !GameData.Instance.clampDailyReward && GameData.Instance.continueDay > 0)
+        if (!GameCache.Instance.firstGameLoad && !GameData.Instance.clampDailyReward && GameData.Instance.continueDay > 0)
         {
             int i;
-            for(i = 0; i < GameData.Instance.continueDay - 1; i++)
+            for (i = 0; i < GameData.Instance.continueDay - 1; i++)
             {
                 btnDays[i].GetComponent<Image>().sprite = btnDaysPassed[i];
             }
@@ -37,18 +44,17 @@ public class SceneMainMenuController : MonoBehaviour
             showPanel(panelDailyReward);
         }
         btnRemoveAds.SetActive(GameData.Instance.ads_on);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+        Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--Main Menu Start() end");
     }
 
     // Update is called once per frame
     void Update()
     {
-            
+        if (!firstFrame)
+        {
+            Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--Main Menu FirstFrame");
+            firstFrame = true;
+        }
     }
 
     public void BtnPlayOnClick()

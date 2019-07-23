@@ -8,9 +8,18 @@ public class Init : MonoBehaviour
 {
     [SerializeField] Text txtLog;
     [SerializeField] GameObject scrollViewLog;
+    private string str;
     private void Awake()
     {
+        str = "Start at: " + DateTime.Now.TimeOfDay;
         DontDestroyOnLoad(this);
+        Application.logMessageReceived += Application_logMessageReceived;
+        Debug.Log(str);
+        Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--Start Init Awake");
+        SceneManager.LoadScene("MainMenu");
+        Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After LoadScene MainMenu function");
+        GameData.Instance.LoadDataFromFile();
+        Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After Load Data function");
     }
 
     private void Application_logMessageReceived(string condition, string stackTrace, LogType type)
@@ -35,14 +44,17 @@ public class Init : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Application.logMessageReceived += Application_logMessageReceived;
         
-        SceneManager.LoadScene("MainMenu");
-        GameData.Instance.LoadDataFromFile();
+        AudioManager.Instance.Initialize();
+        Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After Audio Initialize");
         IAPManager.Instance.InitializePurchasing();
+        Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After IAP Initialize");
         FirebaseManager.Instance.Initialize();
+        Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After Firebase Initialize");
         FacebookManager.Instance.Initialize();
+        Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After Facebook Initialize");
         AdManager.Instance.Initialize();
+        Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After Admob Initialize");
     }
 
     private void OnDisable()

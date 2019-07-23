@@ -19,7 +19,6 @@ public class ScrollLevelController : MonoBehaviour, IBeginDragHandler, IEndDragH
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        //currentPage = -((int)content.localPosition.x + 300) / 600;
     
     }
 

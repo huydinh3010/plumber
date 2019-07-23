@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
-
+using System;
 
 [System.Serializable]
 public class GameData
@@ -16,7 +16,6 @@ public class GameData
     public int unlock_level;
     public int points;
     public int coins;
-    public float level_durations;
     public List<int> level_stars;
     public int day;
     public int[] completed;
@@ -28,12 +27,12 @@ public class GameData
     public bool clampDailyReward;
     public bool clampChallengeReward;
     public bool rate;
-
+    public LevelState unlocklv_state;
     public void increaseCoin(int value)
     {
         coins += value;
-        EventDispatcher.Instance.PostEvent(EventID.OnCoinChange, null);
-        if (sound_on) AudioManager.Instance.Play("coins_reward");
+        EventDispatcher.Instance.PostEvent(EventID.OnCoinChange, null, value);
+        AudioManager.Instance.Play("coins_reward");
     }
 
     public bool decreaseCoin(int value)
@@ -41,8 +40,8 @@ public class GameData
         if (coins >= value)
         {
             coins -= value;
-            EventDispatcher.Instance.PostEvent(EventID.OnCoinChange, null);
-            if(sound_on) AudioManager.Instance.Play("coins_decrease");
+            EventDispatcher.Instance.PostEvent(EventID.OnCoinChange, null, -value);
+            AudioManager.Instance.Play("coins_decrease");
             return true;
         }
         return false;
@@ -51,7 +50,7 @@ public class GameData
     public void increasePoint(int value)
     {
         points += value;
-        EventDispatcher.Instance.PostEvent(EventID.OnPointChange, null);
+        EventDispatcher.Instance.PostEvent(EventID.OnPointChange, null, value);
         
     }
 
@@ -101,7 +100,7 @@ public class GameData
             level_stars.Add(0);
             unlock_level = 1;
             points = 0;
-            coins = 200;
+            coins = 2000;
             day = 1;
             continueDay = 1;
             completed = new int[8];
@@ -112,6 +111,7 @@ public class GameData
             lastDayAccess = System.DateTime.Now.Date.ToFileTime();
             clampDailyReward = false;
             clampChallengeReward = false;
+            unlocklv_state = new LevelState();
             GameCache.Instance.firstGameLoad = true;
         }
         GameCache.Instance.level_selected = unlock_level;
@@ -127,4 +127,27 @@ public class GameData
         binaryFormatter.Serialize(fileStream, data);
         fileStream.Close();
     }
+}
+
+
+[System.Serializable]
+public class LevelState
+{
+    public float durations;
+    public int turn_count;
+    public int remove_pipe;
+    public int construct_pipe;
+    public int[] pipes_type;
+    public int[] pipes_rotation;
+
+    public void newLevel()
+    {
+        durations = 0f;
+        construct_pipe = 0;
+        remove_pipe = 0;
+        turn_count = 0;
+        pipes_type = Array.Empty<int>();
+        pipes_rotation = Array.Empty<int>();
+    }
+
 }
