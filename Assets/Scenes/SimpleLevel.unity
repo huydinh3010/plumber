@@ -190,7 +190,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1088610958}
   m_HandleRect: {fileID: 1088610957}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 0.031088082
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -485,7 +485,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -600, y: 0}
+  m_AnchoredPosition: {x: -38000, y: 0}
   m_SizeDelta: {x: 38600, y: 900}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!225 &290201642
@@ -1777,7 +1777,7 @@ MonoBehaviour:
   m_MovementType: 2
   m_Elasticity: 0.2
   m_Inertia: 1
-  m_DecelerationRate: 0.2
+  m_DecelerationRate: 0
   m_ScrollSensitivity: 1
   m_Viewport: {fileID: 273798797}
   m_HorizontalScrollbar: {fileID: 10603088}
@@ -1819,8 +1819,8 @@ MonoBehaviour:
   btnArrowLeft: {fileID: 1486018669}
   btnArrowRight: {fileID: 487363862}
   txtPackNumber: {fileID: 1365202820}
-  speed_movement: 5000
   canvasContent: {fileID: 290201642}
+  decelerationRate: 10
 --- !u!1 &1365202818
 GameObject:
   m_ObjectHideFlags: 0

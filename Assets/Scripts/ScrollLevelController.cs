@@ -9,17 +9,17 @@ public class ScrollLevelController : MonoBehaviour, IBeginDragHandler, IEndDragH
     public Button btnArrowLeft;
     public Button btnArrowRight;
     public Text txtPackNumber;
-    public float speed_movement;
     public CanvasGroup canvasContent;
+    public float decelerationRate = 10f;
     private RectTransform content;
     private ScrollRect scroll;
-    private int currentPage;
-    private bool isMoving;
+    private bool lerp;
+    private Vector2 target;
     
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-    
+        lerp = false;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -29,78 +29,38 @@ public class ScrollLevelController : MonoBehaviour, IBeginDragHandler, IEndDragH
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        float oldx = -currentPage * 1100 - 600;
-        if (!isMoving && (currentPage != 0 || content.anchoredPosition.x - oldx <= 0) && (currentPage != 34 || content.anchoredPosition.x - oldx >= 0))
+        lerp = true;
+        float vx = scroll.velocity.x;
+        float content_x = scroll.content.anchoredPosition.x;
+        if (vx > 50)
         {
-            if (System.Math.Abs(content.anchoredPosition.x - oldx) < 200)
-            {
-                scroll.StopMovement();
-                StartCoroutine(ChangePage(0)); // back to current page
-            }
-            else if (content.anchoredPosition.x < oldx)
-            {
-                scroll.StopMovement();
-                StartCoroutine(ChangePage(1)); // next page
-            }
-            else if (content.anchoredPosition.x > oldx)
-            {
-                scroll.StopMovement();
-                StartCoroutine(ChangePage(-1)); // prev page
-            }
+            // keo sang phai
+            target = new Vector2(Mathf.Clamp(((int)(-600 - content_x) / 1100) * -1100 - 600, -38000, -600), 0f);
         }
-       
+        else if (vx < -50)
+        {
+            // keo sang trai
+            target = new Vector2(Mathf.Clamp(((int)(-600 - content_x) / 1100 + 1) * -1100 - 600, -38000, -600), 0f);
+        }
+        else
+        {
+            target = new Vector2(Mathf.Clamp(((int)(-50 - content_x) / 1100) * -1100 - 600, -38000, -600), 0f);
+        }
+        txtPackNumber.text = "PACK " + ((int)(-600 - target.x) / 1100 + 1).ToString() + "/35";
     }
-
-
-
+   
     private void btnArrowLeftOnClick()
     {
-        if (!isMoving && currentPage > 0) StartCoroutine(ChangePage(-1));
+        target = new Vector2(Mathf.Clamp(((int)(-50 - scroll.content.anchoredPosition.x) / 1100 - 1) * -1100 - 600, -38000, -600), 0f);
+        txtPackNumber.text = "PACK " + ((int)(-600 - target.x) / 1100 + 1).ToString() + "/35";
+        lerp = true;
     }
 
     private void btnArrowRightOnClick()
     {
-        if (!isMoving && currentPage < 34) StartCoroutine(ChangePage(1));
-    }
-
-    private IEnumerator ChangePage(int d_page)
-    {
-        isMoving = true;
-       
-        float dx = -(currentPage + d_page) * 1100 - 600  - content.anchoredPosition.x;
-        if (dx > 0)
-        {
-            while(true)
-            {
-                dx -= speed_movement*Time.deltaTime;
-                if(dx < 0)
-                {
-                    content.anchoredPosition = new Vector3(-(currentPage + d_page) * 1100 - 600, 0);
-                    break;
-                }
-                else content.anchoredPosition += new Vector2(speed_movement * Time.deltaTime, 0);
-                yield return 0;
-            }
-        }
-        else if (dx < 0)
-        {
-            while (true)
-            {
-                dx += speed_movement* Time.deltaTime;
-                if(dx > 0)
-                {
-                    content.anchoredPosition = new Vector3(-(currentPage + d_page) * 1100 - 600, 0);
-                    break;
-                }
-                else content.anchoredPosition -= new Vector2(speed_movement * Time.deltaTime, 0);
-                yield return 0;
-            }
-            
-        }
-        currentPage = -((int)content.anchoredPosition.x + 600) / 1100;
-        txtPackNumber.text = "PACK " + (currentPage + 1).ToString() + "/35";
-        isMoving = false;
-        
+        target = new Vector2(Mathf.Clamp(((int)(-50 - scroll.content.anchoredPosition.x) / 1100 + 1) * -1100 - 600, -38000, -600), 0f);
+        txtPackNumber.text = "PACK " + ((int)(-600 - target.x) / 1100 + 1).ToString() + "/35";
+        lerp = true;
     }
 
     // Start is called before the first frame update
@@ -108,19 +68,29 @@ public class ScrollLevelController : MonoBehaviour, IBeginDragHandler, IEndDragH
     {
         scroll = GetComponent<ScrollRect>();
         content = scroll.content;
-        if (speed_movement <= 0) speed_movement = 5000f;
         btnArrowRight.onClick.AddListener(() => { btnArrowRightOnClick(); });
         btnArrowLeft.onClick.AddListener(() => { btnArrowLeftOnClick(); });
-        currentPage = (GameCache.Instance.level_selected - 1) / 16;
-        content.anchoredPosition = new Vector3(-currentPage * 1100 - 600, 0, 0);
-        txtPackNumber.text = "PACK " + (currentPage + 1).ToString() + "/35";
-        
+        int startPage = (GameCache.Instance.level_selected - 1) / 16;
+        content.anchoredPosition = new Vector3(-startPage * 1100 - 600, 0, 0);
+        txtPackNumber.text = "PACK " + (startPage + 1).ToString() + "/35";
     }
 
     // Update is called once per frame
     void Update()
-    { 
-        int x = (int)System.Math.Abs(content.anchoredPosition.x + 600) % 1100;
+    {
+        if (lerp)
+        {
+            float decelerate = Mathf.Min(decelerationRate * Time.deltaTime, 1f);
+            scroll.content.anchoredPosition = Vector2.Lerp(scroll.content.anchoredPosition, target, decelerate);
+            if (Vector2.SqrMagnitude(scroll.content.anchoredPosition - target) < 0.25f)
+            {
+                scroll.velocity = Vector2.zero;
+                scroll.content.anchoredPosition = target;
+                lerp = false;
+            }
+        }
+        //effect
+        int x = (int)Mathf.Abs(content.anchoredPosition.x + 600) % 1100;
         if (x < 200)
         {
             scroll.transform.localScale = new Vector3(1 - 0.00075f * x, 1 - 0.00075f * x, 1);
@@ -136,5 +106,6 @@ public class ScrollLevelController : MonoBehaviour, IBeginDragHandler, IEndDragH
             scroll.transform.localScale = new Vector3(0.85f, 0.85f, 1);
             canvasContent.alpha = 0.7f;
         }
+        //
     }
 }
