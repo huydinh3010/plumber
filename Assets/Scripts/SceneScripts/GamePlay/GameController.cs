@@ -14,7 +14,7 @@ public abstract class GameController : MonoBehaviour
     public int rotate_speed;
     public float duration_secs;
     public int turn_count;
-    public bool panelShowing;
+    //public bool panelShowing;
     public int remove_pipe_count;
     public int construct_pipe_count;
     public bool endConstructPipe;
@@ -252,7 +252,7 @@ public abstract class GameController : MonoBehaviour
 
     protected virtual void OnPipeClick(GameObject go)
     {
-        if (!animPlaying && !panelShowing)
+        if (!animPlaying && !PopupManager.Instance.Showing)
         {
             turn_count++;
             StartCoroutine(rotatePipe(go, 1, rotate_speed));
@@ -265,7 +265,7 @@ public abstract class GameController : MonoBehaviour
 
     protected virtual void OnValveClick()
     {
-        if (!animPlaying && !panelShowing)
+        if (!animPlaying && !PopupManager.Instance.Showing)
         {
             List<GameObject> list_results;
             List<int> list_dirs;

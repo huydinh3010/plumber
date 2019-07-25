@@ -18,7 +18,14 @@ public class PopupManager : MonoBehaviour
     [SerializeField] PopupLastLevel popupLastLevel;
 
     private bool showing;
-    
+
+    public bool Showing
+    {
+        get
+        {
+            return showing;
+        }
+    }
 
     private void Awake()
     {
@@ -37,68 +44,82 @@ public class PopupManager : MonoBehaviour
         
     }
 
+    
+
     public void ShowPopup(PopupName name, Dictionary<PopupButtonName, Action> list_actions, Dictionary<PopupSettingType, object> list_settings = null)
     {
-        switch (name)
+        if (!showing)
         {
-            case PopupName.DailyReward:
-                popupDailyReward.Show(list_actions);
-                break;
-            case PopupName.PlayServices:
-                popupPlayServices.Show(list_actions);
-                break;
-            case PopupName.Rate:
-                popupRate.Show(list_actions);
-                break;
-            case PopupName.Achievement:
-                popupAchievement.Show(list_actions);
-                break;
-            case PopupName.AddCoin:
-                popupAddCoin.Show(list_actions);
-                break;
-            case PopupName.PassLevel:
-                popupPassLevel.Show(list_actions, list_settings);
-                break;
-            case PopupName.NextLevel:
-                popupNextLevel.Show(list_actions);
-                break;
-            case PopupName.LastLevel:
-                popupLastLevel.Show(list_actions);
-                break;
+            showing = true;
+            if (list_actions == null) list_actions = new Dictionary<PopupButtonName, Action>();
+            Action close_Callback = list_actions.ContainsKey(PopupButtonName.Close) ? list_actions[PopupButtonName.Close] : null;
+            if (close_Callback == null) list_actions.Add(PopupButtonName.Close, () => { showing = false; });
+            else list_actions[PopupButtonName.Close] += () => { showing = false; };
+            switch (name)
+            {
+                case PopupName.DailyReward:
+                    popupDailyReward.Show(list_actions);
+                    break;
+                case PopupName.PlayServices:
+                    popupPlayServices.Show(list_actions);
+                    break;
+                case PopupName.Rate:
+                    popupRate.Show(list_actions);
+                    break;
+                case PopupName.Achievement:
+                    popupAchievement.Show(list_actions);
+                    break;
+                case PopupName.AddCoin:
+                    popupAddCoin.Show(list_actions);
+                    break;
+                case PopupName.PassLevel:
+                    popupPassLevel.Show(list_actions, list_settings);
+                    break;
+                case PopupName.NextLevel:
+                    popupNextLevel.Show(list_actions);
+                    break;
+                case PopupName.LastLevel:
+                    popupLastLevel.Show(list_actions);
+                    break;
+            }
         }
+        
     }
     
     public void ClosePopup(PopupName name)
     {
-        switch (name)
+        if (showing)
         {
-            case PopupName.DailyReward:
-                popupDailyReward.Close();
-                break;
-            case PopupName.PlayServices:
-                popupPlayServices.Close();
-                break;
-            case PopupName.Rate:
-                popupRate.Close();
-                break;
-            case PopupName.Achievement:
-                popupAchievement.Close();
-                break;
-            case PopupName.AddCoin:
-                popupAddCoin.Close();
-                break;
-            case PopupName.PassLevel:
-                popupPassLevel.Close();
-                break;
-            case PopupName.NextLevel:
-                popupNextLevel.Close();
-                break;
-            case PopupName.LastLevel:
-                popupLastLevel.Close();
-                break;
+            showing = false;
+            switch (name)
+            {
+                case PopupName.DailyReward:
+                    popupDailyReward.Close();
+                    break;
+                case PopupName.PlayServices:
+                    popupPlayServices.Close();
+                    break;
+                case PopupName.Rate:
+                    popupRate.Close();
+                    break;
+                case PopupName.Achievement:
+                    popupAchievement.Close();
+                    break;
+                case PopupName.AddCoin:
+                    popupAddCoin.Close();
+                    break;
+                case PopupName.PassLevel:
+                    popupPassLevel.Close();
+                    break;
+                case PopupName.NextLevel:
+                    popupNextLevel.Close();
+                    break;
+                case PopupName.LastLevel:
+                    popupLastLevel.Close();
+                    break;
+            }
         }
     }
-
 }
 
 

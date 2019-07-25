@@ -6,7 +6,7 @@ using System;
 public class ChallengeSceneController : MonoBehaviour
 {
     public SceneController sceneController;
-    public GameObject panelAddCoin;
+    //public GameObject panelAddCoin;
     public Image[] image_levels;
     public Image image_pool;
     public Button btn_pool;
@@ -15,7 +15,7 @@ public class ChallengeSceneController : MonoBehaviour
     public Text text_tutorial;
     public Text txtCoins;
     private int total;
-    private bool panelShowing;
+    //private bool panelShowing;
     private string[] str = {"Complete all levels and get 100 coins!", "Congratulations! You have completed daily challenge.Claim your reward.", "You clamped the reward!" };
     // Start is called before the first frame update
     private void Awake()
@@ -116,50 +116,51 @@ public class ChallengeSceneController : MonoBehaviour
 
     public void btnAddCoinOnClick()
     {
-        showPanel(panelAddCoin);
+        //showPanel(panelAddCoin);
+        PopupManager.Instance.ShowPopup(PopupName.AddCoin, null);
     }
 
-    private void showPanel(GameObject panel)
-    {
-        panel.GetComponent<Animator>().Play("Show");
-        panelShowing = true;
-    }
+    //private void showPanel(GameObject panel)
+    //{
+    //    panel.GetComponent<Animator>().Play("Show");
+    //    panelShowing = true;
+    //}
 
-    private void closePanel(GameObject panel)
-    {
-        panel.GetComponent<Animator>().Play("Close");
-        panelShowing = false;
-    }
+    //private void closePanel(GameObject panel)
+    //{
+    //    panel.GetComponent<Animator>().Play("Close");
+    //    panelShowing = false;
+    //}
 
-    public void BtnCloseOnPanelOnClick(GameObject target)
-    {
-        if (panelShowing) closePanel(target);
-    }
+    //public void BtnCloseOnPanelOnClick(GameObject target)
+    //{
+    //    if (panelShowing) closePanel(target);
+    //}
 
-    public void BtnWatchVideoOnPanelOnClick()
-    {
-        if (panelShowing)
-        {
-            bool hasVideo = AdManager.Instance.ShowRewardVideo(() =>
-            {
-                GameData.Instance.increaseCoin(10);
-            });
-            FirebaseManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.level_selected);
-            FacebookManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.level_selected);
-        }
-    }
+    //public void BtnWatchVideoOnPanelOnClick()
+    //{
+    //    if (panelShowing)
+    //    {
+    //        bool hasVideo = AdManager.Instance.ShowRewardVideo(() =>
+    //        {
+    //            GameData.Instance.increaseCoin(10);
+    //        });
+    //        FirebaseManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.level_selected);
+    //        FacebookManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.level_selected);
+    //    }
+    //}
 
-    public void BtnShareFbOnPanelOnClick()
-    {
-        if (panelShowing)
-        {
-            FacebookManager.Instance.ShareWithFriends(() => {
-                GameData.Instance.increaseCoin(50);
-                FirebaseManager.Instance.LogEventShareFacebook();
-                FacebookManager.Instance.LogEventShareFacebook();
-            });
-        }
-    }
+    //public void BtnShareFbOnPanelOnClick()
+    //{
+    //    if (panelShowing)
+    //    {
+    //        FacebookManager.Instance.ShareWithFriends(() => {
+    //            GameData.Instance.increaseCoin(50);
+    //            FirebaseManager.Instance.LogEventShareFacebook();
+    //            FacebookManager.Instance.LogEventShareFacebook();
+    //        });
+    //    }
+    //}
 
     private void OnDestroy()
     {
