@@ -131,7 +131,7 @@ public class GamePlaySceneController : MonoBehaviour
                 int n_star = game.getStar();
                 if (n_star > c_star) GameData.Instance.level_stars[GameCache.Instance.level_selected - 1] = n_star;
                 //showPanel(panelNextLevel);
-                PopupManager.Instance.ShowPopup(PopupName.NextLevel, new Dictionary<PopupButtonName, Action>() { { PopupButtonName.Close, CloseLevelPopupCallback }, { PopupButtonName.NextLevel, NextLevelCallback } });
+                PopupManager.Instance.ShowPopup(PopupName.NextLevel, new Dictionary<PopupButtonEvent, Action>() { { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback }, { PopupButtonEvent.NextLevelPressed, NextLevelCallback } });
             }
             else
             {
@@ -150,7 +150,7 @@ public class GamePlaySceneController : MonoBehaviour
                 GameData.Instance.unlocklv_state.newLevel();
                 //btnWatchVideo10TimesCoin.interactable = true;
                 //showPanel(panelPassedLevel);
-                PopupManager.Instance.ShowPopup(PopupName.PassLevel, new Dictionary<PopupButtonName, Action>() { { PopupButtonName.Close, CloseLevelPopupCallback }, { PopupButtonName.NextLevel, NextLevelCallback } }, new Dictionary<PopupSettingType, object>() { { PopupSettingType.PassLevelImage, star } });
+                PopupManager.Instance.ShowPopup(PopupName.PassLevel, new Dictionary<PopupButtonEvent, Action>() { { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback }, { PopupButtonEvent.NextLevelPressed, NextLevelCallback } }, new Dictionary<PopupSettingType, object>() { { PopupSettingType.PassLevelImageType, star } });
             }
             
         }
@@ -159,7 +159,7 @@ public class GamePlaySceneController : MonoBehaviour
             if (GameData.Instance.completed[GameCache.Instance.level_selected - 1] == 1)
             {
                 //showPanel(panelNextLevel);
-                PopupManager.Instance.ShowPopup(PopupName.NextLevel, new Dictionary<PopupButtonName, Action>() { { PopupButtonName.Close, CloseLevelPopupCallback }, { PopupButtonName.NextLevel, NextLevelCallback } });
+                PopupManager.Instance.ShowPopup(PopupName.NextLevel, new Dictionary<PopupButtonEvent, Action>() { { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback }, { PopupButtonEvent.NextLevelPressed, NextLevelCallback } });
             }
             else
             {
@@ -170,7 +170,7 @@ public class GamePlaySceneController : MonoBehaviour
                 //coinReward.sprite = s_coins[star - 1];
                 //pointReward.sprite = s_points[star - 1];
                 //showPanel(panelPassedLevel);
-                PopupManager.Instance.ShowPopup(PopupName.PassLevel, new Dictionary<PopupButtonName, Action>() { { PopupButtonName.Close, CloseLevelPopupCallback }, { PopupButtonName.NextLevel, NextLevelCallback } }, new Dictionary<PopupSettingType, object>() { { PopupSettingType.PassLevelImage, star} });
+                PopupManager.Instance.ShowPopup(PopupName.PassLevel, new Dictionary<PopupButtonEvent, Action>() { { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback }, { PopupButtonEvent.NextLevelPressed, NextLevelCallback } }, new Dictionary<PopupSettingType, object>() { { PopupSettingType.PassLevelImageType, star} });
                 //btnWatchVideo10TimesCoin.interactable = true;
             }
         }
@@ -528,7 +528,7 @@ public class GamePlaySceneController : MonoBehaviour
         }
         else if (GameCache.Instance.canShowRatePanel())
         {
-            PopupManager.Instance.ShowPopup(PopupName.Rate, new Dictionary<PopupButtonName, Action>() { {PopupButtonName.Close, nextLevel} });
+            PopupManager.Instance.ShowPopup(PopupName.Rate, new Dictionary<PopupButtonEvent, Action>() { {PopupButtonEvent.ClosePressed, nextLevel} });
         }
         else
         {

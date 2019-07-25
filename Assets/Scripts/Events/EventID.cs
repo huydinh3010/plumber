@@ -12,5 +12,6 @@ public enum EventID
     PipeAnimationStart,
     PipeAnimationEnd,
     SkipAnimation,
+    OnPopupClosed,
 }
 

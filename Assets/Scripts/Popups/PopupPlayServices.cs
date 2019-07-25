@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-public class PopupPlayServices : MonoBehaviour
+public class PopupPlayServices : MonoBehaviour, IPopup
 {
     [SerializeField] Button btn_Close;
     private Action btn_Close_Callback;
+    private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
-        
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -21,25 +22,36 @@ public class PopupPlayServices : MonoBehaviour
 
     private void Setup()
     {
-        btn_Close.interactable = true;
+        //btn_Close.interactable = true;
     }
 
-    public void Show(Dictionary<PopupButtonName, Action> list_actions)
+    public void OnDisplayed()
+    {
+        btn_Close.enabled = true;
+    }
+
+    public void OnClosed()
+    {
+
+    }
+
+    public void Show(Dictionary<PopupButtonEvent, Action> list_actions, Dictionary<PopupSettingType, object> list_settings)
     {
         Setup();
-        btn_Close_Callback = list_actions.ContainsKey(PopupButtonName.Close) ? list_actions[PopupButtonName.Close] : null;
+        btn_Close_Callback = list_actions.ContainsKey(PopupButtonEvent.ClosePressed) ? list_actions[PopupButtonEvent.ClosePressed] : null;
         GetComponent<Animator>().Play("Show");
     }
 
-    public void Close()
+    private void Close()
     {
-        btn_Close.interactable = false;
+        btn_Close.enabled = false;
+        EventDispatcher.Instance.PostEvent(EventID.OnPopupClosed, this);
         GetComponent<Animator>().Play("Close");
     }
 
     public void BtnCloseOnClick()
     {
         Close();
-        if (btn_Close_Callback != null) btn_Close_Callback();
+        btn_Close_Callback?.Invoke();
     }
 }

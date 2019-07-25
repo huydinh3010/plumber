@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-public class PopupNextLevel : MonoBehaviour
+public class PopupNextLevel : MonoBehaviour, IPopup
 {
     [SerializeField] Button btn_Close;
     [SerializeField] Button btn_Next;
@@ -24,34 +24,45 @@ public class PopupNextLevel : MonoBehaviour
 
     private void Setup()
     {
-        btn_Close.interactable = true;
-        btn_Next.interactable = true;
+        //btn_Close.interactable = true;
+        //btn_Next.interactable = true;
     }
 
-    public void Close()
+    public void OnDisplayed()
     {
-        btn_Close.interactable = false;
-        btn_Next.interactable = false;
+        btn_Close.enabled = true;
+        btn_Next.enabled = true;
+    }
+
+    public void OnClosed()
+    {
+        
+    }
+    private void Close()
+    {
+        btn_Close.enabled = false;
+        btn_Next.enabled = false;
+        EventDispatcher.Instance.PostEvent(EventID.OnPopupClosed, this);
         animator.Play("Close");
     }
 
-    public void Show(Dictionary<PopupButtonName, Action> list_actions)
+    public void Show(Dictionary<PopupButtonEvent, Action> list_actions, Dictionary<PopupSettingType, object> list_settings)
     {
         Setup();
-        btn_Close_Callback = list_actions.ContainsKey(PopupButtonName.Close) ? list_actions[PopupButtonName.Close] : null;
-        btn_Next_Callback = list_actions.ContainsKey(PopupButtonName.NextLevel) ? list_actions[PopupButtonName.NextLevel] : null;
+        btn_Close_Callback = list_actions.ContainsKey(PopupButtonEvent.ClosePressed) ? list_actions[PopupButtonEvent.ClosePressed] : null;
+        btn_Next_Callback = list_actions.ContainsKey(PopupButtonEvent.NextLevelPressed) ? list_actions[PopupButtonEvent.NextLevelPressed] : null;
         animator.Play("Show");
     }
 
     public void BtnCloseOnClick()
     {
         Close();
-        if (btn_Close_Callback != null) btn_Close_Callback();
+        btn_Close_Callback?.Invoke();
     }
 
     public void BtnNextOnClick()
     {
         Close();
-        if (btn_Next_Callback != null) btn_Next_Callback();
+        btn_Next_Callback?.Invoke();
     }
 }

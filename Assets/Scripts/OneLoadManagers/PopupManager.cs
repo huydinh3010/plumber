@@ -5,7 +5,6 @@ using System;
 
 public class PopupManager : MonoBehaviour
 {
-
     public static PopupManager Instance;
 
     [SerializeField] PopupDailyReward popupDailyReward;
@@ -17,6 +16,7 @@ public class PopupManager : MonoBehaviour
     [SerializeField] PopupNextLevel popupNextLevel;
     [SerializeField] PopupLastLevel popupLastLevel;
 
+    private IPopup activePopup;
     private bool showing;
 
     public bool Showing
@@ -27,9 +27,18 @@ public class PopupManager : MonoBehaviour
         }
     }
 
+    public IPopup ActivePopup
+    {
+        get
+        {
+            return activePopup;
+        }
+    }
+
     private void Awake()
     {
         Instance = Instance == null ? this : Instance;
+        EventDispatcher.Instance.RegisterListener(EventID.OnPopupClosed, OnPopupClosed);
     }
 
     // Start is called before the first frame update
@@ -44,81 +53,52 @@ public class PopupManager : MonoBehaviour
         
     }
 
-    
+    private void OnPopupClosed(object param)
+    {
+        showing = false;
+        activePopup = null;
+    }
 
-    public void ShowPopup(PopupName name, Dictionary<PopupButtonName, Action> list_actions, Dictionary<PopupSettingType, object> list_settings = null)
+    public void ShowPopup(PopupName name, Dictionary<PopupButtonEvent, Action> list_actions, Dictionary<PopupSettingType, object> list_settings = null)
     {
         if (!showing)
         {
             showing = true;
-            if (list_actions == null) list_actions = new Dictionary<PopupButtonName, Action>();
-            Action close_Callback = list_actions.ContainsKey(PopupButtonName.Close) ? list_actions[PopupButtonName.Close] : null;
-            if (close_Callback == null) list_actions.Add(PopupButtonName.Close, () => { showing = false; });
-            else list_actions[PopupButtonName.Close] += () => { showing = false; };
+            if (list_actions == null) list_actions = new Dictionary<PopupButtonEvent, Action>();
             switch (name)
             {
                 case PopupName.DailyReward:
-                    popupDailyReward.Show(list_actions);
+                    activePopup = popupDailyReward;
                     break;
                 case PopupName.PlayServices:
-                    popupPlayServices.Show(list_actions);
+                    activePopup = popupPlayServices;
                     break;
                 case PopupName.Rate:
-                    popupRate.Show(list_actions);
+                    activePopup = popupRate;
                     break;
                 case PopupName.Achievement:
-                    popupAchievement.Show(list_actions);
+                    activePopup = popupAchievement;
                     break;
                 case PopupName.AddCoin:
-                    popupAddCoin.Show(list_actions);
+                    activePopup = popupAddCoin;
                     break;
                 case PopupName.PassLevel:
-                    popupPassLevel.Show(list_actions, list_settings);
+                    activePopup = popupPassLevel;
                     break;
                 case PopupName.NextLevel:
-                    popupNextLevel.Show(list_actions);
+                    activePopup = popupNextLevel;
                     break;
                 case PopupName.LastLevel:
-                    popupLastLevel.Show(list_actions);
+                    activePopup = popupLastLevel;
                     break;
             }
+            activePopup.Show(list_actions, list_settings);
         }
-        
     }
-    
-    public void ClosePopup(PopupName name)
+
+    private void OnDestroy()
     {
-        if (showing)
-        {
-            showing = false;
-            switch (name)
-            {
-                case PopupName.DailyReward:
-                    popupDailyReward.Close();
-                    break;
-                case PopupName.PlayServices:
-                    popupPlayServices.Close();
-                    break;
-                case PopupName.Rate:
-                    popupRate.Close();
-                    break;
-                case PopupName.Achievement:
-                    popupAchievement.Close();
-                    break;
-                case PopupName.AddCoin:
-                    popupAddCoin.Close();
-                    break;
-                case PopupName.PassLevel:
-                    popupPassLevel.Close();
-                    break;
-                case PopupName.NextLevel:
-                    popupNextLevel.Close();
-                    break;
-                case PopupName.LastLevel:
-                    popupLastLevel.Close();
-                    break;
-            }
-        }
+        EventDispatcher.Instance.RemoveListener(EventID.OnPopupClosed, OnPopupClosed);
     }
 }
 
@@ -135,20 +115,21 @@ public enum PopupName
     LastLevel,
 }
 
-public enum PopupButtonName
+public enum PopupButtonEvent
 {
-    Close,
-    DayOnDailyReward,
-    RateOnRate,
-    NotNowOnRate,
-    CoinOnAchievement,
-    WatchVideoMoreCoin,
-    WatchVideo10TimesCoin,
-    ShareFacebook,
-    NextLevel,
+    ClosePressed,
+    DayOnDailyRewardPressed,
+    NotNowOnRatePressed,
+    RateOnRatePressed,
+    CoinOnAchievementPressed,
+    WatchVideoMoreCoinPressed,
+    WatchVideo10TimesCoinPressed,
+    ShareFacebookPressed,
+    NextLevelPressed,
 }
 
 public enum PopupSettingType
 {
-    PassLevelImage,
+    PassLevelImageType,
 }
+

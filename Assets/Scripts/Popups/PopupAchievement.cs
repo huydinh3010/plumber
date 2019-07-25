@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class PopupAchievement : MonoBehaviour
+public class PopupAchievement : MonoBehaviour, IPopup
 {
+    [SerializeField] GameObject popup;
     [SerializeField] Button[] btn_Coins;
     [SerializeField] Button btn_Close;
     [SerializeField] Image[] image_Checks;
@@ -17,9 +18,14 @@ public class PopupAchievement : MonoBehaviour
     private int[] achm_coins_reward = { 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000 };
 
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         animator = GetComponent<Animator>();
+    }
+
+    void Start()
+    {
+        popup.SetActive(false);
     }
 
     // Update is called once per frame
@@ -30,28 +36,25 @@ public class PopupAchievement : MonoBehaviour
 
     private void Setup()
     {
-        float delta = content.rect.height / achm_points.Length;
-        content.anchoredPosition = new Vector2(content.anchoredPosition.x, delta * GameData.Instance.achievement_progress);
         for (int i = 0; i < achm_points.Length; i++)
         {
             if (i + 1 <= GameData.Instance.achievement_progress)
             {
-                btn_Coins[i].interactable = false;
+                //btn_Coins[i].interactable = false;
                 btn_Coins[i].GetComponent<CanvasGroup>().alpha = 1;
                 image_Checks[i].enabled = true;
-
             }
             else
             {
                 if (GameData.Instance.points >= achm_points[i])
                 {
-                    btn_Coins[i].interactable = true;
+                    //btn_Coins[i].interactable = true;
                     btn_Coins[i].GetComponent<CanvasGroup>().alpha = 1;
                     image_Checks[i].enabled = false;
                 }
                 else
                 {
-                    btn_Coins[i].interactable = false;
+                    //btn_Coins[i].interactable = false;
                     btn_Coins[i].GetComponent<CanvasGroup>().alpha = 0.5f;
                     image_Checks[i].enabled = false;
                 }
@@ -59,16 +62,50 @@ public class PopupAchievement : MonoBehaviour
         }
     }
 
-    public void Show(Dictionary<PopupButtonName, Action> list_actions)
+    public void OnDisplayed()
     {
-        Setup();
-        btn_Close_Callback = list_actions.ContainsKey(PopupButtonName.Close) ? list_actions[PopupButtonName.Close] : null;
-        btn_Coin_Callback = list_actions.ContainsKey(PopupButtonName.CoinOnAchievement) ? list_actions[PopupButtonName.CoinOnAchievement] : null;
-        animator.Play("Show");
+        float delta = content.rect.height / achm_points.Length;
+        content.anchoredPosition = new Vector2(content.anchoredPosition.x, delta * (GameData.Instance.achievement_progress - 1));
+        btn_Close.enabled = true;
+        for (int i = 0; i < achm_points.Length; i++)
+        {
+            if (i + 1 <= GameData.Instance.achievement_progress)
+            {
+                btn_Coins[i].interactable = false;
+            }
+            else
+            {
+                if (GameData.Instance.points >= achm_points[i])
+                {
+                    btn_Coins[i].interactable = true;
+                }
+                else
+                {
+                    btn_Coins[i].interactable = false;
+                }
+            }
+        }
     }
 
-    public void Close()
+    public void OnClosed()
     {
+        popup.SetActive(false);
+    }
+
+    public void Show(Dictionary<PopupButtonEvent, Action> list_actions, Dictionary<PopupSettingType, object> list_settings)
+    {
+        Setup();
+        btn_Close_Callback = list_actions.ContainsKey(PopupButtonEvent.ClosePressed) ? list_actions[PopupButtonEvent.ClosePressed] : null;
+        btn_Coin_Callback = list_actions.ContainsKey(PopupButtonEvent.CoinOnAchievementPressed) ? list_actions[PopupButtonEvent.CoinOnAchievementPressed] : null;
+        popup.SetActive(true);
+        Debug.Log("AAAA");
+        GetComponent<Animator>().Play("Show");
+    }
+
+    private void Close()
+    {
+        EventDispatcher.Instance.PostEvent(EventID.OnPopupClosed, this);
+        btn_Close.enabled = false;
         animator.Play("Close");
     }
 
@@ -81,12 +118,12 @@ public class PopupAchievement : MonoBehaviour
             btn_Coins[k].interactable = false;
             image_Checks[k].enabled = true;
         }
-        if (btn_Coin_Callback != null) btn_Coin_Callback();
+        btn_Coin_Callback?.Invoke();
     }
 
     public void BtnCloseOnClick()
     {
         Close();
-        if (btn_Close_Callback != null) btn_Close_Callback();
+        btn_Close_Callback?.Invoke();
     }
 }

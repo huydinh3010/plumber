@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-public class PopupRate : MonoBehaviour
+public class PopupRate : MonoBehaviour, IPopup
 {
     [SerializeField] Button btn_Close;
     [SerializeField] Button btn_Not_Now;
@@ -26,38 +26,51 @@ public class PopupRate : MonoBehaviour
 
     private void Setup()
     {
-        btn_Close.interactable = true;
-        btn_Rate.interactable = true;
-        btn_Not_Now.interactable = true;
+        //btn_Close.interactable = true;
+        //btn_Rate.interactable = true;
+        //btn_Not_Now.interactable = true;
     }
 
-    public void Close()
+    public void OnDisplayed()
     {
-        btn_Close.interactable = false;
-        btn_Rate.interactable = false;
-        btn_Not_Now.interactable = false;
+        btn_Close.enabled = true;
+        btn_Rate.enabled = true;
+        btn_Not_Now.enabled = true;
+    }
+
+    public void OnClosed()
+    {
+
+    }
+
+    private void Close()
+    {
+        btn_Close.enabled = false;
+        btn_Rate.enabled = false;
+        btn_Not_Now.enabled = false;
+        EventDispatcher.Instance.PostEvent(EventID.OnPopupClosed, this);
         animator.Play("Close");
     }
 
-    public void Show(Dictionary<PopupButtonName, Action> list_actions)
+    public void Show(Dictionary<PopupButtonEvent, Action> list_actions, Dictionary<PopupSettingType, object> list_settings)
     {
         Setup();
-        btn_Close_Callback = list_actions.ContainsKey(PopupButtonName.Close) ? list_actions[PopupButtonName.Close] : null;
-        btn_Not_Now_Callback = list_actions.ContainsKey(PopupButtonName.NotNowOnRate) ? list_actions[PopupButtonName.NotNowOnRate] : null;
-        btn_Rate_Callback = list_actions.ContainsKey(PopupButtonName.RateOnRate) ? list_actions[PopupButtonName.RateOnRate] : null;
+        btn_Close_Callback = list_actions.ContainsKey(PopupButtonEvent.ClosePressed) ? list_actions[PopupButtonEvent.ClosePressed] : null;
+        btn_Not_Now_Callback = list_actions.ContainsKey(PopupButtonEvent.NotNowOnRatePressed) ? list_actions[PopupButtonEvent.NotNowOnRatePressed] : null;
+        btn_Rate_Callback = list_actions.ContainsKey(PopupButtonEvent.RateOnRatePressed) ? list_actions[PopupButtonEvent.RateOnRatePressed] : null;
         animator.Play("Show");
     }
 
     public void BtnCloseOnClick()
     {
         Close();
-        if (btn_Close_Callback != null) btn_Close_Callback();
+        btn_Close_Callback?.Invoke();
     }
 
     public void BtnNotNowOnClick()
     {
         Close();
-        if (btn_Not_Now_Callback != null) btn_Not_Now_Callback();
+        btn_Not_Now_Callback?.Invoke();
     }
 
     public void BtnRateOnClick()
@@ -68,6 +81,6 @@ public class PopupRate : MonoBehaviour
  Application.OpenURL("itms-apps://itunes.apple.com/app/idYOUR_ID");
 #endif
         GameData.Instance.rate = false;
-        if(btn_Rate_Callback != null) btn_Rate_Callback();
+        btn_Rate_Callback?.Invoke();
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-public class PopupPassLevel : MonoBehaviour
+public class PopupPassLevel : MonoBehaviour, IPopup
 {
     [SerializeField] Button btn_Close;
     [SerializeField] Button btn_Next;
@@ -31,26 +31,39 @@ public class PopupPassLevel : MonoBehaviour
 
     private void Setup()
     {
-        btn_Close.interactable = true;
-        btn_Next.interactable = true;
-        btn_Watch_Video.interactable = true;
+        //btn_Close.interactable = true;
+        //btn_Next.interactable = true;
+        //btn_Watch_Video.interactable = true;
     }
 
-    public void Close()
+    public void OnDisplayed()
     {
-        btn_Close.interactable = false;
-        btn_Next.interactable = false;
-        btn_Watch_Video.interactable = false;
+        btn_Close.enabled = true;
+        btn_Next.enabled = true;
+        btn_Watch_Video.enabled = true;
+    }
+
+    public void OnClosed()
+    {
+
+    }
+
+    private void Close()
+    {
+        btn_Close.enabled = false;
+        btn_Next.enabled = false;
+        btn_Watch_Video.enabled = false;
+        EventDispatcher.Instance.PostEvent(EventID.OnPopupClosed, this);
         animator.Play("Close");
     }
 
-    public void Show(Dictionary<PopupButtonName, Action> list_actions, Dictionary<PopupSettingType, object> list_settings)
+    public void Show(Dictionary<PopupButtonEvent, Action> list_actions, Dictionary<PopupSettingType, object> list_settings)
     {
         Setup();
-        btn_Close_Callback = list_actions.ContainsKey(PopupButtonName.Close) ? list_actions[PopupButtonName.Close] : null;
-        btn_Watch_Video_Callback = list_actions.ContainsKey(PopupButtonName.WatchVideo10TimesCoin) ? list_actions[PopupButtonName.WatchVideo10TimesCoin] : null;
-        btn_Next_Callback = list_actions.ContainsKey(PopupButtonName.NextLevel) ? list_actions[PopupButtonName.NextLevel] : null;
-        value = list_settings.ContainsKey(PopupSettingType.PassLevelImage) ? Convert.ToInt32(list_settings[PopupSettingType.PassLevelImage]) : 0;
+        btn_Close_Callback = list_actions.ContainsKey(PopupButtonEvent.ClosePressed) ? list_actions[PopupButtonEvent.ClosePressed] : null;
+        btn_Watch_Video_Callback = list_actions.ContainsKey(PopupButtonEvent.WatchVideo10TimesCoinPressed) ? list_actions[PopupButtonEvent.WatchVideo10TimesCoinPressed] : null;
+        btn_Next_Callback = list_actions.ContainsKey(PopupButtonEvent.NextLevelPressed) ? list_actions[PopupButtonEvent.NextLevelPressed] : null;
+        value = list_settings.ContainsKey(PopupSettingType.PassLevelImageType) ? Convert.ToInt32(list_settings[PopupSettingType.PassLevelImageType]) : 0;
         if(value >= 1 && value <= 3)
         {
             image_Coin.sprite = sp_Coins[value - 1];
@@ -62,7 +75,7 @@ public class PopupPassLevel : MonoBehaviour
     public void BtnCloseOnClick()
     {
         Close();
-        if (btn_Close_Callback != null) btn_Close_Callback();
+        btn_Close_Callback?.Invoke();
     }
 
     public void BtnWatchVideoOnClick()
@@ -75,12 +88,12 @@ public class PopupPassLevel : MonoBehaviour
         });
         FirebaseManager.Instance.LogEventRequestRewardedVideo("x10_coins", hasVideo, GameCache.Instance.level_selected);
         FacebookManager.Instance.LogEventRequestRewardedVideo("x10_coins", hasVideo, GameCache.Instance.level_selected);
-        if (btn_Watch_Video_Callback != null) btn_Watch_Video_Callback();
+        btn_Watch_Video_Callback?.Invoke();
     }
 
     public void BtnNextOnClick()
     {
         Close();
-        if (btn_Next_Callback != null) btn_Next_Callback();
+        btn_Next_Callback?.Invoke();
     }
 }

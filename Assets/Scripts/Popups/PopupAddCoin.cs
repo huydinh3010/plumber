@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-public class PopupAddCoin : MonoBehaviour
+public class PopupAddCoin : MonoBehaviour, IPopup
 {
     [SerializeField] Button btn_Close;
     [SerializeField] Button btn_Share_Fb;
@@ -26,32 +26,45 @@ public class PopupAddCoin : MonoBehaviour
 
     private void Setup()
     {
-        btn_Close.interactable = true;
-        btn_Share_Fb.interactable = true;
-        btn_Watch_Video.interactable = true;
+        //btn_Close.interactable = true;
+        //btn_Share_Fb.interactable = true;
+        //btn_Watch_Video.interactable = true;
     }
 
-    public void Close()
+    public void OnDisplayed()
     {
-        btn_Close.interactable = false;
-        btn_Share_Fb.interactable = false;
-        btn_Watch_Video.interactable = false;
+        btn_Close.enabled = true;
+        btn_Share_Fb.enabled = true;
+        btn_Watch_Video.enabled = true;
+    }
+
+    public void OnClosed()
+    {
+
+    }
+
+    private void Close()
+    {
+        btn_Close.enabled = false;
+        btn_Share_Fb.enabled = false;
+        btn_Watch_Video.enabled = false;
+        EventDispatcher.Instance.PostEvent(EventID.OnPopupClosed, this);
         animator.Play("Close");
     }
 
-    public void Show(Dictionary<PopupButtonName, Action> list_actions)
+    public void Show(Dictionary<PopupButtonEvent, Action> list_actions, Dictionary<PopupSettingType, object> list_settings)
     {
         Setup();
-        btn_Close_Callback = list_actions.ContainsKey(PopupButtonName.Close) ? list_actions[PopupButtonName.Close] : null;
-        btn_Watch_Video_Callback = list_actions.ContainsKey(PopupButtonName.WatchVideoMoreCoin) ? list_actions[PopupButtonName.WatchVideoMoreCoin] : null;
-        btn_Share_Fb_Callback = list_actions.ContainsKey(PopupButtonName.ShareFacebook) ? list_actions[PopupButtonName.ShareFacebook] : null;
+        btn_Close_Callback = list_actions.ContainsKey(PopupButtonEvent.ClosePressed) ? list_actions[PopupButtonEvent.ClosePressed] : null;
+        btn_Watch_Video_Callback = list_actions.ContainsKey(PopupButtonEvent.WatchVideoMoreCoinPressed) ? list_actions[PopupButtonEvent.WatchVideoMoreCoinPressed] : null;
+        btn_Share_Fb_Callback = list_actions.ContainsKey(PopupButtonEvent.ShareFacebookPressed) ? list_actions[PopupButtonEvent.ShareFacebookPressed] : null;
         animator.Play("Show");
     }
 
     public void BtnCloseOnClick()
     {
         Close();
-        if (btn_Close_Callback != null) btn_Close_Callback();
+        btn_Close_Callback?.Invoke();
     }
 
     public void BtnWatchVideoOnClick()
@@ -62,7 +75,7 @@ public class PopupAddCoin : MonoBehaviour
         });
         FirebaseManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.level_selected);
         FacebookManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.level_selected);
-        if (btn_Watch_Video_Callback != null) btn_Watch_Video_Callback();
+        btn_Watch_Video_Callback?.Invoke();
     }
 
     public void BtnShareFbOnClick()
@@ -72,6 +85,6 @@ public class PopupAddCoin : MonoBehaviour
             FirebaseManager.Instance.LogEventShareFacebook();
             FacebookManager.Instance.LogEventShareFacebook();
         });
-        if (btn_Share_Fb_Callback != null) btn_Share_Fb_Callback();
+        btn_Share_Fb_Callback?.Invoke();
     }
 }

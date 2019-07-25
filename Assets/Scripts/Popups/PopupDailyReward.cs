@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-public class PopupDailyReward : MonoBehaviour
+public class PopupDailyReward : MonoBehaviour, IPopup
 {
     [SerializeField] Button[] btn_Days;
     [SerializeField] Sprite[] sp_Days_Active;
     [SerializeField] Sprite[] sp_Days_Passed;
     private Action btn_Day_Callback;
+    private int enable_index;
+    private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
-
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -29,19 +31,30 @@ public class PopupDailyReward : MonoBehaviour
             btn_Days[i].GetComponent<Image>().sprite = sp_Days_Passed[i];
         }
         btn_Days[i].GetComponent<Image>().sprite = sp_Days_Active[i];
-        btn_Days[i].enabled = true;
+        enable_index = i;
     }
 
-    public void Show(Dictionary<PopupButtonName, Action> list_actions)
+    public void OnDisplayed()
+    {
+        btn_Days[enable_index].enabled = true;
+    }
+
+    public void OnClosed()
+    {
+        
+    }
+
+    public void Show(Dictionary<PopupButtonEvent, Action> list_actions, Dictionary<PopupSettingType, object> list_settings)
     {
         Setup();
-        btn_Day_Callback = list_actions.ContainsKey(PopupButtonName.DayOnDailyReward) ? list_actions[PopupButtonName.DayOnDailyReward] : null;
-        GetComponent<Animator>().Play("Show");
+        btn_Day_Callback = list_actions.ContainsKey(PopupButtonEvent.DayOnDailyRewardPressed) ? list_actions[PopupButtonEvent.DayOnDailyRewardPressed] : null;
+        animator.Play("Show");
     }
 
-    public void Close()
+    private void Close()
     {
-        GetComponent<Animator>().Play("Close");
+        EventDispatcher.Instance.PostEvent(EventID.OnPopupClosed, this);
+        animator.Play("Close");
     }
 
     public void BtnDayOnClick(int k)
@@ -55,7 +68,7 @@ public class PopupDailyReward : MonoBehaviour
             GameData.Instance.clampDailyReward = true;
             StartCoroutine(WaitForClosePanel());
         }
-        if(btn_Day_Callback != null) btn_Day_Callback();
+        btn_Day_Callback?.Invoke();
     }
 
     private IEnumerator WaitForClosePanel()
@@ -63,4 +76,6 @@ public class PopupDailyReward : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         Close();
     }
+
+    
 }
