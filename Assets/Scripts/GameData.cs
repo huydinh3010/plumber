@@ -27,6 +27,7 @@ public class GameData
     public bool clampDailyReward;
     public bool clampChallengeReward;
     public bool rate;
+    public int achievement_progress;
     public LevelState unlocklv_state;
     public void increaseCoin(int value)
     {
@@ -111,6 +112,7 @@ public class GameData
             lastDayAccess = System.DateTime.Now.Date.ToFileTime();
             clampDailyReward = false;
             clampChallengeReward = false;
+            achievement_progress = 0;
             unlocklv_state = new LevelState();
             GameCache.Instance.firstGameLoad = true;
         }
@@ -151,3 +153,4 @@ public class LevelState
     }
 
 }
+
