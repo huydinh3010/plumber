@@ -8,7 +8,7 @@ public class SceneMainMenuController : MonoBehaviour
 {
     public GameObject btnDailyChallenge;
     public GameObject btnRemoveAds;
-    public GameObject btnMoreGame;
+    //public GameObject btnMoreGame;
     private bool firstFrame;
     private void Awake()
     {

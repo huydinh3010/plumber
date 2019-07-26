@@ -8,10 +8,8 @@ public class PopupPassLevel : MonoBehaviour, IPopup
     [SerializeField] Button btn_Close;
     [SerializeField] Button btn_Next;
     [SerializeField] Button btn_Watch_Video;
-    [SerializeField] Image image_Coin;
-    [SerializeField] Image image_Point;
-    [SerializeField] Sprite[] sp_Coins;
-    [SerializeField] Sprite[] sp_Points;
+    [SerializeField] Text text_Coin;
+    [SerializeField] Text text_Point;
     private Action btn_Close_Callback;
     private Action btn_Watch_Video_Callback;
     private Action btn_Next_Callback;
@@ -63,8 +61,8 @@ public class PopupPassLevel : MonoBehaviour, IPopup
         value = list_settings.ContainsKey(PopupSettingType.PassLevelImageType) ? Convert.ToInt32(list_settings[PopupSettingType.PassLevelImageType]) : 0;
         if(value >= 1 && value <= 3)
         {
-            image_Coin.sprite = sp_Coins[value - 1];
-            image_Point.sprite = sp_Points[value - 1];
+            text_Coin.text = "+" + value.ToString();
+            text_Point.text = "+" + (value * 10).ToString();
         }
         GetComponent<Animator>().Play("Show");
     }
