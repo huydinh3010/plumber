@@ -16,6 +16,14 @@ public class PopupManager : MonoBehaviour
     [SerializeField] PopupNextLevel popupNextLevel;
     [SerializeField] PopupLastLevel popupLastLevel;
 
+    [SerializeField] GameObject go_DailyReward;
+    [SerializeField] GameObject go_PlayServices;
+    [SerializeField] GameObject go_Rate;
+    [SerializeField] GameObject go_Achievement;
+    [SerializeField] GameObject go_AddCoin;
+    [SerializeField] GameObject go_PassLevel;
+    [SerializeField] GameObject go_NextLevel;
+    [SerializeField] GameObject go_LastLevel;
     private IPopup activePopup;
     private bool showing;
 
@@ -68,33 +76,49 @@ public class PopupManager : MonoBehaviour
             switch (name)
             {
                 case PopupName.DailyReward:
+                    go_DailyReward.SetActive(true);
                     activePopup = popupDailyReward;
                     break;
                 case PopupName.PlayServices:
+                    go_PlayServices.SetActive(true);
                     activePopup = popupPlayServices;
                     break;
                 case PopupName.Rate:
+                    go_Rate.SetActive(true);
                     activePopup = popupRate;
                     break;
                 case PopupName.Achievement:
+                    go_Achievement.SetActive(true);
                     activePopup = popupAchievement;
                     break;
                 case PopupName.AddCoin:
+                    go_AddCoin.SetActive(true);
                     activePopup = popupAddCoin;
                     break;
                 case PopupName.PassLevel:
+                    go_PassLevel.SetActive(true);
                     activePopup = popupPassLevel;
                     break;
                 case PopupName.NextLevel:
+                    go_NextLevel.SetActive(true);
                     activePopup = popupNextLevel;
                     break;
                 case PopupName.LastLevel:
+                    go_LastLevel.SetActive(true);
                     activePopup = popupLastLevel;
                     break;
             }
             activePopup.Show(list_actions, list_settings);
         }
     }
+
+    public void ClosePopup()
+    {
+        if (activePopup != null)
+        {
+            activePopup.Close();
+        }
+    } 
 
     private void OnDestroy()
     {

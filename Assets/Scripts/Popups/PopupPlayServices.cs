@@ -7,11 +7,10 @@ public class PopupPlayServices : MonoBehaviour, IPopup
 {
     [SerializeField] Button btn_Close;
     private Action btn_Close_Callback;
-    private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
+
     }
 
     // Update is called once per frame
@@ -22,7 +21,7 @@ public class PopupPlayServices : MonoBehaviour, IPopup
 
     private void Setup()
     {
-        //btn_Close.interactable = true;
+        
     }
 
     public void OnDisplayed()
@@ -32,7 +31,7 @@ public class PopupPlayServices : MonoBehaviour, IPopup
 
     public void OnClosed()
     {
-
+        GetComponent<RectTransform>().gameObject.SetActive(false);
     }
 
     public void Show(Dictionary<PopupButtonEvent, Action> list_actions, Dictionary<PopupSettingType, object> list_settings)
@@ -42,7 +41,7 @@ public class PopupPlayServices : MonoBehaviour, IPopup
         GetComponent<Animator>().Play("Show");
     }
 
-    private void Close()
+    public void Close()
     {
         btn_Close.enabled = false;
         EventDispatcher.Instance.PostEvent(EventID.OnPopupClosed, this);

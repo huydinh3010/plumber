@@ -10,11 +10,10 @@ public class PopupDailyReward : MonoBehaviour, IPopup
     [SerializeField] Sprite[] sp_Days_Passed;
     private Action btn_Day_Callback;
     private int enable_index;
-    private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
+        
     }
 
     // Update is called once per frame
@@ -41,20 +40,20 @@ public class PopupDailyReward : MonoBehaviour, IPopup
 
     public void OnClosed()
     {
-        
+        GetComponent<RectTransform>().gameObject.SetActive(false);
     }
 
     public void Show(Dictionary<PopupButtonEvent, Action> list_actions, Dictionary<PopupSettingType, object> list_settings)
     {
         Setup();
         btn_Day_Callback = list_actions.ContainsKey(PopupButtonEvent.DayOnDailyRewardPressed) ? list_actions[PopupButtonEvent.DayOnDailyRewardPressed] : null;
-        animator.Play("Show");
+        GetComponent<Animator>().Play("Show");
     }
 
-    private void Close()
+    public void Close()
     {
         EventDispatcher.Instance.PostEvent(EventID.OnPopupClosed, this);
-        animator.Play("Close");
+        GetComponent<Animator>().Play("Close");
     }
 
     public void BtnDayOnClick(int k)

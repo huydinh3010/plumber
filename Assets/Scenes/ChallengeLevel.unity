@@ -250,7 +250,6 @@ GameObject:
   m_Component:
   - component: {fileID: 151321416}
   - component: {fileID: 151321415}
-  - component: {fileID: 151321417}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -270,8 +269,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5874860ae555c54b816d62e68b489a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneController: {fileID: 151321417}
-  panelAddCoin: {fileID: 166557908}
   image_levels:
   - {fileID: 1527756850}
   - {fileID: 1100610870}
@@ -317,22 +314,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &151321417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 151321414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fabcaed2c00355d4cb3b277b98906c71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 3
-  transitionImage: {fileID: 6569590558319311183, guid: f8008fa27d3b2da45bc6e402cbe026c4,
-    type: 3}
-  canvas: {fileID: 239506303}
 --- !u!1 &153687861
 GameObject:
   m_ObjectHideFlags: 0

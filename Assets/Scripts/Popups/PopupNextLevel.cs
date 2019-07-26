@@ -9,11 +9,10 @@ public class PopupNextLevel : MonoBehaviour, IPopup
     [SerializeField] Button btn_Next;
     private Action btn_Close_Callback;
     private Action btn_Next_Callback;
-    private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
+        
     }
 
     // Update is called once per frame
@@ -24,8 +23,7 @@ public class PopupNextLevel : MonoBehaviour, IPopup
 
     private void Setup()
     {
-        //btn_Close.interactable = true;
-        //btn_Next.interactable = true;
+        
     }
 
     public void OnDisplayed()
@@ -36,14 +34,14 @@ public class PopupNextLevel : MonoBehaviour, IPopup
 
     public void OnClosed()
     {
-        
+        GetComponent<RectTransform>().gameObject.SetActive(false);
     }
-    private void Close()
+    public void Close()
     {
         btn_Close.enabled = false;
         btn_Next.enabled = false;
         EventDispatcher.Instance.PostEvent(EventID.OnPopupClosed, this);
-        animator.Play("Close");
+        GetComponent<Animator>().Play("Close");
     }
 
     public void Show(Dictionary<PopupButtonEvent, Action> list_actions, Dictionary<PopupSettingType, object> list_settings)
@@ -51,7 +49,7 @@ public class PopupNextLevel : MonoBehaviour, IPopup
         Setup();
         btn_Close_Callback = list_actions.ContainsKey(PopupButtonEvent.ClosePressed) ? list_actions[PopupButtonEvent.ClosePressed] : null;
         btn_Next_Callback = list_actions.ContainsKey(PopupButtonEvent.NextLevelPressed) ? list_actions[PopupButtonEvent.NextLevelPressed] : null;
-        animator.Play("Show");
+        GetComponent<Animator>().Play("Show");
     }
 
     public void BtnCloseOnClick()

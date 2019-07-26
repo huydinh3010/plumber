@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using System;
 public class SceneSimpleLevelController : MonoBehaviour
 {
-    public SceneController sceneController;
     public GameObject Grid;
     public GameObject OneStarLv;
     public GameObject TwoStarsLv;
@@ -13,15 +12,12 @@ public class SceneSimpleLevelController : MonoBehaviour
     public GameObject UnlockLv;
     public GameObject LockLv;
     public GameObject ContentObj;
-    //public GameObject panelAddCoin;
-    //public GameObject panelLastLevel;
     public Text txtCoins;
-
-    //private bool panelShowing;
 
     private void Awake()
     {
-        sceneController.openScene();
+        LoadSceneManager.Instance.OpenScene();
+
         txtCoins.text = GameData.Instance.coins.ToString();
         for(int p = 0; p < 35; p++)
         {
@@ -65,7 +61,6 @@ public class SceneSimpleLevelController : MonoBehaviour
         }
         if (GameCache.Instance.lastLevel)
         {
-            //showPanel(panelLastLevel);
             PopupManager.Instance.ShowPopup(PopupName.LastLevel, null);
             GameCache.Instance.lastLevel = false;
         }
@@ -118,71 +113,26 @@ public class SceneSimpleLevelController : MonoBehaviour
         
     }
 
-
-
-    //private void showPanel(GameObject panel)
-    //{
-    //    panel.GetComponent<Animator>().Play("Show");
-    //    panelShowing = true;
-    //}
-
-    //private void closePanel(GameObject panel)
-    //{
-    //    panel.GetComponent<Animator>().Play("Close");
-    //    panelShowing = false;
-    //}
-
     public void BtnBackOnClick()
     {
-        sceneController.loadScene("MainMenu");
+        LoadSceneManager.Instance.LoadScene("MainMenu");
     }
 
     public void BtnLevelOnScrollViewOnClick(int level)
     {
         GameCache.Instance.level_selected = level;
         GameCache.Instance.mode = 1;
-        sceneController.loadScene("GamePlay");
+        LoadSceneManager.Instance.LoadScene("GamePlay");
     }
 
     public void BtnAddCoinOnClick()
     {
-        //showPanel(panelAddCoin);
         PopupManager.Instance.ShowPopup(PopupName.AddCoin, null);
     }
     
-    //public void BtnCloseOnPanelOnClick(GameObject target)
-    //{
-    //    if (panelShowing) closePanel(target);
-    //}
-
-    //public void BtnWatchVideoOnPanelOnClick()
-    //{
-    //    if (panelShowing)
-    //    {
-    //        bool hasVideo = AdManager.Instance.ShowRewardVideo(() =>
-    //        {
-    //            GameData.Instance.increaseCoin(10);
-    //        });
-    //        FirebaseManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.level_selected);
-    //        FacebookManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.level_selected);
-    //    }
-    //}
-
-    //public void BtnShareFbOnPanelOnClick()
-    //{
-    //    if (panelShowing)
-    //    {
-    //        FacebookManager.Instance.ShareWithFriends(() => {
-    //            GameData.Instance.increaseCoin(50);
-    //            FirebaseManager.Instance.LogEventShareFacebook();
-    //            FacebookManager.Instance.LogEventShareFacebook();
-    //        });
-    //    }
-    //}
-    
-
     private void OnDestroy()
     {
         EventDispatcher.Instance.RemoveListener(EventID.OnCoinChange, OnCoinChange);
+        PopupManager.Instance.ClosePopup();
     }
 }

@@ -11,11 +11,10 @@ public class PopupRate : MonoBehaviour, IPopup
     private Action btn_Close_Callback;
     private Action btn_Not_Now_Callback;
     private Action btn_Rate_Callback;
-    private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
+        
     }
 
     // Update is called once per frame
@@ -26,9 +25,7 @@ public class PopupRate : MonoBehaviour, IPopup
 
     private void Setup()
     {
-        //btn_Close.interactable = true;
-        //btn_Rate.interactable = true;
-        //btn_Not_Now.interactable = true;
+
     }
 
     public void OnDisplayed()
@@ -40,16 +37,16 @@ public class PopupRate : MonoBehaviour, IPopup
 
     public void OnClosed()
     {
-
+        GetComponent<RectTransform>().gameObject.SetActive(false);
     }
 
-    private void Close()
+    public void Close()
     {
         btn_Close.enabled = false;
         btn_Rate.enabled = false;
         btn_Not_Now.enabled = false;
         EventDispatcher.Instance.PostEvent(EventID.OnPopupClosed, this);
-        animator.Play("Close");
+        GetComponent<Animator>().Play("Close");
     }
 
     public void Show(Dictionary<PopupButtonEvent, Action> list_actions, Dictionary<PopupSettingType, object> list_settings)
@@ -58,7 +55,7 @@ public class PopupRate : MonoBehaviour, IPopup
         btn_Close_Callback = list_actions.ContainsKey(PopupButtonEvent.ClosePressed) ? list_actions[PopupButtonEvent.ClosePressed] : null;
         btn_Not_Now_Callback = list_actions.ContainsKey(PopupButtonEvent.NotNowOnRatePressed) ? list_actions[PopupButtonEvent.NotNowOnRatePressed] : null;
         btn_Rate_Callback = list_actions.ContainsKey(PopupButtonEvent.RateOnRatePressed) ? list_actions[PopupButtonEvent.RateOnRatePressed] : null;
-        animator.Play("Show");
+        GetComponent<Animator>().Play("Show");
     }
 
     public void BtnCloseOnClick()

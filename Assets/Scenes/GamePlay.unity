@@ -3276,7 +3276,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 7958.549}
+  m_AnchoredPosition: {x: 0, y: 7868.5522}
   m_SizeDelta: {x: 0, y: 400}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1185581689
@@ -5404,7 +5404,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2084200695}
   - component: {fileID: 2084200696}
-  - component: {fileID: 2084200697}
   - component: {fileID: 2084200694}
   - component: {fileID: 2084200698}
   - component: {fileID: 2084200699}
@@ -5442,7 +5441,10 @@ MonoBehaviour:
   rotate_speed: 300
   duration_secs: 0
   turn_count: 0
-  panelShowing: 0
+  remove_pipe_count: 0
+  construct_pipe_count: 0
+  endConstructPipe: 0
+  stop_time: 0
 --- !u!4 &2084200695
 Transform:
   m_ObjectHideFlags: 0
@@ -5470,49 +5472,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 795fbac48ec03a54e9529c9b1148de55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneController: {fileID: 2084200697}
   game: {fileID: 2084200694}
-  panelRate: {fileID: 1723860107}
-  panelAddCoin: {fileID: 2110017541}
-  panelPassedLevel: {fileID: 1990379964}
-  panelNextLevel: {fileID: 2137207240}
   btnSound: {fileID: 899958782}
   btnRemove: {fileID: 443246818}
   btnConstruct: {fileID: 986483810}
   btnAddCoin: {fileID: 2027172887}
-  btnWatchVideo10TimesCoin: {fileID: 61383470}
-  coinReward: {fileID: 804935169}
-  pointReward: {fileID: 777107931}
   txtCoins: {fileID: 599393755}
   txtPoints: {fileID: 738667882}
   txtLevel: {fileID: 1105619415}
-  s_coins:
-  - {fileID: 21300000, guid: cac18e37ab623ff4ca889c1f56106b82, type: 3}
-  - {fileID: 21300000, guid: 6d2e33cc1698faa4ca4c1dcabc75e8a0, type: 3}
-  - {fileID: 21300000, guid: 2fded5b8b3e7c99488711431f03bafe9, type: 3}
-  s_points:
-  - {fileID: 21300000, guid: cdc6ead3d5f2a524bb3d2fa158f9378b, type: 3}
-  - {fileID: 21300000, guid: 3fa0f20a7f45c9d40846d0d0d9c5d9d2, type: 3}
-  - {fileID: 21300000, guid: 8075f3cb111bc174ab094469bfbae45b, type: 3}
   s_sounds:
   - {fileID: 21300000, guid: 47987c183af4b1143936d386669d1aed, type: 3}
   - {fileID: 21300000, guid: 5fef3f21f66246342b606b9a856b3857, type: 3}
---- !u!114 &2084200697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2084200693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fabcaed2c00355d4cb3b277b98906c71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 3
-  transitionImage: {fileID: 6569590558319311183, guid: f8008fa27d3b2da45bc6e402cbe026c4,
-    type: 3}
-  canvas: {fileID: 1592425303}
 --- !u!114 &2084200698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5537,7 +5507,10 @@ MonoBehaviour:
   rotate_speed: 300
   duration_secs: 0
   turn_count: 0
-  panelShowing: 0
+  remove_pipe_count: 0
+  construct_pipe_count: 0
+  endConstructPipe: 0
+  stop_time: 0
   hand: {fileID: 5380729859762908493, guid: c01f1c6ed78bdaa47b6b2d1944053f0f, type: 3}
   text_tutorial: {fileID: 1021819565}
 --- !u!114 &2084200699
@@ -5564,7 +5537,10 @@ MonoBehaviour:
   rotate_speed: 300
   duration_secs: 0
   turn_count: 0
-  panelShowing: 0
+  remove_pipe_count: 0
+  construct_pipe_count: 0
+  endConstructPipe: 0
+  stop_time: 0
 --- !u!1 &2087101478
 GameObject:
   m_ObjectHideFlags: 0

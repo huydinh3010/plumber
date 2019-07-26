@@ -5,8 +5,6 @@ using UnityEngine.UI;
 using System;
 public class ChallengeSceneController : MonoBehaviour
 {
-    public SceneController sceneController;
-    //public GameObject panelAddCoin;
     public Image[] image_levels;
     public Image image_pool;
     public Button btn_pool;
@@ -15,13 +13,13 @@ public class ChallengeSceneController : MonoBehaviour
     public Text text_tutorial;
     public Text txtCoins;
     private int total;
-    //private bool panelShowing;
     private string[] str = {"Complete all levels and get 100 coins!", "Congratulations! You have completed daily challenge.Claim your reward.", "You clamped the reward!" };
+    
     // Start is called before the first frame update
     private void Awake()
     {
+        LoadSceneManager.Instance.OpenScene();
         EventDispatcher.Instance.RegisterListener(EventID.OnCoinChange, onCoinChange);
-        sceneController.openScene();
         for(int i = 0; i < 8; i++)
         {
             if(GameData.Instance.completed[i] == 1)
@@ -51,7 +49,7 @@ public class ChallengeSceneController : MonoBehaviour
 
     public void btnBackOnClick()
     {
-        sceneController.loadScene("MainMenu");
+        LoadSceneManager.Instance.LoadScene("MainMenu");
     }
 
     
@@ -94,7 +92,7 @@ public class ChallengeSceneController : MonoBehaviour
     {
         GameCache.Instance.mode = 2;
         GameCache.Instance.level_selected = k;
-        sceneController.loadScene("GamePlay");
+        LoadSceneManager.Instance.LoadScene("GamePlay");
     }
 
     public void btnPoolOnClick()
@@ -111,59 +109,17 @@ public class ChallengeSceneController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //onClickGameObject();
+        
     }
 
     public void btnAddCoinOnClick()
     {
-        //showPanel(panelAddCoin);
         PopupManager.Instance.ShowPopup(PopupName.AddCoin, null);
     }
-
-    //private void showPanel(GameObject panel)
-    //{
-    //    panel.GetComponent<Animator>().Play("Show");
-    //    panelShowing = true;
-    //}
-
-    //private void closePanel(GameObject panel)
-    //{
-    //    panel.GetComponent<Animator>().Play("Close");
-    //    panelShowing = false;
-    //}
-
-    //public void BtnCloseOnPanelOnClick(GameObject target)
-    //{
-    //    if (panelShowing) closePanel(target);
-    //}
-
-    //public void BtnWatchVideoOnPanelOnClick()
-    //{
-    //    if (panelShowing)
-    //    {
-    //        bool hasVideo = AdManager.Instance.ShowRewardVideo(() =>
-    //        {
-    //            GameData.Instance.increaseCoin(10);
-    //        });
-    //        FirebaseManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.level_selected);
-    //        FacebookManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.level_selected);
-    //    }
-    //}
-
-    //public void BtnShareFbOnPanelOnClick()
-    //{
-    //    if (panelShowing)
-    //    {
-    //        FacebookManager.Instance.ShareWithFriends(() => {
-    //            GameData.Instance.increaseCoin(50);
-    //            FirebaseManager.Instance.LogEventShareFacebook();
-    //            FacebookManager.Instance.LogEventShareFacebook();
-    //        });
-    //    }
-    //}
 
     private void OnDestroy()
     {
         EventDispatcher.Instance.RemoveListener(EventID.OnCoinChange, onCoinChange);
+        PopupManager.Instance.ClosePopup();
     }
 }

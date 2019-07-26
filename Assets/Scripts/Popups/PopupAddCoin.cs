@@ -11,11 +11,10 @@ public class PopupAddCoin : MonoBehaviour, IPopup
     private Action btn_Close_Callback;
     private Action btn_Watch_Video_Callback;
     private Action btn_Share_Fb_Callback;
-    private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
+
     }
 
     // Update is called once per frame
@@ -26,9 +25,7 @@ public class PopupAddCoin : MonoBehaviour, IPopup
 
     private void Setup()
     {
-        //btn_Close.interactable = true;
-        //btn_Share_Fb.interactable = true;
-        //btn_Watch_Video.interactable = true;
+        
     }
 
     public void OnDisplayed()
@@ -40,16 +37,16 @@ public class PopupAddCoin : MonoBehaviour, IPopup
 
     public void OnClosed()
     {
-
+        GetComponent<RectTransform>().gameObject.SetActive(false);
     }
 
-    private void Close()
+    public void Close()
     {
         btn_Close.enabled = false;
         btn_Share_Fb.enabled = false;
         btn_Watch_Video.enabled = false;
         EventDispatcher.Instance.PostEvent(EventID.OnPopupClosed, this);
-        animator.Play("Close");
+        GetComponent<Animator>().Play("Close");
     }
 
     public void Show(Dictionary<PopupButtonEvent, Action> list_actions, Dictionary<PopupSettingType, object> list_settings)
@@ -58,7 +55,7 @@ public class PopupAddCoin : MonoBehaviour, IPopup
         btn_Close_Callback = list_actions.ContainsKey(PopupButtonEvent.ClosePressed) ? list_actions[PopupButtonEvent.ClosePressed] : null;
         btn_Watch_Video_Callback = list_actions.ContainsKey(PopupButtonEvent.WatchVideoMoreCoinPressed) ? list_actions[PopupButtonEvent.WatchVideoMoreCoinPressed] : null;
         btn_Share_Fb_Callback = list_actions.ContainsKey(PopupButtonEvent.ShareFacebookPressed) ? list_actions[PopupButtonEvent.ShareFacebookPressed] : null;
-        animator.Play("Show");
+        GetComponent<Animator>().Play("Show");
     }
 
     public void BtnCloseOnClick()

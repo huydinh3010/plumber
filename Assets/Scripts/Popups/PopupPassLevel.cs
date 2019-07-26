@@ -15,12 +15,11 @@ public class PopupPassLevel : MonoBehaviour, IPopup
     private Action btn_Close_Callback;
     private Action btn_Watch_Video_Callback;
     private Action btn_Next_Callback;
-    private Animator animator;
     private int value;
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
+        
     }
 
     // Update is called once per frame
@@ -31,9 +30,7 @@ public class PopupPassLevel : MonoBehaviour, IPopup
 
     private void Setup()
     {
-        //btn_Close.interactable = true;
-        //btn_Next.interactable = true;
-        //btn_Watch_Video.interactable = true;
+        
     }
 
     public void OnDisplayed()
@@ -45,16 +42,16 @@ public class PopupPassLevel : MonoBehaviour, IPopup
 
     public void OnClosed()
     {
-
+        GetComponent<RectTransform>().gameObject.SetActive(false);
     }
 
-    private void Close()
+    public void Close()
     {
         btn_Close.enabled = false;
         btn_Next.enabled = false;
         btn_Watch_Video.enabled = false;
         EventDispatcher.Instance.PostEvent(EventID.OnPopupClosed, this);
-        animator.Play("Close");
+        GetComponent<Animator>().Play("Close");
     }
 
     public void Show(Dictionary<PopupButtonEvent, Action> list_actions, Dictionary<PopupSettingType, object> list_settings)
@@ -69,7 +66,7 @@ public class PopupPassLevel : MonoBehaviour, IPopup
             image_Coin.sprite = sp_Coins[value - 1];
             image_Point.sprite = sp_Points[value - 1];
         }
-        animator.Play("Show");
+        GetComponent<Animator>().Play("Show");
     }
 
     public void BtnCloseOnClick()
