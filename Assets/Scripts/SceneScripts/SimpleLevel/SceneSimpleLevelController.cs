@@ -13,12 +13,15 @@ public class SceneSimpleLevelController : MonoBehaviour
     public GameObject LockLv;
     public GameObject ContentObj;
     public Text txtCoins;
-
+    public Text txtPoints;
     private void Awake()
     {
         LoadSceneManager.Instance.OpenScene();
+        EventDispatcher.Instance.RegisterListener(EventID.OnCoinChange, OnCoinChange);
+        EventDispatcher.Instance.RegisterListener(EventID.OnPointChange, OnPointChange);
 
         txtCoins.text = GameData.Instance.coins.ToString();
+        txtPoints.text = GameData.Instance.points.ToString();
         for(int p = 0; p < 35; p++)
         {
             GameObject goGridClone = Instantiate(Grid, Vector3.zero, Quaternion.identity, ContentObj.transform);
@@ -64,12 +67,17 @@ public class SceneSimpleLevelController : MonoBehaviour
             PopupManager.Instance.ShowPopup(PopupName.LastLevel, null);
             GameCache.Instance.lastLevel = false;
         }
-        EventDispatcher.Instance.RegisterListener(EventID.OnCoinChange, OnCoinChange);
+        
     }
 
     private void OnCoinChange(object param)
     {
         StartCoroutine(coinChangeEffect(txtCoins, Convert.ToInt32(param)));
+    }
+
+    private void OnPointChange(object param)
+    {
+        StartCoroutine(coinChangeEffect(txtPoints, Convert.ToInt32(param)));
     }
 
     IEnumerator coinChangeEffect(Text text, int value)
@@ -133,6 +141,7 @@ public class SceneSimpleLevelController : MonoBehaviour
     private void OnDestroy()
     {
         EventDispatcher.Instance.RemoveListener(EventID.OnCoinChange, OnCoinChange);
+        EventDispatcher.Instance.RemoveListener(EventID.OnPointChange, OnPointChange);
         PopupManager.Instance.ClosePopup();
     }
 }

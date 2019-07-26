@@ -78,7 +78,7 @@ public class GamePlaySceneController : MonoBehaviour
         else btnSound.GetComponent<Image>().sprite = s_sounds[0];
         txtCoins.text = GameData.Instance.coins.ToString();
         txtPoints.text = GameData.Instance.points.ToString();
-        txtLevel.text = "Level " + GameCache.Instance.level_selected.ToString();
+        txtLevel.text = GameCache.Instance.level_selected.ToString();
         //Gamelogic
         gameover = animPlaying = false;
         game.loadLevelData();
@@ -162,7 +162,7 @@ public class GamePlaySceneController : MonoBehaviour
 
     private void onLevelSelectChange(object param)
     {
-        txtLevel.text = "Level " + GameCache.Instance.level_selected.ToString();
+        txtLevel.text = GameCache.Instance.level_selected.ToString();
     }
 
     private void onCoinChange(object param)

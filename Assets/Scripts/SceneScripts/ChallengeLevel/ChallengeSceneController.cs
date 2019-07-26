@@ -12,6 +12,7 @@ public class ChallengeSceneController : MonoBehaviour
     public Sprite[] d_levels;
     public Text text_tutorial;
     public Text txtCoins;
+    public Text txtPoints;
     private int total;
     private string[] str = {"Complete all levels and get 100 coins!", "Congratulations! You have completed daily challenge.Claim your reward.", "You clamped the reward!" };
     
@@ -20,7 +21,10 @@ public class ChallengeSceneController : MonoBehaviour
     {
         LoadSceneManager.Instance.OpenScene();
         EventDispatcher.Instance.RegisterListener(EventID.OnCoinChange, onCoinChange);
-        for(int i = 0; i < 8; i++)
+        EventDispatcher.Instance.RegisterListener(EventID.OnPointChange, onPointChange);
+        txtCoins.text = GameData.Instance.coins.ToString();
+        txtPoints.text = GameData.Instance.points.ToString();
+        for (int i = 0; i < 8; i++)
         {
             if(GameData.Instance.completed[i] == 1)
             {
@@ -39,7 +43,6 @@ public class ChallengeSceneController : MonoBehaviour
             btn_pool.interactable = false;
         }
         else text_tutorial.text = str[0];
-        txtCoins.text = GameData.Instance.coins.ToString();
     }
 
     void Start()
@@ -57,6 +60,11 @@ public class ChallengeSceneController : MonoBehaviour
     private void onCoinChange(object param)
     {
         StartCoroutine(coinChangeEffect(txtCoins, Convert.ToInt32(param)));
+    }
+
+    private void onPointChange(object param)
+    {
+        StartCoroutine(coinChangeEffect(txtPoints, Convert.ToInt32(param)));
     }
 
     IEnumerator coinChangeEffect(Text text, int value)
@@ -120,6 +128,7 @@ public class ChallengeSceneController : MonoBehaviour
     private void OnDestroy()
     {
         EventDispatcher.Instance.RemoveListener(EventID.OnCoinChange, onCoinChange);
+        EventDispatcher.Instance.RemoveListener(EventID.OnPointChange, onPointChange);
         PopupManager.Instance.ClosePopup();
     }
 }

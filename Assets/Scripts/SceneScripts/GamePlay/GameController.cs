@@ -9,7 +9,6 @@ using UnityEngine.UI;
 public abstract class GameController : MonoBehaviour
 {
     public RectTransform PlayZone;
-    public Sprite[] s_valves;
     public GameObject[] pipes;
     public int rotate_speed;
     public float duration_secs;
