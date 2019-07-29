@@ -12,7 +12,7 @@ public class SceneMainMenuController : MonoBehaviour
     private bool firstFrame;
     private void Awake()
     {
-        
+
     }
 
     // Start is called before the first frame update
@@ -24,8 +24,10 @@ public class SceneMainMenuController : MonoBehaviour
         {
             PopupManager.Instance.ShowPopup(PopupName.DailyReward, null);
         }
-        
+        GameCache.Instance.firstGameLoad = false;
+
         btnRemoveAds.SetActive(GameData.Instance.ads_on);
+
         Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--Main Menu Start() end");
     }
 
@@ -56,7 +58,9 @@ public class SceneMainMenuController : MonoBehaviour
 
     public void BtnRemoveAdsOnClick()
     {
-        IAPManager.Instance.BuyNoAds();
+        //IAPManager.Instance.RegisterNoAdsCallback(()=> { btnRemoveAds.SetActive(false); });
+
+        PopupManager.Instance.ShowPopup(PopupName.RemoveAds, new Dictionary<PopupButtonEvent, Action>() { { PopupButtonEvent.GoOnRemoveAds, OnAdsRemoved } });
     }
 
     public void BtnRateOnClick()
@@ -76,20 +80,13 @@ public class SceneMainMenuController : MonoBehaviour
         LoadSceneManager.Instance.LoadScene("GamePlay");
     }
 
-    public void BtnMoreGameOnClick()
+    private void OnAdsRemoved()
     {
-        // miss id
-#if UNITY_ANDROID
-        Application.OpenURL("market://details?id=YOUR_ID");
-#elif UNITY_IPHONE
- Application.OpenURL("itms-apps://itunes.apple.com/app/idYOUR_ID");
-#endif
+        btnRemoveAds.SetActive(GameData.Instance.ads_on);
     }
 
     private void OnDestroy()
     {
         PopupManager.Instance.ClosePopup();
     }
-
-
 }

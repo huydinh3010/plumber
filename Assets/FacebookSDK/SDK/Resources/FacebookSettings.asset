@@ -16,9 +16,9 @@ MonoBehaviour:
   clientTokens:
   - 
   appIds:
-  - 1207369676102221
+  - 2338863892862261
   appLabels:
-  - Test Game
+  - 'Superb Plumber: Waterline'
   cookie: 1
   logging: 1
   status: 1

@@ -82,7 +82,7 @@ public class PopupDailyReward : MonoBehaviour, IPopup
             btn_Days[k].GetComponent<Image>().sprite = sp_Days_Passed[k];
             GameData.Instance.increaseCoin(rewards[k]);
             btn_Days[k].enabled = false;
-            StartCoroutine(WaitForClosePanel());
+            Close();
         }
         btn_Close_Callback?.Invoke();
     }

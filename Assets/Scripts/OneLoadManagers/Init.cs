@@ -49,8 +49,8 @@ public class Init : MonoBehaviour
         
         AudioManager.Instance.Initialize();
         Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After Audio Initialize");
-        IAPManager.Instance.InitializePurchasing();
-        Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After IAP Initialize");
+        //IAPManager.Instance.InitializePurchasing();
+        //Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After IAP Initialize");
         FirebaseManager.Instance.Initialize();
         Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After Firebase Initialize");
         FacebookManager.Instance.Initialize();

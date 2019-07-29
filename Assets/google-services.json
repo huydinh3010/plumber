@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "1065651647310",
-    "firebase_url": "https://plumber-d3214.firebaseio.com",
-    "project_id": "plumber-d3214",
-    "storage_bucket": "plumber-d3214.appspot.com"
+    "project_number": "326464718541",
+    "firebase_url": "https://superb-plumber-waterline.firebaseio.com",
+    "project_id": "superb-plumber-waterline",
+    "storage_bucket": "superb-plumber-waterline.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1065651647310:android:faeaedd41cbb2333",
+        "mobilesdk_app_id": "1:326464718541:android:129fb9e4d6ccc638",
         "android_client_info": {
-          "package_name": "com.huydinh.plumbertesttest"
+          "package_name": "com.waterline.pipeman"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1065651647310-40j55l0vdbe8c5m1bj4kb01pilrn3lqt.apps.googleusercontent.com",
+          "client_id": "326464718541-dql28dujlgf0d80j6vvej4c4iktq28ql.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB0Vjpqhy5Ou1-nB1ZHMf3CIun_nqyC12Y"
+          "current_key": "AIzaSyD4Ul91yyBPI0SezIL1wa2DN4HIDH2tvU0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1065651647310-40j55l0vdbe8c5m1bj4kb01pilrn3lqt.apps.googleusercontent.com",
+              "client_id": "326464718541-dql28dujlgf0d80j6vvej4c4iktq28ql.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

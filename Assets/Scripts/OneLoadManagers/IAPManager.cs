@@ -16,7 +16,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
     // Google Play Store-specific product identifier subscription product.
     //private static string kProductNameGooglePlaySubscription = "com.unity3d.subscription.original";
-
+    private Action noAdsCallback;
     private void Awake()
     {
         if(Instance == null)
@@ -116,6 +116,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
         {
             Debug.Log("No ads");
             GameData.Instance.ads_on = false;
+            noAdsCallback();
         }
         else
         {
@@ -127,9 +128,15 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
     public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
     {
+        
         // A product purchase attempt did not succeed. Check failureReason for more detail. Consider sharing 
         // this reason with the user to guide their troubleshooting actions.
         Debug.Log(string.Format("OnPurchaseFailed: FAIL. Product: '{0}', PurchaseFailureReason: {1}", product.definition.storeSpecificId, failureReason));
+    }
+
+    public void RegisterNoAdsCallback(Action action)
+    {
+        noAdsCallback = action;
     }
 }
 

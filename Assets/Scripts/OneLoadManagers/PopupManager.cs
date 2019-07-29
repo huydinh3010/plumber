@@ -15,6 +15,7 @@ public class PopupManager : MonoBehaviour
     [SerializeField] PopupPassLevel popupPassLevel;
     [SerializeField] PopupNextLevel popupNextLevel;
     [SerializeField] PopupLastLevel popupLastLevel;
+    [SerializeField] PopupRemoveAds popupRemoveAds;
 
     [SerializeField] GameObject go_DailyReward;
     [SerializeField] GameObject go_PlayServices;
@@ -24,6 +25,7 @@ public class PopupManager : MonoBehaviour
     [SerializeField] GameObject go_PassLevel;
     [SerializeField] GameObject go_NextLevel;
     [SerializeField] GameObject go_LastLevel;
+    [SerializeField] GameObject go_RemoveAds;
     private IPopup activePopup;
     private bool showing;
 
@@ -81,6 +83,10 @@ public class PopupManager : MonoBehaviour
                     go_DailyReward.SetActive(true);
                     activePopup = popupDailyReward;
                     break;
+                case PopupName.RemoveAds:
+                    go_RemoveAds.SetActive(true);
+                    activePopup = popupRemoveAds;
+                    break;
                 case PopupName.PlayServices:
                     go_PlayServices.SetActive(true);
                     activePopup = popupPlayServices;
@@ -132,6 +138,7 @@ public class PopupManager : MonoBehaviour
 public enum PopupName
 {
     DailyReward,
+    RemoveAds,
     PlayServices,
     Rate,
     Achievement,
@@ -145,6 +152,7 @@ public enum PopupButtonEvent
 {
     ClosePressed,
     DayOnDailyRewardPressed,
+    GoOnRemoveAds,
     NotNowOnRatePressed,
     RateOnRatePressed,
     CoinOnAchievementPressed,

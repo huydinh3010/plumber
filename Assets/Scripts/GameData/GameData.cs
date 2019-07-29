@@ -101,7 +101,7 @@ public class GameData
             level_stars.Add(0);
             unlock_level = 1;
             points = 0;
-            coins = 2000;
+            coins = 200;
             day = 1;
             continueDay = 1;
             completed = new int[8];

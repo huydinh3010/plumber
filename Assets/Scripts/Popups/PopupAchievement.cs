@@ -14,7 +14,7 @@ public class PopupAchievement : MonoBehaviour, IPopup
 
     private Action btn_Coin_Callback;
     private Action btn_Close_Callback;
-    private int[] achm_points = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
+    private int[] achm_points = { 50, 100, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000 };
     private int[] achm_coins_reward = { 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000 };
 
     // Start is called before the first frame update

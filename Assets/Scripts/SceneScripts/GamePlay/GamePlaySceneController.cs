@@ -346,7 +346,7 @@ public class GamePlaySceneController : MonoBehaviour
         }
         else if (GameCache.Instance.canShowRatePanel())
         {
-            PopupManager.Instance.ShowPopup(PopupName.Rate, new Dictionary<PopupButtonEvent, Action>() { {PopupButtonEvent.ClosePressed, nextLevel} });
+            PopupManager.Instance.ShowPopup(PopupName.Rate, new Dictionary<PopupButtonEvent, Action>() { { PopupButtonEvent.ClosePressed, nextLevel }, {PopupButtonEvent.NotNowOnRatePressed, nextLevel } });
         }
         else
         {
