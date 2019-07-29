@@ -5,16 +5,16 @@ using UnityEngine.UI;
 using System;
 public class ChallengeSceneController : MonoBehaviour
 {
-    public Image[] image_levels;
-    public Image image_pool;
-    public Button btn_pool;
-    public Sprite[] s_pools;
-    public Sprite[] d_levels;
-    public Text text_tutorial;
-    public Text txtCoins;
-    public Text txtPoints;
+    [SerializeField] Image[] image_levels;
+    [SerializeField] Image image_pool;
+    [SerializeField] Button btn_pool;
+    [SerializeField] Sprite[] s_pools;
+    [SerializeField] Sprite[] d_levels;
+    [SerializeField] Text text_tutorial;
+    [SerializeField] Text txtCoins;
+    [SerializeField] Text txtPoints;
     private int total;
-    private string[] str = {"Complete all levels and get 100 coins!", "Congratulations! You have completed daily challenge.Claim your reward.", "You clamped the reward!" };
+    private string[] str = {"Complete all levels and get 100 coins!", "Congratulations! You have completed daily challenge.Claim your reward.", "You claimed the reward!" };
     
     // Start is called before the first frame update
     private void Awake()
@@ -129,6 +129,6 @@ public class ChallengeSceneController : MonoBehaviour
     {
         EventDispatcher.Instance.RemoveListener(EventID.OnCoinChange, onCoinChange);
         EventDispatcher.Instance.RemoveListener(EventID.OnPointChange, onPointChange);
-        PopupManager.Instance.ClosePopup();
+        PopupManager.Instance.ForceClosePopup();
     }
 }

@@ -5,15 +5,15 @@ using UnityEngine.UI;
 using System;
 public class SceneSimpleLevelController : MonoBehaviour
 {
-    public GameObject Grid;
-    public GameObject OneStarLv;
-    public GameObject TwoStarsLv;
-    public GameObject ThreeStarsLv;
-    public GameObject UnlockLv;
-    public GameObject LockLv;
-    public GameObject ContentObj;
-    public Text txtCoins;
-    public Text txtPoints;
+    [SerializeField] GameObject Grid;
+    [SerializeField] GameObject OneStarLv;
+    [SerializeField] GameObject TwoStarsLv;
+    [SerializeField] GameObject ThreeStarsLv;
+    [SerializeField] GameObject UnlockLv;
+    [SerializeField] GameObject LockLv;
+    [SerializeField] GameObject ContentObj;
+    [SerializeField] Text txtCoins;
+    [SerializeField] Text txtPoints;
     private void Awake()
     {
         LoadSceneManager.Instance.OpenScene();
@@ -142,6 +142,6 @@ public class SceneSimpleLevelController : MonoBehaviour
     {
         EventDispatcher.Instance.RemoveListener(EventID.OnCoinChange, OnCoinChange);
         EventDispatcher.Instance.RemoveListener(EventID.OnPointChange, OnPointChange);
-        PopupManager.Instance.ClosePopup();
+        PopupManager.Instance.ForceClosePopup();
     }
 }

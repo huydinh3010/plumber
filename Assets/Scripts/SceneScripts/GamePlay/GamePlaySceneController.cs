@@ -7,14 +7,14 @@ using System;
 public class GamePlaySceneController : MonoBehaviour
 {
     public GameController game;
-    public Button btnSound;
-    public Button btnRemove;
-    public Button btnConstruct;
-    public Button btnAddCoin;
-    public Text txtCoins;
-    public Text txtPoints;
-    public Text txtLevel;
-    public Sprite[] s_sounds;
+    [SerializeField] Button btnSound;
+    [SerializeField] Button btnRemove;
+    [SerializeField] Button btnConstruct;
+    [SerializeField] Button btnAddCoin;
+    [SerializeField] Text txtCoins;
+    [SerializeField] Text txtPoints;
+    [SerializeField] Text txtLevel;
+    [SerializeField] Sprite[] s_sounds;
     private bool gameover;
     private bool animPlaying;
     private bool tutorial;
@@ -361,6 +361,6 @@ public class GamePlaySceneController : MonoBehaviour
         EventDispatcher.Instance.RemoveListener(EventID.OnPointChange, onPointChange);
         EventDispatcher.Instance.RemoveListener(EventID.PipeAnimationEnd, endGame);
         EventDispatcher.Instance.RemoveListener(EventID.PipeAnimationStart, AnimationStart);
-        PopupManager.Instance.ClosePopup();
+        PopupManager.Instance.ForceClosePopup();
     }
 }

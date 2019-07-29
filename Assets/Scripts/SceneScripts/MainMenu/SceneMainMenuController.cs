@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System;
 public class SceneMainMenuController : MonoBehaviour
 {
-    public GameObject btnDailyChallenge;
-    public GameObject btnRemoveAds;
-    //public GameObject btnMoreGame;
+    [SerializeField] GameObject btnDailyChallenge;
+    [SerializeField] GameObject btnRemoveAds;
     private bool firstFrame;
     private void Awake()
     {
@@ -38,6 +36,7 @@ public class SceneMainMenuController : MonoBehaviour
         {
             Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--Main Menu FirstFrame");
             firstFrame = true;
+            
         }
     }
 
@@ -87,6 +86,6 @@ public class SceneMainMenuController : MonoBehaviour
 
     private void OnDestroy()
     {
-        PopupManager.Instance.ClosePopup();
+        PopupManager.Instance.ForceClosePopup();
     }
 }

@@ -54,20 +54,20 @@ public class PopupManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnPopupClosed(object param)
     {
         showing = false;
         activePopup = null;
-        
+
     }
 
     public void ShowPopup(PopupName name, Dictionary<PopupButtonEvent, Action> list_actions, Dictionary<PopupSettingType, object> list_settings = null)
@@ -75,7 +75,7 @@ public class PopupManager : MonoBehaviour
         if (!showing)
         {
             showing = true;
-           
+
             if (list_actions == null) list_actions = new Dictionary<PopupButtonEvent, Action>();
             switch (name)
             {
@@ -126,7 +126,15 @@ public class PopupManager : MonoBehaviour
         {
             activePopup.Close();
         }
-    } 
+    }
+
+    public void ForceClosePopup()
+    {
+        if(activePopup != null)
+        {
+            activePopup.OnClosed();
+        }
+    }
 
     private void OnDestroy()
     {
