@@ -65,6 +65,7 @@ public class PopupManager : MonoBehaviour
     {
         showing = false;
         activePopup = null;
+        
     }
 
     public void ShowPopup(PopupName name, Dictionary<PopupButtonEvent, Action> list_actions, Dictionary<PopupSettingType, object> list_settings = null)
@@ -72,6 +73,7 @@ public class PopupManager : MonoBehaviour
         if (!showing)
         {
             showing = true;
+           
             if (list_actions == null) list_actions = new Dictionary<PopupButtonEvent, Action>();
             switch (name)
             {

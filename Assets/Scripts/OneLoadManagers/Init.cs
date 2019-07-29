@@ -13,6 +13,8 @@ public class Init : MonoBehaviour
     {
         str = "Start at: " + DateTime.Now.TimeOfDay;
         DontDestroyOnLoad(this);
+        Input.multiTouchEnabled = false;
+
         Application.logMessageReceived += Application_logMessageReceived;
         Debug.Log(str);
         Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--Start Init Awake");
