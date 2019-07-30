@@ -81,8 +81,8 @@ public class PopupPassLevel : MonoBehaviour, IPopup
             btn_Watch_Video.interactable = false;
             Debug.Log("Rewarded 10 times coins");
         });
-        FirebaseManager.Instance.LogEventRequestRewardedVideo("x10_coins", hasVideo, GameCache.Instance.level_selected);
-        FacebookManager.Instance.LogEventRequestRewardedVideo("x10_coins", hasVideo, GameCache.Instance.level_selected);
+        FirebaseManager.Instance.LogEventRequestRewardedVideo("x10_coins", hasVideo, GameCache.Instance.levelSelected);
+        FacebookManager.Instance.LogEventRequestRewardedVideo("x10_coins", hasVideo, GameCache.Instance.levelSelected);
         btn_Watch_Video_Callback?.Invoke();
     }
 

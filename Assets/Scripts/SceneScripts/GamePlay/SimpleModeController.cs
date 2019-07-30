@@ -15,7 +15,7 @@ public class SimpleModeController : GameController
 
     public override void loadLevelData()
     {
-        var textAsset = Resources.Load<TextAsset>("levels/simple/" + GameCache.Instance.level_selected);
+        var textAsset = Resources.Load<TextAsset>("levels/simple/" + GameCache.Instance.levelSelected);
         string[] arr = textAsset.text.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
         int k = 0;
         star_time = int.Parse(arr[k++]);
@@ -31,39 +31,35 @@ public class SimpleModeController : GameController
             }
         }
         int len = int.Parse(arr[k++]);
-        str_results = new string[len];
+        strResults = new string[len];
         for (int i = 0; i < len; i++)
         {
-            str_results[i] = arr[k++];
+            strResults[i] = arr[k++];
         }
     }
 
-    // ok
     public override void setupLevel()
     {
-        unlockLv = GameData.Instance.level_stars[GameCache.Instance.level_selected - 1] == 0;
-        
-        if (unlockLv && GameData.Instance.unlocklv_state.durations > 0)
+        unlockLv = GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1] == 0;
+        if (unlockLv && GameData.Instance.unlockLvState.durationSecs > 0)
         {
-            duration_secs = GameData.Instance.unlocklv_state.durations;
-            turn_count = GameData.Instance.unlocklv_state.turn_count;
-            remove_pipe_count = GameData.Instance.unlocklv_state.remove_pipe;
-            if (duration_secs <= star_time) star = 3;
-            else if (duration_secs > star_time && duration_secs <= star_time * 2) star = 2;
+            durationSecs = GameData.Instance.unlockLvState.durationSecs;
+            turnCount = GameData.Instance.unlockLvState.turnCount;
+            removePipeCount = GameData.Instance.unlockLvState.removePipeCount;
+            if (durationSecs <= star_time) star = 3;
+            else if (durationSecs > star_time && durationSecs <= star_time * 2) star = 2;
             else star = 1;
-            stop_time = false;
+            stopTime = false;
             animPlaying = false;
             endConstructPipe = false;
-            m_clones = new GameObject[row, col];
-            float pipe_size = Mathf.Min(PlayZone.rect.width / 1000, PlayZone.rect.height / 1500) * 250 * 4 / col;
-
+            m_Clones = new GameObject[row, col];
+            float pipe_size = Mathf.Min(playZone.rect.width / 1000, playZone.rect.height / 1500) * 250 * 4 / col;
             for (int i = 0; i < row; i++)
             {
                 for (int j = 0; j < col; j++)
                 {
-                    int index = GameData.Instance.unlocklv_state.pipes_type[i * col + j] - 1;
-                    int angle = GameData.Instance.unlocklv_state.pipes_rotation[i * col + j];
-                    Debug.Log("index: " + index);
+                    int index = GameData.Instance.unlockLvState.listPipeTypes[i * col + j] - 1;
+                    int angle = GameData.Instance.unlockLvState.listPipeRotations[i * col + j];
                     if (index >= 0)
                     {
                         Vector3 position;
@@ -72,13 +68,13 @@ public class SimpleModeController : GameController
                         position.x = ((j - col / 2) + 0.5f) * pipe_size;
                         if (index == 4 || index == 5)
                         {
-                            GameObject go = Instantiate(pipes[index], Vector3.zero, Quaternion.Euler(0f, 0f, -angle * 90), PlayZone.transform);
+                            GameObject go = Instantiate(pipes[index], Vector3.zero, Quaternion.Euler(0f, 0f, -angle * 90), playZone.transform);
                             go.GetComponent<RectTransform>().anchoredPosition3D = position;
                             go.GetComponent<RectTransform>().sizeDelta = new Vector2(pipe_size, pipe_size);
                             go.GetComponent<PipeProperties>().row = i;
                             go.GetComponent<PipeProperties>().col = j;
                             go.GetComponent<PipeProperties>().rotation = angle;
-                            m_clones[i, j] = go;
+                            m_Clones[i, j] = go;
                             if (index == 4)
                             {
                                 valve = go;
@@ -92,44 +88,43 @@ public class SimpleModeController : GameController
                         else
                         {
                             angle = (angle + 3) % 4;
-                            GameObject go = Instantiate(pipes[index], Vector3.zero, Quaternion.Euler(0f, 0f, -angle * 90), PlayZone.transform);
+                            GameObject go = Instantiate(pipes[index], Vector3.zero, Quaternion.Euler(0f, 0f, -angle * 90), playZone.transform);
                             go.GetComponent<RectTransform>().anchoredPosition3D = position;
                             go.GetComponent<RectTransform>().sizeDelta = new Vector2(pipe_size, pipe_size);
                             go.GetComponent<PipeProperties>().row = i;
                             go.GetComponent<PipeProperties>().col = j;
                             go.GetComponent<PipeProperties>().rotation = angle;
                             go.GetComponent<Button>().onClick.AddListener(() => { OnPipeClick(go); });
-                            m_clones[i, j] = go;
-                            StartCoroutine(rotatePipe(go, 1, rotate_speed));
+                            m_Clones[i, j] = go;
+                            StartCoroutine(rotatePipe(go, 1, rotateSpeed));
                         }
                     }
                 }
             }
-            construct_pipe_count = 0;
-            int count = GameData.Instance.unlocklv_state.construct_pipe;
+            constructPipeCount = 0;
+            int count = GameData.Instance.unlockLvState.constructPipeCount;
             for(int i = 0; i < count; i++)
             {
                 constructPipes();
             }
-            
         }
         else
         {
             if(unlockLv)
             {
-                GameData.Instance.unlocklv_state.pipes_type = new int[row * col];
-                GameData.Instance.unlocklv_state.pipes_rotation = new int[row * col];
+                GameData.Instance.unlockLvState.listPipeTypes = new int[row * col];
+                GameData.Instance.unlockLvState.listPipeRotations = new int[row * col];
             }
-            duration_secs = 0f;
+            durationSecs = 0f;
             star = 3;
-            turn_count = 0;
-            stop_time = false;
+            turnCount = 0;
+            stopTime = false;
             animPlaying = false;
             endConstructPipe = false;
-            remove_pipe_count = 0;
-            construct_pipe_count = 0;
-            m_clones = new GameObject[row, col];
-            float pipe_size = Mathf.Min(PlayZone.rect.width / 1000, PlayZone.rect.height / 1500) * 250 * 4 / col;
+            removePipeCount = 0;
+            constructPipeCount = 0;
+            m_Clones = new GameObject[row, col];
+            float pipe_size = Mathf.Min(playZone.rect.width / 1000, playZone.rect.height / 1500) * 250 * 4 / col;
             System.Random rd = new System.Random();
             for (int i = 0; i < row; i++)
             {
@@ -147,41 +142,39 @@ public class SimpleModeController : GameController
                         
                         if (index == 4 || index == 5)
                         {
-                            GameObject go = Instantiate(pipes[index], Vector3.zero, Quaternion.Euler(0f, 0f, -angle * 90), PlayZone.transform);
+                            GameObject go = Instantiate(pipes[index], Vector3.zero, Quaternion.Euler(0f, 0f, -angle * 90), playZone.transform);
                             go.GetComponent<RectTransform>().anchoredPosition3D = position;
                             go.GetComponent<RectTransform>().sizeDelta = new Vector2(pipe_size, pipe_size);
                             go.GetComponent<PipeProperties>().row = i;
                             go.GetComponent<PipeProperties>().col = j;
                             go.GetComponent<PipeProperties>().rotation = angle;
-                            m_clones[i, j] = go;
+                            m_Clones[i, j] = go;
                             if (index == 4)
                             {
                                 valve = go;
                                 valvebg = go.transform.Find("Valve_bg").gameObject;
                                 valvebg.transform.eulerAngles = Vector3.zero;
                                 go.transform.Find("Valve").gameObject.GetComponent<Button>().onClick.AddListener(() => { OnValveClick(); });
-                                //if (star == 2) valvebg.GetComponent<Animator>().Play("Idle1");
-                                //else if (star == 1) valvebg.GetComponent<Animator>().Play("Idle2");
                             }
                         }
                         else
                         {
                             angle = rd.Next(0, 3);
-                            GameObject go = Instantiate(pipes[index], Vector3.zero, Quaternion.Euler(0f, 0f, -angle * 90), PlayZone.transform);
+                            GameObject go = Instantiate(pipes[index], Vector3.zero, Quaternion.Euler(0f, 0f, -angle * 90), playZone.transform);
                             go.GetComponent<RectTransform>().anchoredPosition3D = position;
                             go.GetComponent<RectTransform>().sizeDelta = new Vector2(pipe_size, pipe_size);
                             go.GetComponent<PipeProperties>().row = i;
                             go.GetComponent<PipeProperties>().col = j;
                             go.GetComponent<PipeProperties>().rotation = angle;
                             go.GetComponent<Button>().onClick.AddListener(() => { OnPipeClick(go); });
-                            m_clones[i, j] = go;
-                            StartCoroutine(rotatePipe(go, 1, rotate_speed));
+                            m_Clones[i, j] = go;
+                            StartCoroutine(rotatePipe(go, 1, rotateSpeed));
                             angle = (angle + 1) % 4;
                         }
                         if (unlockLv)
                         {
-                            GameData.Instance.unlocklv_state.pipes_type[i * col + j] = index + 1;
-                            GameData.Instance.unlocklv_state.pipes_rotation[i * col + j] = angle;
+                            GameData.Instance.unlockLvState.listPipeTypes[i * col + j] = index + 1;
+                            GameData.Instance.unlockLvState.listPipeRotations[i * col + j] = angle;
                         }
                     }
                 }
@@ -201,25 +194,24 @@ public class SimpleModeController : GameController
 
     protected override void Update()
     {
-        if (!stop_time)
+        if (!stopTime)
         {
-            duration_secs += Time.deltaTime;
-            if (star == 3 && duration_secs > star_time && duration_secs <= star_time * 2)
+            durationSecs += Time.deltaTime;
+            if (star == 3 && durationSecs > star_time && durationSecs <= star_time * 2)
             {
                 star = 2;
                 valvebg.GetComponent<Animator>().Play("Idle1");
             }
-            else if (star == 2 && duration_secs > star_time * 2)
+            else if (star == 2 && durationSecs > star_time * 2)
             {
                 star = 1;
                 valvebg.GetComponent<Animator>().Play("Idle2");
             }
             if (unlockLv)
             {
-                GameData.Instance.unlocklv_state.durations = duration_secs;
+                GameData.Instance.unlockLvState.durationSecs = durationSecs;
             }
         }
-
     }
 
     public override int getStar()
@@ -241,21 +233,14 @@ public class SimpleModeController : GameController
                 pp.rotation %= 4;
                 if (unlockLv)
                 {
-                    GameData.Instance.unlocklv_state.pipes_rotation[pp.row * this.col + pp.col] = pp.rotation;
+                    GameData.Instance.unlockLvState.listPipeRotations[pp.row * this.col + pp.col] = pp.rotation;
                 }
                 while (angle < 0)
                 {
                     try
                     {
                         angle += speed * Time.deltaTime;
-                        if (angle < 0)
-                        {
-                            gameObject.transform.eulerAngles -= new Vector3(0f, 0f, speed * Time.deltaTime);
-                        }
-                        else
-                        {
-                            gameObject.transform.eulerAngles -= new Vector3(0f, 0f, speed * Time.deltaTime - angle);
-                        }
+                        gameObject.transform.eulerAngles -= new Vector3(0f, 0f, speed * Time.deltaTime - (angle > 0 ? angle : 0));
                     }
                     catch (Exception e)
                     {
@@ -271,22 +256,14 @@ public class SimpleModeController : GameController
                 pp.rotation %= 4;
                 if (unlockLv)
                 {
-                    GameData.Instance.unlocklv_state.pipes_rotation[pp.row * this.col + pp.col] = pp.rotation;
-                    
+                    GameData.Instance.unlockLvState.listPipeRotations[pp.row * this.col + pp.col] = pp.rotation;
                 }
                 while (angle > 0)
                 {
                     try
                     {
                         angle -= speed * Time.deltaTime;
-                        if (angle > 0)
-                        {
-                            gameObject.transform.eulerAngles += new Vector3(0f, 0f, speed * Time.deltaTime);
-                        }
-                        else
-                        {
-                            gameObject.transform.eulerAngles += new Vector3(0f, 0f, speed * Time.deltaTime + angle);
-                        }
+                        gameObject.transform.eulerAngles += new Vector3(0f, 0f, speed * Time.deltaTime + (angle < 0 ? angle : 0));
 
                     }
                     catch (Exception e)
@@ -304,8 +281,8 @@ public class SimpleModeController : GameController
         if (unlockLv)
         {
             PipeProperties pp = gameObject.GetComponent<PipeProperties>();
-            GameData.Instance.unlocklv_state.pipes_type[pp.row * this.col + pp.col] = 0;
-            GameData.Instance.unlocklv_state.pipes_rotation[pp.row * this.col + pp.col] = 0;
+            GameData.Instance.unlockLvState.listPipeTypes[pp.row * this.col + pp.col] = 0;
+            GameData.Instance.unlockLvState.listPipeRotations[pp.row * this.col + pp.col] = 0;
         }
         return base.removePipe(gameObject);
     }
@@ -315,7 +292,7 @@ public class SimpleModeController : GameController
         base.OnPipeClick(go);
         if (unlockLv)
         {
-            GameData.Instance.unlocklv_state.turn_count = turn_count;
+            GameData.Instance.unlockLvState.turnCount = turnCount;
         }
     }
 
@@ -324,9 +301,8 @@ public class SimpleModeController : GameController
         bool b = base.constructPipes();
         if (unlockLv)
         {
-            GameData.Instance.unlocklv_state.construct_pipe = construct_pipe_count;
+            GameData.Instance.unlockLvState.constructPipeCount = constructPipeCount;
         }
-        
         return b;
     }
 
@@ -335,8 +311,7 @@ public class SimpleModeController : GameController
         base.removeIncorrectPipes();
         if (unlockLv)
         {
-            GameData.Instance.unlocklv_state.remove_pipe = remove_pipe_count;
+            GameData.Instance.unlockLvState.removePipeCount = removePipeCount;
         }
-        
     }
 }

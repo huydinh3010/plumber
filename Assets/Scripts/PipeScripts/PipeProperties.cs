@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class PipeProperties : MonoBehaviour
 {
     public int type;
-    public int row;
-    public int col;
-    public int rotation;
-    public int n_line;
+    [HideInInspector] public int row;
+    [HideInInspector] public int col;
+    [HideInInspector] public int rotation;
+    [HideInInspector] public int n_Line;
     public int[] line;
-    public string[] anim_state;
-    public int[] anim_rotation;
-    public int i;
-    public GameObject[] next;
-    public int[] next_in;
+    public string[] animState;
+    public int[] animRotation;
+    [HideInInspector] public int temp;
+    [HideInInspector] public GameObject[] next = new GameObject[2];
+    [HideInInspector] public int[] nextIn = new int[2];
 }
 

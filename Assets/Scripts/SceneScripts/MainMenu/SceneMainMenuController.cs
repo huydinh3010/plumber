@@ -18,13 +18,13 @@ public class SceneMainMenuController : MonoBehaviour
     {
         Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--Main Menu Start() start");
         LoadSceneManager.Instance.OpenScene();
-        if (!GameCache.Instance.firstGameLoad && !GameData.Instance.clampDailyReward && GameData.Instance.continueDay > 0)
+        if (!GameCache.Instance.firstGameLoad && !GameData.Instance.dailyRewardStatus && GameData.Instance.continueDay > 0)
         {
             PopupManager.Instance.ShowPopup(PopupName.DailyReward, null);
         }
         GameCache.Instance.firstGameLoad = false;
 
-        btnRemoveAds.SetActive(GameData.Instance.ads_on);
+        btnRemoveAds.SetActive(GameData.Instance.isAdsOn);
 
         Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--Main Menu Start() end");
     }
@@ -74,14 +74,14 @@ public class SceneMainMenuController : MonoBehaviour
 
     public void BtnHelpOnClick()
     {
-        GameCache.Instance.level_selected = 1;
+        GameCache.Instance.levelSelected = 1;
         GameCache.Instance.mode = 0;
         LoadSceneManager.Instance.LoadScene("GamePlay");
     }
 
     private void OnAdsRemoved()
     {
-        btnRemoveAds.SetActive(GameData.Instance.ads_on);
+        btnRemoveAds.SetActive(GameData.Instance.isAdsOn);
     }
 
     private void OnDestroy()

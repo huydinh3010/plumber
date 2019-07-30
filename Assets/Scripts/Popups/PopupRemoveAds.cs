@@ -77,7 +77,7 @@ public class PopupRemoveAds : MonoBehaviour, IPopup
 
     public void OnPurchaseComplete(Product product, int instanceId)
     {
-        GameData.Instance.ads_on = false;
+        GameData.Instance.isAdsOn = false;
         Close();
         Debug.Log("Complete: ");
         btn_Go_Callback?.Invoke();

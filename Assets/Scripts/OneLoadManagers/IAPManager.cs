@@ -115,7 +115,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
         if (String.Equals(args.purchasedProduct.definition.id, PRODUCT_NO_ADS, StringComparison.Ordinal))
         {
             Debug.Log("No ads");
-            GameData.Instance.ads_on = false;
+            GameData.Instance.isAdsOn = false;
             noAdsCallback();
         }
         else

@@ -3172,6 +3172,11 @@ PrefabInstance:
       propertyPath: productId
       value: com.waterline.removeads
       objectReference: {fileID: 0}
+    - target: {fileID: 6473473394965440148, guid: 32ce48b646fe39e49aabeb472e151c94,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 32ce48b646fe39e49aabeb472e151c94, type: 3}

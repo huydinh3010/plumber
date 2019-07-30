@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-public class SceneSimpleLevelController : MonoBehaviour
+public class SimpleLevelSceneController : MonoBehaviour
 {
     [SerializeField] GameObject Grid;
     [SerializeField] GameObject OneStarLv;
@@ -31,10 +31,10 @@ public class SceneSimpleLevelController : MonoBehaviour
                 for (int j = 0; j < 4; j++)
                 {
                     GameObject go = null;
-                    if (p * 16 + i * 4 + j < GameData.Instance.level_stars.Count)
+                    if (p * 16 + i * 4 + j < GameData.Instance.listLevelStars.Count)
                     {
                         int level = p * 16 + i * 4 + j + 1;
-                        switch (GameData.Instance.level_stars[p * 16 + i * 4 + j])
+                        switch (GameData.Instance.listLevelStars[p * 16 + i * 4 + j])
                         {
                             case 0:
                                 go = Instantiate(UnlockLv, new Vector3(), Quaternion.identity, goGridClone.transform);
@@ -128,7 +128,7 @@ public class SceneSimpleLevelController : MonoBehaviour
 
     public void BtnLevelOnScrollViewOnClick(int level)
     {
-        GameCache.Instance.level_selected = level;
+        GameCache.Instance.levelSelected = level;
         GameCache.Instance.mode = 1;
         LoadSceneManager.Instance.LoadScene("GamePlay");
     }

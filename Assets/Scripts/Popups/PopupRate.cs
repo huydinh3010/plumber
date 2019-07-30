@@ -77,7 +77,7 @@ public class PopupRate : MonoBehaviour, IPopup
 #elif UNITY_IPHONE
  Application.OpenURL("itms-apps://itunes.apple.com/app/idYOUR_ID");
 #endif
-        GameData.Instance.rate = false;
+        GameData.Instance.isRateOn = false;
         btn_Rate_Callback?.Invoke();
     }
 }

@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5874860ae555c54b816d62e68b489a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image_levels:
+  imageLevels:
   - {fileID: 1527756850}
   - {fileID: 1100610870}
   - {fileID: 1520409774}
@@ -227,9 +227,9 @@ MonoBehaviour:
   - {fileID: 533460510}
   - {fileID: 720604973}
   - {fileID: 712961090}
-  image_pool: {fileID: 1851559925}
-  btn_pool: {fileID: 1117081302}
-  s_pools:
+  imagePool: {fileID: 1851559925}
+  btnPool: {fileID: 1117081302}
+  s_Pools:
   - {fileID: 21300000, guid: 0e4614407f126b3429c977c26e01de2b, type: 3}
   - {fileID: 21300000, guid: 5de38b9d2612d824eb79f573339ff433, type: 3}
   - {fileID: 21300000, guid: d69b36dbe1989bc4d8998beebba5e255, type: 3}
@@ -238,7 +238,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 42102edd85d016b41ada485a0fb08d7a, type: 3}
   - {fileID: 21300000, guid: b08ce52ff203a454e92c323c93b438ef, type: 3}
   - {fileID: 21300000, guid: 396a8ad534f27ec419708fa8d216ece6, type: 3}
-  d_levels:
+  d_Levels:
   - {fileID: 21300000, guid: 4bcc7dbe7779f364db825564fa0ae766, type: 3}
   - {fileID: 21300000, guid: b52144cb7b6f52a43aecbd0c464533b0, type: 3}
   - {fileID: 21300000, guid: 72f27d39ef4b33f469886bac1e8fbce7, type: 3}
@@ -247,9 +247,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 10c8f6c8f368a364d904f6ec67ad94dc, type: 3}
   - {fileID: 21300000, guid: bb87ad140de94c8498ecba98cb8496eb, type: 3}
   - {fileID: 21300000, guid: f874a8d82385cc34fb42af0ec30e83e6, type: 3}
-  text_tutorial: {fileID: 164728550}
-  txtCoins: {fileID: 1615839636}
-  txtPoints: {fileID: 1341197864}
+  textTutorial: {fileID: 164728550}
+  textCoin: {fileID: 1615839636}
+  textPoint: {fileID: 1341197864}
 --- !u!4 &151321416
 Transform:
   m_ObjectHideFlags: 0

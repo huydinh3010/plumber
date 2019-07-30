@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System;
-public class Init : MonoBehaviour
+public class OneLoadController : MonoBehaviour
 {
     [SerializeField] Text txtLog;
     [SerializeField] GameObject scrollViewLog;

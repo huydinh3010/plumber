@@ -4,18 +4,17 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ScrollLevelController : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class ScrollviewLevelController : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    public Button btnArrowLeft;
-    public Button btnArrowRight;
-    public Text txtPackNumber;
-    public CanvasGroup canvasContent;
-    public float decelerationRate = 10f;
+    [SerializeField] Button btnArrowLeft;
+    [SerializeField] Button btnArrowRight;
+    [SerializeField] Text txtPackNumber;
+    [SerializeField] CanvasGroup canvasContent;
+    [SerializeField] float decelerationRate = 10f;
     private RectTransform content;
     private ScrollRect scroll;
     private bool lerp;
     private Vector2 target;
-    
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -34,12 +33,10 @@ public class ScrollLevelController : MonoBehaviour, IBeginDragHandler, IEndDragH
         float content_x = scroll.content.anchoredPosition.x;
         if (vx > 50)
         {
-            // keo sang phai
             target = new Vector2(Mathf.Clamp(((int)(-600 - content_x) / 1100) * -1100 - 600, -38000, -600), 0f);
         }
         else if (vx < -50)
         {
-            // keo sang trai
             target = new Vector2(Mathf.Clamp(((int)(-600 - content_x) / 1100 + 1) * -1100 - 600, -38000, -600), 0f);
         }
         else
@@ -70,7 +67,7 @@ public class ScrollLevelController : MonoBehaviour, IBeginDragHandler, IEndDragH
         content = scroll.content;
         btnArrowRight.onClick.AddListener(() => { btnArrowRightOnClick(); });
         btnArrowLeft.onClick.AddListener(() => { btnArrowLeftOnClick(); });
-        int startPage = (GameCache.Instance.level_selected - 1) / 16;
+        int startPage = (GameCache.Instance.levelSelected - 1) / 16;
         content.anchoredPosition = new Vector3(-startPage * 1100 - 600, 0, 0);
         txtPackNumber.text = "PACK " + (startPage + 1).ToString() + "/35";
     }

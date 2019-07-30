@@ -6,21 +6,19 @@ public class GameCache
     public static GameCache Instance = new GameCache();
     private GameCache()
     {
-        //rate_c = 4;
-        //ads_c = 0;
+
     }
-    public int level_selected;
+    public int levelSelected;
     public int mode;
-    //public bool isNextDay;
     public bool firstGameLoad;
     public bool lastLevel;
+
     private int rate_c;
     private int ads_c;
 
-
     public bool canShowRatePanel()
     {
-        if (!GameData.Instance.rate) return false;
+        if (!GameData.Instance.isRateOn) return false;
         rate_c++;
         if(rate_c == 8)
         {
@@ -31,7 +29,7 @@ public class GameCache
     }
     public bool canShowAds()
     {
-        if (!GameData.Instance.ads_on) return false;
+        if (!GameData.Instance.isAdsOn) return false;
         ads_c++;
         if(ads_c == 6)
         {

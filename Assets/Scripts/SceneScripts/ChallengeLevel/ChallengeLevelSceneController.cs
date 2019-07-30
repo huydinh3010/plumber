@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-public class ChallengeSceneController : MonoBehaviour
+public class ChallengeLevelSceneController : MonoBehaviour
 {
-    [SerializeField] Image[] image_levels;
-    [SerializeField] Image image_pool;
-    [SerializeField] Button btn_pool;
-    [SerializeField] Sprite[] s_pools;
-    [SerializeField] Sprite[] d_levels;
-    [SerializeField] Text text_tutorial;
-    [SerializeField] Text txtCoins;
-    [SerializeField] Text txtPoints;
+    [SerializeField] Image[] imageLevels;
+    [SerializeField] Image imagePool;
+    [SerializeField] Button btnPool;
+    [SerializeField] Sprite[] s_Pools;
+    [SerializeField] Sprite[] d_Levels;
+    [SerializeField] Text textTutorial;
+    [SerializeField] Text textCoin;
+    [SerializeField] Text textPoint;
     private int total;
     private string[] str = {"Complete all levels and get 100 coins!", "Congratulations! You have completed daily challenge.Claim your reward.", "You claimed the reward!" };
     
@@ -22,27 +22,27 @@ public class ChallengeSceneController : MonoBehaviour
         LoadSceneManager.Instance.OpenScene();
         EventDispatcher.Instance.RegisterListener(EventID.OnCoinChange, onCoinChange);
         EventDispatcher.Instance.RegisterListener(EventID.OnPointChange, onPointChange);
-        txtCoins.text = GameData.Instance.coins.ToString();
-        txtPoints.text = GameData.Instance.points.ToString();
+        textCoin.text = GameData.Instance.coins.ToString();
+        textPoint.text = GameData.Instance.points.ToString();
         for (int i = 0; i < 8; i++)
         {
-            if(GameData.Instance.completed[i] == 1)
+            if(GameData.Instance.dailyChallengeProgess[i] == 1)
             {
                 total++;
-                image_levels[i].sprite = d_levels[i];
+                imageLevels[i].sprite = d_Levels[i];
             }
         }
-        if(total > 0) image_pool.sprite = s_pools[total - 1];
-        if (total == 8 && !GameData.Instance.clampChallengeReward)
+        if(total > 0) imagePool.sprite = s_Pools[total - 1];
+        if (total == 8 && !GameData.Instance.challengeRewardStatus)
         {
-            text_tutorial.text = str[1];
+            textTutorial.text = str[1];
         }
-        else if(total == 8 && GameData.Instance.clampChallengeReward)
+        else if(total == 8 && GameData.Instance.challengeRewardStatus)
         {
-            text_tutorial.text = str[2];
-            btn_pool.interactable = false;
+            textTutorial.text = str[2];
+            btnPool.interactable = false;
         }
-        else text_tutorial.text = str[0];
+        else textTutorial.text = str[0];
     }
 
     void Start()
@@ -59,12 +59,12 @@ public class ChallengeSceneController : MonoBehaviour
 
     private void onCoinChange(object param)
     {
-        StartCoroutine(coinChangeEffect(txtCoins, Convert.ToInt32(param)));
+        StartCoroutine(coinChangeEffect(textCoin, Convert.ToInt32(param)));
     }
 
     private void onPointChange(object param)
     {
-        StartCoroutine(coinChangeEffect(txtPoints, Convert.ToInt32(param)));
+        StartCoroutine(coinChangeEffect(textPoint, Convert.ToInt32(param)));
     }
 
     IEnumerator coinChangeEffect(Text text, int value)
@@ -99,7 +99,7 @@ public class ChallengeSceneController : MonoBehaviour
     public void btnLevelOnClick(int k)
     {
         GameCache.Instance.mode = 2;
-        GameCache.Instance.level_selected = k;
+        GameCache.Instance.levelSelected = k;
         LoadSceneManager.Instance.LoadScene("GamePlay");
     }
 
@@ -108,9 +108,9 @@ public class ChallengeSceneController : MonoBehaviour
         if (total == 8)
         {
             GameData.Instance.increaseCoin(100);
-            btn_pool.interactable = false;
-            GameData.Instance.clampChallengeReward = true;
-            text_tutorial.text = str[2];
+            btnPool.interactable = false;
+            GameData.Instance.challengeRewardStatus = true;
+            textTutorial.text = str[2];
         }
     }
 

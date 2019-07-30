@@ -147,9 +147,9 @@ MonoBehaviour:
   row: 0
   col: 0
   rotation: 0
-  n_line: 0
+  n_Line: 0
   line: 01000000000000000300000002000000
-  anim_state:
+  animState:
   - pipe290_flip
   - pipe290
   - pipe290_flip
@@ -158,12 +158,12 @@ MonoBehaviour:
   - pipe290_back_flip
   - pipe290_back
   - pipe290_back_flip
-  anim_rotation: 0200000002000000000000000000000000000000000000000200000002000000
-  i: 0
+  animRotation: 0200000002000000000000000000000000000000000000000200000002000000
+  temp: 0
   next:
   - {fileID: 0}
   - {fileID: 0}
-  next_in: 0000000000000000
+  nextIn: 0000000000000000
 --- !u!114 &8731118876393937793
 MonoBehaviour:
   m_ObjectHideFlags: 0

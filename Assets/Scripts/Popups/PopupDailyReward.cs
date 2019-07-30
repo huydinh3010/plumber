@@ -60,9 +60,9 @@ public class PopupDailyReward : MonoBehaviour, IPopup
 
     public void BtnDayOnClick(int k)
     {
-        if (k == GameData.Instance.continueDay - 1 && !GameData.Instance.clampDailyReward)
+        if (k == GameData.Instance.continueDay - 1 && !GameData.Instance.dailyRewardStatus)
         {
-            GameData.Instance.clampDailyReward = true;
+            GameData.Instance.dailyRewardStatus = true;
             int[] rewards = {10, 25, 50, 75, 100};
             btn_Days[k].GetComponent<Image>().sprite = sp_Days_Passed[k];
             GameData.Instance.increaseCoin(rewards[k]);
@@ -74,9 +74,9 @@ public class PopupDailyReward : MonoBehaviour, IPopup
 
     public void BtnCloseOnClick()
     {
-        if (!GameData.Instance.clampDailyReward)
+        if (!GameData.Instance.dailyRewardStatus)
         {
-            GameData.Instance.clampDailyReward = true;
+            GameData.Instance.dailyRewardStatus = true;
             int[] rewards = { 10, 25, 50, 75, 100 };
             int k = GameData.Instance.continueDay - 1;
             btn_Days[k].GetComponent<Image>().sprite = sp_Days_Passed[k];

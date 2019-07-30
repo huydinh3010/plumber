@@ -70,8 +70,8 @@ public class PopupAddCoin : MonoBehaviour, IPopup
         {
             GameData.Instance.increaseCoin(10);
         });
-        FirebaseManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.level_selected);
-        FacebookManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.level_selected);
+        FirebaseManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.levelSelected);
+        FacebookManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.levelSelected);
         btn_Watch_Video_Callback?.Invoke();
     }
 

@@ -33,7 +33,7 @@ public class PopupAchievement : MonoBehaviour, IPopup
     private void Setup()
     {
         float delta = content.rect.height / achm_points.Length;
-        float pos_y = delta * (GameData.Instance.achievement_progress + 1);
+        float pos_y = delta * (GameData.Instance.achievementProgress + 1);
         if (pos_y > scroll.rect.height)
         {
             content.anchoredPosition = new Vector2(content.anchoredPosition.x, content.rect.height - scroll.rect.height);
@@ -44,7 +44,7 @@ public class PopupAchievement : MonoBehaviour, IPopup
         }
         for (int i = 0; i < achm_points.Length; i++)
         {
-            if (i + 1 <= GameData.Instance.achievement_progress)
+            if (i + 1 <= GameData.Instance.achievementProgress)
             {
                 btn_Coins[i].GetComponent<CanvasGroup>().alpha = 1;
                 image_Checks[i].enabled = true;
@@ -70,13 +70,13 @@ public class PopupAchievement : MonoBehaviour, IPopup
         btn_Close.enabled = true;
         for (int i = 0; i < achm_points.Length; i++)
         {
-            if (i + 1 <= GameData.Instance.achievement_progress)
+            if (i + 1 <= GameData.Instance.achievementProgress)
             {
                 btn_Coins[i].interactable = false;
             }
             else
             {
-                if (GameData.Instance.achievement_progress == i && GameData.Instance.points >= achm_points[i])
+                if (GameData.Instance.achievementProgress == i && GameData.Instance.points >= achm_points[i])
                 {
                     btn_Coins[i].interactable = true;
                 }
@@ -110,10 +110,10 @@ public class PopupAchievement : MonoBehaviour, IPopup
 
     public void BtnCoinOnClick(int k)
     {
-        if (k == GameData.Instance.achievement_progress)
+        if (k == GameData.Instance.achievementProgress)
         {
             GameData.Instance.increaseCoin(achm_coins_reward[k]);
-            GameData.Instance.achievement_progress++;
+            GameData.Instance.achievementProgress++;
             btn_Coins[k].interactable = false;
             image_Checks[k].enabled = true;
             if (k < 9)

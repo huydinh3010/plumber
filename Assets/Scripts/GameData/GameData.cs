@@ -13,22 +13,22 @@ public class GameData
     {
         
     }
-    public int unlock_level;
+    public int unlockLevel;
     public int points;
     public int coins;
-    public List<int> level_stars;
+    public List<int> listLevelStars;
     public int day;
-    public int[] completed;
-    public int reward_coins;
-    public bool ads_on;
-    public bool sound_on;
+    public int[] dailyChallengeProgess;
+    public int dailyChallengeRewardCoin;
+    public bool isAdsOn;
+    public bool isSoundOn;
     public long lastDayAccess;
     public int continueDay;
-    public bool clampDailyReward;
-    public bool clampChallengeReward;
-    public bool rate;
-    public int achievement_progress;
-    public LevelState unlocklv_state;
+    public bool dailyRewardStatus;
+    public bool challengeRewardStatus;
+    public bool isRateOn;
+    public int achievementProgress;
+    public LevelState unlockLvState;
     public void increaseCoin(int value)
     {
         coins += value;
@@ -73,14 +73,13 @@ public class GameData
         {
             if (diff == 1 && continueDay < 5) continueDay++;
             else continueDay = 1;
-            clampDailyReward = false;
-            clampChallengeReward = false;
-            completed = new int[8];
+            dailyRewardStatus = false;
+            challengeRewardStatus = false;
+            dailyChallengeProgess = new int[8];
             day = day + diff;
             if (day > 366) day = day % 367 + 1;
             lastDayAccess = System.DateTime.Now.Date.ToFileTime();
         }
-        
     }
 
     public void LoadDataFromFile()
@@ -97,26 +96,26 @@ public class GameData
         }
         else
         {
-            level_stars = new List<int>();
-            level_stars.Add(0);
-            unlock_level = 1;
+            listLevelStars = new List<int>();
+            listLevelStars.Add(0);
+            unlockLevel = 1;
             points = 0;
             coins = 200;
             day = 1;
             continueDay = 1;
-            completed = new int[8];
-            reward_coins = 100;
-            ads_on = true;
-            rate = true;
-            sound_on = true;
+            dailyChallengeProgess = new int[8];
+            dailyChallengeRewardCoin = 100;
+            isAdsOn = true;
+            isRateOn = true;
+            isSoundOn = true;
             lastDayAccess = System.DateTime.Now.Date.ToFileTime();
-            clampDailyReward = false;
-            clampChallengeReward = false;
-            achievement_progress = 0;
-            unlocklv_state = new LevelState();
+            dailyRewardStatus = false;
+            challengeRewardStatus = false;
+            achievementProgress = 0;
+            unlockLvState = new LevelState();
             GameCache.Instance.firstGameLoad = true;
         }
-        GameCache.Instance.level_selected = unlock_level;
+        GameCache.Instance.levelSelected = unlockLevel;
     }
 
     public void SaveDataToFile()
@@ -135,21 +134,21 @@ public class GameData
 [System.Serializable]
 public class LevelState
 {
-    public float durations;
-    public int turn_count;
-    public int remove_pipe;
-    public int construct_pipe;
-    public int[] pipes_type;
-    public int[] pipes_rotation;
+    public float durationSecs;
+    public int turnCount;
+    public int removePipeCount;
+    public int constructPipeCount;
+    public int[] listPipeTypes;
+    public int[] listPipeRotations;
 
-    public void newLevel()
+    public void NewLevelState()
     {
-        durations = 0f;
-        construct_pipe = 0;
-        remove_pipe = 0;
-        turn_count = 0;
-        pipes_type = Array.Empty<int>();
-        pipes_rotation = Array.Empty<int>();
+        durationSecs = 0f;
+        constructPipeCount = 0;
+        removePipeCount = 0;
+        turnCount = 0;
+        listPipeTypes = Array.Empty<int>();
+        listPipeRotations = Array.Empty<int>();
     }
 
 }

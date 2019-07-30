@@ -6,7 +6,6 @@ using System;
 
 public class GamePlaySceneController : MonoBehaviour
 {
-    public GameController game;
     [SerializeField] Button btnSound;
     [SerializeField] Button btnRemove;
     [SerializeField] Button btnConstruct;
@@ -14,14 +13,15 @@ public class GamePlaySceneController : MonoBehaviour
     [SerializeField] Text txtCoins;
     [SerializeField] Text txtPoints;
     [SerializeField] Text txtLevel;
-    [SerializeField] Sprite[] s_sounds;
+    [SerializeField] Sprite[] s_Sounds;
+    private GameController game;
     private bool gameover;
     private bool animPlaying;
     private bool tutorial;
-    private bool en_rmbtn;
-    private bool en_construct_btn;
+    private bool en_RemoveBtn;
+    private bool en_ConstructBtn;
     private void Awake()
-    {
+    {   
         LoadSceneManager.Instance.OpenScene();
         EventDispatcher.Instance.RegisterListener(EventID.OnCoinChange, onCoinChange);
         EventDispatcher.Instance.RegisterListener(EventID.OnPointChange, onPointChange);
@@ -29,7 +29,7 @@ public class GamePlaySceneController : MonoBehaviour
         EventDispatcher.Instance.RegisterListener(EventID.PipeAnimationEnd, endGame);
         EventDispatcher.Instance.RegisterListener(EventID.PipeAnimationStart, AnimationStart);
 
-        if (GameCache.Instance.mode == 0 || (GameCache.Instance.level_selected == 1 && GameCache.Instance.mode == 1)) // help
+        if (GameCache.Instance.mode == 0 || (GameCache.Instance.levelSelected == 1 && GameCache.Instance.mode == 1)) // tutorial
         {
             newGameLevel(0);
         }
@@ -60,36 +60,38 @@ public class GamePlaySceneController : MonoBehaviour
         // UI
         if(type == 0)
         {
-            game = GetComponent<HelpLevelController>();
+            game = GetComponent<TutorialModeController>();
+            game.enabled = true;
             tutorial = true;
         }
         else if(type == 1)
         {
             game = GetComponent<SimpleModeController>();
+            game.enabled = true;
             tutorial = false;
         }
         else
         {
             game = GetComponent<ChallengeModeController>();
+            game.enabled = true;
             tutorial = false;
         }
         btnAddCoin.interactable = true;
-        if (GameData.Instance.sound_on) btnSound.GetComponent<Image>().sprite = s_sounds[1];
-        else btnSound.GetComponent<Image>().sprite = s_sounds[0];
+        btnSound.GetComponent<Image>().sprite = GameData.Instance.isSoundOn ? s_Sounds[1] : s_Sounds[0];
         txtCoins.text = GameData.Instance.coins.ToString();
         txtPoints.text = GameData.Instance.points.ToString();
-        txtLevel.text = GameCache.Instance.level_selected.ToString();
+        txtLevel.text = GameCache.Instance.levelSelected.ToString();
         //Gamelogic
         gameover = animPlaying = false;
         game.loadLevelData();
         game.setupLevel();
-        en_rmbtn = game.remove_pipe_count == 0;
-        en_construct_btn = !game.endConstructPipe;
-        btnRemove.interactable = en_rmbtn && GameData.Instance.coins >= 50;
-        btnConstruct.interactable = en_construct_btn && GameData.Instance.coins >= 25;
+        en_RemoveBtn = game.RemovePipeCount == 0;
+        en_ConstructBtn = !game.EndConstructPipe;
+        btnRemove.interactable = en_RemoveBtn && GameData.Instance.coins >= 50;
+        btnConstruct.interactable = en_ConstructBtn && GameData.Instance.coins >= 25;
         string[] str_type = { "tutorial", "simple","daily_challenge" };
-        FirebaseManager.Instance.LogEventLevelStart(GameCache.Instance.level_selected, str_type[type], GameData.Instance.day);
-        FacebookManager.Instance.LogEventLevelStart(GameCache.Instance.level_selected, str_type[type], GameData.Instance.day);
+        FirebaseManager.Instance.LogEventLevelStart(GameCache.Instance.levelSelected, str_type[type], GameData.Instance.day);
+        FacebookManager.Instance.LogEventLevelStart(GameCache.Instance.levelSelected, str_type[type], GameData.Instance.day);
     }
 
 
@@ -111,58 +113,58 @@ public class GamePlaySceneController : MonoBehaviour
         }
         else if (GameCache.Instance.mode == 1)
         {
-            if (GameData.Instance.level_stars[GameCache.Instance.level_selected - 1] > 0)
+            if (GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1] > 0)
             {
-                int c_star = GameData.Instance.level_stars[GameCache.Instance.level_selected - 1];
+                int c_star = GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1];
                 int n_star = game.getStar();
-                if (n_star > c_star) GameData.Instance.level_stars[GameCache.Instance.level_selected - 1] = n_star;
+                if (n_star > c_star) GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1] = n_star;
                 PopupManager.Instance.ShowPopup(PopupName.NextLevel, new Dictionary<PopupButtonEvent, Action>() { { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback }, { PopupButtonEvent.NextLevelPressed, NextLevelCallback } });
             }
             else
             {
                 int star = game.getStar();
-                GameData.Instance.level_stars[GameCache.Instance.level_selected - 1] = star;
+                GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1] = star;
                 GameData.Instance.increaseCoin(star);
                 GameData.Instance.increasePoint(star * 10);
-                if (GameData.Instance.unlock_level < 560)
+                if (GameData.Instance.unlockLevel < 560)
                 {
-                    GameData.Instance.level_stars.Add(0);
-                    GameData.Instance.unlock_level++;
+                    GameData.Instance.listLevelStars.Add(0);
+                    GameData.Instance.unlockLevel++;
                     unlock_level = true;
                 }
-                GameData.Instance.unlocklv_state.newLevel();
+                GameData.Instance.unlockLvState.NewLevelState();
                 PopupManager.Instance.ShowPopup(PopupName.PassLevel, new Dictionary<PopupButtonEvent, Action>() { { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback }, { PopupButtonEvent.NextLevelPressed, NextLevelCallback } }, new Dictionary<PopupSettingType, object>() { { PopupSettingType.PassLevelImageType, star } });
             }
             
         }
         else if (GameCache.Instance.mode == 2)
         {
-            if (GameData.Instance.completed[GameCache.Instance.level_selected - 1] == 1)
+            if (GameData.Instance.dailyChallengeProgess[GameCache.Instance.levelSelected - 1] == 1)
             {
                 PopupManager.Instance.ShowPopup(PopupName.NextLevel, new Dictionary<PopupButtonEvent, Action>() { { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback }, { PopupButtonEvent.NextLevelPressed, NextLevelCallback } });
             }
             else
             {
                 int star = game.getStar();
-                GameData.Instance.completed[GameCache.Instance.level_selected - 1] = 1;
+                GameData.Instance.dailyChallengeProgess[GameCache.Instance.levelSelected - 1] = 1;
                 GameData.Instance.increaseCoin(star);
                 GameData.Instance.increasePoint(star * 10);
                 PopupManager.Instance.ShowPopup(PopupName.PassLevel, new Dictionary<PopupButtonEvent, Action>() { { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback }, { PopupButtonEvent.NextLevelPressed, NextLevelCallback } }, new Dictionary<PopupSettingType, object>() { { PopupSettingType.PassLevelImageType, star} });
             }
         }
         string type = tutorial ? "tutorial" : (GameCache.Instance.mode == 1 ? "simple" : "daily_challenge");
-        int remove_pipe_count = game.remove_pipe_count;
-        int construct_pipe_count = game.construct_pipe_count;
-        Debug.Log("Duration: " + game.duration_secs);
-        Debug.Log("Turn: " + game.turn_count);
-        FirebaseManager.Instance.LogEventLevelEnd(GameCache.Instance.level_selected, type, GameData.Instance.day, game.duration_secs, game.turn_count, remove_pipe_count, construct_pipe_count);
-        FacebookManager.Instance.LogEventLevelEnd(GameCache.Instance.level_selected, type, GameData.Instance.day, game.duration_secs, game.turn_count, remove_pipe_count, construct_pipe_count);
-        if(unlock_level) FirebaseManager.Instance.SetUserProperties(GameData.Instance.unlock_level);
+        int remove_pipe_count = game.RemovePipeCount;
+        int construct_pipe_count = game.ConstructPipeCount;
+        Debug.Log("Duration: " + game.DurationSecs);
+        Debug.Log("Turn: " + game.TurnCount);
+        FirebaseManager.Instance.LogEventLevelEnd(GameCache.Instance.levelSelected, type, GameData.Instance.day, game.DurationSecs, game.TurnCount, remove_pipe_count, construct_pipe_count);
+        FacebookManager.Instance.LogEventLevelEnd(GameCache.Instance.levelSelected, type, GameData.Instance.day, game.DurationSecs, game.TurnCount, remove_pipe_count, construct_pipe_count);
+        if(unlock_level) FirebaseManager.Instance.SetUserProperties(GameData.Instance.unlockLevel);
     }
 
     private void onLevelSelectChange(object param)
     {
-        txtLevel.text = GameCache.Instance.level_selected.ToString();
+        txtLevel.text = GameCache.Instance.levelSelected.ToString();
     }
 
     private void onCoinChange(object param)
@@ -170,8 +172,8 @@ public class GamePlaySceneController : MonoBehaviour
         StartCoroutine(coinChangeEffect(txtCoins, Convert.ToInt32(param)));
         btnRemove.interactable = GameData.Instance.coins >= 50;
         btnConstruct.interactable = GameData.Instance.coins >= 25;
-        if (!en_rmbtn) btnRemove.interactable = false;
-        if (!en_construct_btn) btnConstruct.interactable = false;
+        if (!en_RemoveBtn) btnRemove.interactable = false;
+        if (!en_ConstructBtn) btnConstruct.interactable = false;
     }
 
     private void onPointChange(object param)
@@ -212,27 +214,27 @@ public class GamePlaySceneController : MonoBehaviour
     {
         if (GameCache.Instance.mode == 1)
         {
-            if (GameCache.Instance.level_selected == 560)
+            if (GameCache.Instance.levelSelected == 560)
             {
                 GameCache.Instance.lastLevel = true;
                 LoadSceneManager.Instance.LoadScene("SimpleLevel");
             }
             else
             {
-                GameCache.Instance.level_selected++;
+                GameCache.Instance.levelSelected++;
                 game.destroy();
                 newGameLevel(1);
             }
         }
         else if (GameCache.Instance.mode == 2)
         {
-            if (GameCache.Instance.level_selected == 8)
+            if (GameCache.Instance.levelSelected == 8)
             {
                 LoadSceneManager.Instance.LoadScene("ChallengeLevel");
             }
             else
             {
-                GameCache.Instance.level_selected++;
+                GameCache.Instance.levelSelected++;
                 game.destroy();
                 newGameLevel(2);
             }
@@ -241,34 +243,34 @@ public class GamePlaySceneController : MonoBehaviour
 
     public void btnSoundOnClick()
     {
-        GameData.Instance.sound_on = !GameData.Instance.sound_on;
-        AudioManager.Instance.soundVolume(GameData.Instance.sound_on ? 1 : 0);
+        GameData.Instance.isSoundOn = !GameData.Instance.isSoundOn;
+        AudioManager.Instance.soundVolume(GameData.Instance.isSoundOn ? 1 : 0);
         AudioManager.Instance.Play("button_sound");
-        if (GameData.Instance.sound_on)
+        if (GameData.Instance.isSoundOn)
         {
-            btnSound.GetComponent<Image>().sprite = s_sounds[1];
+            btnSound.GetComponent<Image>().sprite = s_Sounds[1];
         }
-        else btnSound.GetComponent<Image>().sprite = s_sounds[0];
+        else btnSound.GetComponent<Image>().sprite = s_Sounds[0];
     }
 
     public void btnRemoveOnClick()
     {
-        if (!tutorial && !animPlaying && en_rmbtn && GameData.Instance.decreaseCoin(50))
+        if (!tutorial && !animPlaying && en_RemoveBtn && GameData.Instance.decreaseCoin(50))
         {
             game.removeIncorrectPipes();
             btnRemove.interactable = false;
-            en_rmbtn = false;
+            en_RemoveBtn = false;
         }
     }
 
     public void btnConstructOnClick()
     {
-        if (!tutorial && !animPlaying && en_construct_btn && GameData.Instance.decreaseCoin(25))
+        if (!tutorial && !animPlaying && en_ConstructBtn && GameData.Instance.decreaseCoin(25))
         {
             if (game.constructPipes())
             {
                 btnConstruct.interactable = false;
-                en_construct_btn = false;
+                en_ConstructBtn = false;
             }
         }
     }
@@ -283,7 +285,7 @@ public class GamePlaySceneController : MonoBehaviour
 
     public void btnBackOnClick()
     {
-        game.stop_time = true;
+        game.StopTime = true;
         AudioManager.Instance.Stop("water");
         switch (GameCache.Instance.mode)
         {

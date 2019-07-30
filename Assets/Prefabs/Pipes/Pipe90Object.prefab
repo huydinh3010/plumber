@@ -147,19 +147,19 @@ MonoBehaviour:
   row: 0
   col: 0
   rotation: 0
-  n_line: 0
+  n_Line: 0
   line: 0100000000000000ffffffffffffffff
-  anim_state:
+  animState:
   - pipe90_1
   - pipe90_2
   - 
   - 
-  anim_rotation: 00000000000000000000000000000000
-  i: 0
+  animRotation: 00000000000000000000000000000000
+  temp: 0
   next:
   - {fileID: 0}
   - {fileID: 0}
-  next_in: 0000000000000000
+  nextIn: 0000000000000000
 --- !u!114 &9062972214297287920
 MonoBehaviour:
   m_ObjectHideFlags: 0

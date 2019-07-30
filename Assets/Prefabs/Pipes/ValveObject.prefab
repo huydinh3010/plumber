@@ -149,19 +149,19 @@ MonoBehaviour:
   row: 0
   col: 0
   rotation: 0
-  n_line: 0
+  n_Line: 0
   line: 00000000ffffffffffffffffffffffff
-  anim_state:
+  animState:
   - valve
   - 
   - 
   - 
-  anim_rotation: 00000000000000000000000000000000
-  i: 0
+  animRotation: 00000000000000000000000000000000
+  temp: 0
   next:
   - {fileID: 0}
   - {fileID: 0}
-  next_in: 0000000000000000
+  nextIn: 0000000000000000
 --- !u!222 &4626337267282261878
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -147,9 +147,9 @@ MonoBehaviour:
   row: 0
   col: 0
   rotation: 0
-  n_line: 0
+  n_Line: 0
   line: 02000000030000000000000001000000
-  anim_state:
+  animState:
   - cross_back
   - cross_front
   - cross_back
@@ -158,12 +158,12 @@ MonoBehaviour:
   - cross_filled_back
   - cross_filled_front
   - cross_filled_back
-  anim_rotation: 0000000002000000020000000000000000000000020000000200000000000000
-  i: 0
+  animRotation: 0000000002000000020000000000000000000000020000000200000000000000
+  temp: 0
   next:
   - {fileID: 0}
   - {fileID: 0}
-  next_in: 0000000000000000
+  nextIn: 0000000000000000
 --- !u!114 &6257924849122665324
 MonoBehaviour:
   m_ObjectHideFlags: 0

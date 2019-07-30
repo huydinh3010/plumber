@@ -18,7 +18,7 @@ public class AudioManager : MonoBehaviour
         {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
-            if (GameData.Instance.sound_on) s.source.volume = s.volume;
+            if (GameData.Instance.isSoundOn) s.source.volume = s.volume;
             else s.source.volume = 0;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;

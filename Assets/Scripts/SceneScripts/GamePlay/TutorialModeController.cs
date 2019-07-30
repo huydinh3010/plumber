@@ -5,11 +5,10 @@ using UnityEngine.UI;
 using System.IO;
 using System;
 
-public class HelpLevelController : GameController
+public class TutorialModeController : GameController
 {
-    public GameObject hand;
-    public Text text_tutorial;
-
+    [SerializeField] GameObject hand;
+    [SerializeField] Text text_tutorial;
     private int h_len;
     private int[] pos_x;
     private int[] pos_y;
@@ -28,7 +27,6 @@ public class HelpLevelController : GameController
         string[] arr = textAsset.text.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
         int k = 0;
         int timer = int.Parse(arr[k++]);
-
         row = int.Parse(arr[k++]);
         col = int.Parse(arr[k++]);
         m_pipes = new int[row, col];
@@ -40,22 +38,21 @@ public class HelpLevelController : GameController
             }
         }
         int len = int.Parse(arr[k++]);
-        str_results = new string[len];
+        strResults = new string[len];
         for (int i = 0; i < len; i++)
         {
-            str_results[i] = arr[k++];
+            strResults[i] = arr[k++];
         }
     }
 
-    //ok
     public override void setupLevel()
     {
-        turn_count = 0;
-        duration_secs = 0f;
-        stop_time = false;
+        turnCount = 0;
+        durationSecs = 0f;
+        stopTime = false;
         animPlaying = false;
-        remove_pipe_count = 0;
-        construct_pipe_count = 0;
+        removePipeCount = 0;
+        constructPipeCount = 0;
         endConstructPipe = false;
         h_len = 0;
         pos_x = new int[3];
@@ -63,11 +60,11 @@ public class HelpLevelController : GameController
         pos_y[0] = 2; pos_x[0] = 0;
         pos_y[1] = 2; pos_x[1] = 2;
         pos_y[2] = 0; pos_x[2] = 0;
-        m_clones = new GameObject[row, col];
-        pipe_size = Mathf.Min(PlayZone.rect.width / 1000, PlayZone.rect.height / 1500) * 250 * 4 / col;
-        for (int i = 0; i < str_results.Length; i++)
+        m_Clones = new GameObject[row, col];
+        pipe_size = Mathf.Min(playZone.rect.width / 1000, playZone.rect.height / 1500) * 250 * 4 / col;
+        for (int i = 0; i < strResults.Length; i++)
         {
-            string[] pairs = str_results[i].Split(' ');
+            string[] pairs = strResults[i].Split(' ');
             int y = int.Parse(pairs[0]);
             int x = int.Parse(pairs[1]);
             int angle = int.Parse(pairs[2]);
@@ -75,32 +72,32 @@ public class HelpLevelController : GameController
             position.z = 0;
             position.y = ((row / 2 - y) - 0.5f) * pipe_size;
             position.x = ((x - col / 2) + 0.5f) * pipe_size;
-            m_clones[y, x] = Instantiate(pipes[m_pipes[y, x] / 10 % 7 - 1], Vector3.zero, Quaternion.Euler(0f, 0f, -angle * 90), PlayZone.transform);
-            m_clones[y, x].GetComponent<RectTransform>().anchoredPosition3D = position;
-            if (m_clones[y, x].GetComponent<Button>() != null)
+            GameObject go = Instantiate(pipes[m_pipes[y, x] / 10 % 7 - 1], Vector3.zero, Quaternion.Euler(0f, 0f, -angle * 90), playZone.transform);
+            go.GetComponent<RectTransform>().anchoredPosition3D = position;
+            if (go.GetComponent<Button>() != null)
             {
-                m_clones[y, x].GetComponent<Button>().onClick.AddListener(() => { OnPipeClick(m_clones[y, x]); });
-                m_clones[y, x].GetComponent<Button>().interactable = false;
+                go.GetComponent<Button>().onClick.AddListener(() => { OnPipeClick(go); });
+                go.GetComponent<Button>().interactable = false;
             }
-            m_clones[y, x].GetComponent<PipeProperties>().row = y;
-            m_clones[y, x].GetComponent<PipeProperties>().col = x;
-            m_clones[y, x].GetComponent<PipeProperties>().rotation = angle;
+            go.GetComponent<PipeProperties>().row = y;
+            go.GetComponent<PipeProperties>().col = x;
+            go.GetComponent<PipeProperties>().rotation = angle;
             if (i == 0)
             {
-                valve = m_clones[y, x];
+                valve = go;
                 valve.transform.Find("Valve_bg").eulerAngles = Vector3.zero;
                 valve.GetComponentInChildren<Button>().interactable = false;
                 valve.GetComponentInChildren<Button>().onClick.AddListener(()=> { OnValveClick(); });
             }
+            m_Clones[y, x] = go;
         }
         for (int i = 0; i < pos_x.Length - 1; i++)
         {
-            m_clones[pos_y[i], pos_x[i]].transform.eulerAngles += new Vector3(0f, 0f, 90f);
+            m_Clones[pos_y[i], pos_x[i]].transform.eulerAngles += new Vector3(0f, 0f, 90f);
         }
-        m_clones[pos_y[0], pos_x[0]].GetComponent<Button>().interactable = true;
-
+        m_Clones[pos_y[0], pos_x[0]].GetComponent<Button>().interactable = true;
         // hand
-        hand = Instantiate(hand, Vector3.zero, Quaternion.identity, PlayZone.transform);
+        hand = Instantiate(hand, Vector3.zero, Quaternion.identity, playZone.transform);
         hand.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(((pos_x[0] - col / 2) + 0.5f) * pipe_size, ((row / 2 - pos_y[0]) - 0.5f) * pipe_size, 0);
         hand.GetComponent<RectTransform>().sizeDelta = new Vector2(pipe_size, pipe_size);
          //
@@ -108,15 +105,13 @@ public class HelpLevelController : GameController
         text_tutorial.text = text_content[0];
     }
 
-    //ok
     public override IEnumerator rotatePipe(GameObject gameObject, int k, float speed)
     {
-        Debug.Log("Help rotate");
         if (k == 1)
         {
             gameObject.GetComponent<Button>().interactable = false;
             text_tutorial.text = text_content[++h_len];
-            GameObject next = m_clones[pos_y[h_len], pos_x[h_len]];
+            GameObject next = m_Clones[pos_y[h_len], pos_x[h_len]];
             hand.GetComponent<RectTransform>().anchoredPosition3D = next.GetComponent<RectTransform>().anchoredPosition3D;
             if(next.GetComponent<Button>() != null)
             {
@@ -129,17 +124,10 @@ public class HelpLevelController : GameController
             float angle = -90 * k;
             while (angle < 0)
             {
-                angle += speed * Time.deltaTime;
                 try
                 {
-                    if(angle < 0)
-                    {
-                        gameObject.transform.eulerAngles -= new Vector3(0f, 0f, speed * Time.deltaTime);
-                    }
-                    else
-                    {
-                        gameObject.transform.eulerAngles -= new Vector3(0f, 0f, speed * Time.deltaTime - angle);
-                    }
+                    angle += speed * Time.deltaTime;
+                    gameObject.transform.eulerAngles -= new Vector3(0f, 0f, speed * Time.deltaTime - (angle > 0 ? angle : 0));
                 }
                 catch (Exception e)
                 {
@@ -165,14 +153,8 @@ public class HelpLevelController : GameController
 
     public override void destroy()
     {
-        for (int i = 0; i < row; i++)
-        {
-            for (int j = 0; j < col; j++)
-            {
-                Destroy(m_clones[i, j]);
-            }
-        }
         text_tutorial.enabled = false;
+        base.destroy();
     }
 
     
