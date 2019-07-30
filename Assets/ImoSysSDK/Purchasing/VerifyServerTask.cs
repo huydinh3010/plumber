@@ -44,7 +44,7 @@ namespace ImoSysSDK.Purchasing
 
         void OnRequestFinished(long statusCode, string message, string data)
         {
-            Debug.LogWarning("Request Finished! Text received: " + data);
+            Debug.Log("Request Finished! Text received: " + data);
             bool success = statusCode == 200 && !string.IsNullOrEmpty(data) && ValidateResponse(data);
             if (!success && _triedCount < MAX_TRIED_COUNT) {
                 Verify();

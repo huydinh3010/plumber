@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PipeProperties : MonoBehaviour
 {
     public int type;

@@ -1,17 +1,17 @@
-﻿using ImoSysSDK.Core;
-using System.Text;
+﻿using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
 namespace ImoSysSDK.Network
 {
+    using Core;
     public class RestClient
     {
-#if ENV_PROD || ENV_STAGE
+//#if ENV_PROD || ENV_STAGE
         public const string DOMAIN = "https://api.gamesontop.com";
-#else
-        public const string DOMAIN = "https://api-staging.gamesontop.com";
-#endif
+//#else
+        //public const string DOMAIN = "https://api-staging.gamesontop.com";
+//#endif
         
         public static string deviceId;
 
@@ -31,7 +31,7 @@ namespace ImoSysSDK.Network
                 }));
 
 #elif UNITY_IOS
-               _deviceId = ImoSysSDK.Instance.DeviceId;
+                deviceId = ImoSysSDK.Instance.DeviceId;
 #endif
             }
             else

@@ -31,6 +31,11 @@ namespace ImoSysSDK.Purchasing
         [Tooltip("Event fired after a failed purchase of this product")]
         public OnPurchaseVerifyFailedEvent onPurchaseVerifyFailed;
 
+        private const string CHECK_RESTORED_PREFIX = "checked_restored_";
+        private const string CHECK_RESTORED_FAILED_COUNT_PREFIX = "checked_restored_failed_count_";
+        private const int CHECK_FAILED_LIMIT = 3;
+        private bool verifying;
+
         public IMOIAPButton() {
             onPurchaseComplete = new OnPurchaseCompletedEvent();
             onPurchaseFailed = new OnPurchaseFailedEvent();
@@ -44,6 +49,51 @@ namespace ImoSysSDK.Purchasing
             });
         }
 
+        void OnEnable()
+        {
+            if (buttonType == ButtonType.Purchase)
+            {
+                CodelessIAPStoreListener.Instance.AddButton(this);
+                if (CodelessIAPStoreListener.initializationComplete)
+                {
+                    UpdateText();
+                }
+            }
+            var product = CodelessIAPStoreListener.Instance.GetProduct(productId);
+            if (product != null && product.definition.type != ProductType.Consumable) {
+                if (product.hasReceipt)
+                {
+                    PerformRestore();
+                }
+                else {
+                    IsCheckedRestored = false;
+                    CheckRestoreFailedCount = 0;
+                }
+            }
+        }
+
+        internal void UpdateText()
+        {
+            var product = CodelessIAPStoreListener.Instance.GetProduct(productId);
+            if (product != null)
+            {
+                if (titleText != null)
+                {
+                    titleText.text = product.metadata.localizedTitle;
+                }
+
+                if (descriptionText != null)
+                {
+                    descriptionText.text = product.metadata.localizedDescription;
+                }
+
+                if (priceText != null)
+                {
+                    priceText.text = product.metadata.localizedPriceString;
+                }
+            }
+        }
+
         public bool Restorable {
             get {
                 var product = CodelessIAPStoreListener.Instance.GetProduct(productId);
@@ -55,29 +105,69 @@ namespace ImoSysSDK.Purchasing
             }
         }
 
-        public void CheckRestore() {
+        public void PerformRestore() {
             var product = CodelessIAPStoreListener.Instance.GetProduct(productId);
-            if (product != null) {
+            if (product != null && product.hasReceipt) {
                 verifyPurchase(product);
+            }
+        }
+
+        private int CheckRestoreFailedCount {
+            get {
+                return PlayerPrefs.GetInt(CheckRestoreFailedCountKey, 0);
+            }
+            set {
+                PlayerPrefs.SetInt(CheckRestoreFailedCountKey, value);
+            }
+        }
+
+        private bool IsCheckedRestored {
+            get {
+                return PlayerPrefs.GetInt(CheckRestoredKey, 0) > 0;
+            }
+            set {
+                PlayerPrefs.SetInt(CheckRestoredKey, value ? 1 : 0);
+            }
+        }
+
+        private string CheckRestoredKey {
+            get {
+                return CHECK_RESTORED_PREFIX + productId;
+            }
+        }
+
+        private string CheckRestoreFailedCountKey {
+            get {
+                return CHECK_RESTORED_FAILED_COUNT_PREFIX + productId;
             }
         }
 
         private void verifyPurchase(Product product) {
             ProductDefinition productDefinition = product.definition;
-            VerifyServerTask task = new VerifyServerTask((int)productDefinition.type, productDefinition.id, product, getPurchaseToken(product.receipt), gameObject.GetInstanceID(), OnServerVerifyFinished);
-            task.Verify();
+            if (!verifying && (productDefinition.type == ProductType.Consumable || !IsCheckedRestored))
+            {
+                verifying = true;
+                VerifyServerTask task = new VerifyServerTask((int)productDefinition.type, productDefinition.id, product, getPurchaseToken(product.receipt), gameObject.GetInstanceID(), OnServerVerifyFinished);
+                task.Verify();
+            }
         }
 
         private void OnServerVerifyFinished(bool success, string productId, string response, int instanceId, Product product)
         {
             if (success)
             {
+                IsCheckedRestored = true;
                 onPurchaseVerifySuccess.Invoke(product, gameObject.GetInstanceID());
             }
             else {
+                CheckRestoreFailedCount++;
+                if (CheckRestoreFailedCount >= CHECK_FAILED_LIMIT) {
+                    IsCheckedRestored = true;
+                }
                 string reason = "Verify failed from server";
                 onPurchaseVerifyFailed.Invoke(product, reason);
             }
+            verifying = false;
         }
 
         private string getPurchaseToken(string sReceipt)

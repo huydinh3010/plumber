@@ -79,12 +79,28 @@ public class PopupRemoveAds : MonoBehaviour, IPopup
     {
         GameData.Instance.ads_on = false;
         Close();
+        Debug.Log("Complete: ");
         btn_Go_Callback?.Invoke();
     }
+
+    //public void OnPurchaseComplete()
+    //{
+    //    GameData.Instance.ads_on = false;
+    //    Close();
+    //    Debug.Log("Complete: ");
+    //    btn_Go_Callback?.Invoke();
+    //}
 
     public void OnPurchaseFailed(Product product, string reason)
     {
         Close();
+        Debug.Log("Failed: " + reason);
         btn_Go_Callback?.Invoke();
     }
+
+    //public void OnPurchaseFailed()
+    //{
+    //    Close();
+    //    btn_Go_Callback?.Invoke();
+    //}
 }
