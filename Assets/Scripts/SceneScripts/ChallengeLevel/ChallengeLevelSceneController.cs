@@ -9,7 +9,7 @@ public class ChallengeLevelSceneController : MonoBehaviour
     [SerializeField] Image imagePool;
     [SerializeField] Button btnPool;
     [SerializeField] Sprite[] s_Pools;
-    [SerializeField] Sprite[] d_Levels;
+    [SerializeField] Sprite d_Level;
     [SerializeField] Text textTutorial;
     [SerializeField] Text textCoin;
     [SerializeField] Text textPoint;
@@ -29,7 +29,7 @@ public class ChallengeLevelSceneController : MonoBehaviour
             if(GameData.Instance.dailyChallengeProgess[i] == 1)
             {
                 total++;
-                imageLevels[i].sprite = d_Levels[i];
+                imageLevels[i].sprite = d_Level;
             }
         }
         if(total > 0) imagePool.sprite = s_Pools[total - 1];

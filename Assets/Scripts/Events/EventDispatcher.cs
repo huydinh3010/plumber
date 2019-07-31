@@ -13,7 +13,6 @@ public class EventDispatcher
 
     }
 
-
     public void RegisterListener(EventID eventID, Action<object> callback)
     {
         if (_listeners.ContainsKey(eventID))
@@ -51,17 +50,5 @@ public class EventDispatcher
     public void ClearAllListener()
     {
         _listeners.Clear();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

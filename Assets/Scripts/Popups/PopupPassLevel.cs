@@ -28,7 +28,7 @@ public class PopupPassLevel : MonoBehaviour, IPopup
 
     private void Setup()
     {
-        
+        btn_Watch_Video.interactable = true;
     }
 
     public void OnDisplayed()
