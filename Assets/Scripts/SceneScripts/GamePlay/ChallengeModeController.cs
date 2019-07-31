@@ -47,7 +47,9 @@ public class ChallengeModeController : GameController
         removePipeCount = 0;
         constructPipeCount = 0;
         m_Clones = new GameObject[row, col];
-        float pipe_size = Mathf.Min(playZone.rect.width / 1000, playZone.rect.height / 1500) * 250 * 4 / col;
+        Debug.Log("PlayZone: " + playZone.rect.height + " " + playZone.rect.width);
+        float pipe_size = Mathf.Min(playZone.rect.width * 4 / 1000 / col, playZone.rect.height * 6 / 1500 / row) * 250;
+        //float pipe_size = Mathf.Min(playZone.rect.width / 1000, playZone.rect.height / 1500) * 250 * 4 / col;
         System.Random rd = new System.Random();
         for (int i = 0; i < row; i++)
         {
@@ -95,4 +97,7 @@ public class ChallengeModeController : GameController
             }
         }
     }
+
+    
+
 }

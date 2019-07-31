@@ -23,6 +23,7 @@ public class GameData
     public bool isAdsOn;
     public bool isSoundOn;
     public long lastDayAccess;
+    public long lastFbShare;
     public int continueDay;
     public bool dailyRewardStatus;
     public bool challengeRewardStatus;
@@ -109,6 +110,7 @@ public class GameData
             isRateOn = true;
             isSoundOn = true;
             lastDayAccess = System.DateTime.Now.Date.ToFileTime();
+            lastFbShare = 0;
             dailyRewardStatus = false;
             challengeRewardStatus = false;
             achievementProgress = 0;

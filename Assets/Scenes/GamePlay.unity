@@ -577,7 +577,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 144}
+  m_AnchoredPosition: {x: 0, y: 100}
   m_SizeDelta: {x: 0, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &519420028
@@ -1407,41 +1407,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1193705588}
   m_CullTransparentMesh: 0
---- !u!1 &1229937568
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1229937569}
-  m_Layer: 5
-  m_Name: PlayZone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1229937569
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1229937568}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1592425304}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 22}
-  m_SizeDelta: {x: -80, y: -420}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1398530711
 GameObject:
   m_ObjectHideFlags: 0
@@ -1691,7 +1656,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 565230219}
-  - {fileID: 1229937569}
+  - {fileID: 1881653260}
   - {fileID: 1623628342}
   - {fileID: 426281771}
   m_Father: {fileID: 0}
@@ -1776,7 +1741,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 207}
+  m_AnchoredPosition: {x: 0, y: 76}
   m_SizeDelta: {x: -77, y: 137}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1810223772
@@ -1816,6 +1781,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1810223770}
   m_CullTransparentMesh: 0
+--- !u!1 &1881653259
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1881653260}
+  m_Layer: 5
+  m_Name: PlayZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1881653260
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881653259}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1592425304}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -20}
+  m_SizeDelta: {x: -80, y: -420}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2084200693
 GameObject:
   m_ObjectHideFlags: 0
@@ -1849,7 +1849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8db51d67c7dd4347b4e5e2ed7efce6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playZone: {fileID: 1229937569}
+  playZone: {fileID: 1881653260}
   pipes:
   - {fileID: 8913634226539356029, guid: bad8b37a07be7af4da1813ee36793532, type: 3}
   - {fileID: 5107127645869513209, guid: 37f8546131567ab42a6aca9c0bf590d0, type: 3}
@@ -1885,6 +1885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 795fbac48ec03a54e9529c9b1148de55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bottom: {fileID: 1810223771}
   btnBack: {fileID: 841087805}
   btnSound: {fileID: 603014761}
   btnRemove: {fileID: 904171201}
@@ -1893,6 +1894,7 @@ MonoBehaviour:
   txtCoins: {fileID: 272364132}
   txtPoints: {fileID: 245666874}
   txtLevel: {fileID: 1398530713}
+  playZone: {fileID: 1881653260}
   s_Sounds:
   - {fileID: 21300000, guid: 655d0cf38e088114db41ecda0aabc82e, type: 3}
   - {fileID: 21300000, guid: ce6148c3361846a4d9aae103a2679d62, type: 3}
@@ -1908,7 +1910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38c2e60c17140344fae767519ba749cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playZone: {fileID: 1229937569}
+  playZone: {fileID: 1881653260}
   pipes:
   - {fileID: 8913634226539356029, guid: bad8b37a07be7af4da1813ee36793532, type: 3}
   - {fileID: 5107127645869513209, guid: 37f8546131567ab42a6aca9c0bf590d0, type: 3}
@@ -1931,7 +1933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e251826c27f092742ae069528dddd881, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playZone: {fileID: 1229937569}
+  playZone: {fileID: 1881653260}
   pipes:
   - {fileID: 8913634226539356029, guid: bad8b37a07be7af4da1813ee36793532, type: 3}
   - {fileID: 5107127645869513209, guid: 37f8546131567ab42a6aca9c0bf590d0, type: 3}

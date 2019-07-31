@@ -25,7 +25,7 @@ public class PopupAddCoin : MonoBehaviour, IPopup
 
     private void Setup()
     {
-        
+        btn_Share_Fb.interactable = (System.DateTime.Now - System.DateTime.FromFileTime(GameData.Instance.lastFbShare)).Hours >= 1;
     }
 
     public void OnDisplayed()
@@ -81,6 +81,8 @@ public class PopupAddCoin : MonoBehaviour, IPopup
             GameData.Instance.increaseCoin(50);
             FirebaseManager.Instance.LogEventShareFacebook();
             FacebookManager.Instance.LogEventShareFacebook();
+            btn_Share_Fb.interactable = false;
+            GameData.Instance.lastFbShare = System.DateTime.Now.ToFileTime();
         });
         btn_Share_Fb_Callback?.Invoke();
     }

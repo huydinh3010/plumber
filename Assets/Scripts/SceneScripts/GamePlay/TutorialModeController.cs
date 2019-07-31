@@ -61,7 +61,7 @@ public class TutorialModeController : GameController
         pos_y[1] = 2; pos_x[1] = 2;
         pos_y[2] = 0; pos_x[2] = 0;
         m_Clones = new GameObject[row, col];
-        pipe_size = Mathf.Min(playZone.rect.width / 1000, playZone.rect.height / 1500) * 250 * 4 / col;
+        pipe_size = Mathf.Min(playZone.rect.width * 4 / 1000 / col, playZone.rect.height * 6 / 1500 / row) * 250;
         for (int i = 0; i < strResults.Length; i++)
         {
             string[] pairs = strResults[i].Split(' ');
@@ -151,11 +151,15 @@ public class TutorialModeController : GameController
         return base.checkPipes(out list_results, out list_ds);
     }
 
+    public override void resizeObjectWithPlayZone()
+    {
+        base.resizeObjectWithPlayZone();
+        hand.GetComponent<RectTransform>().anchoredPosition3D = m_Clones[pos_y[h_len], pos_x[h_len]].GetComponent<RectTransform>().anchoredPosition3D;
+    }
+
     public override void destroy()
     {
         text_tutorial.enabled = false;
         base.destroy();
     }
-
-    
 }

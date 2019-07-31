@@ -77,7 +77,7 @@ public abstract class GameController : MonoBehaviour
 
     public abstract void setupLevel();
 
-    private void Awake()
+    protected void Awake()
     {
         
     }
@@ -297,6 +297,26 @@ public abstract class GameController : MonoBehaviour
     }
 
     public abstract int getStar();
+
+    public virtual void resizeObjectWithPlayZone()
+    {
+        float pipe_size = Mathf.Min(playZone.rect.width * 4 / 1000 / col, playZone.rect.height * 6 / 1500 / row) * 250;
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < col; j++)
+            {
+                if (m_Clones[i, j] != null)
+                {
+                    Vector3 position;
+                    position.z = 0;
+                    position.y = ((row / 2 - i) - 0.5f) * pipe_size;
+                    position.x = ((j - col / 2) + 0.5f) * pipe_size;
+                    m_Clones[i, j].GetComponent<RectTransform>().anchoredPosition3D = position;
+                    m_Clones[i, j].GetComponent<RectTransform>().sizeDelta = new Vector2(pipe_size, pipe_size);
+                }
+            }
+        }
+    }
 
     public virtual void destroy()
     {
