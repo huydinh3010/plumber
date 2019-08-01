@@ -6,9 +6,9 @@ using System;
 public class ChallengeLevelSceneController : MonoBehaviour
 {
     [SerializeField] Image[] imageLevels;
-    [SerializeField] Image imagePool;
+    [SerializeField] Image imageState;
     [SerializeField] Button btnPool;
-    [SerializeField] Sprite[] s_Pools;
+    [SerializeField] Sprite[] s_States;
     [SerializeField] Sprite d_Level;
     [SerializeField] Text textTutorial;
     [SerializeField] Text textCoin;
@@ -32,7 +32,7 @@ public class ChallengeLevelSceneController : MonoBehaviour
                 imageLevels[i].sprite = d_Level;
             }
         }
-        if(total > 0) imagePool.sprite = s_Pools[total - 1];
+        if(total > 0) imageState.sprite = s_States[total - 1];
         if (total == 8 && !GameData.Instance.challengeRewardStatus)
         {
             textTutorial.text = str[1];

@@ -81,7 +81,8 @@ public class AdManager : MonoBehaviour
 
     public bool canShowInterstitial1()
     {
-        if(++interstitial1Count == INTERSTITIAL_STEP)
+        if (!GameData.Instance.isAdsOn) return false;
+        if (++interstitial1Count == INTERSTITIAL_STEP)
         {
             interstitial1Count = 0;
             return true;
@@ -94,6 +95,7 @@ public class AdManager : MonoBehaviour
 
     public bool canShowInterstitial2()
     {
+        if (!GameData.Instance.isAdsOn) return false;
         if (rewarded)
         {
             rewarded = false;
