@@ -132,7 +132,6 @@ public class GameData
     }
 }
 
-
 [System.Serializable]
 public class LevelState
 {

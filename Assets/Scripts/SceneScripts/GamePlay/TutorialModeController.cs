@@ -74,6 +74,7 @@ public class TutorialModeController : GameController
             position.x = ((x - col / 2) + 0.5f) * pipe_size;
             GameObject go = Instantiate(pipes[m_pipes[y, x] / 10 % 7 - 1], Vector3.zero, Quaternion.Euler(0f, 0f, -angle * 90), playZone.transform);
             go.GetComponent<RectTransform>().anchoredPosition3D = position;
+            go.GetComponent<RectTransform>().sizeDelta = new Vector2(pipe_size, pipe_size);
             if (go.GetComponent<Button>() != null)
             {
                 go.GetComponent<Button>().onClick.AddListener(() => { OnPipeClick(go); });

@@ -8,7 +8,7 @@ public class AdManager : MonoBehaviour
 {
     public static AdManager Instance;
 
-    private InterstitialAd interstitial;
+    private InterstitialAd[] interstitials = new InterstitialAd[2];
     private RewardBasedVideoAd rewardBasedVideo;
     private BannerView bannerView;
     private Action RewardedCallback;
@@ -18,7 +18,9 @@ public class AdManager : MonoBehaviour
     private int interstitial1Count;
     private int interstitial2Count;
     private const int INTERSTITIAL_STEP = 1;
+    private int interstitialIndex;
     private bool rewarded;
+    private float bannerHeight;
     private void Awake()
     {
         if (Instance == null)
@@ -49,12 +51,15 @@ public class AdManager : MonoBehaviour
         this.RequestRewardBasedVideo();
         if (GameData.Instance.isAdsOn)
         {
-            this.RequestInterstitial();
-            this.RequestBanner();
+            for(int i = 0; i < interstitials.Length; i++)
+            {
+                RequestInterstitial(i);
+            }
+            RequestBanner();
         }
     }
 
-    private void RequestInterstitial()
+    private void RequestInterstitial(int index)
     {
 #if UNITY_ANDROID
         string adUnitId = "ca-app-pub-3940256099942544/1033173712";
@@ -64,68 +69,63 @@ public class AdManager : MonoBehaviour
 #else
         string adUnitId = "unexpected_platform";
 #endif
-        if (interstitial != null) interstitial.Destroy();
-        this.interstitial = new InterstitialAd(adUnitId);
-        this.interstitial.OnAdClosed += HandleOnIntersitialAdClosed;
+        if (interstitials[index] != null) interstitials[index].Destroy();
+        interstitials[index] = new InterstitialAd(adUnitId);
+        interstitials[index].OnAdClosed += (object sender, EventArgs args) => {
+            ClosedInterstitialCallback?.Invoke();
+            RequestInterstitial(index);
+        };
         AdRequest request = new AdRequest.Builder().Build();
-        this.interstitial.LoadAd(request);
+        interstitials[index].LoadAd(request);
     }
 
-    private void HandleOnIntersitialAdClosed(object sender, EventArgs args)
+    public bool canShowInterstitial1()
     {
-        ClosedInterstitialCallback?.Invoke();
-        Debug.Log("HandleAdClosed event received");
-        RequestInterstitial();
+        if(++interstitial1Count == INTERSTITIAL_STEP)
+        {
+            interstitial1Count = 0;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
-    public bool ShowInterstitial1(Action action)
+    public bool canShowInterstitial2()
     {
-        if (!GameData.Instance.isAdsOn ) return false;
-        if(rewarded)
+        if (rewarded)
         {
             rewarded = false;
             return false;
         }
-        interstitial1Count++;
-        if (interstitial1Count == INTERSTITIAL_STEP)
+        if (++interstitial2Count == INTERSTITIAL_STEP)
         {
-            if (interstitial.IsLoaded())
-            {
-                ClosedInterstitialCallback = action;
-                this.interstitial.Show();
-                interstitial1Count = 0;
-                return true;
-            }
-            else
-            {
-                RequestInterstitial();
-                interstitial1Count--;
-            }
+            interstitial2Count = 0;
+            return true;
         }
-        return false;
+        else
+        {
+            return false;
+        }
     }
 
-    public bool ShowInterstitial2(Action action)
+    public bool ShowInterstitial(Action action)
     {
-        rewarded = false;
-        if (!GameData.Instance.isAdsOn) return false;
-        interstitial2Count++;
-        if (interstitial2Count == INTERSTITIAL_STEP)
+        if (interstitials[interstitialIndex].IsLoaded())
         {
-            if (interstitial.IsLoaded())
-            {
-                ClosedInterstitialCallback = action;
-                this.interstitial.Show();
-                interstitial2Count = 0;
-                return true;
-            }
-            else
-            {
-                RequestInterstitial();
-                interstitial2Count--;
-            }
+            ClosedInterstitialCallback = action;
+            interstitials[interstitialIndex].Show();
+            interstitialIndex = (interstitialIndex + 1) % 2;
+            rewarded = false;
+            return true;
         }
-        return false;
+        else
+        {
+            RequestInterstitial(interstitialIndex);
+            interstitialIndex = (interstitialIndex + 1) % 2;
+            return false;
+        }
     }
 
     private void RequestRewardBasedVideo()
@@ -178,10 +178,12 @@ public class AdManager : MonoBehaviour
 #else
             string adUnitId = "unexpected_platform";
 #endif
+        bannerHeight = 0;
         if (bannerView != null) bannerView.Destroy();
-        bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
+        bannerView = new BannerView(adUnitId, AdSize.SmartBanner, AdPosition.Bottom);
         bannerView.OnAdClosed += HandleOnBannerAdsClosed;
         bannerView.OnAdLoaded += HandleOnBannerAdsLoaded;
+        //bannerView.OnAdFailedToLoad += HandleOnBannerFailedToLoad;
         AdRequest request = new AdRequest.Builder().Build();
         bannerView.LoadAd(request);
     }
@@ -189,13 +191,21 @@ public class AdManager : MonoBehaviour
     {
         Debug.Log("HandleAdClosed event received");
         BannerClosedCallback?.Invoke();
+        bannerHeight = 0;
         RequestBanner();
     }
 
     private void HandleOnBannerAdsLoaded(object sender, EventArgs args)
     {
-        BannerLoadedCallback();
+        Debug.Log("Banner Ads Loaded");
+        bannerHeight = bannerView.GetHeightInPixels();
+        BannerLoadedCallback?.Invoke();
     }
+
+    //private void HandleOnBannerFailedToLoad(object sender, EventArgs args)
+    //{
+    //    BannerClosedCallback?.Invoke();
+    //}
 
     public void ShowNewBanner()
     {
@@ -204,7 +214,8 @@ public class AdManager : MonoBehaviour
 
     public float GetBannerHeight()
     {
-        return bannerView == null ? 0 : bannerView.GetHeightInPixels();
+
+        return bannerHeight;
     }
 
     public void AddBannerCallback(Action loaded, Action closed)

@@ -65,16 +65,15 @@ public class GamePlaySceneController : MonoBehaviour
 
     private void setUIPosWithBannerSize()
     {
-        Debug.Log("PlayZone: " + playZone.rect.height + " " + playZone.rect.width);
         normalPlayZonePos = playZone.anchoredPosition;
         normalPlayZoneSize = new Vector2(playZone.rect.width, playZone.rect.height);
         normalBottomPos = bottom.anchoredPosition;
         float bannerHeight = AdManager.Instance.GetBannerHeight();
-        Debug.Log("PlayZone: " + playZone.rect.height + " " + playZone.rect.width);
+        Debug.Log("In SetUIPosWithBannerSize Function: Banner Height = " + bannerHeight);
+        Debug.Log("In SetUIPosWithBannerSize Function: PlayZone Height = " + normalPlayZoneSize.y);
         playZone.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, normalPlayZoneSize.y - bannerHeight);
         playZone.anchoredPosition += new Vector2(0, bannerHeight / 2);
         bottom.anchoredPosition += new Vector2(0, bannerHeight);
-        Debug.Log("PlayZone: " + playZone.rect.height + " " + playZone.rect.width);
     }
 
     private void newGameLevel(int type)
@@ -143,11 +142,20 @@ public class GamePlaySceneController : MonoBehaviour
                 int c_star = GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1];
                 int n_star = game.getStar();
                 if (n_star > c_star) GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1] = n_star;
-                AdManager.Instance.ShowInterstitial2(null);
-                PopupManager.Instance.ShowPopup(PopupName.NextLevel, 
-                    new Dictionary<PopupButtonEvent, Action>() {
-                        { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
-                        { PopupButtonEvent.NextLevelPressed, NextLevelCallback } });
+                Action action = () => {
+                    PopupManager.Instance.ShowPopup(PopupName.NextLevel,
+                        new Dictionary<PopupButtonEvent, Action>() {
+                            { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
+                            { PopupButtonEvent.NextLevelPressed, NextLevelCallback } });
+                };
+                if(AdManager.Instance.canShowInterstitial1() && AdManager.Instance.ShowInterstitial(action))
+                {
+
+                }
+                else
+                {
+                    action();
+                }
             }
             else
             {
@@ -162,13 +170,22 @@ public class GamePlaySceneController : MonoBehaviour
                     unlock_level = true;
                 }
                 GameData.Instance.unlockLvState.NewLevelState();
-                AdManager.Instance.ShowInterstitial2(null);
-                PopupManager.Instance.ShowPopup(PopupName.PassLevel, 
-                    new Dictionary<PopupButtonEvent, Action>() {
-                        { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
-                        { PopupButtonEvent.NextLevelPressed, NextLevelCallback },}, 
-                    new Dictionary<PopupSettingType, object>() {
-                        { PopupSettingType.PassLevelImageType, star }});
+                Action action = () => {
+                    PopupManager.Instance.ShowPopup(PopupName.PassLevel,
+                        new Dictionary<PopupButtonEvent, Action>() {
+                            { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
+                            { PopupButtonEvent.NextLevelPressed, NextLevelCallback },},
+                        new Dictionary<PopupSettingType, object>() {
+                            { PopupSettingType.PassLevelImageType, star }});
+                };
+                if (AdManager.Instance.canShowInterstitial1() && AdManager.Instance.ShowInterstitial(action))
+                {
+
+                }
+                else
+                {
+                    action();
+                }
             }
             
         }
@@ -176,11 +193,20 @@ public class GamePlaySceneController : MonoBehaviour
         {
             if (GameData.Instance.dailyChallengeProgess[GameCache.Instance.levelSelected - 1] == 1)
             {
-                AdManager.Instance.ShowInterstitial2(null);
-                PopupManager.Instance.ShowPopup(PopupName.NextLevel, 
-                    new Dictionary<PopupButtonEvent, Action>() {
-                        { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
-                        { PopupButtonEvent.NextLevelPressed, NextLevelCallback } });
+                Action action = () => {
+                    PopupManager.Instance.ShowPopup(PopupName.NextLevel,
+                        new Dictionary<PopupButtonEvent, Action>() {
+                            { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
+                            { PopupButtonEvent.NextLevelPressed, NextLevelCallback } });
+                };
+                if (AdManager.Instance.canShowInterstitial1() && AdManager.Instance.ShowInterstitial(action))
+                {
+
+                }
+                else
+                {
+                    action();
+                }
             }
             else
             {
@@ -188,13 +214,22 @@ public class GamePlaySceneController : MonoBehaviour
                 GameData.Instance.dailyChallengeProgess[GameCache.Instance.levelSelected - 1] = 1;
                 GameData.Instance.increaseCoin(star);
                 GameData.Instance.increasePoint(star * 10);
-                AdManager.Instance.ShowInterstitial2(null);
-                PopupManager.Instance.ShowPopup(PopupName.PassLevel, 
-                    new Dictionary<PopupButtonEvent, Action>() {
-                        { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
-                        { PopupButtonEvent.NextLevelPressed, NextLevelCallback }, }, 
-                    new Dictionary<PopupSettingType, object>() {
-                        { PopupSettingType.PassLevelImageType, star } });
+                Action action = () => {
+                    PopupManager.Instance.ShowPopup(PopupName.PassLevel,
+                        new Dictionary<PopupButtonEvent, Action>() {
+                            { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
+                            { PopupButtonEvent.NextLevelPressed, NextLevelCallback }, },
+                        new Dictionary<PopupSettingType, object>() {
+                            { PopupSettingType.PassLevelImageType, star } });
+                };
+                if (AdManager.Instance.canShowInterstitial1() && AdManager.Instance.ShowInterstitial(action))
+                {
+
+                }
+                else
+                {
+                    action();
+                }
             }
         }
         string type = tutorial ? "tutorial" : (GameCache.Instance.mode == 1 ? "simple" : "daily_challenge");
@@ -258,10 +293,11 @@ public class GamePlaySceneController : MonoBehaviour
     private void onBannerShow()
     {
         float bannerHeight = AdManager.Instance.GetBannerHeight();
-        bannerHeight = 150;
         playZone.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, normalPlayZoneSize.y - bannerHeight);
         playZone.anchoredPosition = normalPlayZonePos + new Vector2(0, bannerHeight / 2);
         bottom.anchoredPosition = normalBottomPos + new Vector2(0, bannerHeight);
+        Debug.Log("In OnBannerShow Function: Banner Height = " + bannerHeight);
+        Debug.Log("In OnBannerShow Function: PlayZone Height = " + playZone.rect.height);
         game.resizeObjectWithPlayZone();
     }
 
@@ -311,17 +347,15 @@ public class GamePlaySceneController : MonoBehaviour
         GameData.Instance.isSoundOn = !GameData.Instance.isSoundOn;
         AudioManager.Instance.soundVolume(GameData.Instance.isSoundOn ? 1 : 0);
         AudioManager.Instance.Play("button_sound");
+        //AdManager.Instance.ShowNewBanner();
         if (GameData.Instance.isSoundOn)
         {
             btnSound.GetComponent<Image>().sprite = s_Sounds[1];
-            //onBannerShow();
         }
         else
         {
             btnSound.GetComponent<Image>().sprite = s_Sounds[0];
-            //onBannerHide();
         }
-
     }
 
     public void btnRemoveOnClick()
@@ -374,29 +408,48 @@ public class GamePlaySceneController : MonoBehaviour
 
     public void CloseLevelPopupCallback()
     {
-        AdManager.Instance.ShowInterstitial1(null);
-        switch (GameCache.Instance.mode)
+        Action action = () => {
+            switch (GameCache.Instance.mode)
+            {
+                case 1:
+                    LoadSceneManager.Instance.LoadScene("SimpleLevel");
+                    break;
+                case 2:
+                    LoadSceneManager.Instance.LoadScene("ChallengeLevel");
+                    break;
+            }
+        };
+        if(AdManager.Instance.canShowInterstitial2() && AdManager.Instance.ShowInterstitial(action))
         {
-            case 1:
-                LoadSceneManager.Instance.LoadScene("SimpleLevel");
-                break;
-            case 2:
-                LoadSceneManager.Instance.LoadScene("ChallengeLevel");
-                break;
+
+        }
+        else
+        {
+            action();
         }
     }
 
     public void NextLevelCallback()
     {
-        AdManager.Instance.ShowInterstitial1(null);
-        if (r_Count++ == 4)
+        Action action = () =>
         {
-            r_Count = 0;
-            PopupManager.Instance.ShowPopup(PopupName.Rate, new Dictionary<PopupButtonEvent, Action>() { { PopupButtonEvent.ClosePressed, nextLevel }, { PopupButtonEvent.NotNowOnRatePressed, nextLevel } });
+            if (r_Count++ == 4)
+            {
+                r_Count = 0;
+                PopupManager.Instance.ShowPopup(PopupName.Rate, new Dictionary<PopupButtonEvent, Action>() { { PopupButtonEvent.ClosePressed, nextLevel }, { PopupButtonEvent.NotNowOnRatePressed, nextLevel } });
+            }
+            else
+            {
+                nextLevel();
+            }
+        };
+        if (AdManager.Instance.canShowInterstitial2() && AdManager.Instance.ShowInterstitial(action))
+        {
+
         }
         else
         {
-            nextLevel();
+            action();
         }
     }
 
