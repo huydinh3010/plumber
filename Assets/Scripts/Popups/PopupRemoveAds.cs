@@ -28,6 +28,8 @@ public class PopupRemoveAds : MonoBehaviour, IPopup
 
     private void Setup()
     {
+        btn_Close.enabled = false;
+        btn_Go.enabled = false;
 #if UNITY_ANDROID
         content.text = "Go to GooglePlay to pay";
 #elif UNITY_IPHONE
@@ -73,6 +75,7 @@ public class PopupRemoveAds : MonoBehaviour, IPopup
     public void BtnGoOnClick()
     {
         //IAPManager.Instance.BuyNoAds();
+        GameData.Instance.isAdsOn = false;
     }
 
     public void OnPurchaseComplete(Product product, int instanceId)

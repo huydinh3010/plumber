@@ -21,7 +21,7 @@ public class PopupLastLevel : MonoBehaviour, IPopup
 
     private void Setup()
     {
-        
+        btn_Close.enabled = false;
     }
 
     public void OnDisplayed()

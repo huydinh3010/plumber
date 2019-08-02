@@ -79,6 +79,11 @@ public class SceneMainMenuController : MonoBehaviour
         LoadSceneManager.Instance.LoadScene("GamePlay");
     }
 
+    public void BtnShopOnClick()
+    {
+        PopupManager.Instance.ShowPopup(PopupName.Shop, null);
+    }
+
     private void OnAdsRemoved()
     {
         btnRemoveAds.SetActive(GameData.Instance.isAdsOn);

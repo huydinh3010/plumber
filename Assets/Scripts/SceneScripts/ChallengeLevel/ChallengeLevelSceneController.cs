@@ -13,8 +13,9 @@ public class ChallengeLevelSceneController : MonoBehaviour
     [SerializeField] Text textTutorial;
     [SerializeField] Text textCoin;
     [SerializeField] Text textPoint;
+    [SerializeField] Text textCoinReward;
     private int total;
-    private string[] str = {"Complete all levels and get 100 coins!", "Congratulations! You have completed daily challenge.Claim your reward.", "You claimed the reward!" };
+    private string[] str = {"Complete all levels and get reward coins!", "Congratulations! You have completed daily challenge.Claim your reward.", "You claimed the reward!" };
     
     // Start is called before the first frame update
     private void Awake()
@@ -24,6 +25,7 @@ public class ChallengeLevelSceneController : MonoBehaviour
         EventDispatcher.Instance.RegisterListener(EventID.OnPointChange, onPointChange);
         textCoin.text = GameData.Instance.coins.ToString();
         textPoint.text = GameData.Instance.points.ToString();
+        textCoinReward.text = GameConfig.DAILY_CHALLENGE_COIN_REWARD.ToString();
         for (int i = 0; i < 8; i++)
         {
             if(GameData.Instance.dailyChallengeProgess[i] == 1)
@@ -107,7 +109,7 @@ public class ChallengeLevelSceneController : MonoBehaviour
     {
         if (total == 8)
         {
-            GameData.Instance.increaseCoin(100);
+            GameData.Instance.increaseCoin(GameConfig.DAILY_CHALLENGE_COIN_REWARD);
             btnPool.interactable = false;
             GameData.Instance.challengeRewardStatus = true;
             textTutorial.text = str[2];

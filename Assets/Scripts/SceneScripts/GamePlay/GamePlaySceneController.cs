@@ -29,7 +29,8 @@ public class GamePlaySceneController : MonoBehaviour
     private bool en_ConstructBtn;
     private int r_Count;
     private void Awake()
-    {   
+    {
+      
         LoadSceneManager.Instance.OpenScene();
         EventDispatcher.Instance.RegisterListener(EventID.OnCoinChange, onCoinChange);
         EventDispatcher.Instance.RegisterListener(EventID.OnPointChange, onPointChange);
@@ -109,8 +110,8 @@ public class GamePlaySceneController : MonoBehaviour
         game.setupLevel();
         en_RemoveBtn = game.RemovePipeCount == 0;
         en_ConstructBtn = !game.EndConstructPipe;
-        btnRemove.interactable = en_RemoveBtn && GameData.Instance.coins >= 50;
-        btnConstruct.interactable = en_ConstructBtn && GameData.Instance.coins >= 25;
+        btnRemove.interactable = en_RemoveBtn && GameData.Instance.coins >= GameConfig.REMOVE_PIPE_COST;
+        btnConstruct.interactable = en_ConstructBtn && GameData.Instance.coins >= GameConfig.CONSTRUCT_PIPE_COST;
         string[] str_type = { "tutorial", "simple","daily_challenge" };
         FirebaseManager.Instance.LogEventLevelStart(GameCache.Instance.levelSelected, str_type[type], GameData.Instance.day);
         FacebookManager.Instance.LogEventLevelStart(GameCache.Instance.levelSelected, str_type[type], GameData.Instance.day);
@@ -161,9 +162,9 @@ public class GamePlaySceneController : MonoBehaviour
             {
                 int star = game.getStar();
                 GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1] = star;
-                GameData.Instance.increaseCoin(star);
-                GameData.Instance.increasePoint(star * 10);
-                if (GameData.Instance.unlockLevel < 560)
+                GameData.Instance.increaseCoin(GameConfig.PASS_LEVEL_COIN_REWARD[star]);
+                GameData.Instance.increasePoint(GameConfig.PASS_LEVEL_POINT_REWARD[star]);
+                if (GameData.Instance.unlockLevel < GameConfig.NUMBER_OF_SIMPLE_LEVEL)
                 {
                     GameData.Instance.listLevelStars.Add(0);
                     GameData.Instance.unlockLevel++;
@@ -212,8 +213,8 @@ public class GamePlaySceneController : MonoBehaviour
             {
                 int star = game.getStar();
                 GameData.Instance.dailyChallengeProgess[GameCache.Instance.levelSelected - 1] = 1;
-                GameData.Instance.increaseCoin(star);
-                GameData.Instance.increasePoint(star * 10);
+                GameData.Instance.increaseCoin(GameConfig.PASS_LEVEL_COIN_REWARD[star]);
+                GameData.Instance.increasePoint(GameConfig.PASS_LEVEL_POINT_REWARD[star]);
                 Action action = () => {
                     PopupManager.Instance.ShowPopup(PopupName.PassLevel,
                         new Dictionary<PopupButtonEvent, Action>() {
@@ -250,8 +251,8 @@ public class GamePlaySceneController : MonoBehaviour
     private void onCoinChange(object param)
     {
         StartCoroutine(coinChangeEffect(txtCoins, Convert.ToInt32(param)));
-        btnRemove.interactable = GameData.Instance.coins >= 50;
-        btnConstruct.interactable = GameData.Instance.coins >= 25;
+        btnRemove.interactable = GameData.Instance.coins >= GameConfig.REMOVE_PIPE_COST;
+        btnConstruct.interactable = GameData.Instance.coins >= GameConfig.CONSTRUCT_PIPE_COST;
         if (!en_RemoveBtn) btnRemove.interactable = false;
         if (!en_ConstructBtn) btnConstruct.interactable = false;
     }
@@ -314,7 +315,7 @@ public class GamePlaySceneController : MonoBehaviour
     {
         if (GameCache.Instance.mode == 1)
         {
-            if (GameCache.Instance.levelSelected == 560)
+            if (GameCache.Instance.levelSelected == GameConfig.NUMBER_OF_SIMPLE_LEVEL)
             {
                 GameCache.Instance.lastLevel = true;
                 LoadSceneManager.Instance.LoadScene("SimpleLevel");
@@ -360,7 +361,7 @@ public class GamePlaySceneController : MonoBehaviour
 
     public void btnRemoveOnClick()
     {
-        if (!tutorial && !animPlaying && en_RemoveBtn && GameData.Instance.decreaseCoin(50))
+        if (!tutorial && !animPlaying && en_RemoveBtn && GameData.Instance.decreaseCoin(GameConfig.REMOVE_PIPE_COST))
         {
             game.removeIncorrectPipes();
             btnRemove.interactable = false;
@@ -370,7 +371,7 @@ public class GamePlaySceneController : MonoBehaviour
 
     public void btnConstructOnClick()
     {
-        if (!tutorial && !animPlaying && en_ConstructBtn && GameData.Instance.decreaseCoin(25))
+        if (!tutorial && !animPlaying && en_ConstructBtn && GameData.Instance.decreaseCoin(GameConfig.CONSTRUCT_PIPE_COST))
         {
             if (game.constructPipes())
             {

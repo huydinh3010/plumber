@@ -10,6 +10,8 @@ public class PopupPassLevel : MonoBehaviour, IPopup
     [SerializeField] Button btn_Watch_Video;
     [SerializeField] Text text_Coin;
     [SerializeField] Text text_Point;
+    [SerializeField] CanvasGroup middleGroup;
+    [SerializeField] CanvasGroup bottomGroup;
     private Action btn_Close_Callback;
     private Action btn_Watch_Video_Callback;
     private Action btn_Next_Callback;
@@ -28,7 +30,14 @@ public class PopupPassLevel : MonoBehaviour, IPopup
 
     private void Setup()
     {
+        btn_Close.enabled = false;
+        btn_Next.enabled = false;
+        btn_Watch_Video.enabled = false;
         btn_Watch_Video.interactable = true;
+        middleGroup.interactable = false;
+        bottomGroup.interactable = false;
+        middleGroup.alpha = 0f;
+        bottomGroup.alpha = 0f;
     }
 
     public void OnDisplayed()
@@ -36,11 +45,30 @@ public class PopupPassLevel : MonoBehaviour, IPopup
         btn_Close.enabled = true;
         btn_Next.enabled = true;
         btn_Watch_Video.enabled = true;
+        StartCoroutine(fadeInEffect(middleGroup, () =>
+        {
+            StartCoroutine(fadeInEffect(bottomGroup, () =>
+            {
+                middleGroup.interactable = true;
+                bottomGroup.interactable = true;
+            }));
+        }));
     }
 
     public void OnClosed()
     {
         GetComponent<RectTransform>().gameObject.SetActive(false);
+    }
+
+    IEnumerator fadeInEffect(CanvasGroup target, Action EndCallback)
+    {
+        float speed = 1f;
+        while (target.alpha < 1)
+        {
+            target.alpha = (target.alpha + speed * Time.deltaTime) < 1 ? target.alpha + speed * Time.deltaTime : 1;
+            yield return null;
+        }
+        EndCallback();
     }
 
     public void Close()
@@ -61,8 +89,8 @@ public class PopupPassLevel : MonoBehaviour, IPopup
         value = list_settings.ContainsKey(PopupSettingType.PassLevelImageType) ? Convert.ToInt32(list_settings[PopupSettingType.PassLevelImageType]) : 0;
         if(value >= 1 && value <= 3)
         {
-            text_Coin.text = "+" + value.ToString();
-            text_Point.text = "+" + (value * 10).ToString();
+            text_Coin.text = "+" + GameConfig.PASS_LEVEL_COIN_REWARD[value].ToString();
+            text_Point.text = "+" + GameConfig.PASS_LEVEL_POINT_REWARD[value].ToString();
         }
         GetComponent<Animator>().Play("Show");
     }
@@ -77,7 +105,7 @@ public class PopupPassLevel : MonoBehaviour, IPopup
     {
         bool hasVideo = AdManager.Instance.ShowRewardVideo(() =>
         {
-            GameData.Instance.increaseCoin(10 * value);
+            GameData.Instance.increaseCoin(10 * GameConfig.PASS_LEVEL_POINT_REWARD[value]);
             btn_Watch_Video.interactable = false;
             Debug.Log("Rewarded 10 times coins");
         });

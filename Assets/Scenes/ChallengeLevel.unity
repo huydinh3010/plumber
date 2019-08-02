@@ -392,6 +392,7 @@ MonoBehaviour:
   textTutorial: {fileID: 164728550}
   textCoin: {fileID: 1086488030}
   textPoint: {fileID: 1956822076}
+  textCoinReward: {fileID: 23260115}
 --- !u!4 &151321416
 Transform:
   m_ObjectHideFlags: 0

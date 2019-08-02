@@ -51,7 +51,7 @@ public class AdManager : MonoBehaviour
         this.RequestRewardBasedVideo();
         if (GameData.Instance.isAdsOn)
         {
-            for(int i = 0; i < interstitials.Length; i++)
+            for (int i = 0; i < interstitials.Length; i++)
             {
                 RequestInterstitial(i);
             }
@@ -232,5 +232,3 @@ public class AdManager : MonoBehaviour
         BannerClosedCallback = null;
     }
 }
-
-

@@ -25,6 +25,9 @@ public class PopupAddCoin : MonoBehaviour, IPopup
 
     private void Setup()
     {
+        btn_Close.enabled = false;
+        btn_Share_Fb.enabled = false;
+        btn_Watch_Video.enabled = false;
         btn_Share_Fb.interactable = (System.DateTime.Now - System.DateTime.FromFileTime(GameData.Instance.lastFbShare)).Hours >= 1;
     }
 
@@ -68,7 +71,7 @@ public class PopupAddCoin : MonoBehaviour, IPopup
     {
         bool hasVideo = AdManager.Instance.ShowRewardVideo(() =>
         {
-            GameData.Instance.increaseCoin(10);
+            GameData.Instance.increaseCoin(GameConfig.REWARDED_VIDEO_COIN);
         });
         FirebaseManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.levelSelected);
         FacebookManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.levelSelected);

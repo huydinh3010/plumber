@@ -25,7 +25,9 @@ public class PopupRate : MonoBehaviour, IPopup
 
     private void Setup()
     {
-
+        btn_Close.enabled = false;
+        btn_Rate.enabled = false;
+        btn_Not_Now.enabled = false;
     }
 
     public void OnDisplayed()

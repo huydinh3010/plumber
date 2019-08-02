@@ -16,6 +16,7 @@ public class PopupManager : MonoBehaviour
     [SerializeField] PopupNextLevel popupNextLevel;
     [SerializeField] PopupLastLevel popupLastLevel;
     [SerializeField] PopupRemoveAds popupRemoveAds;
+    [SerializeField] PopupShop popupShop;
 
     [SerializeField] GameObject go_DailyReward;
     [SerializeField] GameObject go_PlayServices;
@@ -26,6 +27,7 @@ public class PopupManager : MonoBehaviour
     [SerializeField] GameObject go_NextLevel;
     [SerializeField] GameObject go_LastLevel;
     [SerializeField] GameObject go_RemoveAds;
+    [SerializeField] GameObject go_Shop;
     private IPopup activePopup;
     private bool showing;
 
@@ -115,6 +117,10 @@ public class PopupManager : MonoBehaviour
                     go_LastLevel.SetActive(true);
                     activePopup = popupLastLevel;
                     break;
+                case PopupName.Shop:
+                    go_Shop.SetActive(true);
+                    activePopup = popupShop;
+                    break;
             }
             activePopup.Show(list_actions, list_settings);
         }
@@ -154,6 +160,7 @@ public enum PopupName
     PassLevel,
     NextLevel,
     LastLevel,
+    Shop,
 }
 
 public enum PopupButtonEvent
@@ -168,6 +175,7 @@ public enum PopupButtonEvent
     WatchVideo10TimesCoinPressed,
     ShareFacebookPressed,
     NextLevelPressed,
+    BuyOnShopPressed,
 }
 
 public enum PopupSettingType

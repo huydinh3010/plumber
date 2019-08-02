@@ -22,7 +22,7 @@ public class SimpleLevelSceneController : MonoBehaviour
 
         txtCoins.text = GameData.Instance.coins.ToString();
         txtPoints.text = GameData.Instance.points.ToString();
-        for(int p = 0; p < 35; p++)
+        for (int p = 0; p < GameConfig.NUMBER_OF_SIMPLE_LEVEL / 16; p++) 
         {
             GameObject goGridClone = Instantiate(Grid, Vector3.zero, Quaternion.identity, ContentObj.transform);
             goGridClone.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(-18700 + 1100 * p, 0, 0);

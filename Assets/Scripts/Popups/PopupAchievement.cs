@@ -14,9 +14,7 @@ public class PopupAchievement : MonoBehaviour, IPopup
 
     private Action btn_Coin_Callback;
     private Action btn_Close_Callback;
-    private int[] achm_points = { 50, 100, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000 };
-    private int[] achm_coins_reward = { 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000 };
-
+    
     // Start is called before the first frame update
 
     void Start()
@@ -32,7 +30,8 @@ public class PopupAchievement : MonoBehaviour, IPopup
 
     private void Setup()
     {
-        float delta = content.rect.height / achm_points.Length;
+        btn_Close.enabled = false;
+        float delta = content.rect.height / GameConfig.ACHIEVEMENT_CONDITION_POINT.Length;
         float pos_y = delta * (GameData.Instance.achievementProgress + 1);
         if (pos_y > scroll.rect.height)
         {
@@ -42,7 +41,7 @@ public class PopupAchievement : MonoBehaviour, IPopup
         {
             content.anchoredPosition = new Vector2(content.anchoredPosition.x, 0);
         }
-        for (int i = 0; i < achm_points.Length; i++)
+        for (int i = 0; i < GameConfig.ACHIEVEMENT_CONDITION_POINT.Length; i++)
         {
             if (i + 1 <= GameData.Instance.achievementProgress)
             {
@@ -51,7 +50,7 @@ public class PopupAchievement : MonoBehaviour, IPopup
             }
             else
             {
-                if (GameData.Instance.points >= achm_points[i])
+                if (GameData.Instance.points >= GameConfig.ACHIEVEMENT_CONDITION_POINT[i])
                 {
                     btn_Coins[i].GetComponent<CanvasGroup>().alpha = 1;
                     image_Checks[i].enabled = false;
@@ -68,7 +67,7 @@ public class PopupAchievement : MonoBehaviour, IPopup
     public void OnDisplayed()
     {
         btn_Close.enabled = true;
-        for (int i = 0; i < achm_points.Length; i++)
+        for (int i = 0; i < GameConfig.ACHIEVEMENT_CONDITION_POINT.Length; i++)
         {
             if (i + 1 <= GameData.Instance.achievementProgress)
             {
@@ -76,7 +75,7 @@ public class PopupAchievement : MonoBehaviour, IPopup
             }
             else
             {
-                if (GameData.Instance.achievementProgress == i && GameData.Instance.points >= achm_points[i])
+                if (GameData.Instance.achievementProgress == i && GameData.Instance.points >= GameConfig.ACHIEVEMENT_CONDITION_POINT[i])
                 {
                     btn_Coins[i].interactable = true;
                 }
@@ -112,15 +111,15 @@ public class PopupAchievement : MonoBehaviour, IPopup
     {
         if (k == GameData.Instance.achievementProgress)
         {
-            GameData.Instance.increaseCoin(achm_coins_reward[k]);
+            GameData.Instance.increaseCoin(GameConfig.ACHIEVEMENT_COIN_REWARD[k]);
             GameData.Instance.achievementProgress++;
             btn_Coins[k].interactable = false;
             image_Checks[k].enabled = true;
             if (k < 9)
             {
-                float delta = content.rect.height / achm_points.Length;
+                float delta = content.rect.height / GameConfig.ACHIEVEMENT_CONDITION_POINT.Length;
                 StartCoroutine(ScrollNextItem(delta * (k + 1), () => {
-                    if (GameData.Instance.points >= achm_points[k + 1])
+                    if (GameData.Instance.points >= GameConfig.ACHIEVEMENT_CONDITION_POINT[k + 1])
                         btn_Coins[k + 1].interactable = true; }));
             }
         }
