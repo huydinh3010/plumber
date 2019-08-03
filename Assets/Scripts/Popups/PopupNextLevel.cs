@@ -11,6 +11,7 @@ public class PopupNextLevel : MonoBehaviour, IPopup
     [SerializeField] CanvasGroup bottomGroup;
     private Action btn_Close_Callback;
     private Action btn_Next_Callback;
+    private bool isShow;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,8 +26,7 @@ public class PopupNextLevel : MonoBehaviour, IPopup
 
     private void Setup()
     {
-        btn_Close.enabled = false;
-        btn_Next.enabled = false;
+        isShow = false;
         middleGroup.alpha = 0f;
         bottomGroup.alpha = 0f;
         middleGroup.interactable = false;
@@ -35,9 +35,7 @@ public class PopupNextLevel : MonoBehaviour, IPopup
 
     public void OnDisplayed()
     {
-        btn_Close.enabled = true;
-        btn_Next.enabled = true;
-
+        isShow = true;
         StartCoroutine(fadeInEffect(middleGroup, () =>
             {
                 StartCoroutine(fadeInEffect(bottomGroup, () =>
@@ -66,8 +64,7 @@ public class PopupNextLevel : MonoBehaviour, IPopup
 
     public void Close()
     {
-        btn_Close.enabled = false;
-        btn_Next.enabled = false;
+        isShow = false;
         EventDispatcher.Instance.PostEvent(EventID.OnPopupClosed, this);
         GetComponent<Animator>().Play("Close");
     }
@@ -82,13 +79,19 @@ public class PopupNextLevel : MonoBehaviour, IPopup
 
     public void BtnCloseOnClick()
     {
-        Close();
-        btn_Close_Callback?.Invoke();
+        if (isShow)
+        {
+            Close();
+            btn_Close_Callback?.Invoke();
+        }
     }
 
     public void BtnNextOnClick()
     {
-        Close();
-        btn_Next_Callback?.Invoke();
+        if (isShow)
+        {
+            Close();
+            btn_Next_Callback?.Invoke();
+        }
     }
 }

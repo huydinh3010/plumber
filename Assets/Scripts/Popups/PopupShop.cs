@@ -9,26 +9,29 @@ public class PopupShop : MonoBehaviour, IPopup
     [SerializeField] Button btn_Buy_NoAds;
     [SerializeField] Button[] btn_Buy_Coins;
     [SerializeField] Text[] text_Coins;
-    [SerializeField] Button btn_Close;
-
+    private ImoSysSDK.Purchasing.IMOIAPButton[] iapButtons;
     private Action btn_Close_Callback;
     private Action btn_Buy_Callback;
-
+    private bool isShow;
     void Awake()
     {
-
+        IAPManager.Instance.RegisterNoAdsCallback(() => { btn_Buy_NoAds.interactable = false; });
+        btn_Buy_NoAds.GetComponentInChildren<Text>().text = "$" + GameConfig.SHOP_PRICE[0].ToString();
+        iapButtons = new ImoSysSDK.Purchasing.IMOIAPButton[GameConfig.SHOP_PRICE.Length];
+        iapButtons[0] = btn_Buy_NoAds.GetComponent<ImoSysSDK.Purchasing.IMOIAPButton>();
+        for (int i = 0; i < btn_Buy_Coins.Length; i++)
+        {
+            text_Coins[i].text = "+" + GameConfig.SHOP_COIN[i + 1].ToString();
+            btn_Buy_Coins[i].GetComponentInChildren<Text>().text = "$" + GameConfig.SHOP_PRICE[i + 1].ToString();
+            iapButtons[i+1] = btn_Buy_Coins[i].GetComponent<ImoSysSDK.Purchasing.IMOIAPButton>();
+        }
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        IAPManager.Instance.RegisterNoAdsCallback(() => { btn_Buy_NoAds.interactable = false; });
-        btn_Buy_NoAds.GetComponentInChildren<Text>().text = "$" + GameConfig.SHOP_PRICE[0].ToString();
-        for (int i = 0; i < btn_Buy_Coins.Length; i++)
-        {
-            text_Coins[i].text = "+" + GameConfig.SHOP_COIN[i + 1].ToString();
-            btn_Buy_Coins[i].GetComponentInChildren<Text>().text = "$" + GameConfig.SHOP_PRICE[i+1].ToString();
-        }
+        
     }
 
     // Update is called once per frame
@@ -39,22 +42,20 @@ public class PopupShop : MonoBehaviour, IPopup
 
     private void Setup()
     {
-        btn_Close.enabled = false;
-        btn_Buy_NoAds.enabled = false;
-        btn_Buy_NoAds.interactable = GameData.Instance.isAdsOn;
-        foreach (Button button in btn_Buy_Coins)
+        isShow = false;
+        for(int i = 0; i < iapButtons.Length; i++)
         {
-            button.enabled = false;
+            iapButtons[i].enabled = false;
         }
+        btn_Buy_NoAds.interactable = GameData.Instance.isAdsOn;
     }
 
     public void Close()
     {
-        btn_Close.enabled = false;
-        btn_Buy_NoAds.enabled = false;
-        foreach (Button button in btn_Buy_Coins)
+        isShow = false;
+        for (int i = 0; i < iapButtons.Length; i++)
         {
-            button.enabled = false;
+            iapButtons[i].enabled = false;
         }
         EventDispatcher.Instance.PostEvent(EventID.OnPopupClosed, this);
         GetComponent<Animator>().Play("Close");
@@ -67,11 +68,10 @@ public class PopupShop : MonoBehaviour, IPopup
 
     public void OnDisplayed()
     {
-        btn_Close.enabled = true;
-        btn_Buy_NoAds.enabled = true;
-        foreach (Button button in btn_Buy_Coins)
+        isShow = true;
+        for (int i = 0; i < iapButtons.Length; i++)
         {
-            button.enabled = true;
+            iapButtons[i].enabled = true;
         }
     }
 
@@ -85,12 +85,18 @@ public class PopupShop : MonoBehaviour, IPopup
 
     public void BtnBuyOnClick()
     {
-        btn_Buy_Callback?.Invoke();
+        if (isShow)
+        {
+            btn_Buy_Callback?.Invoke();
+        }
     }
 
     public void BtnCloseOnClick()
     {
-        Close();
-        btn_Close_Callback?.Invoke();
+        if (isShow)
+        {
+            Close();
+            btn_Close_Callback?.Invoke();
+        }
     }
 }

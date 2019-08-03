@@ -5,8 +5,6 @@ using UnityEngine.UI;
 using System;
 public class SceneMainMenuController : MonoBehaviour
 {
-    [SerializeField] GameObject btnDailyChallenge;
-    [SerializeField] GameObject btnRemoveAds;
     private bool firstFrame;
     private void Awake()
     {
@@ -23,8 +21,6 @@ public class SceneMainMenuController : MonoBehaviour
             PopupManager.Instance.ShowPopup(PopupName.DailyReward, null);
         }
         GameCache.Instance.firstGameLoad = false;
-
-        btnRemoveAds.SetActive(GameData.Instance.isAdsOn);
 
         Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--Main Menu Start() end");
     }
@@ -55,13 +51,6 @@ public class SceneMainMenuController : MonoBehaviour
         PopupManager.Instance.ShowPopup(PopupName.Achievement, null);
     }
 
-    public void BtnRemoveAdsOnClick()
-    {
-        //IAPManager.Instance.RegisterNoAdsCallback(()=> { btnRemoveAds.SetActive(false); });
-
-        PopupManager.Instance.ShowPopup(PopupName.RemoveAds, new Dictionary<PopupButtonEvent, Action>() { { PopupButtonEvent.GoOnRemoveAds, OnAdsRemoved } });
-    }
-
     public void BtnRateOnClick()
     {
         PopupManager.Instance.ShowPopup(PopupName.Rate, null);
@@ -82,11 +71,6 @@ public class SceneMainMenuController : MonoBehaviour
     public void BtnShopOnClick()
     {
         PopupManager.Instance.ShowPopup(PopupName.Shop, null);
-    }
-
-    private void OnAdsRemoved()
-    {
-        btnRemoveAds.SetActive(GameData.Instance.isAdsOn);
     }
 
     private void OnDestroy()

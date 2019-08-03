@@ -30,7 +30,6 @@ public class GamePlaySceneController : MonoBehaviour
     private int r_Count;
     private void Awake()
     {
-      
         LoadSceneManager.Instance.OpenScene();
         EventDispatcher.Instance.RegisterListener(EventID.OnCoinChange, onCoinChange);
         EventDispatcher.Instance.RegisterListener(EventID.OnPointChange, onPointChange);
@@ -162,8 +161,8 @@ public class GamePlaySceneController : MonoBehaviour
             {
                 int star = game.getStar();
                 GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1] = star;
-                GameData.Instance.increaseCoin(GameConfig.PASS_LEVEL_COIN_REWARD[star]);
-                GameData.Instance.increasePoint(GameConfig.PASS_LEVEL_POINT_REWARD[star]);
+                GameData.Instance.increaseCoin(GameConfig.PASS_LEVEL_COIN_REWARD[star-1]);
+                GameData.Instance.increasePoint(GameConfig.PASS_LEVEL_POINT_REWARD[star-1]);
                 if (GameData.Instance.unlockLevel < GameConfig.NUMBER_OF_SIMPLE_LEVEL)
                 {
                     GameData.Instance.listLevelStars.Add(0);
@@ -213,8 +212,8 @@ public class GamePlaySceneController : MonoBehaviour
             {
                 int star = game.getStar();
                 GameData.Instance.dailyChallengeProgess[GameCache.Instance.levelSelected - 1] = 1;
-                GameData.Instance.increaseCoin(GameConfig.PASS_LEVEL_COIN_REWARD[star]);
-                GameData.Instance.increasePoint(GameConfig.PASS_LEVEL_POINT_REWARD[star]);
+                GameData.Instance.increaseCoin(GameConfig.PASS_LEVEL_COIN_REWARD[star-1]);
+                GameData.Instance.increasePoint(GameConfig.PASS_LEVEL_POINT_REWARD[star-1]);
                 Action action = () => {
                     PopupManager.Instance.ShowPopup(PopupName.PassLevel,
                         new Dictionary<PopupButtonEvent, Action>() {

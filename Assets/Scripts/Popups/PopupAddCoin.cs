@@ -5,12 +5,11 @@ using UnityEngine.UI;
 using System;
 public class PopupAddCoin : MonoBehaviour, IPopup
 {
-    [SerializeField] Button btn_Close;
     [SerializeField] Button btn_Share_Fb;
-    [SerializeField] Button btn_Watch_Video;
     private Action btn_Close_Callback;
     private Action btn_Watch_Video_Callback;
     private Action btn_Share_Fb_Callback;
+    private bool isShow;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,17 +24,13 @@ public class PopupAddCoin : MonoBehaviour, IPopup
 
     private void Setup()
     {
-        btn_Close.enabled = false;
-        btn_Share_Fb.enabled = false;
-        btn_Watch_Video.enabled = false;
+        isShow = false;
         btn_Share_Fb.interactable = (System.DateTime.Now - System.DateTime.FromFileTime(GameData.Instance.lastFbShare)).Hours >= 1;
     }
 
     public void OnDisplayed()
     {
-        btn_Close.enabled = true;
-        btn_Share_Fb.enabled = true;
-        btn_Watch_Video.enabled = true;
+        isShow = true;
     }
 
     public void OnClosed()
@@ -45,9 +40,7 @@ public class PopupAddCoin : MonoBehaviour, IPopup
 
     public void Close()
     {
-        btn_Close.enabled = false;
-        btn_Share_Fb.enabled = false;
-        btn_Watch_Video.enabled = false;
+        isShow = false;
         EventDispatcher.Instance.PostEvent(EventID.OnPopupClosed, this);
         GetComponent<Animator>().Play("Close");
     }
@@ -63,30 +56,39 @@ public class PopupAddCoin : MonoBehaviour, IPopup
 
     public void BtnCloseOnClick()
     {
-        Close();
-        btn_Close_Callback?.Invoke();
+        if (isShow)
+        {
+            Close();
+            btn_Close_Callback?.Invoke();
+        }
     }
 
     public void BtnWatchVideoOnClick()
     {
-        bool hasVideo = AdManager.Instance.ShowRewardVideo(() =>
+        if (isShow)
         {
-            GameData.Instance.increaseCoin(GameConfig.REWARDED_VIDEO_COIN);
-        });
-        FirebaseManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.levelSelected);
-        FacebookManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.levelSelected);
-        btn_Watch_Video_Callback?.Invoke();
+            bool hasVideo = AdManager.Instance.ShowRewardVideo(() =>
+            {
+                GameData.Instance.increaseCoin(GameConfig.REWARDED_VIDEO_COIN);
+            });
+            FirebaseManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.levelSelected);
+            FacebookManager.Instance.LogEventRequestRewardedVideo("10_coins", hasVideo, GameCache.Instance.levelSelected);
+            btn_Watch_Video_Callback?.Invoke();
+        }
     }
 
     public void BtnShareFbOnClick()
     {
-        FacebookManager.Instance.ShareWithFriends(() => {
-            GameData.Instance.increaseCoin(50);
-            FirebaseManager.Instance.LogEventShareFacebook();
-            FacebookManager.Instance.LogEventShareFacebook();
-            btn_Share_Fb.interactable = false;
-            GameData.Instance.lastFbShare = System.DateTime.Now.ToFileTime();
-        });
-        btn_Share_Fb_Callback?.Invoke();
+        if (isShow)
+        {
+            FacebookManager.Instance.ShareWithFriends(() => {
+                GameData.Instance.increaseCoin(50);
+                FirebaseManager.Instance.LogEventShareFacebook();
+                FacebookManager.Instance.LogEventShareFacebook();
+                btn_Share_Fb.interactable = false;
+                GameData.Instance.lastFbShare = System.DateTime.Now.ToFileTime();
+            });
+            btn_Share_Fb_Callback?.Invoke();
+        }
     }
 }

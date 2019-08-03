@@ -9,6 +9,7 @@ public class PopupDailyReward : MonoBehaviour, IPopup
     private IDayUIDailyRewardSetup[] daysSetup;
     private Action btn_Day_Callback;
     private Action btn_Close_Callback;
+    private bool isShow;
 
     void Awake()
     {
@@ -33,6 +34,7 @@ public class PopupDailyReward : MonoBehaviour, IPopup
 
     private void Setup()
     {
+        isShow = false;
         for(int i = 0; i < daysSetup.Length; i++)
         {
             int value = GameData.Instance.continueDay - 1;
@@ -44,7 +46,7 @@ public class PopupDailyReward : MonoBehaviour, IPopup
 
     public void OnDisplayed()
     {
-        
+        isShow = true;
     }
 
     public void OnClosed()
@@ -62,35 +64,42 @@ public class PopupDailyReward : MonoBehaviour, IPopup
 
     public void Close()
     {
+        isShow = false;
         EventDispatcher.Instance.PostEvent(EventID.OnPopupClosed, this);
         GetComponent<Animator>().Play("Close");
     }
 
     public void BtnDayOnClick(int k)
     {
-        if (k == GameData.Instance.continueDay - 1 && !GameData.Instance.dailyRewardStatus)
+        if (isShow)
         {
-            GameData.Instance.dailyRewardStatus = true;
-            int[] rewards = {10, 25, 50, 75, 100};
-            daysSetup[k].SetPassedState();
-            GameData.Instance.increaseCoin(rewards[k]);
-            StartCoroutine(WaitForClosePanel());
+            if (k == GameData.Instance.continueDay - 1 && !GameData.Instance.dailyRewardStatus)
+            {
+                GameData.Instance.dailyRewardStatus = true;
+                int[] rewards = { 10, 25, 50, 75, 100 };
+                daysSetup[k].SetPassedState();
+                GameData.Instance.increaseCoin(rewards[k]);
+                StartCoroutine(WaitForClosePanel());
+            }
+            btn_Day_Callback?.Invoke();
         }
-        btn_Day_Callback?.Invoke();
     }
 
     public void BtnCloseOnClick()
     {
-        if (!GameData.Instance.dailyRewardStatus)
+        if (isShow)
         {
-            GameData.Instance.dailyRewardStatus = true;
-            int[] rewards = { 10, 25, 50, 75, 100 };
-            int k = GameData.Instance.continueDay - 1;
-            daysSetup[k].SetPassedState();
-            GameData.Instance.increaseCoin(rewards[k]);
-            Close();
+            if (!GameData.Instance.dailyRewardStatus)
+            {
+                GameData.Instance.dailyRewardStatus = true;
+                int[] rewards = { 10, 25, 50, 75, 100 };
+                int k = GameData.Instance.continueDay - 1;
+                daysSetup[k].SetPassedState();
+                GameData.Instance.increaseCoin(rewards[k]);
+                Close();
+            }
+            btn_Close_Callback?.Invoke();
         }
-        btn_Close_Callback?.Invoke();
     }
 
     private IEnumerator WaitForClosePanel()

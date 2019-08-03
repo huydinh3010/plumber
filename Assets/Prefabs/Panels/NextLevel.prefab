@@ -33,10 +33,10 @@ RectTransform:
   m_Father: {fileID: 5447683329867966106}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -15, y: 33}
-  m_SizeDelta: {x: 316.5, y: 140.4}
+  m_AnchorMin: {x: 0.48333335, y: 0.62}
+  m_AnchorMax: {x: 0.48333335, y: 0.62}
+  m_AnchoredPosition: {x: 0, y: 3}
+  m_SizeDelta: {x: 271, y: 122}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5447683329635505707
 CanvasRenderer:
@@ -138,6 +138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5447683329867966106}
   - component: {fileID: 5447683329867966109}
+  - component: {fileID: 381103193}
   m_Layer: 5
   m_Name: bottom
   m_TagString: Untagged
@@ -173,6 +174,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5447683329867966107}
   m_CullTransparentMesh: 0
+--- !u!225 &381103193
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5447683329867966107}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &5447683329981737170
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,7 +213,7 @@ RectTransform:
   m_GameObject: {fileID: 5447683329981737170}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5447683331341376321}
   - {fileID: 5447683331335977884}
@@ -278,7 +291,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5447683330789698032}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -312,7 +325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0.15686275, g: 0.5882353, b: 0.078431375, a: 0.19607843}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -340,7 +353,7 @@ MonoBehaviour:
   m_Script: {fileID: -1200242548, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ShowMaskGraphic: 0
+  m_ShowMaskGraphic: 1
 --- !u!95 &5447683330789698034
 Animator:
   serializedVersion: 3
@@ -374,6 +387,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btn_Close: {fileID: 5447683330804029306}
   btn_Next: {fileID: 5447683329635505705}
+  middleGroup: {fileID: 1275087359}
+  bottomGroup: {fileID: 381103193}
 --- !u!1 &5447683330790221331
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,7 +423,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -20, y: -34}
+  m_AnchoredPosition: {x: -20, y: -30}
   m_SizeDelta: {x: -200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5447683330790221332
@@ -432,7 +447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.07058824, g: 0.047058824, b: 0.003921569, a: 1}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -447,7 +462,7 @@ MonoBehaviour:
     m_MinSize: 40
     m_MaxSize: 80
     m_Alignment: 4
-    m_AlignByGeometry: 0
+    m_AlignByGeometry: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
@@ -654,7 +669,7 @@ MonoBehaviour:
     m_MinSize: 40
     m_MaxSize: 65
     m_Alignment: 4
-    m_AlignByGeometry: 0
+    m_AlignByGeometry: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
@@ -670,6 +685,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5447683331335977884}
   - component: {fileID: 5447683331335977887}
+  - component: {fileID: 1275087359}
   m_Layer: 5
   m_Name: middle
   m_TagString: Untagged
@@ -705,6 +721,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5447683331335977885}
   m_CullTransparentMesh: 0
+--- !u!225 &1275087359
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5447683331335977885}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &5447683331341376350
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,12 +5,10 @@ using UnityEngine.UI;
 using System;
 public class PopupRate : MonoBehaviour, IPopup
 {
-    [SerializeField] Button btn_Close;
-    [SerializeField] Button btn_Not_Now;
-    [SerializeField] Button btn_Rate;
     private Action btn_Close_Callback;
     private Action btn_Not_Now_Callback;
     private Action btn_Rate_Callback;
+    private bool isShow;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,16 +23,12 @@ public class PopupRate : MonoBehaviour, IPopup
 
     private void Setup()
     {
-        btn_Close.enabled = false;
-        btn_Rate.enabled = false;
-        btn_Not_Now.enabled = false;
+        isShow = false;
     }
 
     public void OnDisplayed()
     {
-        btn_Close.enabled = true;
-        btn_Rate.enabled = true;
-        btn_Not_Now.enabled = true;
+        isShow = true;
     }
 
     public void OnClosed()
@@ -44,9 +38,7 @@ public class PopupRate : MonoBehaviour, IPopup
 
     public void Close()
     {
-        btn_Close.enabled = false;
-        btn_Rate.enabled = false;
-        btn_Not_Now.enabled = false;
+        isShow = false;
         EventDispatcher.Instance.PostEvent(EventID.OnPopupClosed, this);
         GetComponent<Animator>().Play("Close");
     }
@@ -62,24 +54,33 @@ public class PopupRate : MonoBehaviour, IPopup
 
     public void BtnCloseOnClick()
     {
-        Close();
-        btn_Close_Callback?.Invoke();
+        if (isShow)
+        {
+            Close();
+            btn_Close_Callback?.Invoke();
+        }
     }
 
     public void BtnNotNowOnClick()
     {
-        Close();
-        btn_Not_Now_Callback?.Invoke();
+        if (isShow)
+        {
+            Close();
+            btn_Not_Now_Callback?.Invoke();
+        }
     }
 
     public void BtnRateOnClick()
     {
+        if (isShow)
+        {
 #if UNITY_ANDROID
-        Application.OpenURL("market://details?id=" + Application.productName);
+            Application.OpenURL("market://details?id=" + Application.productName);
 #elif UNITY_IPHONE
  Application.OpenURL("itms-apps://itunes.apple.com/app/idYOUR_ID");
 #endif
-        GameData.Instance.isRateOn = false;
-        btn_Rate_Callback?.Invoke();
+            GameData.Instance.isRateOn = false;
+            btn_Rate_Callback?.Invoke();
+        }
     }
 }

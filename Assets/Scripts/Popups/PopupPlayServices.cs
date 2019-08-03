@@ -5,8 +5,8 @@ using UnityEngine.UI;
 using System;
 public class PopupPlayServices : MonoBehaviour, IPopup
 {
-    [SerializeField] Button btn_Close;
     private Action btn_Close_Callback;
+    private bool isShow;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,12 +21,12 @@ public class PopupPlayServices : MonoBehaviour, IPopup
 
     private void Setup()
     {
-        btn_Close.enabled = false;
+        isShow = false;
     }
 
     public void OnDisplayed()
     {
-        btn_Close.enabled = true;
+        isShow = true;
     }
 
     public void OnClosed()
@@ -43,14 +43,17 @@ public class PopupPlayServices : MonoBehaviour, IPopup
 
     public void Close()
     {
-        btn_Close.enabled = false;
+        isShow = false;
         EventDispatcher.Instance.PostEvent(EventID.OnPopupClosed, this);
         GetComponent<Animator>().Play("Close");
     }
 
     public void BtnCloseOnClick()
     {
-        Close();
-        btn_Close_Callback?.Invoke();
+        if (isShow)
+        {
+            Close();
+            btn_Close_Callback?.Invoke();
+        }
     }
 }
