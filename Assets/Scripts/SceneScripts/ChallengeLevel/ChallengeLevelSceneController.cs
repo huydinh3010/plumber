@@ -14,6 +14,7 @@ public class ChallengeLevelSceneController : MonoBehaviour
     [SerializeField] Text textCoin;
     [SerializeField] Text textPoint;
     [SerializeField] Text textCoinReward;
+    [SerializeField] GameObject middle;
     private int total;
     private string[] str = {"Complete all levels and get reward coins!", "Congratulations! You have completed daily challenge.Claim your reward.", "You claimed the reward!" };
     
@@ -23,6 +24,14 @@ public class ChallengeLevelSceneController : MonoBehaviour
         LoadSceneManager.Instance.OpenScene();
         EventDispatcher.Instance.RegisterListener(EventID.OnCoinChange, onCoinChange);
         EventDispatcher.Instance.RegisterListener(EventID.OnPointChange, onPointChange);
+
+        float aspect_ratio = (float)Screen.height / Screen.width;
+        if (aspect_ratio < 1.5f)
+        {
+            float scale = 1 - ((1.5f - aspect_ratio));
+            middle.GetComponent<RectTransform>().sizeDelta *= scale; 
+        }
+
         textCoin.text = GameData.Instance.coins.ToString();
         textPoint.text = GameData.Instance.points.ToString();
         textCoinReward.text = GameConfig.DAILY_CHALLENGE_COIN_REWARD.ToString();

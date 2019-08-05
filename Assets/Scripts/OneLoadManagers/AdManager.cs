@@ -49,6 +49,7 @@ public class AdManager : MonoBehaviour
         this.rewardBasedVideo = RewardBasedVideoAd.Instance;
         
         rewardBasedVideo.OnAdRewarded += HandleRewardBasedVideoRewarded;
+        rewardBasedVideo.OnAdClosed += HandleRewardBasedVideoClosed;
         this.RequestRewardBasedVideo();
         if (GameData.Instance.isAdsOn)
         {
@@ -59,6 +60,8 @@ public class AdManager : MonoBehaviour
             RequestBanner();
         }
     }
+
+    
 
     private void RequestInterstitial(int index)
     {
@@ -156,6 +159,11 @@ public class AdManager : MonoBehaviour
         RewardedCallback?.Invoke();
     }
 
+    private void HandleRewardBasedVideoClosed(object sender, EventArgs e)
+    {
+        RequestRewardBasedVideo();
+    }
+
     public bool ShowRewardVideo(Action action)
     {
         if (rewardBasedVideo.IsLoaded())
@@ -172,7 +180,7 @@ public class AdManager : MonoBehaviour
         }
     }
 
-    private void RequestBanner()
+    public void RequestBanner()
     {
 #if UNITY_ANDROID
         string adUnitId = "ca-app-pub-3940256099942544/6300978111";
@@ -183,7 +191,7 @@ public class AdManager : MonoBehaviour
 #endif
         bannerHeight = 0;
         if (bannerView != null) bannerView.Destroy();
-        bannerView = new BannerView(adUnitId, AdSize.SmartBanner, AdPosition.Bottom);
+        bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
         bannerView.OnAdClosed += HandleOnBannerAdsClosed;
         bannerView.OnAdLoaded += HandleOnBannerAdsLoaded;
         //bannerView.OnAdFailedToLoad += HandleOnBannerFailedToLoad;
@@ -201,7 +209,7 @@ public class AdManager : MonoBehaviour
     private void HandleOnBannerAdsLoaded(object sender, EventArgs args)
     {
         Debug.Log("Banner Ads Loaded");
-        bannerHeight = bannerView.GetHeightInPixels();
+        bannerHeight = bannerView.GetHeightInPixels() + 20;
         BannerLoadedCallback?.Invoke();
     }
 
@@ -209,6 +217,11 @@ public class AdManager : MonoBehaviour
     //{
     //    BannerClosedCallback?.Invoke();
     //}
+
+    public bool isBannerShowing()
+    {
+        return bannerView != null;
+    }
 
     public void ShowNewBanner()
     {

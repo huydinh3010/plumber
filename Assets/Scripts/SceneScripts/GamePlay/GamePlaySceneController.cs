@@ -37,6 +37,7 @@ public class GamePlaySceneController : MonoBehaviour
         EventDispatcher.Instance.RegisterListener(EventID.PipeAnimationEnd, endGame);
         EventDispatcher.Instance.RegisterListener(EventID.PipeAnimationStart, AnimationStart);
         AdManager.Instance.AddBannerCallback(onBannerShow, onBannerHide);
+        if (!AdManager.Instance.isBannerShowing()) AdManager.Instance.ShowNewBanner();
     }
 
     // Start is called before the first frame update
@@ -69,8 +70,6 @@ public class GamePlaySceneController : MonoBehaviour
         normalPlayZoneSize = new Vector2(playZone.rect.width, playZone.rect.height);
         normalBottomPos = bottom.anchoredPosition;
         float bannerHeight = AdManager.Instance.GetBannerHeight();
-        Debug.Log("In SetUIPosWithBannerSize Function: Banner Height = " + bannerHeight);
-        Debug.Log("In SetUIPosWithBannerSize Function: PlayZone Height = " + normalPlayZoneSize.y);
         playZone.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, normalPlayZoneSize.y - bannerHeight);
         playZone.anchoredPosition += new Vector2(0, bannerHeight / 2);
         bottom.anchoredPosition += new Vector2(0, bannerHeight);
@@ -296,8 +295,6 @@ public class GamePlaySceneController : MonoBehaviour
         playZone.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, normalPlayZoneSize.y - bannerHeight);
         playZone.anchoredPosition = normalPlayZonePos + new Vector2(0, bannerHeight / 2);
         bottom.anchoredPosition = normalBottomPos + new Vector2(0, bannerHeight);
-        Debug.Log("In OnBannerShow Function: Banner Height = " + bannerHeight);
-        Debug.Log("In OnBannerShow Function: PlayZone Height = " + playZone.rect.height);
         game.resizeObjectWithPlayZone();
     }
 
@@ -347,7 +344,6 @@ public class GamePlaySceneController : MonoBehaviour
         GameData.Instance.isSoundOn = !GameData.Instance.isSoundOn;
         AudioManager.Instance.soundVolume(GameData.Instance.isSoundOn ? 1 : 0);
         AudioManager.Instance.Play("button_sound");
-        //AdManager.Instance.ShowNewBanner();
         if (GameData.Instance.isSoundOn)
         {
             btnSound.GetComponent<Image>().sprite = s_Sounds[1];
