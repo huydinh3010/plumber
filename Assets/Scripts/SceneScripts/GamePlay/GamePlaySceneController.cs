@@ -382,7 +382,7 @@ public class GamePlaySceneController : MonoBehaviour
 
     public void btnAddCoinOnClick()
     {
-        if(!tutorial && !animPlaying)
+        if(!animPlaying)
         {
             PopupManager.Instance.ShowPopup(PopupName.AddCoin, null);
         }

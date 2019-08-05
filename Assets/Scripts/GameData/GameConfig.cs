@@ -13,7 +13,8 @@ public class GameConfig
     public static readonly int[] SHOP_COIN = { 0, 100, 200, 500, 1000, 2000, 5000, 10000 };
     public const int DAILY_CHALLENGE_COIN_REWARD = 100;
     public const int NUMBER_OF_SIMPLE_LEVEL = 560;
-    public const int REWARDED_VIDEO_COIN = 10;
+    public const int REWARDED_VIDEO_COIN = 4;
+    public const int SHARE_FB_COIN_REWARD = 10;
     public const int REMOVE_PIPE_COST = 50;
     public const int CONSTRUCT_PIPE_COST = 25;
 }

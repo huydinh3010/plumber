@@ -8,7 +8,8 @@ using System;
 public class TutorialModeController : GameController
 {
     [SerializeField] GameObject hand;
-    [SerializeField] Text text_tutorial;
+    [SerializeField] GameObject textTutorial;
+    [SerializeField] GameObject handOnAddCoinBtn;
     private int h_len;
     private int[] pos_x;
     private int[] pos_y;
@@ -101,9 +102,10 @@ public class TutorialModeController : GameController
         hand = Instantiate(hand, Vector3.zero, Quaternion.identity, playZone.transform);
         hand.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(((pos_x[0] - col / 2) + 0.5f) * pipe_size, ((row / 2 - pos_y[0]) - 0.5f) * pipe_size, 0);
         hand.GetComponent<RectTransform>().sizeDelta = new Vector2(pipe_size, pipe_size);
-         //
-        text_tutorial.enabled = true;
-        text_tutorial.text = text_content[0];
+        handOnAddCoinBtn.SetActive(true); 
+        //
+        textTutorial.SetActive(true);
+        textTutorial.GetComponent<Text>().text = text_content[0];
     }
 
     public override IEnumerator rotatePipe(GameObject gameObject, int k, float speed)
@@ -111,7 +113,7 @@ public class TutorialModeController : GameController
         if (k == 1)
         {
             gameObject.GetComponent<Button>().interactable = false;
-            text_tutorial.text = text_content[++h_len];
+            textTutorial.GetComponent<Text>().text = text_content[++h_len];
             GameObject next = m_Clones[pos_y[h_len], pos_x[h_len]];
             hand.GetComponent<RectTransform>().anchoredPosition3D = next.GetComponent<RectTransform>().anchoredPosition3D;
             if(next.GetComponent<Button>() != null)
@@ -147,7 +149,7 @@ public class TutorialModeController : GameController
 
     public override bool checkPipes(out List<GameObject> list_results, out List<int> list_ds)
     {
-        text_tutorial.text = text_content[++h_len];
+        textTutorial.GetComponent<Text>().text = text_content[++h_len];
         Destroy(hand);
         return base.checkPipes(out list_results, out list_ds);
     }
@@ -160,7 +162,8 @@ public class TutorialModeController : GameController
 
     public override void destroy()
     {
-        text_tutorial.enabled = false;
+        textTutorial.SetActive(false);
+        handOnAddCoinBtn.SetActive(false);
         base.destroy();
     }
 }

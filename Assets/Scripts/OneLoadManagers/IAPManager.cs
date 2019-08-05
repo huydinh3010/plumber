@@ -33,21 +33,21 @@ public class IAPManager : MonoBehaviour
         noAdsCallback -= action;
     }
 
-    public void OnIAPNoAdsCompleted(Product product, int instanceId)
+    public void OnIAPNoAdsCompleted(Product product)
     {
         GameData.Instance.isAdsOn = false;
         noAdsCallback?.Invoke();
     }
 
-    public void OnIAPBuyCoinsCompleted(Product product, int instanceId)
+    public void OnIAPBuyCoinsCompleted(Product product)
     {
         //GameData.Instance.increaseCoin(GameConfig.SHOP_COIN[1]);
-        Debug.Log(instanceId);
+        Debug.Log(product.transactionID);
     }
 
-    public void OnIAPFailed(Product product, string reason)
+    public void OnIAPFailed(Product product, PurchaseFailureReason reason)
     {
-        Debug.Log("IAP Failed: " + reason);
+        Debug.Log("IAP Failed: " + reason.ToString());
     }
 
 }

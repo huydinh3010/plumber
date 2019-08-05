@@ -47,6 +47,7 @@ public class AdManager : MonoBehaviour
         // Initialize the Google Mobile Ads SDK.
         MobileAds.Initialize(appId);
         this.rewardBasedVideo = RewardBasedVideoAd.Instance;
+        
         rewardBasedVideo.OnAdRewarded += HandleRewardBasedVideoRewarded;
         this.RequestRewardBasedVideo();
         if (GameData.Instance.isAdsOn)
