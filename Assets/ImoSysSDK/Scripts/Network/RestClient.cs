@@ -5,6 +5,8 @@ using UnityEngine.Networking;
 namespace ImoSysSDK.Network
 {
     using Core;
+    using System.Collections.Generic;
+
     public class RestClient
     {
 //#if ENV_PROD || ENV_STAGE
@@ -17,7 +19,15 @@ namespace ImoSysSDK.Network
 
         public delegate void OnRequestFinished(long statusCode, string message, string data);
 
-        public static void SendPostRequest(string url, string sJson, OnRequestFinished onRequestFinished)
+        public static void SendPostRequest(string path, string sJson, OnRequestFinished onRequestFinished) {
+            SendRequest(UnityWebRequest.kHttpVerbPOST, path, null, sJson, onRequestFinished);
+        }
+
+        public static void SendGetRequest(string path, Dictionary<string, string> queryParams, OnRequestFinished onRequestFinished) {
+            SendRequest(UnityWebRequest.kHttpVerbGET, path, queryParams, null, onRequestFinished);
+        }
+
+        private static void SendRequest(string method, string path, Dictionary<string, string> queryParams, string sJson, OnRequestFinished onRequestFinished)
         {
             if (deviceId == null)
             {
@@ -27,28 +37,36 @@ namespace ImoSysSDK.Network
                 imosysIdentifierObject.Call("getDeviceIdAsync", new ImoSysIdentifierPluginCallback((deviceId) =>
                 {
                     RestClient.deviceId = deviceId;
-                    SendPostRequest(deviceId, url, sJson, onRequestFinished);
+                    SendRequest(RestClient.deviceId, method, path, queryParams, sJson, onRequestFinished);
                 }));
 
 #elif UNITY_IOS
                 deviceId = ImoSysSDK.Instance.DeviceId;
-                SendPostRequest(deviceId, url, sJson, onRequestFinished);
+                SendRequest(deviceId, method, path, queryParams, sJson, onRequestFinished);
 #endif
-            }
-            else
+            } else
             {
-                SendPostRequest(deviceId, url, sJson, onRequestFinished);
+                SendRequest(deviceId, method, path, queryParams, sJson, onRequestFinished);
             }
         }
 
-        public static void SendPostRequest(string deviceId, string url, string sJson, OnRequestFinished onRequestFinished)
+        private static void SendRequest(string deviceId, string method, string path, Dictionary<string, string> queryParams, string sJson, OnRequestFinished onRequestFinished)
         {
-            //Debug.Log("Post body: " + sJson);
-            UnityWebRequest request = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST);
-            request.SetRequestHeader("Content-Type", "application/json");
+            StringBuilder sb = new StringBuilder(DOMAIN);
+            sb.Append(path);
+            if (queryParams != null && queryParams.Count > 0) {
+                sb.Append('?');
+                sb.Append(Encoding.UTF8.GetString(UnityWebRequest.SerializeSimpleForm(queryParams)));
+            }
+            string url = sb.ToString();
+            UnityWebRequest request = new UnityWebRequest(url, method);
+            if ((method.Equals(UnityWebRequest.kHttpVerbPOST) || method.Equals(UnityWebRequest.kHttpVerbPUT)) && !string.IsNullOrEmpty(sJson)) {
+                Debug.Log("Post body: " + sJson);
+                request.SetRequestHeader("Content-Type", "application/json");
+                request.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(sJson));
+            }
             AddRequiredHeaders(request, deviceId);
             request.downloadHandler = new DownloadHandlerBuffer();
-            request.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(sJson));
             UnityWebRequestAsyncOperation operation = request.SendWebRequest();
             operation.completed += (ops) => {
                 string message = request.isNetworkError ? request.error : string.Empty;

@@ -47,7 +47,7 @@ namespace ImoSysSDK.Purchasing
             _nonce = Guid.NewGuid().ToString();
             PurchaseBody body = new PurchaseBody(_orderId, _purchaseToken, _sendProductId, _productType, _nonce);
             string path = "/v1/iap/verify";
-            Network.RestClient.SendPostRequest(Network.RestClient.DOMAIN + path, JsonUtility.ToJson(body), OnRequestFinished);
+            Network.RestClient.SendPostRequest(path, JsonUtility.ToJson(body), OnRequestFinished);
         }
 
         void OnRequestFinished(long statusCode, string message, string data)

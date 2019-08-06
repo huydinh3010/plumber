@@ -6,9 +6,14 @@ using UnityEngine;
 
 namespace ImoSysSDK.SocialPlatforms {
 
-    public class FacebookLogin {
+    public class FacebookHelper {
+
+        private static readonly object instanceLock = new object();
+        private static FacebookHelper instance;
 
         private const string LOGIN_PATH = "/v1/games/facebook/login";
+        private const string KEY_FACEBOOK_LOGGED_IN = "imo_is_fb_logged_in";
+        private const string KEY_FACEBOOK_USER_ID = "imo_facebook_user_id";
 
         public delegate void OnLoginSuccessEvent();
 
@@ -18,14 +23,44 @@ namespace ImoSysSDK.SocialPlatforms {
 
         public event OnLoginSuccessEvent onLoginSuccess;
 
-        public FacebookLogin(OnLoginFailedEvent onLoginFailed, OnLoginSuccessEvent onLoginSuccess) {
-            this.onLoginFailed = onLoginFailed;
-            this.onLoginSuccess = onLoginSuccess;
+        public static FacebookHelper Instance {
+            get {
+                if (instance == null) {
+                    lock (instanceLock) {
+                        if (instance == null) {
+                            instance = new FacebookHelper();
+                        }
+                    }
+                }
+                return instance;
+            }
         }
 
-        public void Login() {
+        public FacebookHelper() {
+        }
+        
+        public bool IsLoggedIn {
+            get {
+                return PlayerPrefs.GetInt(KEY_FACEBOOK_LOGGED_IN, 0) != 0;
+            }
+            set {
+                PlayerPrefs.SetInt(KEY_FACEBOOK_LOGGED_IN, value ? 1 : 0);
+            }
+        }
+
+        public string FacebookUserId {
+            get {
+                return PlayerPrefs.GetString(KEY_FACEBOOK_USER_ID, string.Empty);
+            }
+            set {
+                PlayerPrefs.SetString(KEY_FACEBOOK_USER_ID, value);
+            }
+        }
+
+        public void Login(OnLoginFailedEvent onLoginFailed, OnLoginSuccessEvent onLoginSuccess) {
+            this.onLoginFailed = onLoginFailed;
+            this.onLoginSuccess = onLoginSuccess;
             if (FB.IsInitialized) {
-                FB.ActivateApp();
                 InternalLogin();
             } else {
                 FB.Init(OnInitComplete, OnHideUnity);
@@ -42,9 +77,9 @@ namespace ImoSysSDK.SocialPlatforms {
 
         private void OnInitComplete() {
             if (FB.IsInitialized) {
-                FB.ActivateApp();
                 InternalLogin();
             } else {
+                onLoginFailedCallback("Failed to initialize the Facebook SDK");
                 Debug.Log("Failed to initialize the Facebook SDK");
             }
         }
@@ -63,6 +98,7 @@ namespace ImoSysSDK.SocialPlatforms {
                 LoginWithServer(aToken);
             } else {
                 Debug.Log("User cancelled login");
+                onLoginFailedCallback("User cancelled login");
             }
         }
 
@@ -72,15 +108,32 @@ namespace ImoSysSDK.SocialPlatforms {
         }
 
         private void OnRequestFinished(long statusCode, string message, string data) {
+            Debug.Log("IMO Message: " + message);
+            Debug.Log("IMO Data: " + data);
             if (statusCode == 200) {
-                if (onLoginSuccess != null) {
-                    onLoginSuccess();
-                }
+                    IsLoggedIn = true;
+                    FacebookUserId = AccessToken.CurrentAccessToken.UserId;
+                    onLoginSuccessCallback();
             } else {
+                onLoginFailedCallback(message);
+            }
+        }
+
+        private void onLoginFailedCallback(string message) {
+            if (onLoginFailed != null) {
                 onLoginFailed(message);
+                onLoginFailed = null;
+            }
+        }
+
+        private void onLoginSuccessCallback() {
+            if (onLoginSuccess != null) {
+                onLoginSuccess();
+                onLoginSuccess = null;
             }
         }
     }
+
 
     public class FacebookInfoBody {
         public string fbId;

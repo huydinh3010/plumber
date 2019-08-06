@@ -18,9 +18,26 @@ public class MainController : MonoBehaviour
         
     }
 
+    public void UpdateLeaderboardClick() {
+        GameServices.Instance.UpdateScore(2342368, 1000, (success) => {
+            Debug.Log("IMO update leaderboard: " + success);
+        });
+    }
+
+    public void GetLeaderboardClick() {
+        GameServices.Instance.FetchLeaderboard(2342368, GameServices.LeaderboardTypes.LifeTime, 10, (success, items) => {
+            Debug.Log("IMO get leaderboard: " + success);
+            if(items  != null) {
+                for (int i = 0; i < items.Length; i++) {
+                    Debug.Log("leaderboard i(" + i + "): " + items[i].name + " - " + items[i].score);
+                }
+            }
+        });
+    }
+
+
     public void LoginFacebookClick() {
-        FacebookLogin fbLogin = new FacebookLogin(onLoginFBFailed, onLoginFBSuccess);
-        fbLogin.Login();
+        FacebookHelper.Instance.Login(onLoginFBFailed, onLoginFBSuccess);
     }
 
     private void onLoginFBFailed(string message) {

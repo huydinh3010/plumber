@@ -240,6 +240,13 @@ public class AdManager : MonoBehaviour
         BannerClosedCallback = closed;
     }
 
+    public void CloseBanner()
+    {
+        bannerView.Destroy();
+        bannerHeight = 0f;
+        BannerClosedCallback?.Invoke();
+    }
+
     public void ClearBannerCallback()
     {
         BannerLoadedCallback = null;

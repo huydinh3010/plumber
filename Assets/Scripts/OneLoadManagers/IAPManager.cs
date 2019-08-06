@@ -36,13 +36,50 @@ public class IAPManager : MonoBehaviour
     public void OnIAPNoAdsCompleted(Product product, int instanceId)
     {
         GameData.Instance.isAdsOn = false;
+        AdManager.Instance.CloseBanner();
         Debug.Log("IAP noads completed");
         noAdsCallback?.Invoke();
     }
 
-    public void OnIAPBuyCoinsCompleted(Product product, int instanceId)
+    public void OnIAPBuy100CoinsCompleted(Product product, int instanceId)
     {
-        //GameData.Instance.increaseCoin(GameConfig.SHOP_COIN[1]);
+        GameData.Instance.increaseCoin(100);
+        Debug.Log("IAP Completed: " + instanceId);
+    }
+
+    public void OnIAPBuy200CoinsCompleted(Product product, int instanceId)
+    {
+        GameData.Instance.increaseCoin(200);
+        Debug.Log("IAP Completed: " + instanceId);
+    }
+
+    public void OnIAPBuy500CoinsCompleted(Product product, int instanceId)
+    {
+        GameData.Instance.increaseCoin(500);
+        Debug.Log("IAP Completed: " + instanceId);
+    }
+
+    public void OnIAPBuy1000CoinsCompleted(Product product, int instanceId)
+    {
+        GameData.Instance.increaseCoin(1000);
+        Debug.Log("IAP Completed: " + instanceId);
+    }
+
+    public void OnIAPBuy2000CoinsCompleted(Product product, int instanceId)
+    {
+        GameData.Instance.increaseCoin(2000);
+        Debug.Log("IAP Completed: " + instanceId);
+    }
+
+    public void OnIAPBuy5000CoinsCompleted(Product product, int instanceId)
+    {
+        GameData.Instance.increaseCoin(5000);
+        Debug.Log("IAP Completed: " + instanceId);
+    }
+
+    public void OnIAPBuy10000oinsCompleted(Product product, int instanceId)
+    {
+        GameData.Instance.increaseCoin(10000);
         Debug.Log("IAP Completed: " + instanceId);
     }
 

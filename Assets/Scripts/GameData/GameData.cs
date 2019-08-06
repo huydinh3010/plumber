@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System;
+using ImoSysSDK.SocialPlatforms;
 
 [System.Serializable]
 public class GameData
@@ -53,7 +54,9 @@ public class GameData
     {
         points += value;
         EventDispatcher.Instance.PostEvent(EventID.OnPointChange, null, value);
-        
+        GameServices.Instance.UpdateScore(GameConfig.LEADERBROAD_ID, points, (success) => {
+            Debug.Log("IMO update leaderboard: " + success);
+        });
     }
 
     public bool decreasePoint(int value)
@@ -62,6 +65,9 @@ public class GameData
         {
             points -= value;
             EventDispatcher.Instance.PostEvent(EventID.OnPointChange, null);
+            GameServices.Instance.UpdateScore(GameConfig.LEADERBROAD_ID, points, (success) => {
+                Debug.Log("IMO update leaderboard: " + success);
+            });
             return true;
         }
         return false;
