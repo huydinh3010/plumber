@@ -220,7 +220,7 @@ public class AdManager : MonoBehaviour
 
     public bool isBannerShowing()
     {
-        return bannerView != null;
+        return bannerHeight > 0;
     }
 
     public void ShowNewBanner()

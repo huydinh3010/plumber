@@ -17,7 +17,7 @@ public class GamePlaySceneController : MonoBehaviour
     [SerializeField] Text txtLevel;
     [SerializeField] RectTransform playZone;
     [SerializeField] Sprite[] s_Sounds;
-
+    [SerializeField] Sprite achievement;
     private GameController game;
     private Vector2 normalPlayZonePos;
     private Vector2 normalPlayZoneSize;
@@ -30,6 +30,7 @@ public class GamePlaySceneController : MonoBehaviour
     private int r_Count;
     private void Awake()
     {
+        GameData.Instance.isAdsOn = false;
         LoadSceneManager.Instance.OpenScene();
         EventDispatcher.Instance.RegisterListener(EventID.OnCoinChange, onCoinChange);
         EventDispatcher.Instance.RegisterListener(EventID.OnPointChange, onPointChange);
@@ -258,6 +259,11 @@ public class GamePlaySceneController : MonoBehaviour
     private void onPointChange(object param)
     {
         StartCoroutine(coinChangeEffect(txtPoints, Convert.ToInt32(param)));
+        if(GameCache.Instance.unlockAchievementProgress < GameConfig.ACHIEVEMENT_CONDITION_POINT.Length && GameData.Instance.points > GameConfig.ACHIEVEMENT_CONDITION_POINT[GameCache.Instance.unlockAchievementProgress])
+        {
+            PopupManager.Instance.ShowNotification("Unlock achievement. Go back Menu to get " + GameConfig.ACHIEVEMENT_COIN_REWARD[GameCache.Instance.unlockAchievementProgress] + " coins", achievement, 3f);
+            GameCache.Instance.unlockAchievementProgress++;
+        }
     }
 
     IEnumerator coinChangeEffect(Text text, int value)
@@ -340,7 +346,6 @@ public class GamePlaySceneController : MonoBehaviour
 
     public void btnSoundOnClick()
     {
-        
         GameData.Instance.isSoundOn = !GameData.Instance.isSoundOn;
         AudioManager.Instance.soundVolume(GameData.Instance.isSoundOn ? 1 : 0);
         AudioManager.Instance.Play("button_sound");

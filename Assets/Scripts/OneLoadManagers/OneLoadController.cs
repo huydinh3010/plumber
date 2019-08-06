@@ -22,6 +22,7 @@ public class OneLoadController : MonoBehaviour
         Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After LoadScene MainMenu function");
         GameData.Instance.LoadDataFromFile();
         Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After Load Data function");
+        
     }
 
     private void Application_logMessageReceived(string condition, string stackTrace, LogType type)

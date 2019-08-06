@@ -2280,6 +2280,7 @@ MonoBehaviour:
   s_Sounds:
   - {fileID: 21300000, guid: 655d0cf38e088114db41ecda0aabc82e, type: 3}
   - {fileID: 21300000, guid: ce6148c3361846a4d9aae103a2679d62, type: 3}
+  achievement: {fileID: 21300000, guid: 757be9a586296a946bd9f4c3411000c6, type: 3}
 --- !u!114 &2084200698
 MonoBehaviour:
   m_ObjectHideFlags: 0

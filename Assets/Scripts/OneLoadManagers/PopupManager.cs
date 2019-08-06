@@ -16,6 +16,7 @@ public class PopupManager : MonoBehaviour
     [SerializeField] PopupNextLevel popupNextLevel;
     [SerializeField] PopupLastLevel popupLastLevel;
     [SerializeField] PopupShop popupShop;
+    [SerializeField] Notification notification;
 
     [SerializeField] GameObject go_DailyReward;
     [SerializeField] GameObject go_PlayServices;
@@ -26,6 +27,7 @@ public class PopupManager : MonoBehaviour
     [SerializeField] GameObject go_NextLevel;
     [SerializeField] GameObject go_LastLevel;
     [SerializeField] GameObject go_Shop;
+    [SerializeField] GameObject go_Notification;
     private IPopup activePopup;
     private bool showing;
 
@@ -68,6 +70,14 @@ public class PopupManager : MonoBehaviour
         showing = false;
         activePopup = null;
 
+    }
+
+    
+    public void ShowNotification(string content, Sprite image, float duration) 
+    {
+        if (go_Notification.active) go_Notification.SetActive(false);
+        go_Notification.SetActive(true);
+        notification.Show(content, image, duration);
     }
 
     public void ShowPopup(PopupName name, Dictionary<PopupButtonEvent, Action> list_actions, Dictionary<PopupSettingType, object> list_settings = null)

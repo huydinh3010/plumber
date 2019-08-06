@@ -34,7 +34,7 @@ namespace ImoSysSDK.Network
 #if UNITY_ANDROID
                 AndroidJavaClass pluginClass = new AndroidJavaClass("com.imosys.core.ImoSysIdentifier");
                 AndroidJavaObject imosysIdentifierObject = pluginClass.CallStatic<AndroidJavaObject>("getInstance");
-                imosysIdentifierObject.Call("getDeviceIdAsync", new ImoSysIdentifierPluginCallback((deviceId) =>
+                imosysIdentifierObject?.Call("getDeviceIdAsync", new ImoSysIdentifierPluginCallback((deviceId) =>
                 {
                     RestClient.deviceId = deviceId;
                     SendRequest(RestClient.deviceId, method, path, queryParams, sJson, onRequestFinished);

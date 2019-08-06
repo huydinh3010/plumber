@@ -6,6 +6,7 @@ using System;
 public class PopupAddCoin : MonoBehaviour, IPopup
 {
     [SerializeField] Button btn_Share_Fb;
+    [SerializeField] Sprite coin;
     private Action btn_Close_Callback;
     private Action btn_Watch_Video_Callback;
     private Action btn_Share_Fb_Callback;
@@ -69,7 +70,9 @@ public class PopupAddCoin : MonoBehaviour, IPopup
         {
             bool hasVideo = AdManager.Instance.ShowRewardVideo(() =>
             {
-                GameData.Instance.increaseCoin(GameConfig.REWARDED_VIDEO_COIN);
+                int reward = GameConfig.REWARDED_VIDEO_COIN;
+                GameData.Instance.increaseCoin(reward);
+                PopupManager.Instance.ShowNotification("You are rewarded " + reward + " coins!", coin, 1.5f);
             });
             FirebaseManager.Instance.LogEventRequestRewardedVideo("4_coins", hasVideo, GameCache.Instance.levelSelected);
             FacebookManager.Instance.LogEventRequestRewardedVideo("4_coins", hasVideo, GameCache.Instance.levelSelected);
@@ -82,7 +85,9 @@ public class PopupAddCoin : MonoBehaviour, IPopup
         if (isShow)
         {
             FacebookManager.Instance.ShareWithFriends(() => {
-                GameData.Instance.increaseCoin(GameConfig.SHARE_FB_COIN_REWARD);
+                int reward = GameConfig.SHARE_FB_COIN_REWARD;
+                GameData.Instance.increaseCoin(reward);
+                PopupManager.Instance.ShowNotification("Share Facebook completed. You are rewarded " + reward + " coins. Wait 1 hour for the next time!", coin, 1.5f);
                 FirebaseManager.Instance.LogEventShareFacebook();
                 FacebookManager.Instance.LogEventShareFacebook();
                 btn_Share_Fb.interactable = false;

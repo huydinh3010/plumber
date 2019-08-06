@@ -14,6 +14,7 @@ public class PopupPlayServices : MonoBehaviour, IPopup
     [SerializeField] Text textPlayerScore;
     [SerializeField] Image imagePlayerFlag;
     [SerializeField] Text textPlayerRank;
+    [SerializeField] Sprite error;
     private Action btn_Close_Callback;
     private bool isShow;
     private const int LEADER_BROAD_LIMIT_ITEM = 10;
@@ -26,7 +27,7 @@ public class PopupPlayServices : MonoBehaviour, IPopup
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     IEnumerator loadingEffect(Action callback)
@@ -34,7 +35,7 @@ public class PopupPlayServices : MonoBehaviour, IPopup
         mask.SetActive(true);
         fillerImage.fillAmount = 0f;
         float speed = 1f;
-        while(fillerImage.fillAmount < 1f)
+        while (fillerImage.fillAmount < 1f)
         {
             fillerImage.fillAmount += speed * Time.deltaTime;
             yield return null;
@@ -46,11 +47,11 @@ public class PopupPlayServices : MonoBehaviour, IPopup
 
     private void setupLeaderBroad(bool success, LeaderboardItem[] items)
     {
-        
-        Action action = () => {
-            Debug.Log("IMO get leaderboard: " + success);
-            if (items != null)
-            {
+
+        Debug.Log("IMO get leaderboard: " + success);
+        if (items != null)
+        {
+            Action action = () => {
                 int i = 0;
                 Debug.Log("GameServices.PlayerId = " + GameServices.Instance.PlayerId);
                 float contentHeight = (items.Length < LEADER_BROAD_LIMIT_ITEM ? items.Length : LEADER_BROAD_LIMIT_ITEM) * -200;
@@ -83,10 +84,13 @@ public class PopupPlayServices : MonoBehaviour, IPopup
 
                     }
                 }
-            }
-        };
-        StartCoroutine(loadingEffect(action));
-
+            };
+            StartCoroutine(loadingEffect(action));
+        }
+        else
+        {
+            PopupManager.Instance.ShowNotification("Cannot load leaderbroad. Make sure you are connected to the internet and try again!", error, 2f);
+        }
     }
 
     private void Setup()

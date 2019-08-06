@@ -11,6 +11,7 @@ public class PopupPassLevel : MonoBehaviour, IPopup
     [SerializeField] Text text_Point;
     [SerializeField] CanvasGroup middleGroup;
     [SerializeField] CanvasGroup bottomGroup;
+    [SerializeField] Sprite coin;
     private Action btn_Close_Callback;
     private Action btn_Watch_Video_Callback;
     private Action btn_Next_Callback;
@@ -104,8 +105,10 @@ public class PopupPassLevel : MonoBehaviour, IPopup
         {
             bool hasVideo = AdManager.Instance.ShowRewardVideo(() =>
             {
-                GameData.Instance.increaseCoin(2 * GameConfig.PASS_LEVEL_COIN_REWARD[value - 1]);
+                int reward = 2 * GameConfig.PASS_LEVEL_COIN_REWARD[value - 1];
+                GameData.Instance.increaseCoin(reward);
                 btn_Watch_Video.interactable = false;
+                PopupManager.Instance.ShowNotification("You are rewarded " + reward + " coins!", coin, 1.5f);
             });
             FirebaseManager.Instance.LogEventRequestRewardedVideo("x2_coins", hasVideo, GameCache.Instance.levelSelected);
             FacebookManager.Instance.LogEventRequestRewardedVideo("x2_coins", hasVideo, GameCache.Instance.levelSelected);
