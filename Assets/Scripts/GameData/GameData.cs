@@ -18,7 +18,7 @@ public class GameData
     public int points;
     public int coins;
     public List<int> listLevelStars;
-    public int day;
+    public int dayOfDailyChallenge;
     public int[] dailyChallengeProgess;
     public int dailyChallengeRewardCoin;
     public bool isAdsOn;
@@ -86,8 +86,10 @@ public class GameData
             challengeRewardStatus = false;
             dailyChallengeProgess = new int[8];
             watchVideoRemain = GameConfig.WATCH_VIDEO_LIMIT;
-            day = day + diff;
-            if (day > 366) day = day % 367 + 1;
+            lastWatchVideo = 0;
+            lastFbShare = 0;
+            dayOfDailyChallenge = dayOfDailyChallenge + diff;
+            if (dayOfDailyChallenge > 366) dayOfDailyChallenge = dayOfDailyChallenge % 367 + 1;
             lastDayAccess = System.DateTime.Now.Date.ToFileTime();
         }
     }
@@ -119,7 +121,7 @@ public class GameData
             unlockLevel = 1;
             points = 0;
             coins = 200;
-            day = 1;
+            dayOfDailyChallenge = 1;
             continueDay = 1;
             dailyChallengeProgess = new int[8];
             dailyChallengeRewardCoin = 100;

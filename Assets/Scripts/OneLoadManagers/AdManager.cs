@@ -180,6 +180,9 @@ public class AdManager : MonoBehaviour
     {
         Debug.Log("Banner Ads Loaded");
         bannerHeight = bannerView.GetHeightInPixels() + 20;
+        // 
+        bannerView.Show();
+        //
         BannerLoadedCallback?.Invoke();
     }
 

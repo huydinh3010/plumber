@@ -37,7 +37,6 @@ public class GamePlaySceneController : MonoBehaviour
         EventDispatcher.Instance.RegisterListener(EventID.PipeAnimationEnd, endGame);
         EventDispatcher.Instance.RegisterListener(EventID.PipeAnimationStart, AnimationStart);
         AdManager.Instance.AddBannerCallback(onBannerShow, onBannerHide);
-        if (!AdManager.Instance.isBannerShowing()) AdManager.Instance.ShowNewBanner();
     }
 
     // Start is called before the first frame update
@@ -111,8 +110,8 @@ public class GamePlaySceneController : MonoBehaviour
         btnRemove.interactable = en_RemoveBtn && GameData.Instance.coins >= GameConfig.REMOVE_PIPE_COST;
         btnConstruct.interactable = en_ConstructBtn && GameData.Instance.coins >= GameConfig.CONSTRUCT_PIPE_COST;
         string[] str_type = { "tutorial", "simple", "daily_challenge" };
-        FirebaseManager.Instance.LogEventLevelStart(GameCache.Instance.levelSelected, str_type[type], GameData.Instance.day);
-        FacebookManager.Instance.LogEventLevelStart(GameCache.Instance.levelSelected, str_type[type], GameData.Instance.day);
+        FirebaseManager.Instance.LogEventLevelStart(GameCache.Instance.levelSelected, str_type[type], GameData.Instance.dayOfDailyChallenge);
+        FacebookManager.Instance.LogEventLevelStart(GameCache.Instance.levelSelected, str_type[type], GameData.Instance.dayOfDailyChallenge);
     }
 
     public void AnimationStart(object param)
@@ -240,8 +239,8 @@ public class GamePlaySceneController : MonoBehaviour
         int construct_pipe_count = game.ConstructPipeCount;
         Debug.Log("Duration: " + game.DurationSecs);
         Debug.Log("Turn: " + game.TurnCount);
-        FirebaseManager.Instance.LogEventLevelEnd(GameCache.Instance.levelSelected, type, GameData.Instance.day, game.DurationSecs, game.TurnCount, remove_pipe_count, construct_pipe_count);
-        FacebookManager.Instance.LogEventLevelEnd(GameCache.Instance.levelSelected, type, GameData.Instance.day, game.DurationSecs, game.TurnCount, remove_pipe_count, construct_pipe_count);
+        FirebaseManager.Instance.LogEventLevelEnd(GameCache.Instance.levelSelected, type, GameData.Instance.dayOfDailyChallenge, game.DurationSecs, game.TurnCount, remove_pipe_count, construct_pipe_count);
+        FacebookManager.Instance.LogEventLevelEnd(GameCache.Instance.levelSelected, type, GameData.Instance.dayOfDailyChallenge, game.DurationSecs, game.TurnCount, remove_pipe_count, construct_pipe_count);
         if (unlock_level) FirebaseManager.Instance.SetUserProperties(GameData.Instance.unlockLevel);
     }
 

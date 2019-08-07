@@ -12,6 +12,7 @@ public class PopupPassLevel : MonoBehaviour, IPopup
     [SerializeField] CanvasGroup middleGroup;
     [SerializeField] CanvasGroup bottomGroup;
     [SerializeField] Sprite coin;
+    [SerializeField] Text timer_Watch_Video;
     private Action btn_Close_Callback;
     private Action btn_Watch_Video_Callback;
     private Action btn_Next_Callback;
@@ -37,6 +38,40 @@ public class PopupPassLevel : MonoBehaviour, IPopup
         bottomGroup.interactable = false;
         middleGroup.alpha = 0f;
         bottomGroup.alpha = 0f;
+        setWatchVideoTimer();
+    }
+
+    private void setWatchVideoTimer()
+    {
+        timer_Watch_Video.enabled = false;
+        if (GameData.Instance.watchVideoRemain > 0)
+        {
+            if (!btn_Watch_Video.interactable && GameData.Instance.watchVideoRemain > 0)
+            {
+                int delta = (int)(System.DateTime.Now - System.DateTime.FromFileTime(GameData.Instance.lastWatchVideo)).TotalSeconds;
+                if(delta >= 0)
+                {
+                    
+                    int second_remain = 3 * 60 - delta;
+                    Debug.Log("______second: " + second_remain);
+                    StartCoroutine(countDown(timer_Watch_Video, second_remain, btn_Watch_Video));
+                }
+            }
+        }
+    }
+
+    IEnumerator countDown(Text text_change, int second, Button active_btn)
+    {
+        text_change.enabled = true;
+        while (second > 0)
+        {
+            second--;
+            TimeSpan time = TimeSpan.FromSeconds(second);
+            text_change.text = time.Hours > 0 ? string.Format("{0:D2}:{1:D2}:{2:D2}", time.Hours, time.Minutes, time.Seconds) : string.Format("{0:D2}:{1:D2}", time.Minutes, time.Seconds);
+            yield return new WaitForSeconds(1f);
+        }
+        active_btn.interactable = true;
+        text_change.enabled = false;
     }
 
     public void OnDisplayed()
