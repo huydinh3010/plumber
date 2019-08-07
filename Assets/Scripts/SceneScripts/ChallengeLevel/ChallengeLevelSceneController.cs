@@ -140,6 +140,13 @@ public class ChallengeLevelSceneController : MonoBehaviour
     {
         EventDispatcher.Instance.RemoveListener(EventID.OnCoinChange, onCoinChange);
         EventDispatcher.Instance.RemoveListener(EventID.OnPointChange, onPointChange);
-        PopupManager.Instance.ForceClosePopup();
+        try
+        {
+            PopupManager.Instance.ForceClosePopup();
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 }

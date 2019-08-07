@@ -27,11 +27,18 @@ public class OneLoadController : MonoBehaviour
 
     private void Application_logMessageReceived(string condition, string stackTrace, LogType type)
     {
-        txtLog.text += "[" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + "][" + type + "] : " + condition + "\n";
-        if(type == LogType.Exception)
+        try
         {
-            txtLog.text += stackTrace + "\n";
-        }   
+            txtLog.text += "[" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + "][" + type + "] : " + condition + "\n";
+            if (type == LogType.Exception)
+            {
+                txtLog.text += stackTrace + "\n";
+            }
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
     public void BtnShowLogOnClick()

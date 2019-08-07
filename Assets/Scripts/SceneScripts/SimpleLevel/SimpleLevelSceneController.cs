@@ -142,6 +142,13 @@ public class SimpleLevelSceneController : MonoBehaviour
     {
         EventDispatcher.Instance.RemoveListener(EventID.OnCoinChange, OnCoinChange);
         EventDispatcher.Instance.RemoveListener(EventID.OnPointChange, OnPointChange);
-        PopupManager.Instance.ForceClosePopup();
+        try
+        {
+            PopupManager.Instance.ForceClosePopup();
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 }

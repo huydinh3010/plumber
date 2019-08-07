@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 namespace ImoSysSDK.Network
 {
     using Core;
+    using System;
     using System.Collections.Generic;
 
     public class RestClient
@@ -31,19 +32,27 @@ namespace ImoSysSDK.Network
         {
             if (deviceId == null)
             {
-#if UNITY_ANDROID
-                AndroidJavaClass pluginClass = new AndroidJavaClass("com.imosys.core.ImoSysIdentifier");
-                AndroidJavaObject imosysIdentifierObject = pluginClass.CallStatic<AndroidJavaObject>("getInstance");
-                imosysIdentifierObject?.Call("getDeviceIdAsync", new ImoSysIdentifierPluginCallback((deviceId) =>
+                try
                 {
-                    RestClient.deviceId = deviceId;
-                    SendRequest(RestClient.deviceId, method, path, queryParams, sJson, onRequestFinished);
-                }));
+#if UNITY_ANDROID
+                    AndroidJavaClass pluginClass = new AndroidJavaClass("com.imosys.core.ImoSysIdentifier");
+                    AndroidJavaObject imosysIdentifierObject = pluginClass.CallStatic<AndroidJavaObject>("getInstance");
+                    imosysIdentifierObject.Call("getDeviceIdAsync", new ImoSysIdentifierPluginCallback((deviceId) =>
+                    {
+                        RestClient.deviceId = deviceId;
+                        SendRequest(RestClient.deviceId, method, path, queryParams, sJson, onRequestFinished);
+                    }));
 
 #elif UNITY_IOS
                 deviceId = ImoSysSDK.Instance.DeviceId;
                 SendRequest(deviceId, method, path, queryParams, sJson, onRequestFinished);
 #endif
+                }
+                catch (Exception e)
+                {
+                    Debug.Log("__________________RestClient Exception: " + e.ToString());
+                }
+
             } else
             {
                 SendRequest(deviceId, method, path, queryParams, sJson, onRequestFinished);
@@ -56,6 +65,17 @@ namespace ImoSysSDK.Network
             sb.Append(path);
             if (queryParams != null && queryParams.Count > 0) {
                 sb.Append('?');
+                bool first = true;
+                foreach(KeyValuePair<string, string> entry in queryParams) {
+                    if (!first) {
+                        sb.Append('&');
+                    } else {
+                        first = false;
+                    }
+                    sb.Append(UnityWebRequest.EscapeURL(entry.Key));
+                    sb.Append('=');
+                    sb.Append(UnityWebRequest.EscapeURL(entry.Value));
+                }
                 sb.Append(Encoding.UTF8.GetString(UnityWebRequest.SerializeSimpleForm(queryParams)));
             }
             string url = sb.ToString();

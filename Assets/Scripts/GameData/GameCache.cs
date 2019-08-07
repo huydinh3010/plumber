@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using ImoSysSDK.SocialPlatforms;
 public class GameCache
 {
     public static GameCache Instance = new GameCache();

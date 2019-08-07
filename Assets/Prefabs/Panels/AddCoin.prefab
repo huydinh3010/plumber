@@ -552,6 +552,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   btn_Share_Fb: {fileID: 6513692621141985013}
+  coin: {fileID: 21300000, guid: 5565bc7d656ad534fb21c2d90d8bd5f4, type: 3}
+  btn_Watch_Video: {fileID: 6513692621110733156}
 --- !u!1 &6513692622580612607
 GameObject:
   m_ObjectHideFlags: 0

@@ -30,6 +30,8 @@ public class GameData
     public bool challengeRewardStatus;
     public bool isRateOn;
     public int achievementProgress;
+    public int watchVideoRemain;
+    public long lastWatchVideo;
     public LevelState unlockLvState;
     public void increaseCoin(int value)
     {
@@ -83,6 +85,7 @@ public class GameData
             dailyRewardStatus = false;
             challengeRewardStatus = false;
             dailyChallengeProgess = new int[8];
+            watchVideoRemain = GameConfig.WATCH_VIDEO_LIMIT;
             day = day + diff;
             if (day > 366) day = day % 367 + 1;
             lastDayAccess = System.DateTime.Now.Date.ToFileTime();
@@ -125,9 +128,11 @@ public class GameData
             isSoundOn = true;
             lastDayAccess = System.DateTime.Now.Date.ToFileTime();
             lastFbShare = 0;
+            lastWatchVideo = 0;
             dailyRewardStatus = false;
             challengeRewardStatus = false;
             achievementProgress = 0;
+            watchVideoRemain = GameConfig.WATCH_VIDEO_LIMIT;
             unlockLvState = new LevelState();
             GameCache.Instance.firstGameLoad = true;
         }

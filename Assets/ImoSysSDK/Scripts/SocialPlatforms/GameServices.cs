@@ -41,6 +41,9 @@ namespace ImoSysSDK.SocialPlatforms {
                 }
                 return playerId;
             }
+            internal set {
+                playerId = value;
+            }
         }
 
         public void UpdateScore(int leaderboardId, int score, Action<bool> callback) {

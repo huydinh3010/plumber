@@ -659,6 +659,85 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afdb8bbc72c405a4db58fdbe2c5f7173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &478990915
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 478990916}
+  - component: {fileID: 478990918}
+  - component: {fileID: 478990917}
+  m_Layer: 5
+  m_Name: Timer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &478990916
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478990915}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.00032, y: 1.00032, z: 1.00032}
+  m_Children: []
+  m_Father: {fileID: 1750998608}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -0}
+  m_SizeDelta: {x: 250, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &478990917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478990915}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 70
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 5
+    m_MaxSize: 80
+    m_Alignment: 4
+    m_AlignByGeometry: 1
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 59:59
+--- !u!222 &478990918
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478990915}
+  m_CullTransparentMesh: 0
 --- !u!1 &589816163
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,7 +856,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &965173506
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1308,7 +1387,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1461701504
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1613,6 +1692,12 @@ MonoBehaviour:
   textContent: {fileID: 225573098}
   image: {fileID: 1107470409}
   timeDuration: 2
+--- !u!224 &1750998608 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6513692621141985012, guid: 43d9722af143f924e8c1e499249be9d9,
+    type: 3}
+  m_PrefabInstance: {fileID: 6513692622222007436}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1783945681
 GameObject:
   m_ObjectHideFlags: 0
@@ -1649,6 +1734,12 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &1858322892 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6513692621110733163, guid: 43d9722af143f924e8c1e499249be9d9,
+    type: 3}
+  m_PrefabInstance: {fileID: 6513692622222007436}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1877929044
 GameObject:
   m_ObjectHideFlags: 0
@@ -1731,6 +1822,85 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1885973041
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1885973042}
+  - component: {fileID: 1885973044}
+  - component: {fileID: 1885973043}
+  m_Layer: 5
+  m_Name: Timer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1885973042
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885973041}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1858322892}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 250, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1885973043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885973041}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 70
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 5
+    m_MaxSize: 80
+    m_Alignment: 4
+    m_AlignByGeometry: 1
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 03:00
+--- !u!222 &1885973044
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885973041}
+  m_CullTransparentMesh: 0
 --- !u!1 &1993890643
 GameObject:
   m_ObjectHideFlags: 0
@@ -2583,11 +2753,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shop
       objectReference: {fileID: 0}
-    - target: {fileID: 4708015169570423397, guid: aec63e38085a3234e8bcf274a66c55cf,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4708015169570423396, guid: aec63e38085a3234e8bcf274a66c55cf,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2693,654 +2858,93 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 4708015170552254669, guid: aec63e38085a3234e8bcf274a66c55cf,
+    - target: {fileID: 4708015169473151903, guid: aec63e38085a3234e8bcf274a66c55cf,
         type: 3}
       propertyPath: onPurchaseVerifySuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2147130558}
-    - target: {fileID: 4708015170552254669, guid: aec63e38085a3234e8bcf274a66c55cf,
+    - target: {fileID: 4708015169473151903, guid: aec63e38085a3234e8bcf274a66c55cf,
         type: 3}
       propertyPath: onPurchaseVerifyFailed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2147130558}
-    - target: {fileID: 4708015170489493914, guid: aec63e38085a3234e8bcf274a66c55cf,
+    - target: {fileID: 4708015169473151903, guid: aec63e38085a3234e8bcf274a66c55cf,
         type: 3}
-      propertyPath: onPurchaseVerifySuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2147130558}
-    - target: {fileID: 4708015170489493914, guid: aec63e38085a3234e8bcf274a66c55cf,
-        type: 3}
-      propertyPath: onPurchaseVerifyFailed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2147130558}
-    - target: {fileID: 4708015169256812801, guid: aec63e38085a3234e8bcf274a66c55cf,
-        type: 3}
-      propertyPath: onPurchaseVerifySuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2147130558}
-    - target: {fileID: 4708015169256812801, guid: aec63e38085a3234e8bcf274a66c55cf,
-        type: 3}
-      propertyPath: onPurchaseVerifyFailed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2147130558}
-    - target: {fileID: 4708015169844409612, guid: aec63e38085a3234e8bcf274a66c55cf,
-        type: 3}
-      propertyPath: onPurchaseVerifySuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2147130558}
-    - target: {fileID: 4708015169844409612, guid: aec63e38085a3234e8bcf274a66c55cf,
-        type: 3}
-      propertyPath: onPurchaseVerifyFailed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2147130558}
-    - target: {fileID: 4708015168530291361, guid: aec63e38085a3234e8bcf274a66c55cf,
-        type: 3}
-      propertyPath: onPurchaseVerifySuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2147130558}
-    - target: {fileID: 4708015168530291361, guid: aec63e38085a3234e8bcf274a66c55cf,
-        type: 3}
-      propertyPath: onPurchaseVerifyFailed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2147130558}
-    - target: {fileID: 4708015169078323167, guid: aec63e38085a3234e8bcf274a66c55cf,
-        type: 3}
-      propertyPath: onPurchaseVerifySuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2147130558}
-    - target: {fileID: 4708015169078323167, guid: aec63e38085a3234e8bcf274a66c55cf,
-        type: 3}
-      propertyPath: onPurchaseVerifyFailed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2147130558}
-    - target: {fileID: 4708015170209291902, guid: aec63e38085a3234e8bcf274a66c55cf,
-        type: 3}
-      propertyPath: onPurchaseVerifySuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2147130558}
-    - target: {fileID: 4708015170209291902, guid: aec63e38085a3234e8bcf274a66c55cf,
-        type: 3}
-      propertyPath: onPurchaseVerifyFailed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2147130558}
-    - target: {fileID: 4708015169770297614, guid: aec63e38085a3234e8bcf274a66c55cf,
-        type: 3}
-      propertyPath: onPurchaseVerifySuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2147130558}
-    - target: {fileID: 4708015169770297614, guid: aec63e38085a3234e8bcf274a66c55cf,
-        type: 3}
-      propertyPath: onPurchaseVerifyFailed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2147130558}
-    - target: {fileID: 4708015169215233183, guid: aec63e38085a3234e8bcf274a66c55cf,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.5
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4708015169215233183, guid: aec63e38085a3234e8bcf274a66c55cf,
+    - target: {fileID: 4708015169473151902, guid: aec63e38085a3234e8bcf274a66c55cf,
         type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4708015169215233183, guid: aec63e38085a3234e8bcf274a66c55cf,
+      propertyPath: onPurchaseVerifySuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2147130558}
+    - target: {fileID: 4708015169473151902, guid: aec63e38085a3234e8bcf274a66c55cf,
         type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4708015169339482188, guid: aec63e38085a3234e8bcf274a66c55cf,
+      propertyPath: onPurchaseVerifyFailed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2147130558}
+    - target: {fileID: 4708015169473151901, guid: aec63e38085a3234e8bcf274a66c55cf,
         type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4708015169339482188, guid: aec63e38085a3234e8bcf274a66c55cf,
+      propertyPath: onPurchaseVerifySuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2147130558}
+    - target: {fileID: 4708015169473151901, guid: aec63e38085a3234e8bcf274a66c55cf,
         type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4708015169339482188, guid: aec63e38085a3234e8bcf274a66c55cf,
+      propertyPath: onPurchaseVerifyFailed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2147130558}
+    - target: {fileID: 4708015169473151900, guid: aec63e38085a3234e8bcf274a66c55cf,
         type: 3}
-      propertyPath: m_SizeDelta.x
-      value: -7
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4708015168530291361, guid: aec63e38085a3234e8bcf274a66c55cf, type: 3}
-    - {fileID: 4708015170552254669, guid: aec63e38085a3234e8bcf274a66c55cf, type: 3}
-    - {fileID: 4708015170489493914, guid: aec63e38085a3234e8bcf274a66c55cf, type: 3}
-    - {fileID: 4708015169256812801, guid: aec63e38085a3234e8bcf274a66c55cf, type: 3}
-    - {fileID: 4708015169844409612, guid: aec63e38085a3234e8bcf274a66c55cf, type: 3}
-    - {fileID: 4708015169078323167, guid: aec63e38085a3234e8bcf274a66c55cf, type: 3}
-    - {fileID: 4708015170209291902, guid: aec63e38085a3234e8bcf274a66c55cf, type: 3}
-    - {fileID: 4708015169770297614, guid: aec63e38085a3234e8bcf274a66c55cf, type: 3}
+      propertyPath: onPurchaseVerifySuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2147130558}
+    - target: {fileID: 4708015169473151900, guid: aec63e38085a3234e8bcf274a66c55cf,
+        type: 3}
+      propertyPath: onPurchaseVerifyFailed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2147130558}
+    - target: {fileID: 4708015169473151899, guid: aec63e38085a3234e8bcf274a66c55cf,
+        type: 3}
+      propertyPath: onPurchaseVerifySuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2147130558}
+    - target: {fileID: 4708015169473151899, guid: aec63e38085a3234e8bcf274a66c55cf,
+        type: 3}
+      propertyPath: onPurchaseVerifyFailed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2147130558}
+    - target: {fileID: 4708015169473151898, guid: aec63e38085a3234e8bcf274a66c55cf,
+        type: 3}
+      propertyPath: onPurchaseVerifySuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2147130558}
+    - target: {fileID: 4708015169473151898, guid: aec63e38085a3234e8bcf274a66c55cf,
+        type: 3}
+      propertyPath: onPurchaseVerifyFailed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2147130558}
+    - target: {fileID: 4708015169473151897, guid: aec63e38085a3234e8bcf274a66c55cf,
+        type: 3}
+      propertyPath: onPurchaseVerifySuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2147130558}
+    - target: {fileID: 4708015169473151897, guid: aec63e38085a3234e8bcf274a66c55cf,
+        type: 3}
+      propertyPath: onPurchaseVerifyFailed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2147130558}
+    - target: {fileID: 4708015169473151896, guid: aec63e38085a3234e8bcf274a66c55cf,
+        type: 3}
+      propertyPath: onPurchaseVerifySuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2147130558}
+    - target: {fileID: 4708015169473151896, guid: aec63e38085a3234e8bcf274a66c55cf,
+        type: 3}
+      propertyPath: onPurchaseVerifyFailed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2147130558}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aec63e38085a3234e8bcf274a66c55cf, type: 3}
---- !u!1 &4708015169473151888 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4708015169770297843, guid: aec63e38085a3234e8bcf274a66c55cf,
-    type: 3}
-  m_PrefabInstance: {fileID: 4708015169473151887}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4708015169473151889 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4708015170209291875, guid: aec63e38085a3234e8bcf274a66c55cf,
-    type: 3}
-  m_PrefabInstance: {fileID: 4708015169473151887}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4708015169473151890 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4708015169078323140, guid: aec63e38085a3234e8bcf274a66c55cf,
-    type: 3}
-  m_PrefabInstance: {fileID: 4708015169473151887}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4708015169473151891 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4708015168530291366, guid: aec63e38085a3234e8bcf274a66c55cf,
-    type: 3}
-  m_PrefabInstance: {fileID: 4708015169473151887}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4708015169473151892 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4708015169844409841, guid: aec63e38085a3234e8bcf274a66c55cf,
-    type: 3}
-  m_PrefabInstance: {fileID: 4708015169473151887}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4708015169473151893 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4708015169256812806, guid: aec63e38085a3234e8bcf274a66c55cf,
-    type: 3}
-  m_PrefabInstance: {fileID: 4708015169473151887}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4708015169473151894 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4708015170489493919, guid: aec63e38085a3234e8bcf274a66c55cf,
-    type: 3}
-  m_PrefabInstance: {fileID: 4708015169473151887}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4708015169473151895 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4708015170552254642, guid: aec63e38085a3234e8bcf274a66c55cf,
-    type: 3}
-  m_PrefabInstance: {fileID: 4708015169473151887}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4708015169473151896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4708015169473151888}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06ee1e1f0bd871849875f7756546859b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  productId: com.waterline.coins10000
-  buttonType: 0
-  consumePurchase: 1
-  onPurchaseComplete:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Purchasing.IAPButton+OnPurchaseCompletedEvent, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  onPurchaseFailed:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Purchasing.IAPButton+OnPurchaseFailedEvent, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  titleText: {fileID: 0}
-  descriptionText: {fileID: 0}
-  priceText: {fileID: 0}
-  onPurchaseVerifySuccess:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2147130558}
-        m_MethodName: OnIAPBuy10000oinsCompleted
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: ImoSysSDK.Purchasing.IMOIAPButton+OnPurchaseVerifySuccessEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  onPurchaseVerifyFailed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2147130558}
-        m_MethodName: OnIAPFailed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: ImoSysSDK.Purchasing.IMOIAPButton+OnPurchaseVerifyFailedEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &4708015169473151897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4708015169473151889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06ee1e1f0bd871849875f7756546859b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  productId: com.waterline.coins5000
-  buttonType: 0
-  consumePurchase: 1
-  onPurchaseComplete:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Purchasing.IAPButton+OnPurchaseCompletedEvent, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  onPurchaseFailed:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Purchasing.IAPButton+OnPurchaseFailedEvent, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  titleText: {fileID: 0}
-  descriptionText: {fileID: 0}
-  priceText: {fileID: 0}
-  onPurchaseVerifySuccess:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2147130558}
-        m_MethodName: OnIAPBuy5000CoinsCompleted
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: ImoSysSDK.Purchasing.IMOIAPButton+OnPurchaseVerifySuccessEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  onPurchaseVerifyFailed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2147130558}
-        m_MethodName: OnIAPFailed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: ImoSysSDK.Purchasing.IMOIAPButton+OnPurchaseVerifyFailedEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &4708015169473151898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4708015169473151890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06ee1e1f0bd871849875f7756546859b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  productId: com.waterline.coins2000
-  buttonType: 0
-  consumePurchase: 1
-  onPurchaseComplete:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Purchasing.IAPButton+OnPurchaseCompletedEvent, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  onPurchaseFailed:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Purchasing.IAPButton+OnPurchaseFailedEvent, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  titleText: {fileID: 0}
-  descriptionText: {fileID: 0}
-  priceText: {fileID: 0}
-  onPurchaseVerifySuccess:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2147130558}
-        m_MethodName: OnIAPBuy2000CoinsCompleted
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: ImoSysSDK.Purchasing.IMOIAPButton+OnPurchaseVerifySuccessEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  onPurchaseVerifyFailed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2147130558}
-        m_MethodName: OnIAPFailed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: ImoSysSDK.Purchasing.IMOIAPButton+OnPurchaseVerifyFailedEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &4708015169473151899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4708015169473151891}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06ee1e1f0bd871849875f7756546859b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  productId: com.waterline.coins1000
-  buttonType: 0
-  consumePurchase: 1
-  onPurchaseComplete:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Purchasing.IAPButton+OnPurchaseCompletedEvent, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  onPurchaseFailed:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Purchasing.IAPButton+OnPurchaseFailedEvent, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  titleText: {fileID: 0}
-  descriptionText: {fileID: 0}
-  priceText: {fileID: 0}
-  onPurchaseVerifySuccess:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2147130558}
-        m_MethodName: OnIAPBuy1000CoinsCompleted
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: ImoSysSDK.Purchasing.IMOIAPButton+OnPurchaseVerifySuccessEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  onPurchaseVerifyFailed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2147130558}
-        m_MethodName: OnIAPFailed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: ImoSysSDK.Purchasing.IMOIAPButton+OnPurchaseVerifyFailedEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &4708015169473151900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4708015169473151892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06ee1e1f0bd871849875f7756546859b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  productId: com.waterline.coins500
-  buttonType: 0
-  consumePurchase: 1
-  onPurchaseComplete:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Purchasing.IAPButton+OnPurchaseCompletedEvent, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  onPurchaseFailed:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Purchasing.IAPButton+OnPurchaseFailedEvent, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  titleText: {fileID: 0}
-  descriptionText: {fileID: 0}
-  priceText: {fileID: 0}
-  onPurchaseVerifySuccess:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2147130558}
-        m_MethodName: OnIAPBuy500CoinsCompleted
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: ImoSysSDK.Purchasing.IMOIAPButton+OnPurchaseVerifySuccessEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  onPurchaseVerifyFailed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2147130558}
-        m_MethodName: OnIAPFailed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: ImoSysSDK.Purchasing.IMOIAPButton+OnPurchaseVerifyFailedEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &4708015169473151901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4708015169473151893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06ee1e1f0bd871849875f7756546859b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  productId: com.waterline.coins200
-  buttonType: 0
-  consumePurchase: 1
-  onPurchaseComplete:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Purchasing.IAPButton+OnPurchaseCompletedEvent, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  onPurchaseFailed:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Purchasing.IAPButton+OnPurchaseFailedEvent, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  titleText: {fileID: 0}
-  descriptionText: {fileID: 0}
-  priceText: {fileID: 0}
-  onPurchaseVerifySuccess:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2147130558}
-        m_MethodName: OnIAPBuy200CoinsCompleted
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: ImoSysSDK.Purchasing.IMOIAPButton+OnPurchaseVerifySuccessEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  onPurchaseVerifyFailed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2147130558}
-        m_MethodName: OnIAPFailed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: ImoSysSDK.Purchasing.IMOIAPButton+OnPurchaseVerifyFailedEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &4708015169473151902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4708015169473151894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06ee1e1f0bd871849875f7756546859b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  productId: com.waterline.coins100
-  buttonType: 0
-  consumePurchase: 1
-  onPurchaseComplete:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Purchasing.IAPButton+OnPurchaseCompletedEvent, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  onPurchaseFailed:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Purchasing.IAPButton+OnPurchaseFailedEvent, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  titleText: {fileID: 0}
-  descriptionText: {fileID: 0}
-  priceText: {fileID: 0}
-  onPurchaseVerifySuccess:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2147130558}
-        m_MethodName: OnIAPBuy100CoinsCompleted
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: ImoSysSDK.Purchasing.IMOIAPButton+OnPurchaseVerifySuccessEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  onPurchaseVerifyFailed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2147130558}
-        m_MethodName: OnIAPFailed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: ImoSysSDK.Purchasing.IMOIAPButton+OnPurchaseVerifyFailedEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &4708015169473151903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4708015169473151895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06ee1e1f0bd871849875f7756546859b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  productId: com.waterline.removeads
-  buttonType: 0
-  consumePurchase: 0
-  onPurchaseComplete:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Purchasing.IAPButton+OnPurchaseCompletedEvent, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  onPurchaseFailed:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Purchasing.IAPButton+OnPurchaseFailedEvent, Assembly-CSharp-firstpass,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  titleText: {fileID: 0}
-  descriptionText: {fileID: 0}
-  priceText: {fileID: 0}
-  onPurchaseVerifySuccess:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2147130558}
-        m_MethodName: OnIAPNoAdsCompleted
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: ImoSysSDK.Purchasing.IMOIAPButton+OnPurchaseVerifySuccessEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  onPurchaseVerifyFailed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2147130558}
-        m_MethodName: OnIAPFailed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: ImoSysSDK.Purchasing.IMOIAPButton+OnPurchaseVerifyFailedEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1001 &5447683329580432273
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3582,12 +3186,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6513692621817949846, guid: 43d9722af143f924e8c1e499249be9d9,
+    - target: {fileID: 6513692621141985013, guid: 43d9722af143f924e8c1e499249be9d9,
         type: 3}
-      propertyPath: coin
-      value: 
-      objectReference: {fileID: 21300000, guid: 5565bc7d656ad534fb21c2d90d8bd5f4,
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6513692621110733156, guid: 43d9722af143f924e8c1e499249be9d9,
         type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43d9722af143f924e8c1e499249be9d9, type: 3}
 --- !u!1001 &8097629027925473545
@@ -3601,6 +3209,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LeaderBroad
+      objectReference: {fileID: 0}
+    - target: {fileID: 8097629028098835010, guid: 4b4edea4cd4cb6846b4d74dbe3a329a8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8097629028098835013, guid: 4b4edea4cd4cb6846b4d74dbe3a329a8,
         type: 3}
@@ -3706,6 +3319,30 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2104991568, guid: 4b4edea4cd4cb6846b4d74dbe3a329a8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2104991568, guid: 4b4edea4cd4cb6846b4d74dbe3a329a8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2104991568, guid: 4b4edea4cd4cb6846b4d74dbe3a329a8, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1213007012, guid: 4b4edea4cd4cb6846b4d74dbe3a329a8, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1213007012, guid: 4b4edea4cd4cb6846b4d74dbe3a329a8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1213007012, guid: 4b4edea4cd4cb6846b4d74dbe3a329a8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.99999994
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b4edea4cd4cb6846b4d74dbe3a329a8, type: 3}

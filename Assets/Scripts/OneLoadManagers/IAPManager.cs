@@ -98,7 +98,7 @@ public class IAPManager : MonoBehaviour
     public void OnIAPFailed(Product product, string reason)
     {
         Debug.Log("IAP Failed: " + reason.ToString());
-        PopupManager.Instance.ShowNotification("Buy failed. Please try again later!", error, 2f);
+        if(reason != "Verify failed from server") PopupManager.Instance.ShowNotification("Buy failed. Please try again later!", error, 2f);
     }
 
 }

@@ -30,7 +30,6 @@ public class GamePlaySceneController : MonoBehaviour
     private int r_Count;
     private void Awake()
     {
-        GameData.Instance.isAdsOn = false;
         LoadSceneManager.Instance.OpenScene();
         EventDispatcher.Instance.RegisterListener(EventID.OnCoinChange, onCoinChange);
         EventDispatcher.Instance.RegisterListener(EventID.OnPointChange, onPointChange);
@@ -79,13 +78,13 @@ public class GamePlaySceneController : MonoBehaviour
     private void newGameLevel(int type)
     {
         // UI
-        if(type == 0)
+        if (type == 0)
         {
             game = GetComponent<TutorialModeController>();
             game.enabled = true;
             tutorial = true;
         }
-        else if(type == 1)
+        else if (type == 1)
         {
             game = GetComponent<SimpleModeController>();
             game.enabled = true;
@@ -111,7 +110,7 @@ public class GamePlaySceneController : MonoBehaviour
         en_ConstructBtn = !game.EndConstructPipe;
         btnRemove.interactable = en_RemoveBtn && GameData.Instance.coins >= GameConfig.REMOVE_PIPE_COST;
         btnConstruct.interactable = en_ConstructBtn && GameData.Instance.coins >= GameConfig.CONSTRUCT_PIPE_COST;
-        string[] str_type = { "tutorial", "simple","daily_challenge" };
+        string[] str_type = { "tutorial", "simple", "daily_challenge" };
         FirebaseManager.Instance.LogEventLevelStart(GameCache.Instance.levelSelected, str_type[type], GameData.Instance.day);
         FacebookManager.Instance.LogEventLevelStart(GameCache.Instance.levelSelected, str_type[type], GameData.Instance.day);
     }
@@ -142,13 +141,14 @@ public class GamePlaySceneController : MonoBehaviour
                 int c_star = GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1];
                 int n_star = game.getStar();
                 if (n_star > c_star) GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1] = n_star;
-                Action action = () => {
+                Action action = () =>
+                {
                     PopupManager.Instance.ShowPopup(PopupName.NextLevel,
                         new Dictionary<PopupButtonEvent, Action>() {
                             { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
                             { PopupButtonEvent.NextLevelPressed, NextLevelCallback } });
                 };
-                if(AdManager.Instance.canShowInterstitial1() && AdManager.Instance.ShowInterstitial(action))
+                if (!tutorial && AdManager.Instance.canShowInterstitial() && AdManager.Instance.ShowInterstitial(action))
                 {
 
                 }
@@ -161,8 +161,8 @@ public class GamePlaySceneController : MonoBehaviour
             {
                 int star = game.getStar();
                 GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1] = star;
-                GameData.Instance.increaseCoin(GameConfig.PASS_LEVEL_COIN_REWARD[star-1]);
-                GameData.Instance.increasePoint(GameConfig.PASS_LEVEL_POINT_REWARD[star-1]);
+                GameData.Instance.increaseCoin(GameConfig.PASS_LEVEL_COIN_REWARD[star - 1]);
+                GameData.Instance.increasePoint(GameConfig.PASS_LEVEL_POINT_REWARD[star - 1]);
                 if (GameData.Instance.unlockLevel < GameConfig.NUMBER_OF_SIMPLE_LEVEL)
                 {
                     GameData.Instance.listLevelStars.Add(0);
@@ -170,7 +170,8 @@ public class GamePlaySceneController : MonoBehaviour
                     unlock_level = true;
                 }
                 GameData.Instance.unlockLvState.NewLevelState();
-                Action action = () => {
+                Action action = () =>
+                {
                     PopupManager.Instance.ShowPopup(PopupName.PassLevel,
                         new Dictionary<PopupButtonEvent, Action>() {
                             { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
@@ -178,7 +179,7 @@ public class GamePlaySceneController : MonoBehaviour
                         new Dictionary<PopupSettingType, object>() {
                             { PopupSettingType.PassLevelImageType, star }});
                 };
-                if (AdManager.Instance.canShowInterstitial1() && AdManager.Instance.ShowInterstitial(action))
+                if (!tutorial && AdManager.Instance.canShowInterstitial() && AdManager.Instance.ShowInterstitial(action))
                 {
 
                 }
@@ -187,19 +188,20 @@ public class GamePlaySceneController : MonoBehaviour
                     action();
                 }
             }
-            
+
         }
         else if (GameCache.Instance.mode == 2)
         {
             if (GameData.Instance.dailyChallengeProgess[GameCache.Instance.levelSelected - 1] == 1)
             {
-                Action action = () => {
+                Action action = () =>
+                {
                     PopupManager.Instance.ShowPopup(PopupName.NextLevel,
                         new Dictionary<PopupButtonEvent, Action>() {
                             { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
                             { PopupButtonEvent.NextLevelPressed, NextLevelCallback } });
                 };
-                if (AdManager.Instance.canShowInterstitial1() && AdManager.Instance.ShowInterstitial(action))
+                if (!tutorial && AdManager.Instance.canShowInterstitial() && AdManager.Instance.ShowInterstitial(action))
                 {
 
                 }
@@ -212,9 +214,10 @@ public class GamePlaySceneController : MonoBehaviour
             {
                 int star = game.getStar();
                 GameData.Instance.dailyChallengeProgess[GameCache.Instance.levelSelected - 1] = 1;
-                GameData.Instance.increaseCoin(GameConfig.PASS_LEVEL_COIN_REWARD[star-1]);
-                GameData.Instance.increasePoint(GameConfig.PASS_LEVEL_POINT_REWARD[star-1]);
-                Action action = () => {
+                GameData.Instance.increaseCoin(GameConfig.PASS_LEVEL_COIN_REWARD[star - 1]);
+                GameData.Instance.increasePoint(GameConfig.PASS_LEVEL_POINT_REWARD[star - 1]);
+                Action action = () =>
+                {
                     PopupManager.Instance.ShowPopup(PopupName.PassLevel,
                         new Dictionary<PopupButtonEvent, Action>() {
                             { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
@@ -222,7 +225,7 @@ public class GamePlaySceneController : MonoBehaviour
                         new Dictionary<PopupSettingType, object>() {
                             { PopupSettingType.PassLevelImageType, star } });
                 };
-                if (AdManager.Instance.canShowInterstitial1() && AdManager.Instance.ShowInterstitial(action))
+                if (!tutorial && AdManager.Instance.canShowInterstitial() && AdManager.Instance.ShowInterstitial(action))
                 {
 
                 }
@@ -239,7 +242,7 @@ public class GamePlaySceneController : MonoBehaviour
         Debug.Log("Turn: " + game.TurnCount);
         FirebaseManager.Instance.LogEventLevelEnd(GameCache.Instance.levelSelected, type, GameData.Instance.day, game.DurationSecs, game.TurnCount, remove_pipe_count, construct_pipe_count);
         FacebookManager.Instance.LogEventLevelEnd(GameCache.Instance.levelSelected, type, GameData.Instance.day, game.DurationSecs, game.TurnCount, remove_pipe_count, construct_pipe_count);
-        if(unlock_level) FirebaseManager.Instance.SetUserProperties(GameData.Instance.unlockLevel);
+        if (unlock_level) FirebaseManager.Instance.SetUserProperties(GameData.Instance.unlockLevel);
     }
 
     private void onLevelSelectChange(object param)
@@ -259,7 +262,7 @@ public class GamePlaySceneController : MonoBehaviour
     private void onPointChange(object param)
     {
         StartCoroutine(coinChangeEffect(txtPoints, Convert.ToInt32(param)));
-        if(GameCache.Instance.unlockAchievementProgress < GameConfig.ACHIEVEMENT_CONDITION_POINT.Length && GameData.Instance.points > GameConfig.ACHIEVEMENT_CONDITION_POINT[GameCache.Instance.unlockAchievementProgress])
+        if (GameCache.Instance.unlockAchievementProgress < GameConfig.ACHIEVEMENT_CONDITION_POINT.Length && GameData.Instance.points > GameConfig.ACHIEVEMENT_CONDITION_POINT[GameCache.Instance.unlockAchievementProgress])
         {
             PopupManager.Instance.ShowNotification("Unlock achievement. Go back Menu to get " + GameConfig.ACHIEVEMENT_COIN_REWARD[GameCache.Instance.unlockAchievementProgress] + " coins", achievement, 3f);
             GameCache.Instance.unlockAchievementProgress++;
@@ -271,7 +274,7 @@ public class GamePlaySceneController : MonoBehaviour
         int frame = 10;
         int delta = (Mathf.Abs(value) / frame) + 1;
         int text_value = int.Parse(text.text);
-        if(value > 0)
+        if (value > 0)
         {
             while (value > 0)
             {
@@ -383,7 +386,7 @@ public class GamePlaySceneController : MonoBehaviour
 
     public void btnAddCoinOnClick()
     {
-        if(!animPlaying)
+        if (!animPlaying)
         {
             PopupManager.Instance.ShowPopup(PopupName.AddCoin, null);
         }
@@ -409,49 +412,50 @@ public class GamePlaySceneController : MonoBehaviour
 
     public void CloseLevelPopupCallback()
     {
-        Action action = () => {
-            switch (GameCache.Instance.mode)
-            {
-                case 1:
-                    LoadSceneManager.Instance.LoadScene("SimpleLevel");
-                    break;
-                case 2:
-                    LoadSceneManager.Instance.LoadScene("ChallengeLevel");
-                    break;
-            }
-        };
-        if(AdManager.Instance.canShowInterstitial2() && AdManager.Instance.ShowInterstitial(action))
+        //Action action = () =>
+        //{
+        switch (GameCache.Instance.mode)
         {
+            case 1:
+                LoadSceneManager.Instance.LoadScene("SimpleLevel");
+                break;
+            case 2:
+                LoadSceneManager.Instance.LoadScene("ChallengeLevel");
+                break;
+        }
+        //};
+        //if (AdManager.Instance.canShowInterstitial2() && AdManager.Instance.ShowInterstitial(action))
+        //{
 
-        }
-        else
-        {
-            action();
-        }
+        //}
+        //else
+        //{
+        //    action();
+        //}
     }
 
     public void NextLevelCallback()
     {
-        Action action = () =>
+        //Action action = () =>
+        //{
+        if (r_Count++ == 4)
         {
-            if (r_Count++ == 4)
-            {
-                r_Count = 0;
-                PopupManager.Instance.ShowPopup(PopupName.Rate, new Dictionary<PopupButtonEvent, Action>() { { PopupButtonEvent.ClosePressed, nextLevel }, { PopupButtonEvent.NotNowOnRatePressed, nextLevel } });
-            }
-            else
-            {
-                nextLevel();
-            }
-        };
-        if (AdManager.Instance.canShowInterstitial2() && AdManager.Instance.ShowInterstitial(action))
-        {
-
+            r_Count = 0;
+            PopupManager.Instance.ShowPopup(PopupName.Rate, new Dictionary<PopupButtonEvent, Action>() { { PopupButtonEvent.ClosePressed, nextLevel }, { PopupButtonEvent.NotNowOnRatePressed, nextLevel } });
         }
         else
         {
-            action();
+            nextLevel();
         }
+        //};
+        //if (AdManager.Instance.canShowInterstitial2() && AdManager.Instance.ShowInterstitial(action))
+        //{
+
+        //}
+        //else
+        //{
+        //    action();
+        //}
     }
 
     private void OnDestroy()
@@ -462,6 +466,13 @@ public class GamePlaySceneController : MonoBehaviour
         EventDispatcher.Instance.RemoveListener(EventID.PipeAnimationEnd, endGame);
         EventDispatcher.Instance.RemoveListener(EventID.PipeAnimationStart, AnimationStart);
         AdManager.Instance.ClearBannerCallback();
-        PopupManager.Instance.ForceClosePopup();
+        try
+        {
+            PopupManager.Instance.ForceClosePopup();
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 }

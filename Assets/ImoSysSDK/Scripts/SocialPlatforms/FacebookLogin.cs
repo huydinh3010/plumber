@@ -111,9 +111,10 @@ namespace ImoSysSDK.SocialPlatforms {
             Debug.Log("IMO Message: " + message);
             Debug.Log("IMO Data: " + data);
             if (statusCode == 200) {
-                    IsLoggedIn = true;
-                    FacebookUserId = AccessToken.CurrentAccessToken.UserId;
-                    onLoginSuccessCallback();
+                IsLoggedIn = true;
+                FacebookUserId = AccessToken.CurrentAccessToken.UserId;
+                GameServices.Instance.PlayerId = "fb:" + AccessToken.CurrentAccessToken.UserId;
+                onLoginSuccessCallback();
             } else {
                 onLoginFailedCallback(message);
             }

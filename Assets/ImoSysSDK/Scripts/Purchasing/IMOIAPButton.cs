@@ -68,6 +68,11 @@ namespace ImoSysSDK.Purchasing
             }
         }
 
+        public void ChangeProductId(string productId) {
+            this.productId = productId;
+            UpdateText();
+        }
+
         internal void UpdateText()
         {
             var product = CodelessIAPStoreListener.Instance.GetProduct(productId);

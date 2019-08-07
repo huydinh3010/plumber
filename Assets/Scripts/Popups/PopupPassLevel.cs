@@ -32,7 +32,7 @@ public class PopupPassLevel : MonoBehaviour, IPopup
     private void Setup()
     {
         isShow = false;
-        btn_Watch_Video.interactable = true;
+        btn_Watch_Video.interactable = (GameData.Instance.watchVideoRemain > 0) && ((System.DateTime.Now - System.DateTime.FromFileTime(GameData.Instance.lastWatchVideo)).Minutes >= 3);
         middleGroup.interactable = false;
         bottomGroup.interactable = false;
         middleGroup.alpha = 0f;
@@ -105,13 +105,18 @@ public class PopupPassLevel : MonoBehaviour, IPopup
         {
             bool hasVideo = AdManager.Instance.ShowRewardVideo(() =>
             {
-                int reward = 2 * GameConfig.PASS_LEVEL_COIN_REWARD[value - 1];
+                int reward = 5 * GameConfig.PASS_LEVEL_COIN_REWARD[value - 1];
                 GameData.Instance.increaseCoin(reward);
                 btn_Watch_Video.interactable = false;
-                PopupManager.Instance.ShowNotification("You are rewarded " + reward + " coins!", coin, 1.5f);
+                GameData.Instance.watchVideoRemain--;
+                GameData.Instance.lastWatchVideo = System.DateTime.Now.ToFileTime();
+                string content = "";
+                if (GameData.Instance.watchVideoRemain > 0) content = "You are rewarded " + reward + " coins. Please wait 3 minutes for the next time!";
+                else content = "You are rewarded " + reward + " coins. You have watched all video of today!";
+                PopupManager.Instance.ShowNotification(content, coin, 1.5f);
             });
-            FirebaseManager.Instance.LogEventRequestRewardedVideo("x2_coins", hasVideo, GameCache.Instance.levelSelected);
-            FacebookManager.Instance.LogEventRequestRewardedVideo("x2_coins", hasVideo, GameCache.Instance.levelSelected);
+            FirebaseManager.Instance.LogEventRequestRewardedVideo("x5_coins", hasVideo, GameCache.Instance.levelSelected);
+            FacebookManager.Instance.LogEventRequestRewardedVideo("x5_coins", hasVideo, GameCache.Instance.levelSelected);
             btn_Watch_Video_Callback?.Invoke();
         }
     }

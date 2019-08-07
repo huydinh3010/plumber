@@ -75,6 +75,13 @@ public class SceneMainMenuController : MonoBehaviour
 
     private void OnDestroy()
     {
-        PopupManager.Instance.ForceClosePopup();
+        try
+        {
+            PopupManager.Instance.ForceClosePopup();
+        }
+        catch (Exception e)
+        {
+            
+        }
     }
 }

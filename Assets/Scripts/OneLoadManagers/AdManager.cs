@@ -8,19 +8,15 @@ public class AdManager : MonoBehaviour
 {
     public static AdManager Instance;
 
-    private InterstitialAd[] interstitials = new InterstitialAd[2];
+    private InterstitialAd interstitial;
     private RewardBasedVideoAd rewardBasedVideo;
     private BannerView bannerView;
     private Action RewardedCallback;
     private Action ClosedInterstitialCallback;
     private Action BannerLoadedCallback;
     private Action BannerClosedCallback;
-    private int interstitial1Count;
-    private int interstitial2Count;
-    private const int INTERSTITIAL_STEP = 1;
-    private int interstitialIndex;
-    private bool rewarded;
     private float bannerHeight;
+    private float timer = 0f;
     private void Awake()
     {
         if (Instance == null)
@@ -34,15 +30,20 @@ public class AdManager : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        if (timer > 0) timer -= Time.deltaTime;
+    }
+
     public void Initialize()
     {
 #if UNITY_ANDROID
         string appId = "ca-app-pub-3940256099942544~3347511713";
         // string appId = "ca-app-pub-8912425266737526~2657028361";
 #elif UNITY_IPHONE
-            string appId = "ca-app-pub-3940256099942544~1458002511";
+        string appId = "ca-app-pub-3940256099942544~1458002511";
 #else
-            string appId = "unexpected_platform";
+        string appId = "unexpected_platform";
 #endif
         // Initialize the Google Mobile Ads SDK.
         MobileAds.Initialize(appId);
@@ -53,17 +54,14 @@ public class AdManager : MonoBehaviour
         this.RequestRewardBasedVideo();
         if (GameData.Instance.isAdsOn)
         {
-            for (int i = 0; i < interstitials.Length; i++)
-            {
-                RequestInterstitial(i);
-            }
+            RequestInterstitial();
             RequestBanner();
         }
     }
 
     
 
-    private void RequestInterstitial(int index)
+    private void RequestInterstitial()
     {
 #if UNITY_ANDROID
         string adUnitId = "ca-app-pub-3940256099942544/1033173712";
@@ -73,63 +71,36 @@ public class AdManager : MonoBehaviour
 #else
         string adUnitId = "unexpected_platform";
 #endif
-        if (interstitials[index] != null) interstitials[index].Destroy();
-        interstitials[index] = new InterstitialAd(adUnitId);
-        interstitials[index].OnAdClosed += (object sender, EventArgs args) => {
+        if (interstitial != null) interstitial.Destroy();
+        interstitial = new InterstitialAd(adUnitId);
+        interstitial.OnAdClosed += (object sender, EventArgs args) => {
             ClosedInterstitialCallback?.Invoke();
-            RequestInterstitial(index);
+            RequestInterstitial();
+            timer = 20f;
         };
         AdRequest request = new AdRequest.Builder().Build();
-        interstitials[index].LoadAd(request);
+        interstitial.LoadAd(request);
     }
 
-    public bool canShowInterstitial1()
+    public bool canShowInterstitial()
     {
         if (!GameData.Instance.isAdsOn) return false;
-        if (++interstitial1Count == INTERSTITIAL_STEP)
-        {
-            interstitial1Count = 0;
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return timer <= 0;
     }
 
-    public bool canShowInterstitial2()
-    {
-        if (!GameData.Instance.isAdsOn) return false;
-        if (rewarded)
-        {
-            rewarded = false;
-            return false;
-        }
-        if (++interstitial2Count == INTERSTITIAL_STEP)
-        {
-            interstitial2Count = 0;
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+    
 
     public bool ShowInterstitial(Action action)
     {
-        if (interstitials[interstitialIndex].IsLoaded())
+        if (interstitial.IsLoaded())
         {
             ClosedInterstitialCallback = action;
-            interstitials[interstitialIndex].Show();
-            interstitialIndex = (interstitialIndex + 1) % 2;
-            rewarded = false;
+            interstitial.Show();
             return true;
         }
         else
         {
-            RequestInterstitial(interstitialIndex);
-            interstitialIndex = (interstitialIndex + 1) % 2;
+            RequestInterstitial();
             return false;
         }
     }
@@ -153,7 +124,6 @@ public class AdManager : MonoBehaviour
     {
         string type = args.Type;
         double amount = args.Amount;
-        rewarded = true;
         Debug.Log("HandleRewardBasedVideoRewarded event received for "
                         + amount.ToString() + " " + type);
         RewardedCallback?.Invoke();
@@ -212,11 +182,6 @@ public class AdManager : MonoBehaviour
         bannerHeight = bannerView.GetHeightInPixels() + 20;
         BannerLoadedCallback?.Invoke();
     }
-
-    //private void HandleOnBannerFailedToLoad(object sender, EventArgs args)
-    //{
-    //    BannerClosedCallback?.Invoke();
-    //}
 
     public bool isBannerShowing()
     {

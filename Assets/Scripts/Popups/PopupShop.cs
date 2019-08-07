@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PopupShop : MonoBehaviour, IPopup
 {
+    [SerializeField] RectTransform content;
     [SerializeField] Button btn_Buy_NoAds;
     [SerializeField] Button[] btn_Buy_Coins;
     [SerializeField] Text[] text_Coins;
@@ -43,6 +44,7 @@ public class PopupShop : MonoBehaviour, IPopup
     private void Setup()
     {
         isShow = false;
+        content.anchoredPosition = Vector2.zero;
         for (int i = 0; i < iapButtons.Length; i++)
         {
             iapButtons[i].enabled = false;
@@ -69,10 +71,11 @@ public class PopupShop : MonoBehaviour, IPopup
     public void OnDisplayed()
     {
         isShow = true;
-        for (int i = 0; i < iapButtons.Length; i++)
+        for (int i = 1; i < iapButtons.Length; i++)
         {
             iapButtons[i].enabled = true;
         }
+        iapButtons[0].enabled = GameData.Instance.isAdsOn;
     }
 
     public void Show(Dictionary<PopupButtonEvent, Action> list_actions, Dictionary<PopupSettingType, object> list_settings)
