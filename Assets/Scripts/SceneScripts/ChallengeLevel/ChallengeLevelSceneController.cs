@@ -15,6 +15,7 @@ public class ChallengeLevelSceneController : MonoBehaviour
     [SerializeField] Text textPoint;
     [SerializeField] Text textCoinReward;
     [SerializeField] GameObject middle;
+    [SerializeField] GameObject hand;
     private int total;
     private string[] str = {"Complete all levels and get reward coins!", "Congratulations! You have completed daily challenge.Claim your reward.", "You claimed the reward!" };
     
@@ -34,7 +35,7 @@ public class ChallengeLevelSceneController : MonoBehaviour
 
         textCoin.text = GameData.Instance.coins.ToString();
         textPoint.text = GameData.Instance.points.ToString();
-        textCoinReward.text = GameConfig.DAILY_CHALLENGE_COIN_REWARD.ToString();
+        textCoinReward.text = "+" + GameConfig.DAILY_CHALLENGE_COIN_REWARD.ToString();
         for (int i = 0; i < 8; i++)
         {
             if(GameData.Instance.dailyChallengeProgess[i] == 1)
@@ -47,13 +48,17 @@ public class ChallengeLevelSceneController : MonoBehaviour
         if (total == 8 && !GameData.Instance.challengeRewardStatus)
         {
             textTutorial.text = str[1];
+            hand.SetActive(true);
         }
-        else if(total == 8 && GameData.Instance.challengeRewardStatus)
+        else if (total == 8 && GameData.Instance.challengeRewardStatus)
         {
             textTutorial.text = str[2];
             btnPool.interactable = false;
         }
-        else textTutorial.text = str[0];
+        else
+        {
+            textTutorial.text = str[0];
+        }
     }
 
     void Start()
@@ -122,6 +127,7 @@ public class ChallengeLevelSceneController : MonoBehaviour
             btnPool.interactable = false;
             GameData.Instance.challengeRewardStatus = true;
             textTutorial.text = str[2];
+            hand.SetActive(false);
         }
     }
 
