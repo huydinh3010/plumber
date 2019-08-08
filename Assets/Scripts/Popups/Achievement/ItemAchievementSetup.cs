@@ -9,6 +9,7 @@ public class ItemAchievementSetup : MonoBehaviour
     [SerializeField] Text text_Point;
     [SerializeField] Text text_Coin;
     [SerializeField] GameObject image_Tick;
+    [SerializeField] Animator anim_Button;
     
     public void setup(int point, int coin)
     {
@@ -21,6 +22,7 @@ public class ItemAchievementSetup : MonoBehaviour
         btn_Coin.GetComponent<Image>().color = new Color32(100, 100, 100, 150);
         btn_Coin.GetComponent<Button>().enabled = false;
         image_Tick.SetActive(false);
+        anim_Button.Play("Idle");
     }
 
     public void setActiveState()
@@ -28,6 +30,7 @@ public class ItemAchievementSetup : MonoBehaviour
         btn_Coin.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         btn_Coin.GetComponent<Button>().enabled = true;
         image_Tick.SetActive(false);
+        anim_Button.Play("Scale");
     }
 
     public void setPassedState()
@@ -35,5 +38,6 @@ public class ItemAchievementSetup : MonoBehaviour
         btn_Coin.GetComponent<Image>().color = new Color32(255, 255, 255, 150);
         btn_Coin.GetComponent<Button>().enabled = false;
         image_Tick.SetActive(true);
+        anim_Button.Play("Idle");
     }
 }

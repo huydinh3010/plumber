@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1966594}
   - component: {fileID: 1966596}
   - component: {fileID: 1966595}
+  - component: {fileID: 1007514709}
   m_Layer: 5
   m_Name: TextCoinTop
   m_TagString: Untagged
@@ -79,6 +80,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +50
+--- !u!114 &1007514709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.07058824, g: 0.047058824, b: 0.003921569, a: 1}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &87449308
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,6 +328,7 @@ GameObject:
   - component: {fileID: 306447253}
   - component: {fileID: 306447255}
   - component: {fileID: 306447254}
+  - component: {fileID: 566460319}
   m_Layer: 5
   m_Name: TextCoinMiddle
   m_TagString: Untagged
@@ -380,6 +397,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +10
+--- !u!114 &566460319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306447252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.07058824, g: 0.047058824, b: 0.003921569, a: 1}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &331667407
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,6 +571,7 @@ GameObject:
   - component: {fileID: 614227037}
   - component: {fileID: 614227039}
   - component: {fileID: 614227038}
+  - component: {fileID: 1488384565}
   m_Layer: 5
   m_Name: TextDay
   m_TagString: Untagged
@@ -607,6 +640,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Day 4
+--- !u!114 &1488384565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 614227036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.07058824, g: 0.047058824, b: 0.003921569, a: 1}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &656057623
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,6 +666,7 @@ GameObject:
   - component: {fileID: 656057624}
   - component: {fileID: 656057626}
   - component: {fileID: 656057625}
+  - component: {fileID: 1633049507}
   m_Layer: 5
   m_Name: TextDay
   m_TagString: Untagged
@@ -686,6 +735,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Day 1
+--- !u!114 &1633049507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 656057623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.07058824, g: 0.047058824, b: 0.003921569, a: 1}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &689899057
 GameObject:
   m_ObjectHideFlags: 0
@@ -771,6 +835,7 @@ GameObject:
   - component: {fileID: 739288448}
   - component: {fileID: 739288450}
   - component: {fileID: 739288449}
+  - component: {fileID: 470976600}
   m_Layer: 5
   m_Name: TextDay
   m_TagString: Untagged
@@ -839,6 +904,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Day 3
+--- !u!114 &470976600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739288447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.07058824, g: 0.047058824, b: 0.003921569, a: 1}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &958337562
 GameObject:
   m_ObjectHideFlags: 0
@@ -850,6 +930,7 @@ GameObject:
   - component: {fileID: 958337563}
   - component: {fileID: 958337565}
   - component: {fileID: 958337564}
+  - component: {fileID: 1347091911}
   m_Layer: 5
   m_Name: TextDay
   m_TagString: Untagged
@@ -918,6 +999,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Day 2
+--- !u!114 &1347091911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958337562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.07058824, g: 0.047058824, b: 0.003921569, a: 1}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1129036285
 GameObject:
   m_ObjectHideFlags: 0
@@ -1003,6 +1099,7 @@ GameObject:
   - component: {fileID: 1129680184}
   - component: {fileID: 1129680186}
   - component: {fileID: 1129680185}
+  - component: {fileID: 183674400}
   m_Layer: 5
   m_Name: TextCoinTop
   m_TagString: Untagged
@@ -1071,6 +1168,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
+--- !u!114 &183674400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129680183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.07058824, g: 0.047058824, b: 0.003921569, a: 1}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1177628022
 GameObject:
   m_ObjectHideFlags: 0
@@ -1378,6 +1490,7 @@ GameObject:
   - component: {fileID: 1479280322}
   - component: {fileID: 1479280324}
   - component: {fileID: 1479280323}
+  - component: {fileID: 1065754516}
   m_Layer: 5
   m_Name: TextCoin
   m_TagString: Untagged
@@ -1446,6 +1559,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +100
+--- !u!114 &1065754516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479280321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.07058824, g: 0.047058824, b: 0.003921569, a: 1}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1532239193
 GameObject:
   m_ObjectHideFlags: 0
@@ -1605,6 +1733,7 @@ GameObject:
   - component: {fileID: 1583081149}
   - component: {fileID: 1583081151}
   - component: {fileID: 1583081150}
+  - component: {fileID: 1552870943}
   m_Layer: 5
   m_Name: TextCoinMiddle
   m_TagString: Untagged
@@ -1673,6 +1802,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +25
+--- !u!114 &1552870943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1583081148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.07058824, g: 0.047058824, b: 0.003921569, a: 1}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1651447165
 GameObject:
   m_ObjectHideFlags: 0
@@ -1758,6 +1902,7 @@ GameObject:
   - component: {fileID: 1666127167}
   - component: {fileID: 1666127169}
   - component: {fileID: 1666127168}
+  - component: {fileID: 1001474273}
   m_Layer: 5
   m_Name: TextCoinTop
   m_TagString: Untagged
@@ -1826,6 +1971,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +75
+--- !u!114 &1001474273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666127166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.07058824, g: 0.047058824, b: 0.003921569, a: 1}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1808040557
 GameObject:
   m_ObjectHideFlags: 0
@@ -1837,6 +1997,7 @@ GameObject:
   - component: {fileID: 1808040558}
   - component: {fileID: 1808040560}
   - component: {fileID: 1808040559}
+  - component: {fileID: 1607621000}
   m_Layer: 5
   m_Name: TextCoinMiddle
   m_TagString: Untagged
@@ -1905,6 +2066,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +50
+--- !u!114 &1607621000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808040557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.07058824, g: 0.047058824, b: 0.003921569, a: 1}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1897641505
 GameObject:
   m_ObjectHideFlags: 0
@@ -1916,8 +2092,9 @@ GameObject:
   - component: {fileID: 1897641506}
   - component: {fileID: 1897641508}
   - component: {fileID: 1897641507}
+  - component: {fileID: 917494197}
   m_Layer: 5
-  m_Name: TextDay (1)
+  m_Name: TextDay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1984,6 +2161,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Day 5
+--- !u!114 &917494197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897641505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.07058824, g: 0.047058824, b: 0.003921569, a: 1}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1966938654
 GameObject:
   m_ObjectHideFlags: 0
@@ -2069,6 +2261,7 @@ GameObject:
   - component: {fileID: 2023301826}
   - component: {fileID: 2023301828}
   - component: {fileID: 2023301827}
+  - component: {fileID: 236971059}
   m_Layer: 5
   m_Name: TextCoinMiddle
   m_TagString: Untagged
@@ -2137,6 +2330,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +75
+--- !u!114 &236971059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2023301825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.07058824, g: 0.047058824, b: 0.003921569, a: 1}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &2069528619
 GameObject:
   m_ObjectHideFlags: 0
@@ -2148,6 +2356,7 @@ GameObject:
   - component: {fileID: 2069528620}
   - component: {fileID: 2069528622}
   - component: {fileID: 2069528621}
+  - component: {fileID: 1329876064}
   m_Layer: 5
   m_Name: TextCoinTop
   m_TagString: Untagged
@@ -2216,6 +2425,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +10
+--- !u!114 &1329876064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069528619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.07058824, g: 0.047058824, b: 0.003921569, a: 1}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &2122582773
 GameObject:
   m_ObjectHideFlags: 0
@@ -2303,6 +2527,7 @@ GameObject:
   - component: {fileID: 3623495598635181056}
   - component: {fileID: 3623495598635181071}
   - component: {fileID: 6868495080831102299}
+  - component: {fileID: 66554155}
   m_Layer: 5
   m_Name: Day4
   m_TagString: Untagged
@@ -2442,6 +2667,25 @@ MonoBehaviour:
   imageEffect: {fileID: 1539665853}
   textCoinMiddle: {fileID: 2023301825}
   imageTick: {fileID: 335825017}
+--- !u!95 &66554155
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3623495598635181069}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 03cb4e32fc496bc49be37794cacbee66, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3623495598819546984
 GameObject:
   m_ObjectHideFlags: 0
@@ -2455,6 +2699,7 @@ GameObject:
   - component: {fileID: 3623495598819546987}
   - component: {fileID: 3623495598819546986}
   - component: {fileID: 3882151582720596282}
+  - component: {fileID: 593051309}
   m_Layer: 5
   m_Name: Day5
   m_TagString: Untagged
@@ -2592,6 +2837,25 @@ MonoBehaviour:
   chestOpen: {fileID: 1651447165}
   textCoin: {fileID: 1479280321}
   imageTick: {fileID: 1308357337}
+--- !u!95 &593051309
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3623495598819546984}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 03cb4e32fc496bc49be37794cacbee66, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3623495598964790720
 GameObject:
   m_ObjectHideFlags: 0
@@ -2626,10 +2890,10 @@ RectTransform:
   m_Father: {fileID: 3623495598977213386}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 20, y: 0}
-  m_SizeDelta: {x: -231, y: 750}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 20, y: 43}
+  m_SizeDelta: {x: 849, y: 750}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3623495598964790723
 CanvasRenderer:
@@ -2809,6 +3073,7 @@ GameObject:
   - component: {fileID: 3623495598985937251}
   - component: {fileID: 3623495598985937250}
   - component: {fileID: 8047459405837674112}
+  - component: {fileID: 241260162}
   m_Layer: 5
   m_Name: Day1
   m_TagString: Untagged
@@ -2948,6 +3213,25 @@ MonoBehaviour:
   imageEffect: {fileID: 2122582773}
   textCoinMiddle: {fileID: 306447252}
   imageTick: {fileID: 87449308}
+--- !u!95 &241260162
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3623495598985937248}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 03cb4e32fc496bc49be37794cacbee66, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3623495599156507478
 GameObject:
   m_ObjectHideFlags: 0
@@ -3006,7 +3290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.07058824, g: 0.047058824, b: 0.003921569, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -3015,10 +3299,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 34b4c7f269b06fe48b8cfa527fff3c9b, type: 3}
-    m_FontSize: 80
+    m_FontSize: 70
     m_FontStyle: 0
-    m_BestFit: 1
-    m_MinSize: 40
+    m_BestFit: 0
+    m_MinSize: 7
     m_MaxSize: 80
     m_Alignment: 4
     m_AlignByGeometry: 1
@@ -3040,6 +3324,7 @@ GameObject:
   - component: {fileID: 3623495599219370172}
   - component: {fileID: 3623495599219370171}
   - component: {fileID: 8260669165053836766}
+  - component: {fileID: 1781970656}
   m_Layer: 5
   m_Name: Day2
   m_TagString: Untagged
@@ -3179,6 +3464,25 @@ MonoBehaviour:
   imageEffect: {fileID: 1177628022}
   textCoinMiddle: {fileID: 1583081148}
   imageTick: {fileID: 255586547}
+--- !u!95 &1781970656
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3623495599219370169}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 03cb4e32fc496bc49be37794cacbee66, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3623495599309608198
 GameObject:
   m_ObjectHideFlags: 0
@@ -3255,7 +3559,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -63.90039, y: -72.1}
+  m_AnchoredPosition: {x: -59.9, y: -42.6}
   m_SizeDelta: {x: 105, y: 143}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3623495599519549144
@@ -3361,6 +3665,7 @@ GameObject:
   - component: {fileID: 3623495599857719432}
   - component: {fileID: 3623495599857719479}
   - component: {fileID: 3112147283668910647}
+  - component: {fileID: 816921751}
   m_Layer: 5
   m_Name: Day3
   m_TagString: Untagged
@@ -3500,6 +3805,25 @@ MonoBehaviour:
   imageEffect: {fileID: 689899057}
   textCoinMiddle: {fileID: 1808040557}
   imageTick: {fileID: 145363819}
+--- !u!95 &816921751
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3623495599857719477}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 03cb4e32fc496bc49be37794cacbee66, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3623495600303991426
 GameObject:
   m_ObjectHideFlags: 0

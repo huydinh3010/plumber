@@ -30,6 +30,7 @@ public class SmallDaySetup : MonoBehaviour, IDayUIDailyRewardSetup
         textCoinMiddle.SetActive(false);
         imageTick.SetActive(false);
         GetComponent<Button>().enabled = false;
+        GetComponent<Animator>().Play("Idle");
     }
 
     public void SetActiveState()
@@ -40,6 +41,7 @@ public class SmallDaySetup : MonoBehaviour, IDayUIDailyRewardSetup
         textCoinMiddle.SetActive(true);
         imageTick.SetActive(false);
         GetComponent<Button>().enabled = true;
+        GetComponent<Animator>().Play("Scale");
     }
 
     public void SetPassedState()
@@ -50,5 +52,6 @@ public class SmallDaySetup : MonoBehaviour, IDayUIDailyRewardSetup
         textCoinMiddle.SetActive(true);
         imageTick.SetActive(true);
         GetComponent<Button>().enabled = false;
+        GetComponent<Animator>().Play("Idle");
     }
 }
