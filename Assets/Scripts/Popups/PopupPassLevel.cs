@@ -21,7 +21,7 @@ public class PopupPassLevel : MonoBehaviour, IPopup
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -44,18 +44,15 @@ public class PopupPassLevel : MonoBehaviour, IPopup
     private void setWatchVideoTimer()
     {
         timer_Watch_Video.enabled = false;
-        if (GameData.Instance.watchVideoRemain > 0)
+        if (!btn_Watch_Video.interactable && GameData.Instance.watchVideoRemain > 0)
         {
-            if (!btn_Watch_Video.interactable && GameData.Instance.watchVideoRemain > 0)
+            int delta = (int)(System.DateTime.Now - System.DateTime.FromFileTime(GameData.Instance.lastWatchVideo)).TotalSeconds;
+            if (delta >= 0)
             {
-                int delta = (int)(System.DateTime.Now - System.DateTime.FromFileTime(GameData.Instance.lastWatchVideo)).TotalSeconds;
-                if(delta >= 0)
-                {
-                    
-                    int second_remain = 3 * 60 - delta;
-                    Debug.Log("______second: " + second_remain);
-                    StartCoroutine(countDown(timer_Watch_Video, second_remain, btn_Watch_Video));
-                }
+
+                int second_remain = 3 * 60 - delta;
+                Debug.Log("______second: " + second_remain);
+                StartCoroutine(countDown(timer_Watch_Video, second_remain, btn_Watch_Video));
             }
         }
     }
@@ -117,10 +114,10 @@ public class PopupPassLevel : MonoBehaviour, IPopup
         btn_Watch_Video_Callback = list_actions.ContainsKey(PopupButtonEvent.WatchVideo10TimesCoinPressed) ? list_actions[PopupButtonEvent.WatchVideo10TimesCoinPressed] : null;
         btn_Next_Callback = list_actions.ContainsKey(PopupButtonEvent.NextLevelPressed) ? list_actions[PopupButtonEvent.NextLevelPressed] : null;
         value = list_settings.ContainsKey(PopupSettingType.PassLevelImageType) ? Convert.ToInt32(list_settings[PopupSettingType.PassLevelImageType]) : 0;
-        if(value >= 1 && value <= 3)
+        if (value >= 1 && value <= 3)
         {
-            text_Coin.text = "+" + GameConfig.PASS_LEVEL_COIN_REWARD[value-1].ToString();
-            text_Point.text = "+" + GameConfig.PASS_LEVEL_POINT_REWARD[value-1].ToString();
+            text_Coin.text = "+" + GameConfig.PASS_LEVEL_COIN_REWARD[value - 1].ToString();
+            text_Point.text = "+" + GameConfig.PASS_LEVEL_POINT_REWARD[value - 1].ToString();
         }
         GetComponent<Animator>().Play("Show");
     }
@@ -146,9 +143,9 @@ public class PopupPassLevel : MonoBehaviour, IPopup
                 GameData.Instance.watchVideoRemain--;
                 GameData.Instance.lastWatchVideo = System.DateTime.Now.ToFileTime();
                 string content = "";
-                if (GameData.Instance.watchVideoRemain > 0) content = "You are rewarded " + reward + " coins. Please wait 3 minutes for the next time!";
+                if (GameData.Instance.watchVideoRemain > 0) content = "You are rewarded " + reward + " coins!";
                 else content = "You are rewarded " + reward + " coins. You have watched all video of today!";
-                PopupManager.Instance.ShowNotification(content, coin, 1.5f);
+                PopupManager.Instance.ShowNotification(content, coin, 2f);
             });
             FirebaseManager.Instance.LogEventRequestRewardedVideo("x5_coins", hasVideo, GameCache.Instance.levelSelected);
             FacebookManager.Instance.LogEventRequestRewardedVideo("x5_coins", hasVideo, GameCache.Instance.levelSelected);

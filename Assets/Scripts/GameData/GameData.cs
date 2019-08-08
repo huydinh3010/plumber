@@ -10,6 +10,7 @@ using ImoSysSDK.SocialPlatforms;
 public class GameData
 {
     public static GameData Instance = new GameData();
+    private const string DATA_FILE_NAME = "player.dat";
     private GameData()
     {
         
@@ -86,8 +87,8 @@ public class GameData
             challengeRewardStatus = false;
             dailyChallengeProgess = new int[8];
             watchVideoRemain = GameConfig.WATCH_VIDEO_LIMIT;
-            lastWatchVideo = 0;
-            lastFbShare = 0;
+            lastWatchVideo = System.DateTime.Now.AddDays(-2).ToFileTime();
+            lastFbShare = System.DateTime.Now.AddDays(-2).ToFileTime();
             dayOfDailyChallenge = dayOfDailyChallenge + diff;
             if (dayOfDailyChallenge > 366) dayOfDailyChallenge = dayOfDailyChallenge % 367 + 1;
             lastDayAccess = System.DateTime.Now.Date.ToFileTime();
@@ -96,55 +97,68 @@ public class GameData
 
     public void LoadDataFromFile()
     {
-        string path = Application.persistentDataPath + "/user.data";
+        string path = Application.persistentDataPath + "/" + DATA_FILE_NAME;
         if (File.Exists(path))
         {
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
-            FileStream fileStream = new FileStream(path, FileMode.Open);
-            string data = binaryFormatter.Deserialize(fileStream) as string;
-            fileStream.Close();
-            Instance = JsonUtility.FromJson<GameData>(data);
-            Instance.updateDay();
-            for(int i = GameConfig.ACHIEVEMENT_CONDITION_POINT.Length - 1; i >= 0; i--)
+            try
             {
-                if (Instance.points > GameConfig.ACHIEVEMENT_CONDITION_POINT[i])
+                BinaryFormatter binaryFormatter = new BinaryFormatter();
+                FileStream fileStream = new FileStream(path, FileMode.Open);
+                string data = binaryFormatter.Deserialize(fileStream) as string;
+                fileStream.Close();
+                Instance = JsonUtility.FromJson<GameData>(data);
+                Instance.updateDay();
+                for (int i = GameConfig.ACHIEVEMENT_CONDITION_POINT.Length - 1; i >= 0; i--)
                 {
-                    GameCache.Instance.unlockAchievementProgress = i + 1;
-                    break;
+                    if (Instance.points > GameConfig.ACHIEVEMENT_CONDITION_POINT[i])
+                    {
+                        GameCache.Instance.unlockAchievementProgress = i + 1;
+                        break;
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                newData();
+                
             }
         }
         else
         {
-            listLevelStars = new List<int>();
-            listLevelStars.Add(0);
-            unlockLevel = 1;
-            points = 0;
-            coins = 200;
-            dayOfDailyChallenge = 1;
-            continueDay = 1;
-            dailyChallengeProgess = new int[8];
-            dailyChallengeRewardCoin = 100;
-            isAdsOn = true;
-            isRateOn = true;
-            isSoundOn = true;
-            lastDayAccess = System.DateTime.Now.Date.ToFileTime();
-            lastFbShare = 0;
-            lastWatchVideo = 0;
-            dailyRewardStatus = false;
-            challengeRewardStatus = false;
-            achievementProgress = 0;
-            watchVideoRemain = GameConfig.WATCH_VIDEO_LIMIT;
-            unlockLvState = new LevelState();
-            GameCache.Instance.firstGameLoad = true;
+            newData();
         }
         GameCache.Instance.levelSelected = unlockLevel;
+    }
+
+    private void newData()
+    {
+        listLevelStars = new List<int>();
+        listLevelStars.Add(0);
+        unlockLevel = 1;
+        points = 0;
+        coins = 200;
+        dayOfDailyChallenge = 1;
+        continueDay = 1;
+        dailyChallengeProgess = new int[8];
+        dailyChallengeRewardCoin = 100;
+        isAdsOn = true;
+        isRateOn = true;
+        isSoundOn = true;
+        lastDayAccess = System.DateTime.Now.Date.ToFileTime();
+        lastWatchVideo = System.DateTime.Now.AddDays(-2).ToFileTime();
+        lastFbShare = System.DateTime.Now.AddDays(-2).ToFileTime();
+        dailyRewardStatus = false;
+        challengeRewardStatus = false;
+        achievementProgress = 0;
+        watchVideoRemain = GameConfig.WATCH_VIDEO_LIMIT;
+        unlockLvState = new LevelState();
+        GameCache.Instance.firstGameLoad = true;
     }
 
     public void SaveDataToFile()
     {
         BinaryFormatter binaryFormatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/user.data";
+        string path = Application.persistentDataPath + "/" + DATA_FILE_NAME;
         FileStream fileStream = new FileStream(path, FileMode.Create);
         string data = JsonUtility.ToJson(this);
         Debug.Log("Save data: " + data);

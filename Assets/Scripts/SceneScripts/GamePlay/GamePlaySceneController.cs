@@ -37,6 +37,7 @@ public class GamePlaySceneController : MonoBehaviour
         EventDispatcher.Instance.RegisterListener(EventID.PipeAnimationEnd, endGame);
         EventDispatcher.Instance.RegisterListener(EventID.PipeAnimationStart, AnimationStart);
         AdManager.Instance.AddBannerCallback(onBannerShow, onBannerHide);
+        if (!AdManager.Instance.isBannerShowing()) AdManager.Instance.ShowNewBanner();
     }
 
     // Start is called before the first frame update
@@ -261,7 +262,7 @@ public class GamePlaySceneController : MonoBehaviour
     private void onPointChange(object param)
     {
         StartCoroutine(coinChangeEffect(txtPoints, Convert.ToInt32(param)));
-        if (GameCache.Instance.unlockAchievementProgress < GameConfig.ACHIEVEMENT_CONDITION_POINT.Length && GameData.Instance.points > GameConfig.ACHIEVEMENT_CONDITION_POINT[GameCache.Instance.unlockAchievementProgress])
+        if (GameCache.Instance.unlockAchievementProgress < GameConfig.ACHIEVEMENT_CONDITION_POINT.Length && GameData.Instance.points >= GameConfig.ACHIEVEMENT_CONDITION_POINT[GameCache.Instance.unlockAchievementProgress])
         {
             PopupManager.Instance.ShowNotification("Unlock achievement. Go back Menu to get " + GameConfig.ACHIEVEMENT_COIN_REWARD[GameCache.Instance.unlockAchievementProgress] + " coins", achievement, 3f);
             GameCache.Instance.unlockAchievementProgress++;
