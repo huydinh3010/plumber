@@ -926,7 +926,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &965173506
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1484,7 +1484,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1461701504
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3404,6 +3404,11 @@ PrefabInstance:
       propertyPath: onPurchaseVerifyFailed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2147130558}
+    - target: {fileID: 4708015169294659638, guid: aec63e38085a3234e8bcf274a66c55cf,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -66.299805
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aec63e38085a3234e8bcf274a66c55cf, type: 3}
 --- !u!1001 &5447683329580432273
