@@ -38,10 +38,17 @@ public class AdManager : MonoBehaviour
     public void Initialize()
     {
 #if UNITY_ANDROID
+#if ENV_PROD
+        string appId = "ca-app-pub-8912425266737526~2657028361";
+#else
         string appId = "ca-app-pub-3940256099942544~3347511713";
-        // string appId = "ca-app-pub-8912425266737526~2657028361";
+#endif
 #elif UNITY_IPHONE
+#if ENV_PROD
+        string appId = "";
+#else
         string appId = "ca-app-pub-3940256099942544~1458002511";
+#endif
 #else
         string appId = "unexpected_platform";
 #endif
@@ -108,12 +115,20 @@ public class AdManager : MonoBehaviour
     private void RequestRewardBasedVideo()
     {
 #if UNITY_ANDROID
-        string adUnitId = "ca-app-pub-3940256099942544/5224354917";
-        //string adUnitId = "ca-app-pub-8912425266737526/8950973977";
-#elif UNITY_IPHONE
-            string adUnitId = "ca-app-pub-3940256099942544/1712485313";
+#if ENV_PROD
+        string adUnitId = "ca-app-pub-8912425266737526/8950973977";
 #else
-            string adUnitId = "unexpected_platform";
+        string adUnitId = "ca-app-pub-3940256099942544/5224354917";
+#endif
+#elif UNITY_IPHONE
+        
+#if ENV_PROD
+        string adUnitId = "";
+#else
+        string adUnitId = "ca-app-pub-3940256099942544/1712485313";
+#endif
+#else
+        string adUnitId = "unexpected_platform";
 #endif
 
         AdRequest request = new AdRequest.Builder().Build();
@@ -153,11 +168,19 @@ public class AdManager : MonoBehaviour
     public void RequestBanner()
     {
 #if UNITY_ANDROID
-        string adUnitId = "ca-app-pub-3940256099942544/6300978111";
-#elif UNITY_IPHONE
-            string adUnitId = "ca-app-pub-3940256099942544/2934735716";
+#if ENV_PROD
+        string adUnitId = "";
 #else
-            string adUnitId = "unexpected_platform";
+        string adUnitId = "ca-app-pub-3940256099942544/6300978111";
+#endif
+#elif UNITY_IPHONE
+#if ENV_PROD
+        string adUnitId = "";
+#else
+        string adUnitId = "ca-app-pub-3940256099942544/2934735716";
+#endif
+#else
+        string adUnitId = "unexpected_platform";
 #endif
         bannerHeight = 0;
         if (bannerView != null) bannerView.Destroy();

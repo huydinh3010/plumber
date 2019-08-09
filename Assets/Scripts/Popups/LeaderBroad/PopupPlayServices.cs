@@ -64,9 +64,10 @@ public class PopupPlayServices : MonoBehaviour, IPopup
                 foreach (GameObject go in go_items) Destroy(go);
                 int i = 0;
                 Debug.Log("GameServices.PlayerId = " + GameServices.Instance.PlayerId);
-                float contentHeight = (items.Length < LEADER_BROAD_LIMIT_ITEM ? items.Length : LEADER_BROAD_LIMIT_ITEM) * 200;
-                contentHeight = contentHeight < scroll.rect.height ? scroll.rect.height : contentHeight;
-                content.GetComponent<RectTransform>().sizeDelta = new Vector2(content.GetComponent<RectTransform>().sizeDelta.x, contentHeight);
+                float item_height = item.GetComponent<RectTransform>().rect.height;
+                float content_height = (items.Length < LEADER_BROAD_LIMIT_ITEM ? items.Length : LEADER_BROAD_LIMIT_ITEM) * item_height;
+                content_height = content_height < scroll.rect.height ? scroll.rect.height : content_height;
+                content.GetComponent<RectTransform>().sizeDelta = new Vector2(content.GetComponent<RectTransform>().sizeDelta.x, content_height);
                 content.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
                 for (i = 0; i < items.Length; i++)
                 {
@@ -80,7 +81,7 @@ public class PopupPlayServices : MonoBehaviour, IPopup
                     if (i < LEADER_BROAD_LIMIT_ITEM)
                     {
                         GameObject go = Instantiate(item, Vector3.zero, Quaternion.identity, content.transform);
-                        go.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, i * -200);
+                        go.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, i * -item_height);
                         go.GetComponent<ItemLeaderBroadSetup>().setup(items[i].rank, items[i].name, items[i].score, items[i].countryCode);
                         go_items.Add(go);
                     }
@@ -124,6 +125,7 @@ public class PopupPlayServices : MonoBehaviour, IPopup
     private void Setup()
     {
         isShow = false;
+        content.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
         if (FacebookHelper.Instance.IsLoggedIn)
         {
             btn_LoginFb.GetComponent<Mask>().enabled = true;

@@ -9,7 +9,7 @@ public class PopupAchievement : MonoBehaviour, IPopup
     [SerializeField] GameObject[] go_Items;
     [SerializeField] RectTransform content;
     [SerializeField] RectTransform scroll;
-
+    [SerializeField] Sprite coin;
     private ItemAchievementSetup[] itemsSetup;
     private Action btn_Coin_Callback;
     private Action btn_Close_Callback;
@@ -96,9 +96,11 @@ public class PopupAchievement : MonoBehaviour, IPopup
         {
             if (k == GameData.Instance.achievementProgress)
             {
-                GameData.Instance.increaseCoin(GameConfig.ACHIEVEMENT_COIN_REWARD[k]);
+                int reward = GameConfig.ACHIEVEMENT_COIN_REWARD[k];
+                GameData.Instance.increaseCoin(reward);
                 GameData.Instance.achievementProgress++;
                 itemsSetup[k].setPassedState();
+                PopupManager.Instance.ShowNotification("You are rewarded " + reward + " coins!", coin, 2f);
                 if (k < go_Items.Length - 1 && GameData.Instance.points >= GameConfig.ACHIEVEMENT_CONDITION_POINT[k + 1])
                 {
                     float delta = content.rect.height / GameConfig.ACHIEVEMENT_CONDITION_POINT.Length;

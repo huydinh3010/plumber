@@ -6,6 +6,7 @@ using System;
 public class PopupDailyReward : MonoBehaviour, IPopup
 {
     [SerializeField] GameObject[] go_Days;
+    [SerializeField] Sprite coin;
     private IDayUIDailyRewardSetup[] daysSetup;
     private Action btn_Day_Callback;
     private Action btn_Close_Callback;
@@ -76,9 +77,10 @@ public class PopupDailyReward : MonoBehaviour, IPopup
             if (k == GameData.Instance.continueDay - 1 && !GameData.Instance.dailyRewardStatus)
             {
                 GameData.Instance.dailyRewardStatus = true;
-                int[] rewards = { 10, 25, 50, 75, 100 };
                 daysSetup[k].SetPassedState();
-                GameData.Instance.increaseCoin(rewards[k]);
+                int reward = GameConfig.DAILY_REWARD_COIN[k];
+                GameData.Instance.increaseCoin(reward);
+                PopupManager.Instance.ShowNotification("You are rewarded " + reward + " coins. Comes back every day for more coins!", coin, 2f);
                 StartCoroutine(WaitForClosePanel());
             }
             btn_Day_Callback?.Invoke();
@@ -92,10 +94,11 @@ public class PopupDailyReward : MonoBehaviour, IPopup
             if (!GameData.Instance.dailyRewardStatus)
             {
                 GameData.Instance.dailyRewardStatus = true;
-                int[] rewards = { 10, 25, 50, 75, 100 };
                 int k = GameData.Instance.continueDay - 1;
                 daysSetup[k].SetPassedState();
-                GameData.Instance.increaseCoin(rewards[k]);
+                int reward = GameConfig.DAILY_REWARD_COIN[k];
+                GameData.Instance.increaseCoin(reward);
+                PopupManager.Instance.ShowNotification("You are rewarded " + reward + " coins. Comes back every day for more coins!", coin, 2f);
                 Close();
             }
             btn_Close_Callback?.Invoke();
