@@ -120,14 +120,13 @@ public class GameData
             catch (Exception e)
             {
                 newData();
-                
             }
         }
         else
         {
             newData();
         }
-        GameCache.Instance.levelSelected = unlockLevel;
+        GameCache.Instance.levelSelected = Instance.unlockLevel;
     }
 
     private void newData()

@@ -273,12 +273,12 @@ public class GamePlaySceneController : MonoBehaviour
     {
         int frame = 10;
         int delta = (Mathf.Abs(value) / frame) + 1;
-        int text_value = int.Parse(text.text);
         if (value > 0)
         {
             while (value > 0)
             {
                 value -= delta;
+                int text_value = int.Parse(text.text);
                 if (value < 0) text_value += delta + value;
                 else text_value += delta;
                 text.text = (text_value).ToString();
@@ -290,6 +290,7 @@ public class GamePlaySceneController : MonoBehaviour
             while (value < 0)
             {
                 value += delta;
+                int text_value = int.Parse(text.text);
                 if (value > 0) text_value = text_value - delta + value;
                 else text_value -= delta;
                 text.text = (text_value).ToString();

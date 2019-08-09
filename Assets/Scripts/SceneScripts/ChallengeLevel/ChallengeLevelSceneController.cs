@@ -81,18 +81,23 @@ public class ChallengeLevelSceneController : MonoBehaviour
     private void onPointChange(object param)
     {
         StartCoroutine(coinChangeEffect(textPoint, Convert.ToInt32(param)));
+        if (GameCache.Instance.unlockAchievementProgress < GameConfig.ACHIEVEMENT_CONDITION_POINT.Length && GameData.Instance.points >= GameConfig.ACHIEVEMENT_CONDITION_POINT[GameCache.Instance.unlockAchievementProgress])
+        {
+            PopupManager.Instance.ShowNotification("Unlock achievement. Go back Menu to get " + GameConfig.ACHIEVEMENT_COIN_REWARD[GameCache.Instance.unlockAchievementProgress] + " coins", null, 3f);
+            GameCache.Instance.unlockAchievementProgress++;
+        }
     }
 
     IEnumerator coinChangeEffect(Text text, int value)
     {
         int frame = 10;
         int delta = (Mathf.Abs(value) / frame) + 1;
-        int text_value = int.Parse(text.text);
         if (value > 0)
         {
             while (value > 0)
             {
                 value -= delta;
+                int text_value = int.Parse(text.text);
                 if (value < 0) text_value += delta + value;
                 else text_value += delta;
                 text.text = (text_value).ToString();
@@ -104,6 +109,7 @@ public class ChallengeLevelSceneController : MonoBehaviour
             while (value < 0)
             {
                 value += delta;
+                int text_value = int.Parse(text.text);
                 if (value > 0) text_value = text_value - delta + value;
                 else text_value -= delta;
                 text.text = (text_value).ToString();

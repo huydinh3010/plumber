@@ -8,21 +8,25 @@ public class OneLoadController : MonoBehaviour
 {
     [SerializeField] Text txtLog;
     [SerializeField] GameObject scrollViewLog;
+    [SerializeField] GameObject btn_Test;
     private string str;
     private void Awake()
     {
         str = "Start at: " + DateTime.Now.TimeOfDay;
         DontDestroyOnLoad(this);
         Input.multiTouchEnabled = false;
-
-        Application.logMessageReceived += Application_logMessageReceived;
         Debug.Log(str);
         Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--Start Init Awake");
         SceneManager.LoadScene("MainMenu");
         Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After LoadScene MainMenu function");
         GameData.Instance.LoadDataFromFile();
         Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After Load Data function");
-        
+#if ENV_PROD
+        btn_Test.SetActive(false);
+#else
+        btn_Test.SetActive(true);
+        Application.logMessageReceived += Application_logMessageReceived;
+#endif
     }
 
     private void Application_logMessageReceived(string condition, string stackTrace, LogType type)
@@ -41,16 +45,7 @@ public class OneLoadController : MonoBehaviour
         }
     }
 
-    public void BtnShowLogOnClick()
-    {
-        scrollViewLog.SetActive(!scrollViewLog.active);
-    }
-
-    public void BtnClearLogOnClick()
-    {
-        txtLog.text = "";
-    }
-
+   
     // Start is called before the first frame update
     void Start()
     {
@@ -66,17 +61,7 @@ public class OneLoadController : MonoBehaviour
         AdManager.Instance.Initialize();
         Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After Admob Initialize");
     }
-
-    private void OnDisable()
-    {
-        
-    }
-
-    private void OnEnable()
-    {
-        
-    }
-    
+ 
     private void Update()
     {
         
@@ -99,5 +84,48 @@ public class OneLoadController : MonoBehaviour
     private void OnDestroy()
     {
         Debug.Log("Destroy Init Object");
+    }
+
+    public void BtnShowLogOnClick()
+    {
+        scrollViewLog.SetActive(!scrollViewLog.active);
+    }
+
+    public void BtnClearLogOnClick()
+    {
+        txtLog.text = "";
+    }
+
+    public void BtnAddCoinOnClick()
+    {
+        GameData.Instance.increaseCoin(100);
+    }
+
+    public void BtnAddPointOnClick()
+    {
+        GameData.Instance.increasePoint(100);
+    }
+
+    public void BtnUnlock1LvOnClick()
+    {
+        if (GameData.Instance.listLevelStars.Count < 560)
+        {
+            GameData.Instance.listLevelStars[GameData.Instance.listLevelStars.Count - 1] = 3;
+            GameData.Instance.listLevelStars.Add(0);
+            GameData.Instance.unlockLevel++;
+            GameCache.Instance.levelSelected = GameData.Instance.unlockLevel;
+        }
+    }
+
+    public void BtnUnlock16LvOnClick()
+    {
+        if (GameData.Instance.listLevelStars.Count < 544)
+        {
+            GameData.Instance.listLevelStars[GameData.Instance.listLevelStars.Count - 1] = 3;
+            for (int i = 0; i < 15; i++) GameData.Instance.listLevelStars.Add(3);
+            GameData.Instance.listLevelStars.Add(0);
+            GameData.Instance.unlockLevel += 16;
+            GameCache.Instance.levelSelected = GameData.Instance.unlockLevel;
+        }
     }
 }

@@ -35,7 +35,7 @@ public class ItemAchievementSetup : MonoBehaviour
 
     public void setPassedState()
     {
-        btn_Coin.GetComponent<Image>().color = new Color32(255, 255, 255, 150);
+        btn_Coin.GetComponent<Image>().color = new Color32(255, 255, 255, 200);
         btn_Coin.GetComponent<Button>().enabled = false;
         image_Tick.SetActive(true);
         anim_Button.Play("Idle");

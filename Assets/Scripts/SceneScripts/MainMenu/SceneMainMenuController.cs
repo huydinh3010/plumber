@@ -8,7 +8,7 @@ public class SceneMainMenuController : MonoBehaviour
     private bool firstFrame;
     private void Awake()
     {
-
+        EventDispatcher.Instance.RegisterListener(EventID.OnPointChange, OnPointChange);
     }
 
     // Start is called before the first frame update
@@ -33,6 +33,15 @@ public class SceneMainMenuController : MonoBehaviour
             Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--Main Menu FirstFrame");
             firstFrame = true;
             
+        }
+    }
+
+    private void OnPointChange(object param)
+    {
+        if (GameCache.Instance.unlockAchievementProgress < GameConfig.ACHIEVEMENT_CONDITION_POINT.Length && GameData.Instance.points >= GameConfig.ACHIEVEMENT_CONDITION_POINT[GameCache.Instance.unlockAchievementProgress])
+        {
+            PopupManager.Instance.ShowNotification("Unlock achievement. Go back Menu to get " + GameConfig.ACHIEVEMENT_COIN_REWARD[GameCache.Instance.unlockAchievementProgress] + " coins", null, 3f);
+            GameCache.Instance.unlockAchievementProgress++;
         }
     }
 
@@ -75,6 +84,7 @@ public class SceneMainMenuController : MonoBehaviour
 
     private void OnDestroy()
     {
+        EventDispatcher.Instance.RemoveListener(EventID.OnPointChange, OnPointChange);
         try
         {
             PopupManager.Instance.ForceClosePopup();
