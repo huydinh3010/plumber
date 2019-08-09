@@ -114,6 +114,7 @@ public class OneLoadController : MonoBehaviour
             GameData.Instance.listLevelStars.Add(0);
             GameData.Instance.unlockLevel++;
             GameCache.Instance.levelSelected = GameData.Instance.unlockLevel;
+            GameData.Instance.unlockLvState.NewLevelState();
         }
     }
 
@@ -126,6 +127,7 @@ public class OneLoadController : MonoBehaviour
             GameData.Instance.listLevelStars.Add(0);
             GameData.Instance.unlockLevel += 16;
             GameCache.Instance.levelSelected = GameData.Instance.unlockLevel;
+            GameData.Instance.unlockLvState.NewLevelState();
         }
     }
 }
