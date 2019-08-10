@@ -51,14 +51,12 @@ public class SimpleLevelSceneController : MonoBehaviour
                             default:
                                 break;
                         }
-                        go.GetComponentInChildren<Text>().text = level.ToString();
-                        go.GetComponent<Button>().onClick.AddListener(() => { BtnLevelOnScrollViewOnClick(level); });
+                        go.GetComponent<ItemSetup>().setup(level, ()=>{ BtnLevelOnScrollViewOnClick(level);});
                     }
                     else
                     {
                         go = Instantiate(LockLv, new Vector3(), Quaternion.identity, goGridClone.transform);
                     }
-                    go.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
                 }
             }
         }
@@ -68,6 +66,11 @@ public class SimpleLevelSceneController : MonoBehaviour
             GameCache.Instance.lastLevel = false;
         }
         
+    }
+
+    public void BtnSound()
+    {
+        AudioManager.Instance.Play("button_sound");
     }
 
     private void OnCoinChange(object param)
@@ -80,7 +83,10 @@ public class SimpleLevelSceneController : MonoBehaviour
         StartCoroutine(coinChangeEffect(txtPoints, Convert.ToInt32(param)));
         if (GameCache.Instance.unlockAchievementProgress < GameConfig.ACHIEVEMENT_CONDITION_POINT.Length && GameData.Instance.points >= GameConfig.ACHIEVEMENT_CONDITION_POINT[GameCache.Instance.unlockAchievementProgress])
         {
-            PopupManager.Instance.ShowNotification("Unlock achievement. Go back Menu to get " + GameConfig.ACHIEVEMENT_COIN_REWARD[GameCache.Instance.unlockAchievementProgress] + " coins", null, 3f);
+            PopupManager.Instance.ShowNotification("Unlock achievement. Touch to go back Menu to get " + GameConfig.ACHIEVEMENT_COIN_REWARD[GameCache.Instance.unlockAchievementProgress] + " coins", null, 3f, () => {
+                GameCache.Instance.showAchievement = true;
+                LoadSceneManager.Instance.LoadScene("MainMenu");
+            });
             GameCache.Instance.unlockAchievementProgress++;
         }
     }
@@ -129,6 +135,7 @@ public class SimpleLevelSceneController : MonoBehaviour
 
     public void BtnBackOnClick()
     {
+        AudioManager.Instance.Play("button_sound");
         LoadSceneManager.Instance.LoadScene("MainMenu");
     }
 
@@ -141,6 +148,7 @@ public class SimpleLevelSceneController : MonoBehaviour
 
     public void BtnAddCoinOnClick()
     {
+        AudioManager.Instance.Play("button_sound");
         PopupManager.Instance.ShowPopup(PopupName.AddCoin, null);
     }
     

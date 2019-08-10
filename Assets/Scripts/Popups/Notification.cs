@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System;
 public class Notification : MonoBehaviour
 {
     [SerializeField] Text textContent;
     [SerializeField] Image image;
     [SerializeField] float timeDuration;
-
+    private Action btn_Callback;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +21,7 @@ public class Notification : MonoBehaviour
         
     }
 
-    public void Show(string content, Sprite s_image, float duration)
+    public void Show(string content, Sprite s_image, float duration, Action action = null)
     {
         textContent.text = content;
         if (s_image == null)
@@ -34,6 +34,7 @@ public class Notification : MonoBehaviour
             image.sprite = s_image;
         }
         this.timeDuration = duration;
+        btn_Callback = action;
         StartCoroutine(playAnimation());
     }
 
@@ -47,5 +48,11 @@ public class Notification : MonoBehaviour
         GetComponent<Animator>().Play("Show");
         yield return new WaitForSeconds(timeDuration);
         GetComponent<Animator>().Play("Hide");
+    }
+
+    public void btnOnClick()
+    {
+        btn_Callback?.Invoke();
+        btn_Callback = null;
     }
 }

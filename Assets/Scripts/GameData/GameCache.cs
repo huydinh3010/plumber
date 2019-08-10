@@ -12,5 +12,6 @@ public class GameCache
     public int mode;
     public bool firstGameLoad;
     public bool lastLevel;
+    public bool showAchievement;
     public int unlockAchievementProgress;
 }

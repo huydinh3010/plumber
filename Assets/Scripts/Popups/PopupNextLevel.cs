@@ -11,6 +11,7 @@ public class PopupNextLevel : MonoBehaviour, IPopup
     [SerializeField] CanvasGroup bottomGroup;
     private Action btn_Close_Callback;
     private Action btn_Next_Callback;
+    private Action on_Displayed;
     private bool isShow;
     // Start is called before the first frame update
     void Start()
@@ -36,12 +37,14 @@ public class PopupNextLevel : MonoBehaviour, IPopup
     public void OnDisplayed()
     {
         isShow = true;
+        on_Displayed?.Invoke();
         StartCoroutine(fadeInEffect(middleGroup, () =>
             {
                 StartCoroutine(fadeInEffect(bottomGroup, () =>
                     {
                         middleGroup.interactable = true;
                         bottomGroup.interactable = true;
+                        
                     }));
             }));
     }
@@ -74,6 +77,7 @@ public class PopupNextLevel : MonoBehaviour, IPopup
         Setup();
         btn_Close_Callback = list_actions.ContainsKey(PopupButtonEvent.ClosePressed) ? list_actions[PopupButtonEvent.ClosePressed] : null;
         btn_Next_Callback = list_actions.ContainsKey(PopupButtonEvent.NextLevelPressed) ? list_actions[PopupButtonEvent.NextLevelPressed] : null;
+        on_Displayed = list_actions.ContainsKey(PopupButtonEvent.OnPopupDisplayed) ? list_actions[PopupButtonEvent.OnPopupDisplayed] : null;
         GetComponent<Animator>().Play("Show");
     }
 
@@ -81,6 +85,7 @@ public class PopupNextLevel : MonoBehaviour, IPopup
     {
         if (isShow)
         {
+            AudioManager.Instance.Play("button_sound");
             Close();
             btn_Close_Callback?.Invoke();
         }
@@ -90,6 +95,7 @@ public class PopupNextLevel : MonoBehaviour, IPopup
     {
         if (isShow)
         {
+            AudioManager.Instance.Play("button_sound");
             Close();
             btn_Next_Callback?.Invoke();
         }

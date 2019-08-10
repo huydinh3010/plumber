@@ -234,6 +234,7 @@ GameObject:
   - component: {fileID: 7458404880119318518}
   - component: {fileID: 869706733821545620}
   - component: {fileID: 5459936673494457088}
+  - component: {fileID: 1227772844538054300}
   m_Layer: 5
   m_Name: Unlock
   m_TagString: Untagged
@@ -343,6 +344,20 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &1227772844538054300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3272489917206226243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23eac2035aa5d0f40bcaea3824db4b06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 8082736242397321267}
+  button: {fileID: 5459936673494457088}
 --- !u!1 &9069644726126111888
 GameObject:
   m_ObjectHideFlags: 0

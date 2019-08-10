@@ -56,6 +56,7 @@ public class PopupRate : MonoBehaviour, IPopup
     {
         if (isShow)
         {
+            AudioManager.Instance.Play("button_sound");
             Close();
             btn_Close_Callback?.Invoke();
         }
@@ -65,6 +66,7 @@ public class PopupRate : MonoBehaviour, IPopup
     {
         if (isShow)
         {
+            AudioManager.Instance.Play("button_sound");
             Close();
             btn_Not_Now_Callback?.Invoke();
         }
@@ -74,8 +76,9 @@ public class PopupRate : MonoBehaviour, IPopup
     {
         if (isShow)
         {
+            AudioManager.Instance.Play("button_sound");
 #if UNITY_ANDROID
-            Application.OpenURL("market://details?id=" + Application.productName);
+            Application.OpenURL("market://details?id=com.waterline.pipeman");
 #elif UNITY_IPHONE
  Application.OpenURL("itms-apps://itunes.apple.com/app/idYOUR_ID");
 #endif

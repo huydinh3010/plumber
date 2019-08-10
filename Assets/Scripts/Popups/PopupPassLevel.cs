@@ -16,6 +16,7 @@ public class PopupPassLevel : MonoBehaviour, IPopup
     private Action btn_Close_Callback;
     private Action btn_Watch_Video_Callback;
     private Action btn_Next_Callback;
+    private Action on_Displayed;
     private int value;
     private bool isShow;
     // Start is called before the first frame update
@@ -74,6 +75,7 @@ public class PopupPassLevel : MonoBehaviour, IPopup
     public void OnDisplayed()
     {
         isShow = true;
+        on_Displayed?.Invoke();
         StartCoroutine(fadeInEffect(middleGroup, () =>
         {
             StartCoroutine(fadeInEffect(bottomGroup, () =>
@@ -113,6 +115,7 @@ public class PopupPassLevel : MonoBehaviour, IPopup
         btn_Close_Callback = list_actions.ContainsKey(PopupButtonEvent.ClosePressed) ? list_actions[PopupButtonEvent.ClosePressed] : null;
         btn_Watch_Video_Callback = list_actions.ContainsKey(PopupButtonEvent.WatchVideo10TimesCoinPressed) ? list_actions[PopupButtonEvent.WatchVideo10TimesCoinPressed] : null;
         btn_Next_Callback = list_actions.ContainsKey(PopupButtonEvent.NextLevelPressed) ? list_actions[PopupButtonEvent.NextLevelPressed] : null;
+        on_Displayed = list_actions.ContainsKey(PopupButtonEvent.OnPopupDisplayed) ? list_actions[PopupButtonEvent.OnPopupDisplayed] : null;
         value = list_settings.ContainsKey(PopupSettingType.PassLevelImageType) ? Convert.ToInt32(list_settings[PopupSettingType.PassLevelImageType]) : 0;
         if (value >= 1 && value <= 3)
         {
@@ -126,6 +129,7 @@ public class PopupPassLevel : MonoBehaviour, IPopup
     {
         if (isShow)
         {
+            AudioManager.Instance.Play("button_sound");
             Close();
             btn_Close_Callback?.Invoke();
         }
@@ -135,6 +139,7 @@ public class PopupPassLevel : MonoBehaviour, IPopup
     {
         if (isShow)
         {
+            AudioManager.Instance.Play("button_sound");
             bool hasVideo = AdManager.Instance.ShowRewardVideo(() =>
             {
                 int reward = 5 * GameConfig.PASS_LEVEL_COIN_REWARD[value - 1];
@@ -157,6 +162,7 @@ public class PopupPassLevel : MonoBehaviour, IPopup
     {
         if (isShow)
         {
+            AudioManager.Instance.Play("button_sound");
             Close();
             btn_Next_Callback?.Invoke();
         }

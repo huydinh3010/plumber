@@ -103,7 +103,7 @@ public class OneLoadController : MonoBehaviour
 
     public void BtnAddPointOnClick()
     {
-        GameData.Instance.increasePoint(100);
+        GameData.Instance.increasePoint(1000);
     }
 
     public void BtnUnlock1LvOnClick()

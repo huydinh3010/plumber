@@ -26,7 +26,6 @@ public class PopupShop : MonoBehaviour, IPopup
             btn_Buy_Coins[i].GetComponentInChildren<Text>().text = "$" + GameConfig.SHOP_PRICE[i + 1].ToString();
             iapButtons[i+1] = btn_Buy_Coins[i].GetComponent<ImoSysSDK.Purchasing.IMOIAPButton>();
         }
-        
     }
 
     // Start is called before the first frame update
@@ -90,6 +89,7 @@ public class PopupShop : MonoBehaviour, IPopup
     {
         if (isShow)
         {
+            AudioManager.Instance.Play("button_sound");
             btn_Buy_Callback?.Invoke();
         }
     }
@@ -98,6 +98,7 @@ public class PopupShop : MonoBehaviour, IPopup
     {
         if (isShow)
         {
+            AudioManager.Instance.Play("button_sound");
             Close();
             btn_Close_Callback?.Invoke();
         }

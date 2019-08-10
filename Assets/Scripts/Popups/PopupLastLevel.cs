@@ -51,6 +51,7 @@ public class PopupLastLevel : MonoBehaviour, IPopup
     {
         if (isShow)
         {
+            AudioManager.Instance.Play("button_sound");
             Close();
             btn_Close_Callback?.Invoke();
         }

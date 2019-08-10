@@ -136,103 +136,93 @@ public class GamePlaySceneController : MonoBehaviour
         }
         else if (GameCache.Instance.mode == 1)
         {
-            if (GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1] > 0)
+            Action action = () =>
             {
-                int c_star = GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1];
-                int n_star = game.getStar();
-                if (n_star > c_star) GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1] = n_star;
-                Action action = () =>
+                if (GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1] > 0)
                 {
+                    int star = game.getStar();
+                    Action onPopupDisplayed = () => {
+                        int c_star = GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1];
+                        int n_star = star;
+                        if (n_star > c_star) GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1] = n_star;
+                    };
                     PopupManager.Instance.ShowPopup(PopupName.NextLevel,
                         new Dictionary<PopupButtonEvent, Action>() {
                             { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
-                            { PopupButtonEvent.NextLevelPressed, NextLevelCallback } });
-                };
-                if (!tutorial && AdManager.Instance.canShowInterstitial() && AdManager.Instance.ShowInterstitial(action))
-                {
-
+                            { PopupButtonEvent.NextLevelPressed, NextLevelCallback },
+                            { PopupButtonEvent.OnPopupDisplayed, onPopupDisplayed} });
                 }
                 else
                 {
-                    action();
-                }
-            }
-            else
-            {
-                int star = game.getStar();
-                GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1] = star;
-                GameData.Instance.increaseCoin(GameConfig.PASS_LEVEL_COIN_REWARD[star - 1]);
-                GameData.Instance.increasePoint(GameConfig.PASS_LEVEL_POINT_REWARD[star - 1]);
-                if (GameData.Instance.unlockLevel < GameConfig.NUMBER_OF_SIMPLE_LEVEL)
-                {
-                    GameData.Instance.listLevelStars.Add(0);
-                    GameData.Instance.unlockLevel++;
-                    unlock_level = true;
-                }
-                GameData.Instance.unlockLvState.NewLevelState();
-                Action action = () =>
-                {
+                    int star = game.getStar();
+                    Action onPopupDisplayed = () => {
+                        GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1] = star;
+                        GameData.Instance.increaseCoin(GameConfig.PASS_LEVEL_COIN_REWARD[star - 1]);
+                        GameData.Instance.increasePoint(GameConfig.PASS_LEVEL_POINT_REWARD[star - 1]);
+                        if (GameData.Instance.unlockLevel < GameConfig.NUMBER_OF_SIMPLE_LEVEL)
+                        {
+                            GameData.Instance.listLevelStars.Add(0);
+                            GameData.Instance.unlockLevel++;
+                            unlock_level = true;
+                        }
+                        GameData.Instance.unlockLvState.NewLevelState();
+                    };
                     PopupManager.Instance.ShowPopup(PopupName.PassLevel,
                         new Dictionary<PopupButtonEvent, Action>() {
                             { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
-                            { PopupButtonEvent.NextLevelPressed, NextLevelCallback },},
-                        new Dictionary<PopupSettingType, object>() {
+                            { PopupButtonEvent.NextLevelPressed, NextLevelCallback },
+                            { PopupButtonEvent.OnPopupDisplayed, onPopupDisplayed} },
+                            new Dictionary<PopupSettingType, object>() {
                             { PopupSettingType.PassLevelImageType, star }});
-                };
-                if (!tutorial && AdManager.Instance.canShowInterstitial() && AdManager.Instance.ShowInterstitial(action))
-                {
+                }
+            };
 
-                }
-                else
-                {
-                    action();
-                }
+            if (!tutorial && AdManager.Instance.canShowInterstitial() && AdManager.Instance.ShowInterstitial(action))
+            {
+
             }
+            else
+            {
+                action();
+            }
+
 
         }
         else if (GameCache.Instance.mode == 2)
         {
-            if (GameData.Instance.dailyChallengeProgess[GameCache.Instance.levelSelected - 1] == 1)
+            Action action = () =>
             {
-                Action action = () =>
+                if (GameData.Instance.dailyChallengeProgess[GameCache.Instance.levelSelected - 1] == 1)
                 {
                     PopupManager.Instance.ShowPopup(PopupName.NextLevel,
                         new Dictionary<PopupButtonEvent, Action>() {
                             { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
                             { PopupButtonEvent.NextLevelPressed, NextLevelCallback } });
-                };
-                if (!tutorial && AdManager.Instance.canShowInterstitial() && AdManager.Instance.ShowInterstitial(action))
-                {
-
                 }
                 else
                 {
-                    action();
+                    int star = game.getStar();
+                    Action onPopupDisplayed = () => {
+                        GameData.Instance.dailyChallengeProgess[GameCache.Instance.levelSelected - 1] = 1;
+                        GameData.Instance.increaseCoin(GameConfig.PASS_LEVEL_COIN_REWARD[star - 1]);
+                        GameData.Instance.increasePoint(GameConfig.PASS_LEVEL_POINT_REWARD[star - 1]);
+                    };
+                    PopupManager.Instance.ShowPopup(PopupName.PassLevel,
+                            new Dictionary<PopupButtonEvent, Action>() {
+                            { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
+                            { PopupButtonEvent.NextLevelPressed, NextLevelCallback },
+                            { PopupButtonEvent.OnPopupDisplayed, onPopupDisplayed} },
+                            new Dictionary<PopupSettingType, object>() {
+                            { PopupSettingType.PassLevelImageType, star } });
                 }
+            };
+            if (!tutorial && AdManager.Instance.canShowInterstitial() && AdManager.Instance.ShowInterstitial(action))
+            {
+
             }
             else
             {
-                int star = game.getStar();
-                GameData.Instance.dailyChallengeProgess[GameCache.Instance.levelSelected - 1] = 1;
-                GameData.Instance.increaseCoin(GameConfig.PASS_LEVEL_COIN_REWARD[star - 1]);
-                GameData.Instance.increasePoint(GameConfig.PASS_LEVEL_POINT_REWARD[star - 1]);
-                Action action = () =>
-                {
-                    PopupManager.Instance.ShowPopup(PopupName.PassLevel,
-                        new Dictionary<PopupButtonEvent, Action>() {
-                            { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
-                            { PopupButtonEvent.NextLevelPressed, NextLevelCallback }, },
-                        new Dictionary<PopupSettingType, object>() {
-                            { PopupSettingType.PassLevelImageType, star } });
-                };
-                if (!tutorial && AdManager.Instance.canShowInterstitial() && AdManager.Instance.ShowInterstitial(action))
-                {
-
-                }
-                else
-                {
-                    action();
-                }
+                action();
             }
         }
         string type = tutorial ? "tutorial" : (GameCache.Instance.mode == 1 ? "simple" : "daily_challenge");
@@ -264,7 +254,10 @@ public class GamePlaySceneController : MonoBehaviour
         StartCoroutine(coinChangeEffect(txtPoints, Convert.ToInt32(param)));
         if (GameCache.Instance.unlockAchievementProgress < GameConfig.ACHIEVEMENT_CONDITION_POINT.Length && GameData.Instance.points >= GameConfig.ACHIEVEMENT_CONDITION_POINT[GameCache.Instance.unlockAchievementProgress])
         {
-            PopupManager.Instance.ShowNotification("Unlock achievement. Go back Menu to get " + GameConfig.ACHIEVEMENT_COIN_REWARD[GameCache.Instance.unlockAchievementProgress] + " coins", achievement, 3f);
+            PopupManager.Instance.ShowNotification("Unlock achievement. Touch to go back Menu to get " + GameConfig.ACHIEVEMENT_COIN_REWARD[GameCache.Instance.unlockAchievementProgress] + " coins", achievement, 3f, () => {
+                GameCache.Instance.showAchievement = true;
+                LoadSceneManager.Instance.LoadScene("MainMenu");
+            });
             GameCache.Instance.unlockAchievementProgress++;
         }
     }
@@ -389,6 +382,7 @@ public class GamePlaySceneController : MonoBehaviour
     {
         if (!animPlaying)
         {
+            AudioManager.Instance.Play("button_sound");
             PopupManager.Instance.ShowPopup(PopupName.AddCoin, null);
         }
     }
@@ -397,6 +391,7 @@ public class GamePlaySceneController : MonoBehaviour
     {
         game.StopTime = true;
         AudioManager.Instance.Stop("water");
+        AudioManager.Instance.Play("button_sound");
         switch (GameCache.Instance.mode)
         {
             case 0:

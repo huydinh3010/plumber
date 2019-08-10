@@ -8,7 +8,7 @@ public class FacebookManager : MonoBehaviour
 {
     public static FacebookManager Instance;
     private Action SharedCallback;
-
+    private Action ShareFailedCallback;
     void Awake()
     {
         if(Instance == null)
@@ -61,16 +61,18 @@ public class FacebookManager : MonoBehaviour
         if (FB.IsLoggedIn)
         {
             Debug.Log("FB login worked");
-            ShareWithFriends(SharedCallback);
+            ShareWithFriends(SharedCallback, ShareFailedCallback);
         }
         else
         {
             Debug.Log("FB login fail");
+            ShareFailedCallback?.Invoke();
         }
     }
-    public void ShareWithFriends(Action action)
+    public void ShareWithFriends(Action onSuccess, Action onFailed)
     {
-        SharedCallback = action;
+        SharedCallback = onSuccess;
+        ShareFailedCallback = onFailed;
         if (FB.IsLoggedIn)
         {
             FB.FeedShare(
@@ -88,7 +90,11 @@ public class FacebookManager : MonoBehaviour
     {
         if(!result.Cancelled && string.IsNullOrEmpty(result.Error))
         {
-            SharedCallback();
+            SharedCallback?.Invoke();
+        }
+        else
+        {
+            ShareFailedCallback?.Invoke();
         }
     }
 

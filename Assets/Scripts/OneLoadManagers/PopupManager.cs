@@ -73,11 +73,11 @@ public class PopupManager : MonoBehaviour
     }
 
     
-    public void ShowNotification(string content, Sprite image, float duration) 
+    public void ShowNotification(string content, Sprite image, float duration, Action action = null) 
     {
         if (go_Notification.active) go_Notification.SetActive(false);
         go_Notification.SetActive(true);
-        notification.Show(content, image, duration);
+        notification.Show(content, image, duration, action);
     }
 
     public void ShowPopup(PopupName name, Dictionary<PopupButtonEvent, Action> list_actions, Dictionary<PopupSettingType, object> list_settings = null)
@@ -144,6 +144,7 @@ public class PopupManager : MonoBehaviour
         {
             activePopup.OnClosed();
         }
+        showing = false;
     }
 
     private void OnDestroy()
@@ -179,6 +180,7 @@ public enum PopupButtonEvent
     ShareFacebookPressed,
     NextLevelPressed,
     BuyOnShopPressed,
+    OnPopupDisplayed,
 }
 
 public enum PopupSettingType

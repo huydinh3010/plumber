@@ -234,6 +234,7 @@ GameObject:
   - component: {fileID: 7474749151276756282}
   - component: {fileID: 3164019277362399921}
   - component: {fileID: 6560530662417162374}
+  - component: {fileID: 5982621940068330611}
   m_Layer: 5
   m_Name: ThreeStar
   m_TagString: Untagged
@@ -343,6 +344,20 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &5982621940068330611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2283908146697566735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23eac2035aa5d0f40bcaea3824db4b06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 6548951173818541644}
+  button: {fileID: 6560530662417162374}
 --- !u!1 &4232607762808423089
 GameObject:
   m_ObjectHideFlags: 0

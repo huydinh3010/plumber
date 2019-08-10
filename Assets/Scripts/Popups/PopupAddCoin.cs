@@ -111,6 +111,7 @@ public class PopupAddCoin : MonoBehaviour, IPopup
     {
         if (isShow)
         {
+            AudioManager.Instance.Play("button_sound");
             Close();
             btn_Close_Callback?.Invoke();
         }
@@ -120,6 +121,7 @@ public class PopupAddCoin : MonoBehaviour, IPopup
     {
         if (isShow)
         {
+            AudioManager.Instance.Play("button_sound");
             bool hasVideo = AdManager.Instance.ShowRewardVideo(() =>
             {
                 int reward = GameConfig.REWARDED_VIDEO_COIN;
@@ -143,6 +145,7 @@ public class PopupAddCoin : MonoBehaviour, IPopup
     {
         if (isShow)
         {
+            AudioManager.Instance.Play("button_sound");
             FacebookManager.Instance.ShareWithFriends(() =>
             {
                 int reward = GameConfig.SHARE_FB_COIN_REWARD;
@@ -153,6 +156,8 @@ public class PopupAddCoin : MonoBehaviour, IPopup
                 btn_Share_Fb.interactable = false;
                 GameData.Instance.lastFbShare = System.DateTime.Now.ToFileTime();
                 setShareFbTimer();
+            }, () => {
+                PopupManager.Instance.ShowNotification("Share Facebook failed!", null, 1.5f);
             });
             btn_Share_Fb_Callback?.Invoke();
         }

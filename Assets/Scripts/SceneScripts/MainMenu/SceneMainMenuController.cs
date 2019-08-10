@@ -20,6 +20,11 @@ public class SceneMainMenuController : MonoBehaviour
         {
             PopupManager.Instance.ShowPopup(PopupName.DailyReward, null);
         }
+        if (GameCache.Instance.showAchievement)
+        {
+            GameCache.Instance.showAchievement = false;
+            PopupManager.Instance.ShowPopup(PopupName.Achievement, null);
+        }
         GameCache.Instance.firstGameLoad = false;
 
         Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--Main Menu Start() end");
@@ -40,38 +45,46 @@ public class SceneMainMenuController : MonoBehaviour
     {
         if (GameCache.Instance.unlockAchievementProgress < GameConfig.ACHIEVEMENT_CONDITION_POINT.Length && GameData.Instance.points >= GameConfig.ACHIEVEMENT_CONDITION_POINT[GameCache.Instance.unlockAchievementProgress])
         {
-            PopupManager.Instance.ShowNotification("Unlock achievement. Go back Menu to get " + GameConfig.ACHIEVEMENT_COIN_REWARD[GameCache.Instance.unlockAchievementProgress] + " coins", null, 3f);
+            PopupManager.Instance.ShowNotification("Unlock achievement. Touch to go back Menu to get " + GameConfig.ACHIEVEMENT_COIN_REWARD[GameCache.Instance.unlockAchievementProgress] + " coins", null, 3f, ()=>{
+                PopupManager.Instance.ShowPopup(PopupName.Achievement, null);
+            });
             GameCache.Instance.unlockAchievementProgress++;
         }
     }
 
     public void BtnPlayOnClick()
     {
+        AudioManager.Instance.Play("button_sound");
         LoadSceneManager.Instance.LoadScene("SimpleLevel");
     }
 
     public void BtnDailyChallengeOnClick()
     {
+        AudioManager.Instance.Play("button_sound");
         LoadSceneManager.Instance.LoadScene("ChallengeLevel");
     }
 
     public void BtnAchievementOnClick()
     {
+        AudioManager.Instance.Play("button_sound");
         PopupManager.Instance.ShowPopup(PopupName.Achievement, null);
     }
 
     public void BtnRateOnClick()
     {
+        AudioManager.Instance.Play("button_sound");
         PopupManager.Instance.ShowPopup(PopupName.Rate, null);
     }
 
     public void BtnPlayServicesOnClick()
     {
+        AudioManager.Instance.Play("button_sound");
         PopupManager.Instance.ShowPopup(PopupName.PlayServices, null);
     }
 
     public void BtnHelpOnClick()
     {
+        AudioManager.Instance.Play("button_sound");
         GameCache.Instance.levelSelected = 1;
         GameCache.Instance.mode = 0;
         LoadSceneManager.Instance.LoadScene("GamePlay");
@@ -79,6 +92,7 @@ public class SceneMainMenuController : MonoBehaviour
 
     public void BtnShopOnClick()
     {
+        AudioManager.Instance.Play("button_sound");
         PopupManager.Instance.ShowPopup(PopupName.Shop, null);
     }
 
