@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 public class SceneMainMenuController : MonoBehaviour
 {
+    [SerializeField] Sprite achievement;
     private bool firstFrame;
     private void Awake()
     {
@@ -16,14 +17,14 @@ public class SceneMainMenuController : MonoBehaviour
     {
         Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--Main Menu Start() start");
         LoadSceneManager.Instance.OpenScene();
-        if (!GameCache.Instance.firstGameLoad && !GameData.Instance.dailyRewardStatus && GameData.Instance.continueDay > 0)
-        {
-            PopupManager.Instance.ShowPopup(PopupName.DailyReward, null);
-        }
         if (GameCache.Instance.showAchievement)
         {
             GameCache.Instance.showAchievement = false;
             PopupManager.Instance.ShowPopup(PopupName.Achievement, null);
+        }
+        else if (!GameCache.Instance.firstGameLoad && !GameData.Instance.dailyRewardStatus && GameData.Instance.continueDay > 0)
+        {
+            PopupManager.Instance.ShowPopup(PopupName.DailyReward, null);
         }
         GameCache.Instance.firstGameLoad = false;
 
@@ -45,7 +46,7 @@ public class SceneMainMenuController : MonoBehaviour
     {
         if (GameCache.Instance.unlockAchievementProgress < GameConfig.ACHIEVEMENT_CONDITION_POINT.Length && GameData.Instance.points >= GameConfig.ACHIEVEMENT_CONDITION_POINT[GameCache.Instance.unlockAchievementProgress])
         {
-            PopupManager.Instance.ShowNotification("Unlock achievement. Touch to go back Menu to get " + GameConfig.ACHIEVEMENT_COIN_REWARD[GameCache.Instance.unlockAchievementProgress] + " coins", null, 3f, ()=>{
+            PopupManager.Instance.ShowNotification("Unlock achievement. Touch to go back Menu to get " + GameConfig.ACHIEVEMENT_COIN_REWARD[GameCache.Instance.unlockAchievementProgress] + " coins", achievement, 3f, ()=>{
                 PopupManager.Instance.ShowPopup(PopupName.Achievement, null);
             });
             GameCache.Instance.unlockAchievementProgress++;

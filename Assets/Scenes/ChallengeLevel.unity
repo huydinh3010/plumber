@@ -411,6 +411,7 @@ MonoBehaviour:
   textCoinReward: {fileID: 23260115}
   middle: {fileID: 749324000}
   hand: {fileID: 1896197432}
+  achievement: {fileID: 21300000, guid: 757be9a586296a946bd9f4c3411000c6, type: 3}
 --- !u!4 &151321416
 Transform:
   m_ObjectHideFlags: 0

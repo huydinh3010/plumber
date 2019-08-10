@@ -14,6 +14,7 @@ public class SimpleLevelSceneController : MonoBehaviour
     [SerializeField] GameObject ContentObj;
     [SerializeField] Text txtCoins;
     [SerializeField] Text txtPoints;
+    [SerializeField] Sprite achievement;
     private void Awake()
     {
         LoadSceneManager.Instance.OpenScene();
@@ -83,7 +84,7 @@ public class SimpleLevelSceneController : MonoBehaviour
         StartCoroutine(coinChangeEffect(txtPoints, Convert.ToInt32(param)));
         if (GameCache.Instance.unlockAchievementProgress < GameConfig.ACHIEVEMENT_CONDITION_POINT.Length && GameData.Instance.points >= GameConfig.ACHIEVEMENT_CONDITION_POINT[GameCache.Instance.unlockAchievementProgress])
         {
-            PopupManager.Instance.ShowNotification("Unlock achievement. Touch to go back Menu to get " + GameConfig.ACHIEVEMENT_COIN_REWARD[GameCache.Instance.unlockAchievementProgress] + " coins", null, 3f, () => {
+            PopupManager.Instance.ShowNotification("Unlock achievement. Touch to go back Menu to get " + GameConfig.ACHIEVEMENT_COIN_REWARD[GameCache.Instance.unlockAchievementProgress] + " coins", achievement, 3f, () => {
                 GameCache.Instance.showAchievement = true;
                 LoadSceneManager.Instance.LoadScene("MainMenu");
             });

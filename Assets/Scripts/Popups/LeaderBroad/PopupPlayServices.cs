@@ -106,7 +106,7 @@ public class PopupPlayServices : MonoBehaviour, IPopup
         }
         else
         {
-            PopupManager.Instance.ShowNotification("Cannot load leaderbroad. Make sure you are connected to the internet and try again!", error, 1.5f);
+            //PopupManager.Instance.ShowNotification("Cannot load leaderbroad. Make sure you are connected to the internet and try again!", error, 1.5f);
         }
     }
 
