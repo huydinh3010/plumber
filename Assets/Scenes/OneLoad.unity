@@ -3535,6 +3535,22 @@ PrefabInstance:
       propertyPath: m_FontData.m_MinSize
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2829743106228332414, guid: d2400396d147e5d43b0c72286509bb42,
+        type: 3}
+      propertyPath: m_Text
+      value: If you like our game, please press the rate button and rate it on Google
+        Play.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2829743106228332414, guid: d2400396d147e5d43b0c72286509bb42,
+        type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 2829743106228332414, guid: d2400396d147e5d43b0c72286509bb42,
+        type: 3}
+      propertyPath: m_FontData.m_MinSize
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2400396d147e5d43b0c72286509bb42, type: 3}
 --- !u!1001 &3623495598958748456

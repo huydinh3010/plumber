@@ -228,8 +228,8 @@ public class GamePlaySceneController : MonoBehaviour
         string type = tutorial ? "tutorial" : (GameCache.Instance.mode == 1 ? "simple" : "daily_challenge");
         int remove_pipe_count = game.RemovePipeCount;
         int construct_pipe_count = game.ConstructPipeCount;
-        Debug.Log("Duration: " + game.DurationSecs);
-        Debug.Log("Turn: " + game.TurnCount);
+        //Debug.Log("Duration: " + game.DurationSecs);
+        //Debug.Log("Turn: " + game.TurnCount);
         FirebaseManager.Instance.LogEventLevelEnd(GameCache.Instance.levelSelected, type, GameData.Instance.dayOfDailyChallenge, game.DurationSecs, game.TurnCount, remove_pipe_count, construct_pipe_count);
         FacebookManager.Instance.LogEventLevelEnd(GameCache.Instance.levelSelected, type, GameData.Instance.dayOfDailyChallenge, game.DurationSecs, game.TurnCount, remove_pipe_count, construct_pipe_count);
         if (unlock_level) FirebaseManager.Instance.SetUserProperties(GameData.Instance.unlockLevel);

@@ -71,8 +71,12 @@ public class AdManager : MonoBehaviour
     private void RequestInterstitial()
     {
 #if UNITY_ANDROID
+
+#if ENV_PROD
+        string adUnitId = "ca-app-pub-8912425266737526/2510576754";
+#else
         string adUnitId = "ca-app-pub-3940256099942544/1033173712";
-        //string adUnitId = "ca-app-pub-8912425266737526/2510576754";
+#endif
 #elif UNITY_IPHONE
         string adUnitId = "ca-app-pub-3940256099942544/4411468910";
 #else
@@ -139,8 +143,8 @@ public class AdManager : MonoBehaviour
     {
         string type = args.Type;
         double amount = args.Amount;
-        Debug.Log("HandleRewardBasedVideoRewarded event received for "
-                        + amount.ToString() + " " + type);
+        //Debug.Log("HandleRewardBasedVideoRewarded event received for "
+                        //+ amount.ToString() + " " + type);
         RewardedCallback?.Invoke();
     }
 
@@ -153,7 +157,7 @@ public class AdManager : MonoBehaviour
     {
         if (rewardBasedVideo.IsLoaded())
         {
-            Debug.Log("Show RewardVideo");
+            //Debug.Log("Show RewardVideo");
             RewardedCallback = action;
             rewardBasedVideo.Show();
             return true;
@@ -169,7 +173,7 @@ public class AdManager : MonoBehaviour
     {
 #if UNITY_ANDROID
 #if ENV_PROD
-        string adUnitId = "";
+        string adUnitId = "ca-app-pub-8912425266737526/9538246423";
 #else
         string adUnitId = "ca-app-pub-3940256099942544/6300978111";
 #endif
@@ -193,7 +197,7 @@ public class AdManager : MonoBehaviour
     }
     private void HandleOnBannerAdsClosed(object sender, EventArgs args)
     {
-        Debug.Log("HandleAdClosed event received");
+        //Debug.Log("HandleAdClosed event received");
         BannerClosedCallback?.Invoke();
         bannerHeight = 0;
         RequestBanner();
@@ -201,7 +205,7 @@ public class AdManager : MonoBehaviour
 
     private void HandleOnBannerAdsLoaded(object sender, EventArgs args)
     {
-        Debug.Log("Banner Ads Loaded");
+        //Debug.Log("Banner Ads Loaded");
         bannerHeight = bannerView.GetHeightInPixels() + 20;
         // 
         bannerView.Show();
