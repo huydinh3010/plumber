@@ -118,7 +118,6 @@ public class PopupPlayServices : MonoBehaviour, IPopup
         WWW www = new WWW(url);
         yield return www;
         Texture2D texture = www.texture;
-        //Debug.Log("__________________texture != null: " + texture != null);
         if (texture != null)
         {
             avatar.GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
