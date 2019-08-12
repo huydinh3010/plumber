@@ -19,12 +19,14 @@ public class PopupPlayServices : MonoBehaviour, IPopup
     [SerializeField] Text textPlayerRank;
     [SerializeField] GameObject btn_LoginFb;
     [SerializeField] GameObject avatar;
+    [SerializeField] GameObject textLogin;
     [SerializeField] Sprite error;
     [SerializeField] Sprite fb;
     private List<GameObject> go_items = new List<GameObject>();
     private LeaderboardItem[] leaderboardItems;
     private Action btn_Close_Callback;
     private bool isShow;
+    private bool avatarLoaded;
     private const int LEADER_BROAD_LIMIT_ITEM = 10;
     // Start is called before the first frame update
     void Start()
@@ -89,13 +91,14 @@ public class PopupPlayServices : MonoBehaviour, IPopup
                     {
                         textPlayerName.text = items[i].name;
                         textPlayerScore.text = items[i].score.ToString();
-                        imagePlayerFlag.sprite = Resources.Load<Sprite>("Flags/" + items[i].countryCode);
+                        string c_code = (items[i].countryCode != null && items[i].countryCode.Length > 0) ? items[i].countryCode : "zz";
+                        imagePlayerFlag.sprite = Resources.Load<Sprite>("Flags/" + c_code);
                         int rank = items[i].rank;
                         if (rank <= 0) textPlayerRank.text = "";
                         else if (rank < 1000) textPlayerRank.text = rank.ToString();
                         else if (rank < 1000000) textPlayerRank.text = rank / 1000 + "K";
                         else if (rank < 1000000000) textPlayerRank.text = rank / 1000000 + "M";
-                        if (FacebookHelper.Instance.IsLoggedIn)
+                        if (!avatarLoaded)
                         {
                             StartCoroutine(loadAvatar(items[i].avatarUrl));
                         }
@@ -116,8 +119,13 @@ public class PopupPlayServices : MonoBehaviour, IPopup
         yield return www;
         Texture2D texture = www.texture;
         Debug.Log("__________________texture != null: " + texture != null);
-        //url.LoadImageIntoTexture(textFb2);
-        avatar.GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        if (texture != null)
+        {
+            avatar.GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            avatarLoaded = true;
+            btn_LoginFb.GetComponent<Mask>().enabled = true;
+            avatar.SetActive(true);
+        }
         www.Dispose();
         www = null;
     }
@@ -126,7 +134,7 @@ public class PopupPlayServices : MonoBehaviour, IPopup
     {
         isShow = false;
         content.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-        if (FacebookHelper.Instance.IsLoggedIn)
+        if (avatarLoaded)
         {
             btn_LoginFb.GetComponent<Mask>().enabled = true;
             avatar.SetActive(true);
@@ -136,6 +144,7 @@ public class PopupPlayServices : MonoBehaviour, IPopup
             btn_LoginFb.GetComponent<Mask>().enabled = false;
             avatar.SetActive(false);
         }
+        textLogin.SetActive(!FacebookHelper.Instance.IsLoggedIn);
         GameServices.Instance.UpdateScore(GameConfig.LEADERBROAD_ID, GameData.Instance.points, null);
         GameServices.Instance.FetchLeaderboard(GameConfig.LEADERBROAD_ID, GameServices.LeaderboardTypes.LifeTime, LEADER_BROAD_LIMIT_ITEM, setupLeaderBroad);
     }
@@ -185,8 +194,9 @@ public class PopupPlayServices : MonoBehaviour, IPopup
 
     private void OnLoginFBSuccess()
     {
-        btn_LoginFb.GetComponent<Mask>().enabled = true;
-        avatar.SetActive(true);
+        //btn_LoginFb.GetComponent<Mask>().enabled = true;
+        //avatar.SetActive(true);
+        textLogin.SetActive(false);
         GameServices.Instance.FetchLeaderboard(GameConfig.LEADERBROAD_ID, GameServices.LeaderboardTypes.LifeTime, LEADER_BROAD_LIMIT_ITEM, setupLeaderBroad);
         PopupManager.Instance.ShowNotification("Login Facebook completed!", fb, 1.5f);
     }

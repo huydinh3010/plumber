@@ -12,21 +12,16 @@ public class OneLoadController : MonoBehaviour
     private string str;
     private void Awake()
     {
-        str = "Start at: " + DateTime.Now.TimeOfDay;
         DontDestroyOnLoad(this);
         Input.multiTouchEnabled = false;
-        Debug.Log(str);
-        Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--Start Init Awake");
         SceneManager.LoadScene("MainMenu");
-        Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After LoadScene MainMenu function");
         GameData.Instance.LoadDataFromFile();
-        Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After Load Data function");
-#if ENV_PROD
-        btn_Test.SetActive(false);
-#else
-        btn_Test.SetActive(true);
-        Application.logMessageReceived += Application_logMessageReceived;
-#endif
+//#if ENV_PROD
+//        btn_Test.SetActive(false);
+//#else
+//        btn_Test.SetActive(true);
+//        Application.logMessageReceived += Application_logMessageReceived;
+//#endif
     }
 
     private void Application_logMessageReceived(string condition, string stackTrace, LogType type)
@@ -51,15 +46,15 @@ public class OneLoadController : MonoBehaviour
     {
         
         AudioManager.Instance.Initialize();
-        Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After Audio Initialize");
+        //Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After Audio Initialize");
         //IAPManager.Instance.InitializePurchasing();
         //Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After IAP Initialize");
         FirebaseManager.Instance.Initialize();
-        Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After Firebase Initialize");
+        //Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After Firebase Initialize");
         FacebookManager.Instance.Initialize();
-        Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After Facebook Initialize");
+        //Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After Facebook Initialize");
         AdManager.Instance.Initialize();
-        Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After Admob Initialize");
+        //Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After Admob Initialize");
     }
  
     private void Update()

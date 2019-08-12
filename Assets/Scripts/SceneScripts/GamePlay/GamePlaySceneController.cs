@@ -254,8 +254,8 @@ public class GamePlaySceneController : MonoBehaviour
         StartCoroutine(coinChangeEffect(txtPoints, Convert.ToInt32(param)));
         if (GameCache.Instance.unlockAchievementProgress < GameConfig.ACHIEVEMENT_CONDITION_POINT.Length && GameData.Instance.points >= GameConfig.ACHIEVEMENT_CONDITION_POINT[GameCache.Instance.unlockAchievementProgress])
         {
+            GameCache.Instance.showAchievement = true;
             PopupManager.Instance.ShowNotification("Unlock achievement. Touch to go back Menu to get " + GameConfig.ACHIEVEMENT_COIN_REWARD[GameCache.Instance.unlockAchievementProgress] + " coins", achievement, 3f, () => {
-                GameCache.Instance.showAchievement = true;
                 LoadSceneManager.Instance.LoadScene("MainMenu");
             });
             GameCache.Instance.unlockAchievementProgress++;

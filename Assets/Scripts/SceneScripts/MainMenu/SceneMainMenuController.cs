@@ -15,7 +15,7 @@ public class SceneMainMenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--Main Menu Start() start");
+        //Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--Main Menu Start() start");
         LoadSceneManager.Instance.OpenScene();
         if (GameCache.Instance.showAchievement)
         {
@@ -28,18 +28,18 @@ public class SceneMainMenuController : MonoBehaviour
         }
         GameCache.Instance.firstGameLoad = false;
 
-        Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--Main Menu Start() end");
+        //Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--Main Menu Start() end");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!firstFrame)
-        {
-            Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--Main Menu FirstFrame");
-            firstFrame = true;
+        //if (!firstFrame)
+        //{
+        //    //Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--Main Menu FirstFrame");
+        //    firstFrame = true;
             
-        }
+        //}
     }
 
     private void OnPointChange(object param)

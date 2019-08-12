@@ -28,10 +28,11 @@ public class ChallengeLevelSceneController : MonoBehaviour
         EventDispatcher.Instance.RegisterListener(EventID.OnPointChange, onPointChange);
 
         float aspect_ratio = (float)Screen.height / Screen.width;
-        if (aspect_ratio < 1.5f)
+        if (aspect_ratio < 1.6f)
         {
-            float scale = 1 - ((1.5f - aspect_ratio));
-            middle.GetComponent<RectTransform>().sizeDelta *= scale; 
+            float scale = 1 - ((1.6f - aspect_ratio) / 1.2f);
+            middle.GetComponent<RectTransform>().sizeDelta *= scale;
+            textTutorial.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, 20);
         }
 
         textCoin.text = GameData.Instance.coins.ToString();
@@ -85,8 +86,8 @@ public class ChallengeLevelSceneController : MonoBehaviour
         StartCoroutine(coinChangeEffect(textPoint, Convert.ToInt32(param)));
         if (GameCache.Instance.unlockAchievementProgress < GameConfig.ACHIEVEMENT_CONDITION_POINT.Length && GameData.Instance.points >= GameConfig.ACHIEVEMENT_CONDITION_POINT[GameCache.Instance.unlockAchievementProgress])
         {
+            GameCache.Instance.showAchievement = true;
             PopupManager.Instance.ShowNotification("Unlock achievement. Touch to go back Menu to get " + GameConfig.ACHIEVEMENT_COIN_REWARD[GameCache.Instance.unlockAchievementProgress] + " coins", achievement, 3f, () => {
-                GameCache.Instance.showAchievement = true;
                 LoadSceneManager.Instance.LoadScene("MainMenu");
             });
             GameCache.Instance.unlockAchievementProgress++;
