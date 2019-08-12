@@ -76,7 +76,7 @@ public class FacebookManager : MonoBehaviour
         if (FB.IsLoggedIn)
         {
             FB.FeedShare(
-                link: new System.Uri("https://testgame.huydinh"),
+                link: new System.Uri("https://play.google.com/store/apps/details?id=com.waterline.pipeman"),
                 callback: ShareCallback
                 );
         }

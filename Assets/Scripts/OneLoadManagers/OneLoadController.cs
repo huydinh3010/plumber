@@ -16,12 +16,12 @@ public class OneLoadController : MonoBehaviour
         Input.multiTouchEnabled = false;
         SceneManager.LoadScene("MainMenu");
         GameData.Instance.LoadDataFromFile();
-//#if ENV_PROD
-//        btn_Test.SetActive(false);
-//#else
-//        btn_Test.SetActive(true);
-//        Application.logMessageReceived += Application_logMessageReceived;
-//#endif
+#if ENV_PROD
+        btn_Test.SetActive(false);
+#else
+        btn_Test.SetActive(true);
+        Application.logMessageReceived += Application_logMessageReceived;
+#endif
     }
 
     private void Application_logMessageReceived(string condition, string stackTrace, LogType type)
@@ -66,7 +66,7 @@ public class OneLoadController : MonoBehaviour
     {
         if (pause)
         {
-            Debug.Log("Application Pause: Save data to file");
+            //Debug.Log("Application Pause: Save data to file");
             GameData.Instance.SaveDataToFile();
         }
     }
@@ -78,7 +78,7 @@ public class OneLoadController : MonoBehaviour
 
     private void OnDestroy()
     {
-        Debug.Log("Destroy Init Object");
+        //Debug.Log("Destroy Init Object");
     }
 
     public void BtnShowLogOnClick()

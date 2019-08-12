@@ -14,7 +14,7 @@ public class TutorialModeController : GameController
     private int[] pos_x;
     private int[] pos_y;
     private int[,] m_pipes;
-    private string[] text_content = { "Touch the pipes to turn them.", "Make a water path from value to container.", "Open the valve!", "Good job!" };
+    private string[] text_content = { "Touch the pipes to turn them.", "Make a water path from valve to container.", "Open the valve!", "Good job!" };
     private float pipe_size;
 
     public override int getStar()

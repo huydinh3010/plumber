@@ -95,7 +95,6 @@ public class PopupNextLevel : MonoBehaviour, IPopup
     {
         if (isShow)
         {
-            //AudioManager.Instance.Play("button_sound");
             Close();
             btn_Next_Callback?.Invoke();
         }

@@ -18,7 +18,7 @@ public class ChallengeLevelSceneController : MonoBehaviour
     [SerializeField] GameObject hand;
     [SerializeField] Sprite achievement;
     private int total;
-    private string[] str = {"Complete all levels and get reward coins!", "Congratulations! You have completed daily challenge.Claim your reward.", "You claimed the reward!" };
+    private string[] str = {"Complete all levels and get reward coins!", "Congratulations! You have completed daily challenge. Claim your reward.", "You claimed the reward!" };
     
     // Start is called before the first frame update
     private void Awake()

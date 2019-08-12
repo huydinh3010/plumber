@@ -52,7 +52,6 @@ public class PopupPassLevel : MonoBehaviour, IPopup
             {
 
                 int second_remain = 3 * 60 - delta;
-                Debug.Log("______second: " + second_remain);
                 StartCoroutine(countDown(timer_Watch_Video, second_remain, btn_Watch_Video));
             }
         }
@@ -139,7 +138,6 @@ public class PopupPassLevel : MonoBehaviour, IPopup
     {
         if (isShow)
         {
-            //AudioManager.Instance.Play("button_sound");
             bool hasVideo = AdManager.Instance.ShowRewardVideo(() =>
             {
                 int reward = 5 * GameConfig.PASS_LEVEL_COIN_REWARD[value - 1];
@@ -162,7 +160,6 @@ public class PopupPassLevel : MonoBehaviour, IPopup
     {
         if (isShow)
         {
-            //AudioManager.Instance.Play("button_sound");
             Close();
             btn_Next_Callback?.Invoke();
         }

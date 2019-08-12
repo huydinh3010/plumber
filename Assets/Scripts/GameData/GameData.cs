@@ -58,7 +58,7 @@ public class GameData
         points += value;
         EventDispatcher.Instance.PostEvent(EventID.OnPointChange, null, value);
         GameServices.Instance.UpdateScore(GameConfig.LEADERBROAD_ID, points, (success) => {
-            Debug.Log("IMO update leaderboard: " + success);
+            //Debug.Log("IMO update leaderboard: " + success);
         });
     }
 
@@ -69,7 +69,7 @@ public class GameData
             points -= value;
             EventDispatcher.Instance.PostEvent(EventID.OnPointChange, null);
             GameServices.Instance.UpdateScore(GameConfig.LEADERBROAD_ID, points, (success) => {
-                Debug.Log("IMO update leaderboard: " + success);
+                //Debug.Log("IMO update leaderboard: " + success);
             });
             return true;
         }
@@ -160,7 +160,7 @@ public class GameData
         string path = Application.persistentDataPath + "/" + DATA_FILE_NAME;
         FileStream fileStream = new FileStream(path, FileMode.Create);
         string data = JsonUtility.ToJson(this);
-        Debug.Log("Save data: " + data);
+        //Debug.Log("Save data: " + data);
         binaryFormatter.Serialize(fileStream, data);
         fileStream.Close();
     }

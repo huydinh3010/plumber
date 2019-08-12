@@ -19,7 +19,6 @@ public class PopupPlayServices : MonoBehaviour, IPopup
     [SerializeField] Text textPlayerRank;
     [SerializeField] GameObject btn_LoginFb;
     [SerializeField] GameObject avatar;
-    [SerializeField] GameObject textLogin;
     [SerializeField] Sprite error;
     [SerializeField] Sprite fb;
     private List<GameObject> go_items = new List<GameObject>();
@@ -57,7 +56,6 @@ public class PopupPlayServices : MonoBehaviour, IPopup
 
     private void setupLeaderBroad(bool success, LeaderboardItem[] items)
     {
-        Debug.Log("IMO get leaderboard: " + success);
         if (items != null)
         {
             leaderboardItems = items;
@@ -65,7 +63,6 @@ public class PopupPlayServices : MonoBehaviour, IPopup
             {
                 foreach (GameObject go in go_items) Destroy(go);
                 int i = 0;
-                Debug.Log("GameServices.PlayerId = " + GameServices.Instance.PlayerId);
                 float item_height = item.GetComponent<RectTransform>().rect.height;
                 float content_height = (items.Length < LEADER_BROAD_LIMIT_ITEM ? items.Length : LEADER_BROAD_LIMIT_ITEM) * item_height;
                 content_height = content_height < scroll.rect.height ? scroll.rect.height : content_height;
@@ -73,13 +70,6 @@ public class PopupPlayServices : MonoBehaviour, IPopup
                 content.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
                 for (i = 0; i < items.Length; i++)
                 {
-                    Debug.Log("Item " + i + ":");
-                    Debug.Log("PlayerId = " + items[i].playerId);
-                    Debug.Log("PlayerName = " + items[i].name);
-                    Debug.Log("PlayerScore = " + items[i].score);
-                    Debug.Log("PlayerRank = " + items[i].rank);
-                    Debug.Log("PlayerCountry = " + items[i].countryCode);
-                    Debug.Log("----------------------------end");
                     if (i < LEADER_BROAD_LIMIT_ITEM)
                     {
                         GameObject go = Instantiate(item, Vector3.zero, Quaternion.identity, content.transform);
@@ -118,7 +108,6 @@ public class PopupPlayServices : MonoBehaviour, IPopup
         WWW www = new WWW(url);
         yield return www;
         Texture2D texture = www.texture;
-        Debug.Log("__________________texture != null: " + texture != null);
         if (texture != null)
         {
             avatar.GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
@@ -134,7 +123,7 @@ public class PopupPlayServices : MonoBehaviour, IPopup
     {
         isShow = false;
         content.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-        if (avatarLoaded)
+        if (FacebookHelper.Instance.IsLoggedIn)
         {
             btn_LoginFb.GetComponent<Mask>().enabled = true;
             avatar.SetActive(true);
@@ -144,7 +133,6 @@ public class PopupPlayServices : MonoBehaviour, IPopup
             btn_LoginFb.GetComponent<Mask>().enabled = false;
             avatar.SetActive(false);
         }
-        textLogin.SetActive(!FacebookHelper.Instance.IsLoggedIn);
         GameServices.Instance.UpdateScore(GameConfig.LEADERBROAD_ID, GameData.Instance.points, null);
         GameServices.Instance.FetchLeaderboard(GameConfig.LEADERBROAD_ID, GameServices.LeaderboardTypes.LifeTime, LEADER_BROAD_LIMIT_ITEM, setupLeaderBroad);
     }
@@ -194,9 +182,11 @@ public class PopupPlayServices : MonoBehaviour, IPopup
 
     private void OnLoginFBSuccess()
     {
-        //btn_LoginFb.GetComponent<Mask>().enabled = true;
-        //avatar.SetActive(true);
-        textLogin.SetActive(false);
+        btn_LoginFb.GetComponent<Mask>().enabled = true;
+        avatar.SetActive(true);
+        //
+        GameServices.Instance.UpdateScore(GameConfig.LEADERBROAD_ID, GameData.Instance.points, null);
+        //
         GameServices.Instance.FetchLeaderboard(GameConfig.LEADERBROAD_ID, GameServices.LeaderboardTypes.LifeTime, LEADER_BROAD_LIMIT_ITEM, setupLeaderBroad);
         PopupManager.Instance.ShowNotification("Login Facebook completed!", fb, 1.5f);
     }
