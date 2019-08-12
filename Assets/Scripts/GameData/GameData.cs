@@ -110,7 +110,7 @@ public class GameData
                 Instance.updateDay();
                 for (int i = GameConfig.ACHIEVEMENT_CONDITION_POINT.Length - 1; i >= 0; i--)
                 {
-                    if (Instance.points > GameConfig.ACHIEVEMENT_CONDITION_POINT[i])
+                    if (Instance.points >= GameConfig.ACHIEVEMENT_CONDITION_POINT[i])
                     {
                         GameCache.Instance.unlockAchievementProgress = i + 1;
                         break;
