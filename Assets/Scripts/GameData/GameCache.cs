@@ -14,4 +14,5 @@ public class GameCache
     public bool lastLevel;
     public bool showAchievement;
     public int unlockAchievementProgress;
+    public bool avatarLoaded;
 }

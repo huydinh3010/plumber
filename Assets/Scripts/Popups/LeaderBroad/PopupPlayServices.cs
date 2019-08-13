@@ -25,7 +25,6 @@ public class PopupPlayServices : MonoBehaviour, IPopup
     private LeaderboardItem[] leaderboardItems;
     private Action btn_Close_Callback;
     private bool isShow;
-    private bool avatarLoaded;
     private const int LEADER_BROAD_LIMIT_ITEM = 10;
     // Start is called before the first frame update
     void Start()
@@ -88,7 +87,7 @@ public class PopupPlayServices : MonoBehaviour, IPopup
                         else if (rank < 1000) textPlayerRank.text = rank.ToString();
                         else if (rank < 1000000) textPlayerRank.text = rank / 1000 + "K";
                         else if (rank < 1000000000) textPlayerRank.text = rank / 1000000 + "M";
-                        if (!avatarLoaded)
+                        if (!GameCache.Instance.avatarLoaded)
                         {
                             StartCoroutine(loadAvatar(items[i].avatarUrl));
                         }
@@ -105,13 +104,14 @@ public class PopupPlayServices : MonoBehaviour, IPopup
 
     IEnumerator loadAvatar(string url)
     {
+        //Debug.Log(url);
         WWW www = new WWW(url);
         yield return www;
         Texture2D texture = www.texture;
         if (texture != null)
         {
             avatar.GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-            avatarLoaded = true;
+            GameCache.Instance.avatarLoaded = true;
             btn_LoginFb.GetComponent<Mask>().enabled = true;
             avatar.SetActive(true);
         }
