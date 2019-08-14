@@ -15,4 +15,5 @@ public class GameCache
     public bool showAchievement;
     public int unlockAchievementProgress;
     public bool avatarLoaded;
+    public int showAddCoinCount;
 }

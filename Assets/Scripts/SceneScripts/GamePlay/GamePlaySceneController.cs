@@ -58,6 +58,7 @@ public class GamePlaySceneController : MonoBehaviour
         {
             newGameLevel(2);
         }
+        
     }
 
     // Update is called once per frame
@@ -79,6 +80,7 @@ public class GamePlaySceneController : MonoBehaviour
 
     private void newGameLevel(int type)
     {
+        
         // UI
         if (type == 0)
         {
@@ -98,6 +100,15 @@ public class GamePlaySceneController : MonoBehaviour
             game.enabled = true;
             tutorial = false;
         }
+        if (!tutorial && GameData.Instance.coins < GameConfig.CONSTRUCT_PIPE_COST)
+        {
+            if (GameCache.Instance.showAddCoinCount >= 2)
+            {
+                PopupManager.Instance.ShowPopup(PopupName.AddCoin, null);
+            }
+            else GameCache.Instance.showAddCoinCount++;
+        }
+
         btnBack.interactable = true;
         btnAddCoin.interactable = true;
         btnSound.GetComponent<Image>().sprite = GameData.Instance.isSoundOn ? s_Sounds[1] : s_Sounds[0];
@@ -110,8 +121,8 @@ public class GamePlaySceneController : MonoBehaviour
         game.setupLevel();
         en_RemoveBtn = game.RemovePipeCount == 0;
         en_ConstructBtn = !game.EndConstructPipe;
-        btnRemove.interactable = en_RemoveBtn && GameData.Instance.coins >= GameConfig.REMOVE_PIPE_COST;
-        btnConstruct.interactable = en_ConstructBtn && GameData.Instance.coins >= GameConfig.CONSTRUCT_PIPE_COST;
+        btnRemove.interactable = en_RemoveBtn;
+        btnConstruct.interactable = en_ConstructBtn;
         string[] str_type = { "tutorial", "simple", "daily_challenge" };
         FirebaseManager.Instance.LogEventLevelStart(GameCache.Instance.levelSelected, str_type[type], GameData.Instance.dayOfDailyChallenge);
         FacebookManager.Instance.LogEventLevelStart(GameCache.Instance.levelSelected, str_type[type], GameData.Instance.dayOfDailyChallenge);
@@ -242,11 +253,9 @@ public class GamePlaySceneController : MonoBehaviour
 
     private void onCoinChange(object param)
     {
-        StartCoroutine(coinChangeEffect(txtCoins, Convert.ToInt32(param)));
-        btnRemove.interactable = GameData.Instance.coins >= GameConfig.REMOVE_PIPE_COST;
-        btnConstruct.interactable = GameData.Instance.coins >= GameConfig.CONSTRUCT_PIPE_COST;
-        if (!en_RemoveBtn) btnRemove.interactable = false;
-        if (!en_ConstructBtn) btnConstruct.interactable = false;
+        int value = Convert.ToInt32(param);
+        StartCoroutine(coinChangeEffect(txtCoins, value));
+        if (value < 0 && GameData.Instance.coins < GameConfig.CONSTRUCT_PIPE_COST) GameCache.Instance.showAddCoinCount = 2;
     }
 
     private void onPointChange(object param)
@@ -358,22 +367,36 @@ public class GamePlaySceneController : MonoBehaviour
 
     public void btnRemoveOnClick()
     {
-        if (!tutorial && !animPlaying && en_RemoveBtn && GameData.Instance.decreaseCoin(GameConfig.REMOVE_PIPE_COST))
+        if (!tutorial && !animPlaying && en_RemoveBtn)
         {
-            game.removeIncorrectPipes();
-            btnRemove.interactable = false;
-            en_RemoveBtn = false;
+            if (GameData.Instance.decreaseCoin(GameConfig.REMOVE_PIPE_COST))
+            {
+                game.removeIncorrectPipes();
+                btnRemove.interactable = false;
+                en_RemoveBtn = false;
+            }
+            else
+            {
+                PopupManager.Instance.ShowPopup(PopupName.AddCoin, null, new Dictionary<PopupSettingType, object>() {{ PopupSettingType.AddCoinType, GameConfig.REMOVE_PIPE_COST }});
+            }
         }
     }
 
     public void btnConstructOnClick()
     {
-        if (!tutorial && !animPlaying && en_ConstructBtn && GameData.Instance.decreaseCoin(GameConfig.CONSTRUCT_PIPE_COST))
+        if (!tutorial && !animPlaying && en_ConstructBtn)
         {
-            if (game.constructPipes())
+            if (GameData.Instance.decreaseCoin(GameConfig.CONSTRUCT_PIPE_COST))
             {
-                btnConstruct.interactable = false;
-                en_ConstructBtn = false;
+                if (game.constructPipes())
+                {
+                    btnConstruct.interactable = false;
+                    en_ConstructBtn = false;
+                }
+            }
+            else
+            {
+                PopupManager.Instance.ShowPopup(PopupName.AddCoin, null, new Dictionary<PopupSettingType, object>() { { PopupSettingType.AddCoinType, GameConfig.CONSTRUCT_PIPE_COST } });
             }
         }
     }

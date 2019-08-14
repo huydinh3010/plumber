@@ -186,5 +186,6 @@ public enum PopupButtonEvent
 public enum PopupSettingType
 {
     PassLevelImageType,
+    AddCoinType,
 }
 

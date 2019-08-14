@@ -10,6 +10,7 @@ public class PopupAddCoin : MonoBehaviour, IPopup
     [SerializeField] Button btn_Watch_Video;
     [SerializeField] Text timer_Watch_Video;
     [SerializeField] Text timer_Share_Fb;
+    [SerializeField] Text title;
     private Action btn_Close_Callback;
     private Action btn_Watch_Video_Callback;
     private Action btn_Share_Fb_Callback;
@@ -104,6 +105,23 @@ public class PopupAddCoin : MonoBehaviour, IPopup
         btn_Close_Callback = list_actions.ContainsKey(PopupButtonEvent.ClosePressed) ? list_actions[PopupButtonEvent.ClosePressed] : null;
         btn_Watch_Video_Callback = list_actions.ContainsKey(PopupButtonEvent.WatchVideoMoreCoinPressed) ? list_actions[PopupButtonEvent.WatchVideoMoreCoinPressed] : null;
         btn_Share_Fb_Callback = list_actions.ContainsKey(PopupButtonEvent.ShareFacebookPressed) ? list_actions[PopupButtonEvent.ShareFacebookPressed] : null;
+        if (list_settings != null && list_settings.ContainsKey(PopupSettingType.AddCoinType))
+        {
+            title.text = "Your coin is less than " + list_settings[PopupSettingType.AddCoinType].ToString() + ", not enough to use hint. Get more coins to use.";
+        }
+        else if(GameData.Instance.coins < GameConfig.CONSTRUCT_PIPE_COST)
+        {
+            title.text = "Your coin is less than " + GameConfig.CONSTRUCT_PIPE_COST + ", not enough to use hint. Get more coins to use.";
+        }
+        else if (GameData.Instance.coins < GameConfig.REMOVE_PIPE_COST)
+        {
+            title.text = "Your coin is less than " + GameConfig.REMOVE_PIPE_COST + ", not enough to use hint. Get more coins to use.";
+        }
+        else
+        {
+            title.text = "Get more coins here!";
+        }
+        GameCache.Instance.showAddCoinCount = 0;
         GetComponent<Animator>().Play("Show");
     }
 
@@ -114,6 +132,15 @@ public class PopupAddCoin : MonoBehaviour, IPopup
             AudioManager.Instance.Play("button_sound");
             Close();
             btn_Close_Callback?.Invoke();
+        }
+    }
+
+    public void BtnShopOnClick()
+    {
+        if (isShow)
+        {
+            Close();
+            PopupManager.Instance.ShowPopup(PopupName.Shop, null);
         }
     }
 

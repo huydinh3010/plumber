@@ -56,7 +56,7 @@ public class PopupNextLevel : MonoBehaviour, IPopup
 
     IEnumerator fadeInEffect(CanvasGroup target, Action EndCallback) 
     {
-        float speed = 1f;
+        float speed = 4f;
         while(target.alpha < 1)
         {
             target.alpha = (target.alpha + speed * Time.deltaTime) < 1 ? target.alpha + speed * Time.deltaTime : 1;
