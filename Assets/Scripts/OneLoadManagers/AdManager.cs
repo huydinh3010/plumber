@@ -188,9 +188,22 @@ public class AdManager : MonoBehaviour
         bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
         bannerView.OnAdClosed += HandleOnBannerAdsClosed;
         bannerView.OnAdLoaded += HandleOnBannerAdsLoaded;
+        bannerView.OnAdFailedToLoad += HandleOnBannerAdsFailedToLoad;
         AdRequest request = new AdRequest.Builder().Build();
         bannerView.LoadAd(request);
     }
+
+    private void HandleOnBannerAdsFailedToLoad(object sender, AdFailedToLoadEventArgs e)
+    {
+        StartCoroutine(waitToLoadBanner());
+    }
+
+    IEnumerator waitToLoadBanner()
+    {
+        yield return new WaitForSeconds(5f);
+        RequestBanner();
+    }
+
     private void HandleOnBannerAdsClosed(object sender, EventArgs args)
     {
         BannerClosedCallback?.Invoke();
