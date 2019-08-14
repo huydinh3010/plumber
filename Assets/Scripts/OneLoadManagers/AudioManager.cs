@@ -9,8 +9,9 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance;
 
     public Sound[] sounds;
-    private Sound background;
-    //private bool bgPlaying;
+    private Sound menu;
+    private Sound ingame;
+    private bool bgEnd;
 
     private void Awake()
     {
@@ -23,13 +24,14 @@ public class AudioManager : MonoBehaviour
         {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
-            if (GameData.Instance.isSoundOn) s.source.volume = s.volume;
-            else s.source.volume = 0;
+            s.source.volume = s.volume;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
-            if (s.name == "background") background = s;
+            if (s.name == "music_menu") menu = s;
+            if (s.name == "music_ingame") ingame = s;
         }
-        StartCoroutine(playBackGroundEffect());
+        if (!GameData.Instance.isSoundOn) setMute(true);
+        StartCoroutine(startBackGroundEffect(menu));
     }
 
     // Start is called before the first frame update
@@ -50,24 +52,28 @@ public class AudioManager : MonoBehaviour
         s.source.Play();
     }
 
+    public void PlayPipeSound()
+    {
+        System.Random random = new System.Random();
+        string name = "pipe_" + random.Next(1, 5);
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        Debug.Log(name);
+        s.source.Play();
+    }
+
+    public void PlayValveSound()
+    {
+        System.Random random = new System.Random();
+        string name = "valve_" + random.Next(1, 2);
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        Debug.Log(name);
+        s.source.Play();
+    }
+
     public void Stop(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         s.source.Stop();
-    }
-
-    IEnumerator playBackGroundEffect()
-    {
-        yield return new WaitForSeconds(0.5f);
-        float volume = 0;
-        float speed = 1f;
-        background.source.Play();
-        while (volume < 1f)
-        {
-            volume += speed * Time.deltaTime;
-            background.source.volume = volume;
-            yield return null;
-        }
     }
 
     public void setMute(bool mute)
@@ -78,34 +84,43 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void backgroundVolume(float volume)
+    public void changeBackground(int type)
     {
-        StartCoroutine(bgVolumeChangeEffect(volume));
-    }
-
-    IEnumerator bgVolumeChangeEffect(float volume)
-    {
-        float c_vol = background.source.volume;
-        float speed = 1f;
-        float delta = Mathf.Abs(volume - c_vol);
-        if (volume > c_vol)
+        if(type == 0)
         {
-            while (delta > 0)
-            {
-                delta -= speed * Time.deltaTime;
-                background.source.volume += speed * Time.deltaTime + (delta < 0 ? delta : 0);
-                yield return null;
-            }
+            StartCoroutine(endBackGroundEffect(ingame, ()=> { StartCoroutine(startBackGroundEffect(menu)); }));
         }
         else
         {
-            while (delta > 0)
-            {
-                delta -= speed * Time.deltaTime;
-                background.source.volume -= (speed * Time.deltaTime + (delta < 0 ? delta : 0));
-                yield return null;
-            }
+            StartCoroutine(endBackGroundEffect(menu, () => { StartCoroutine(startBackGroundEffect(ingame)); }));
         }
+    }
+
+    IEnumerator startBackGroundEffect(Sound sound)
+    {
+        sound.source.volume = 0f;
+        sound.source.Play();
+        float speed = 1f;
+        while (!bgEnd && sound.source.volume < sound.volume)
+        {
+            sound.source.volume += speed * Time.deltaTime;
+            yield return null;
+        }
+        if(!bgEnd) sound.source.volume = sound.volume;
+    }
+
+    IEnumerator endBackGroundEffect(Sound sound, Action action)
+    {
+        bgEnd = true;
+        float speed = 3f;
+        while (sound.source.volume > 0)
+        {
+            sound.source.volume -= speed * Time.deltaTime;
+            yield return null;
+        }
+        sound.source.Stop();
+        bgEnd = false;
+        action();
     }
 }
 

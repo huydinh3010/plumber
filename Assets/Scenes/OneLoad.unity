@@ -3089,21 +3089,63 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: water
     clip: {fileID: 8300000, guid: f4ac38db01fe09741857e62f124c3524, type: 3}
-    volume: 1
+    volume: 0.8
     pitch: 1
     loop: 1
     source: {fileID: 0}
-  - name: background
-    clip: {fileID: 8300000, guid: 51049e921fc1b9a42a217a32c2111420, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 1
-    source: {fileID: 0}
-  - name: pipe_sound
-    clip: {fileID: 8300000, guid: c8f1855b23caa1c4486f0844f13f6eb5, type: 3}
-    volume: 1
+  - name: pipe_1
+    clip: {fileID: 8300000, guid: 31f445d00020ccf4788ac1cddcb68c41, type: 3}
+    volume: 0.7
     pitch: 1
     loop: 0
+    source: {fileID: 0}
+  - name: pipe_2
+    clip: {fileID: 8300000, guid: 31b70bbb28415b74db1c3a17e4f0eecf, type: 3}
+    volume: 0.7
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: pipe_3
+    clip: {fileID: 8300000, guid: f67f739f889366b459076b6378e51968, type: 3}
+    volume: 0.7
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: pipe_4
+    clip: {fileID: 8300000, guid: 619d64a415b77c240a7e689c3e8a9fee, type: 3}
+    volume: 0.7
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: pipe_5
+    clip: {fileID: 8300000, guid: 7e44605064f05a54fb35b7d8962cfd81, type: 3}
+    volume: 0.7
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: valve_1
+    clip: {fileID: 8300000, guid: d02f776254d45ef45a0db679cd524be0, type: 3}
+    volume: 0.7
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: valve_2
+    clip: {fileID: 8300000, guid: 1c826cff00f4d0248b04cd952c69055a, type: 3}
+    volume: 0.7
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: music_ingame
+    clip: {fileID: 8300000, guid: a8eaa0930ed180f41a90b99d4925b49a, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: music_menu
+    clip: {fileID: 8300000, guid: 688ed1a9089e0ac458a2776098aad6ab, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
     source: {fileID: 0}
 --- !u!114 &2147130560
 MonoBehaviour:

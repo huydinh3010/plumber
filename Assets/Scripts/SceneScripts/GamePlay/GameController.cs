@@ -248,6 +248,7 @@ public abstract class GameController : MonoBehaviour
     protected void playAnimation(List<GameObject> list_results, List<int> list_ds)
     {
         EventDispatcher.Instance.PostEvent(EventID.PipeAnimationStart, this);
+        AudioManager.Instance.PlayValveSound();
         AudioManager.Instance.Play("water");
         animPlaying = true;
         stopTime = true;
@@ -273,7 +274,7 @@ public abstract class GameController : MonoBehaviour
     {
         if (!animPlaying && !PopupManager.Instance.Showing)
         {
-            AudioManager.Instance.Play("pipe_sound");
+            AudioManager.Instance.PlayPipeSound();
             turnCount++;
             StartCoroutine(rotatePipe(go, 1, rotateSpeed));
         }

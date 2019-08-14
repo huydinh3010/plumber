@@ -15,7 +15,7 @@ public class OneLoadController : MonoBehaviour
         DontDestroyOnLoad(this);
         Input.multiTouchEnabled = false;
         SceneManager.LoadScene("MainMenu");
-        GameData.Instance.LoadDataFromFile();
+        GameData.Instance.LoadData();
 #if ENV_PROD
         btn_Test.SetActive(false);
 #else
