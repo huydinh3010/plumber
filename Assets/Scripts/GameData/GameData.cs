@@ -9,11 +9,12 @@ using ImoSysSDK.SocialPlatforms;
 [System.Serializable]
 public class GameData
 {
+
     public static GameData Instance = new GameData();
     private const string DATA_FILE_NAME = "player.dat";
     private GameData()
     {
-        
+
     }
     public int unlockLevel;
     public int points;
@@ -26,13 +27,13 @@ public class GameData
     public bool isSoundOn;
     public long lastDayAccess;
     public long lastFbShare;
+    public long lastWatchVideo;
     public int continueDay;
     public bool dailyRewardStatus;
     public bool challengeRewardStatus;
     public bool isRateOn;
     public int achievementProgress;
     public int watchVideoRemain;
-    public long lastWatchVideo;
     public LevelState unlockLvState;
     public void increaseCoin(int value)
     {
@@ -57,7 +58,8 @@ public class GameData
     {
         points += value;
         EventDispatcher.Instance.PostEvent(EventID.OnPointChange, null, value);
-        GameServices.Instance.UpdateScore(GameConfig.LEADERBROAD_ID, points, (success) => {
+        GameServices.Instance.UpdateScore(GameConfig.LEADERBROAD_ID, points, (success) =>
+        {
             //Debug.Log("IMO update leaderboard: " + success);
         });
     }
@@ -68,7 +70,8 @@ public class GameData
         {
             points -= value;
             EventDispatcher.Instance.PostEvent(EventID.OnPointChange, null);
-            GameServices.Instance.UpdateScore(GameConfig.LEADERBROAD_ID, points, (success) => {
+            GameServices.Instance.UpdateScore(GameConfig.LEADERBROAD_ID, points, (success) =>
+            {
                 //Debug.Log("IMO update leaderboard: " + success);
             });
             return true;
@@ -79,7 +82,7 @@ public class GameData
     private void updateDay()
     {
         int diff = (System.DateTime.Now.Date - System.DateTime.FromFileTime(lastDayAccess).Date).Days;
-        if(diff > 0)
+        if (diff > 0)
         {
             if (diff == 1 && continueDay < 5) continueDay++;
             else continueDay = 1;
@@ -95,38 +98,47 @@ public class GameData
         }
     }
 
-    public void LoadDataFromFile()
+    public void LoadData()
     {
-        string path = Application.persistentDataPath + "/" + DATA_FILE_NAME;
-        if (File.Exists(path))
+        if (PlayerPrefs.HasKey("GAME"))
         {
-            try
+            string path = Application.persistentDataPath + "/" + DATA_FILE_NAME;
+            if (File.Exists(path))
             {
-                BinaryFormatter binaryFormatter = new BinaryFormatter();
-                FileStream fileStream = new FileStream(path, FileMode.Open);
-                string data = binaryFormatter.Deserialize(fileStream) as string;
-                fileStream.Close();
-                Instance = JsonUtility.FromJson<GameData>(data);
-                Instance.updateDay();
-                for (int i = GameConfig.ACHIEVEMENT_CONDITION_POINT.Length - 1; i >= 0; i--)
+                try
                 {
-                    if (Instance.points >= GameConfig.ACHIEVEMENT_CONDITION_POINT[i])
+                    BinaryFormatter binaryFormatter = new BinaryFormatter();
+                    FileStream fileStream = new FileStream(path, FileMode.Open);
+                    string data = binaryFormatter.Deserialize(fileStream) as string;
+                    fileStream.Close();
+                    Instance = JsonUtility.FromJson<GameData>(data);
+                    Instance.updateDay();
+                    for (int i = GameConfig.ACHIEVEMENT_CONDITION_POINT.Length - 1; i >= 0; i--)
                     {
-                        GameCache.Instance.unlockAchievementProgress = i + 1;
-                        break;
+                        if (Instance.points >= GameConfig.ACHIEVEMENT_CONDITION_POINT[i])
+                        {
+                            GameCache.Instance.unlockAchievementProgress = i + 1;
+                            break;
+                        }
                     }
                 }
+                catch (Exception e)
+                {
+                    newData();
+                }
             }
-            catch (Exception e)
+            else
             {
                 newData();
             }
+            GameCache.Instance.levelSelected = Instance.unlockLevel;
         }
         else
         {
+            PlayerPrefs.SetInt("GAME", 1);
             newData();
+            SaveDataToFile();
         }
-        GameCache.Instance.levelSelected = Instance.unlockLevel;
     }
 
     private void newData()

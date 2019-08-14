@@ -139,6 +139,7 @@ public class PopupAddCoin : MonoBehaviour, IPopup
     {
         if (isShow)
         {
+            AudioManager.Instance.Play("button_sound");
             Close();
             PopupManager.Instance.ShowPopup(PopupName.Shop, null);
         }
@@ -148,7 +149,7 @@ public class PopupAddCoin : MonoBehaviour, IPopup
     {
         if (isShow)
         {
-            //AudioManager.Instance.Play("button_sound");
+            AudioManager.Instance.Play("button_sound");
             bool hasVideo = AdManager.Instance.ShowRewardVideo(() =>
             {
                 int reward = GameConfig.REWARDED_VIDEO_COIN;
@@ -172,7 +173,7 @@ public class PopupAddCoin : MonoBehaviour, IPopup
     {
         if (isShow)
         {
-            //AudioManager.Instance.Play("button_sound");
+            AudioManager.Instance.Play("button_sound");
             FacebookManager.Instance.ShareWithFriends(() =>
             {
                 int reward = GameConfig.SHARE_FB_COIN_REWARD;

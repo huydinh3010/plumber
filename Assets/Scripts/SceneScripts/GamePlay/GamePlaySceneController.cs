@@ -30,7 +30,7 @@ public class GamePlaySceneController : MonoBehaviour
     private int r_Count;
     private void Awake()
     {
-        AudioManager.Instance.backgroundVolume(0.5f);
+        AudioManager.Instance.changeBackground(1);
         LoadSceneManager.Instance.OpenScene();
         EventDispatcher.Instance.RegisterListener(EventID.OnCoinChange, onCoinChange);
         EventDispatcher.Instance.RegisterListener(EventID.OnPointChange, onPointChange);
@@ -413,7 +413,6 @@ public class GamePlaySceneController : MonoBehaviour
     public void btnBackOnClick()
     {
         game.StopTime = true;
-        AudioManager.Instance.Stop("water");
         AudioManager.Instance.Play("button_sound");
         switch (GameCache.Instance.mode)
         {
@@ -465,7 +464,8 @@ public class GamePlaySceneController : MonoBehaviour
         AdManager.Instance.ClearBannerCallback();
         try
         {
-            AudioManager.Instance.backgroundVolume(1f);
+            AudioManager.Instance.Stop("water");
+            AudioManager.Instance.changeBackground(0);
             PopupManager.Instance.ForceClosePopup();
         }
         catch (Exception e)
