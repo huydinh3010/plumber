@@ -273,6 +273,7 @@ public abstract class GameController : MonoBehaviour
     {
         if (!animPlaying && !PopupManager.Instance.Showing)
         {
+            AudioManager.Instance.Play("pipe_sound");
             turnCount++;
             StartCoroutine(rotatePipe(go, 1, rotateSpeed));
         }

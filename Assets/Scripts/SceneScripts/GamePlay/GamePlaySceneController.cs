@@ -30,6 +30,7 @@ public class GamePlaySceneController : MonoBehaviour
     private int r_Count;
     private void Awake()
     {
+        AudioManager.Instance.backgroundVolume(0.5f);
         LoadSceneManager.Instance.OpenScene();
         EventDispatcher.Instance.RegisterListener(EventID.OnCoinChange, onCoinChange);
         EventDispatcher.Instance.RegisterListener(EventID.OnPointChange, onPointChange);
@@ -43,6 +44,7 @@ public class GamePlaySceneController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         setUIPosWithBannerSize();
         if (GameCache.Instance.mode == 0 || (GameCache.Instance.levelSelected == 1 && GameCache.Instance.mode == 1)) // tutorial
         {
@@ -342,7 +344,7 @@ public class GamePlaySceneController : MonoBehaviour
     public void btnSoundOnClick()
     {
         GameData.Instance.isSoundOn = !GameData.Instance.isSoundOn;
-        AudioManager.Instance.soundVolume(GameData.Instance.isSoundOn ? 1 : 0);
+        AudioManager.Instance.setMute(!GameData.Instance.isSoundOn);
         AudioManager.Instance.Play("button_sound");
         if (GameData.Instance.isSoundOn)
         {
@@ -440,6 +442,7 @@ public class GamePlaySceneController : MonoBehaviour
         AdManager.Instance.ClearBannerCallback();
         try
         {
+            AudioManager.Instance.backgroundVolume(1f);
             PopupManager.Instance.ForceClosePopup();
         }
         catch (Exception e)

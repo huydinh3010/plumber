@@ -28,6 +28,8 @@ public class SceneMainMenuController : MonoBehaviour
         GameCache.Instance.firstGameLoad = false;
     }
 
+
+
     // Update is called once per frame
     void Update()
     {

@@ -1,11 +1,16 @@
-﻿using UnityEngine.Audio;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.Audio;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
     public Sound[] sounds;
+    private Sound background;
+    //private bool bgPlaying;
 
     private void Awake()
     {
@@ -22,19 +27,21 @@ public class AudioManager : MonoBehaviour
             else s.source.volume = 0;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
+            if (s.name == "background") background = s;
         }
+        StartCoroutine(playBackGroundEffect());
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void Play(string name)
@@ -49,14 +56,57 @@ public class AudioManager : MonoBehaviour
         s.source.Stop();
     }
 
-    public void soundVolume(float volume)
+    IEnumerator playBackGroundEffect()
+    {
+        yield return new WaitForSeconds(0.5f);
+        float volume = 0;
+        float speed = 1f;
+        background.source.Play();
+        while (volume < 1f)
+        {
+            volume += speed * Time.deltaTime;
+            background.source.volume = volume;
+            yield return null;
+        }
+    }
+
+    public void setMute(bool mute)
     {
         foreach (Sound s in sounds)
         {
-            s.source.volume = volume;
+            s.source.mute = mute;
         }
     }
-    
+
+    public void backgroundVolume(float volume)
+    {
+        StartCoroutine(bgVolumeChangeEffect(volume));
+    }
+
+    IEnumerator bgVolumeChangeEffect(float volume)
+    {
+        float c_vol = background.source.volume;
+        float speed = 1f;
+        float delta = Mathf.Abs(volume - c_vol);
+        if (volume > c_vol)
+        {
+            while (delta > 0)
+            {
+                delta -= speed * Time.deltaTime;
+                background.source.volume += speed * Time.deltaTime + (delta < 0 ? delta : 0);
+                yield return null;
+            }
+        }
+        else
+        {
+            while (delta > 0)
+            {
+                delta -= speed * Time.deltaTime;
+                background.source.volume -= (speed * Time.deltaTime + (delta < 0 ? delta : 0));
+                yield return null;
+            }
+        }
+    }
 }
 
 

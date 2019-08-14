@@ -3135,6 +3135,18 @@ MonoBehaviour:
     pitch: 1
     loop: 1
     source: {fileID: 0}
+  - name: background
+    clip: {fileID: 8300000, guid: 51049e921fc1b9a42a217a32c2111420, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: pipe_sound
+    clip: {fileID: 8300000, guid: c8f1855b23caa1c4486f0844f13f6eb5, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!114 &2147130560
 MonoBehaviour:
   m_ObjectHideFlags: 0
