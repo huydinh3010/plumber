@@ -30,15 +30,13 @@ public class FacebookManager : MonoBehaviour
 
     private void SetInit()
     {
-        Debug.Log("Facebook init done!");
         if (FB.IsLoggedIn)
         {
-            //FB.ActivateApp();
-            // Fb logged in
+
         }
         else
         {
-            //call login facebook
+           
         }
     }
     private void OnHideUnity(bool isGameShown)

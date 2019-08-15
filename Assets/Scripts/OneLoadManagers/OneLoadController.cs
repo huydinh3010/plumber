@@ -66,19 +66,8 @@ public class OneLoadController : MonoBehaviour
     {
         if (pause)
         {
-            //Debug.Log("Application Pause: Save data to file");
-            GameData.Instance.SaveDataToFile();
+            PlayerPrefs.Save();
         }
-    }
-
-    private void OnApplicationQuit()
-    {
-        GameData.Instance.SaveDataToFile();
-    }
-
-    private void OnDestroy()
-    {
-        //Debug.Log("Destroy Init Object");
     }
 
     public void BtnShowLogOnClick()

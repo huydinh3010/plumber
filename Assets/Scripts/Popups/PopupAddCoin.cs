@@ -32,8 +32,8 @@ public class PopupAddCoin : MonoBehaviour, IPopup
     private void Setup()
     {
         isShow = false;
-        btn_Share_Fb.interactable = (System.DateTime.Now - System.DateTime.FromFileTime(GameData.Instance.lastFbShare)).Hours >= 1;
-        btn_Watch_Video.interactable = (GameData.Instance.watchVideoRemain > 0) && ((System.DateTime.Now - System.DateTime.FromFileTime(GameData.Instance.lastWatchVideo)).Minutes >= 3);
+        btn_Share_Fb.interactable = (System.DateTime.Now - GameData.Instance.lastFbShare).Hours >= 1;
+        btn_Watch_Video.interactable = (GameData.Instance.watchVideoRemain > 0) && ((System.DateTime.Now - GameData.Instance.lastWatchVideo).Minutes >= 3);
         setShareFbTimer();
         setWatchVideoTimer();
     }
@@ -44,11 +44,10 @@ public class PopupAddCoin : MonoBehaviour, IPopup
 
         if (!btn_Watch_Video.interactable && GameData.Instance.watchVideoRemain > 0)
         {
-            int delta = (int)(System.DateTime.Now - System.DateTime.FromFileTime(GameData.Instance.lastWatchVideo)).TotalSeconds;
+            int delta = (int)(System.DateTime.Now - GameData.Instance.lastWatchVideo).TotalSeconds;
             if (delta >= 0)
             {
                 int second_remain = 3 * 60 - delta;
-                Debug.Log("______second: " + second_remain);
                 StartCoroutine(countDown(timer_Watch_Video, second_remain, btn_Watch_Video));
             }
         }
@@ -59,7 +58,7 @@ public class PopupAddCoin : MonoBehaviour, IPopup
         timer_Share_Fb.enabled = false;
         if (!btn_Share_Fb.interactable)
         {
-            int delta = (int)(System.DateTime.Now - System.DateTime.FromFileTime(GameData.Instance.lastFbShare)).TotalSeconds;
+            int delta = (int)(System.DateTime.Now - GameData.Instance.lastFbShare).TotalSeconds;
             if (delta >= 0)
             {
                 int second_remain = 60 * 60 - delta;
@@ -156,7 +155,7 @@ public class PopupAddCoin : MonoBehaviour, IPopup
                 GameData.Instance.increaseCoin(reward);
                 btn_Watch_Video.interactable = false;
                 GameData.Instance.watchVideoRemain--;
-                GameData.Instance.lastWatchVideo = System.DateTime.Now.ToFileTime();
+                GameData.Instance.lastWatchVideo = System.DateTime.Now;
                 string content = "";
                 if (GameData.Instance.watchVideoRemain > 0) content = "You are rewarded " + reward + " coins!";
                 else content = "You are rewarded " + reward + " coins. You have watched all video of today!";
@@ -182,7 +181,7 @@ public class PopupAddCoin : MonoBehaviour, IPopup
                 FirebaseManager.Instance.LogEventShareFacebook();
                 FacebookManager.Instance.LogEventShareFacebook();
                 btn_Share_Fb.interactable = false;
-                GameData.Instance.lastFbShare = System.DateTime.Now.ToFileTime();
+                GameData.Instance.lastFbShare = System.DateTime.Now;
                 setShareFbTimer();
             }, () => {
                 PopupManager.Instance.ShowNotification("Share Facebook failed!", null, 1.5f);
