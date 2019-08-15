@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
     private Sound menu;
     private Sound ingame;
     private bool bgEnd;
+    private int type = 1;
 
     private void Awake()
     {
@@ -84,7 +85,9 @@ public class AudioManager : MonoBehaviour
 
     public void changeBackground(int type)
     {
-        if(type == 0)
+        if (type == this.type) return;
+        this.type = type;
+        if(this.type == 0)
         {
             StartCoroutine(endBackGroundEffect(ingame, ()=> { StartCoroutine(startBackGroundEffect(menu)); }));
         }
