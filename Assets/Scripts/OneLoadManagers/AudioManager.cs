@@ -31,7 +31,7 @@ public class AudioManager : MonoBehaviour
             if (s.name == "music_ingame") ingame = s;
         }
         if (!GameData.Instance.isSoundOn) setMute(true);
-        StartCoroutine(startBackGroundEffect(menu));
+       // StartCoroutine(startBackGroundEffect(menu));
     }
 
     // Start is called before the first frame update
