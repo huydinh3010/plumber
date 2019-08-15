@@ -9,6 +9,7 @@ public class Notification : MonoBehaviour
     [SerializeField] Image image;
     [SerializeField] float timeDuration;
     private Action btn_Callback;
+    private bool closed;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +24,7 @@ public class Notification : MonoBehaviour
 
     public void Show(string content, Sprite s_image, float duration, Action action = null)
     {
+        closed = false;
         textContent.text = content;
         if (s_image == null)
         {
@@ -47,12 +49,21 @@ public class Notification : MonoBehaviour
     {
         GetComponent<Animator>().Play("Show");
         yield return new WaitForSeconds(timeDuration);
-        GetComponent<Animator>().Play("Hide");
+        if (!closed)
+        {
+            closed = true;
+            GetComponent<Animator>().Play("Hide");
+        }
     }
 
     public void btnOnClick()
     {
         btn_Callback?.Invoke();
         btn_Callback = null;
+        if (!closed)
+        {
+            closed = true;
+            GetComponent<Animator>().Play("Hide");
+        }
     }
 }

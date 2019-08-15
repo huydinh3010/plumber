@@ -463,7 +463,7 @@ public class GamePlaySceneController : MonoBehaviour
 
     public void NextLevelCallback()
     {
-        if (r_Count++ == 4)
+        if (GameData.Instance.isRateOn && r_Count++ == 4)
         {
             r_Count = 0;
             PopupManager.Instance.ShowPopup(PopupName.Rate, new Dictionary<PopupButtonEvent, Action>() { { PopupButtonEvent.ClosePressed, nextLevel }, { PopupButtonEvent.NotNowOnRatePressed, nextLevel } });
