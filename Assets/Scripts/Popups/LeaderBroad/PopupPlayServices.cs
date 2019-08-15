@@ -104,7 +104,6 @@ public class PopupPlayServices : MonoBehaviour, IPopup
 
     IEnumerator loadAvatar(string url)
     {
-        //Debug.Log(url);
         WWW www = new WWW(url);
         yield return www;
         Texture2D texture = www.texture;

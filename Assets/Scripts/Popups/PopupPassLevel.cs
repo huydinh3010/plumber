@@ -34,7 +34,7 @@ public class PopupPassLevel : MonoBehaviour, IPopup
     private void Setup()
     {
         isShow = false;
-        btn_Watch_Video.interactable = (GameData.Instance.watchVideoRemain > 0) && ((System.DateTime.Now - System.DateTime.FromFileTime(GameData.Instance.lastWatchVideo)).Minutes >= 3);
+        btn_Watch_Video.interactable = (GameData.Instance.watchVideoRemain > 0) && ((System.DateTime.Now - GameData.Instance.lastWatchVideo).Minutes >= 3);
         middleGroup.interactable = false;
         bottomGroup.interactable = false;
         middleGroup.alpha = 0f;
@@ -47,7 +47,7 @@ public class PopupPassLevel : MonoBehaviour, IPopup
         timer_Watch_Video.enabled = false;
         if (!btn_Watch_Video.interactable && GameData.Instance.watchVideoRemain > 0)
         {
-            int delta = (int)(System.DateTime.Now - System.DateTime.FromFileTime(GameData.Instance.lastWatchVideo)).TotalSeconds;
+            int delta = (int)(System.DateTime.Now - GameData.Instance.lastWatchVideo).TotalSeconds;
             if (delta >= 0)
             {
 
@@ -145,7 +145,7 @@ public class PopupPassLevel : MonoBehaviour, IPopup
                 GameData.Instance.increaseCoin(reward);
                 btn_Watch_Video.interactable = false;
                 GameData.Instance.watchVideoRemain--;
-                GameData.Instance.lastWatchVideo = System.DateTime.Now.ToFileTime();
+                GameData.Instance.lastWatchVideo = System.DateTime.Now;
                 string content = "";
                 if (GameData.Instance.watchVideoRemain > 0) content = "You are rewarded " + reward + " coins!";
                 else content = "You are rewarded " + reward + " coins. You have watched all video of today!";

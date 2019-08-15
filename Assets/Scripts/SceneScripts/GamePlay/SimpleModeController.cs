@@ -112,8 +112,8 @@ public class SimpleModeController : GameController
         {
             if(unlockLv)
             {
-                GameData.Instance.unlockLvState.listPipeTypes = new int[row * col];
-                GameData.Instance.unlockLvState.listPipeRotations = new int[row * col];
+                GameData.Instance.unlockLvState.listPipeTypes.NewValue(row * col);
+                GameData.Instance.unlockLvState.listPipeRotations.NewValue(row * col);
             }
             durationSecs = 0f;
             star = 3;

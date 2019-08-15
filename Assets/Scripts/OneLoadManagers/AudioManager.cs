@@ -57,7 +57,6 @@ public class AudioManager : MonoBehaviour
         System.Random random = new System.Random();
         string name = "pipe_" + random.Next(1, 5);
         Sound s = Array.Find(sounds, sound => sound.name == name);
-        Debug.Log(name);
         s.source.Play();
     }
 
@@ -66,7 +65,6 @@ public class AudioManager : MonoBehaviour
         System.Random random = new System.Random();
         string name = "valve_" + random.Next(1, 2);
         Sound s = Array.Find(sounds, sound => sound.name == name);
-        Debug.Log(name);
         s.source.Play();
     }
 
