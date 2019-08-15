@@ -58,10 +58,17 @@ public class GameData
     {
         points += value;
         EventDispatcher.Instance.PostEvent(EventID.OnPointChange, null, value);
-        GameServices.Instance.UpdateScore(GameConfig.LEADERBROAD_ID, points, (success) =>
+        try
         {
-            //Debug.Log("IMO update leaderboard: " + success);
-        });
+            GameServices.Instance.UpdateScore(GameConfig.LEADERBROAD_ID, points, (success) =>
+            {
+                //Debug.Log("IMO update leaderboard: " + success);
+            });
+        }
+        catch
+        {
+
+        }
     }
 
     public bool decreasePoint(int value)
@@ -70,10 +77,17 @@ public class GameData
         {
             points -= value;
             EventDispatcher.Instance.PostEvent(EventID.OnPointChange, null);
-            GameServices.Instance.UpdateScore(GameConfig.LEADERBROAD_ID, points, (success) =>
+            try
             {
-                //Debug.Log("IMO update leaderboard: " + success);
-            });
+                GameServices.Instance.UpdateScore(GameConfig.LEADERBROAD_ID, points, (success) =>
+                {
+                    //Debug.Log("IMO update leaderboard: " + success);
+                });
+            }
+            catch
+            {
+
+            }
             return true;
         }
         return false;

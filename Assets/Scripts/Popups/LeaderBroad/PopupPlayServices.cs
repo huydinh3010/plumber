@@ -133,8 +133,15 @@ public class PopupPlayServices : MonoBehaviour, IPopup
             btn_LoginFb.GetComponent<Mask>().enabled = false;
             avatar.SetActive(false);
         }
-        GameServices.Instance.UpdateScore(GameConfig.LEADERBROAD_ID, GameData.Instance.points, null);
-        GameServices.Instance.FetchLeaderboard(GameConfig.LEADERBROAD_ID, GameServices.LeaderboardTypes.LifeTime, LEADER_BROAD_LIMIT_ITEM, setupLeaderBroad);
+        try
+        {
+            GameServices.Instance.UpdateScore(GameConfig.LEADERBROAD_ID, GameData.Instance.points, null);
+            GameServices.Instance.FetchLeaderboard(GameConfig.LEADERBROAD_ID, GameServices.LeaderboardTypes.LifeTime, LEADER_BROAD_LIMIT_ITEM, setupLeaderBroad);
+        }
+        catch
+        {
+
+        }
     }
 
     public void OnDisplayed()
@@ -184,10 +191,17 @@ public class PopupPlayServices : MonoBehaviour, IPopup
     {
         btn_LoginFb.GetComponent<Mask>().enabled = true;
         avatar.SetActive(true);
-        //
-        GameServices.Instance.UpdateScore(GameConfig.LEADERBROAD_ID, GameData.Instance.points, null);
-        //
-        GameServices.Instance.FetchLeaderboard(GameConfig.LEADERBROAD_ID, GameServices.LeaderboardTypes.LifeTime, LEADER_BROAD_LIMIT_ITEM, setupLeaderBroad);
+        try
+        {
+            //
+            GameServices.Instance.UpdateScore(GameConfig.LEADERBROAD_ID, GameData.Instance.points, null);
+            //
+            GameServices.Instance.FetchLeaderboard(GameConfig.LEADERBROAD_ID, GameServices.LeaderboardTypes.LifeTime, LEADER_BROAD_LIMIT_ITEM, setupLeaderBroad);
+        }
+        catch
+        {
+
+        }
         PopupManager.Instance.ShowNotification("Login Facebook completed!", fb, 1.5f);
     }
 
