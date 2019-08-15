@@ -465,7 +465,6 @@ public class GamePlaySceneController : MonoBehaviour
         try
         {
             AudioManager.Instance.Stop("water");
-            AudioManager.Instance.changeBackground(0);
             PopupManager.Instance.ForceClosePopup();
         }
         catch (Exception e)
