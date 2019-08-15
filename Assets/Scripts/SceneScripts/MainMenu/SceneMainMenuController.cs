@@ -81,7 +81,7 @@ public class SceneMainMenuController : MonoBehaviour
     public void BtnHelpOnClick()
     {
         AudioManager.Instance.Play("button_sound");
-        GameCache.Instance.levelSelected = 1;
+        GameCache.Instance.simpleLevelSelected = 1;
         GameCache.Instance.mode = 0;
         LoadSceneManager.Instance.LoadScene("GamePlay");
     }

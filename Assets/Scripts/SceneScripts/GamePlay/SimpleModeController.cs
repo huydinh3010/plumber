@@ -15,7 +15,7 @@ public class SimpleModeController : GameController
 
     public override void loadLevelData()
     {
-        var textAsset = Resources.Load<TextAsset>("levels/simple/" + GameCache.Instance.levelSelected);
+        var textAsset = Resources.Load<TextAsset>("levels/simple/" + GameCache.Instance.simpleLevelSelected);
         string[] arr = textAsset.text.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
         int k = 0;
         star_time = int.Parse(arr[k++]);
@@ -40,7 +40,7 @@ public class SimpleModeController : GameController
 
     public override void setupLevel()
     {
-        unlockLv = GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1] == 0;
+        unlockLv = GameData.Instance.listLevelStars[GameCache.Instance.simpleLevelSelected - 1] == 0;
         if (unlockLv && GameData.Instance.unlockLvState.durationSecs > 0)
         {
             durationSecs = GameData.Instance.unlockLvState.durationSecs;

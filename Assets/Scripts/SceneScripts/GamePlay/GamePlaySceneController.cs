@@ -34,7 +34,6 @@ public class GamePlaySceneController : MonoBehaviour
         LoadSceneManager.Instance.OpenScene();
         EventDispatcher.Instance.RegisterListener(EventID.OnCoinChange, onCoinChange);
         EventDispatcher.Instance.RegisterListener(EventID.OnPointChange, onPointChange);
-        EventDispatcher.Instance.RegisterListener(EventID.OnLevelSelectChange, onLevelSelectChange);
         EventDispatcher.Instance.RegisterListener(EventID.PipeAnimationEnd, endGame);
         EventDispatcher.Instance.RegisterListener(EventID.PipeAnimationStart, AnimationStart);
         AdManager.Instance.AddBannerCallback(onBannerShow, onBannerHide);
@@ -46,7 +45,7 @@ public class GamePlaySceneController : MonoBehaviour
     {
         
         setUIPosWithBannerSize();
-        if (GameCache.Instance.mode == 0 || (GameCache.Instance.levelSelected == 1 && GameCache.Instance.mode == 1)) // tutorial
+        if (GameCache.Instance.mode == 0 || (GameCache.Instance.simpleLevelSelected == 1 && GameCache.Instance.mode == 1)) // tutorial
         {
             newGameLevel(0);
         }
@@ -114,7 +113,7 @@ public class GamePlaySceneController : MonoBehaviour
         btnSound.GetComponent<Image>().sprite = GameData.Instance.isSoundOn ? s_Sounds[1] : s_Sounds[0];
         txtCoins.text = GameData.Instance.coins.ToString();
         txtPoints.text = GameData.Instance.points.ToString();
-        txtLevel.text = GameCache.Instance.levelSelected.ToString();
+        txtLevel.text = type == 2 ? GameCache.Instance.challengeLevelSelected.ToString() : GameCache.Instance.simpleLevelSelected.ToString();
         //Gamelogic
         gameover = animPlaying = false;
         game.loadLevelData();
@@ -124,8 +123,8 @@ public class GamePlaySceneController : MonoBehaviour
         btnRemove.interactable = en_RemoveBtn;
         btnConstruct.interactable = en_ConstructBtn;
         string[] str_type = { "tutorial", "simple", "daily_challenge" };
-        FirebaseManager.Instance.LogEventLevelStart(GameCache.Instance.levelSelected, str_type[type], GameData.Instance.dayOfDailyChallenge);
-        FacebookManager.Instance.LogEventLevelStart(GameCache.Instance.levelSelected, str_type[type], GameData.Instance.dayOfDailyChallenge);
+        FirebaseManager.Instance.LogEventLevelStart(type == 2 ? GameCache.Instance.challengeLevelSelected : GameCache.Instance.simpleLevelSelected, str_type[type], GameData.Instance.dayOfDailyChallenge);
+        FacebookManager.Instance.LogEventLevelStart(type == 2 ? GameCache.Instance.challengeLevelSelected : GameCache.Instance.simpleLevelSelected, str_type[type], GameData.Instance.dayOfDailyChallenge);
     }
 
     public void AnimationStart(object param)
@@ -151,13 +150,13 @@ public class GamePlaySceneController : MonoBehaviour
         {
             Action action = () =>
             {
-                if (GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1] > 0)
+                if (GameData.Instance.listLevelStars[GameCache.Instance.simpleLevelSelected - 1] > 0)
                 {
                     int star = game.getStar();
                     Action onPopupDisplayed = () => {
-                        int c_star = GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1];
+                        int c_star = GameData.Instance.listLevelStars[GameCache.Instance.simpleLevelSelected - 1];
                         int n_star = star;
-                        if (n_star > c_star) GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1] = n_star;
+                        if (n_star > c_star) GameData.Instance.listLevelStars[GameCache.Instance.simpleLevelSelected - 1] = n_star;
                     };
                     PopupManager.Instance.ShowPopup(PopupName.NextLevel,
                         new Dictionary<PopupButtonEvent, Action>() {
@@ -169,7 +168,7 @@ public class GamePlaySceneController : MonoBehaviour
                 {
                     int star = game.getStar();
                     Action onPopupDisplayed = () => {
-                        GameData.Instance.listLevelStars[GameCache.Instance.levelSelected - 1] = star;
+                        GameData.Instance.listLevelStars[GameCache.Instance.simpleLevelSelected - 1] = star;
                         GameData.Instance.increaseCoin(GameConfig.PASS_LEVEL_COIN_REWARD[star - 1]);
                         GameData.Instance.increasePoint(GameConfig.PASS_LEVEL_POINT_REWARD[star - 1]);
                         if (GameData.Instance.unlockLevel < GameConfig.NUMBER_OF_SIMPLE_LEVEL)
@@ -205,7 +204,7 @@ public class GamePlaySceneController : MonoBehaviour
         {
             Action action = () =>
             {
-                if (GameData.Instance.dailyChallengeProgess[GameCache.Instance.levelSelected - 1] == 1)
+                if (GameData.Instance.dailyChallengeProgess[GameCache.Instance.challengeLevelSelected - 1] == 1)
                 {
                     PopupManager.Instance.ShowPopup(PopupName.NextLevel,
                         new Dictionary<PopupButtonEvent, Action>() {
@@ -216,7 +215,7 @@ public class GamePlaySceneController : MonoBehaviour
                 {
                     int star = game.getStar();
                     Action onPopupDisplayed = () => {
-                        GameData.Instance.dailyChallengeProgess[GameCache.Instance.levelSelected - 1] = 1;
+                        GameData.Instance.dailyChallengeProgess[GameCache.Instance.challengeLevelSelected - 1] = 1;
                         GameData.Instance.increaseCoin(GameConfig.PASS_LEVEL_COIN_REWARD[star - 1]);
                         GameData.Instance.increasePoint(GameConfig.PASS_LEVEL_POINT_REWARD[star - 1]);
                     };
@@ -241,14 +240,9 @@ public class GamePlaySceneController : MonoBehaviour
         string type = tutorial ? "tutorial" : (GameCache.Instance.mode == 1 ? "simple" : "daily_challenge");
         int remove_pipe_count = game.RemovePipeCount;
         int construct_pipe_count = game.ConstructPipeCount;
-        FirebaseManager.Instance.LogEventLevelEnd(GameCache.Instance.levelSelected, type, GameData.Instance.dayOfDailyChallenge, game.DurationSecs, game.TurnCount, remove_pipe_count, construct_pipe_count);
-        FacebookManager.Instance.LogEventLevelEnd(GameCache.Instance.levelSelected, type, GameData.Instance.dayOfDailyChallenge, game.DurationSecs, game.TurnCount, remove_pipe_count, construct_pipe_count);
+        FirebaseManager.Instance.LogEventLevelEnd(GameCache.Instance.mode == 2 ? GameCache.Instance.challengeLevelSelected : GameCache.Instance.simpleLevelSelected, type, GameData.Instance.dayOfDailyChallenge, game.DurationSecs, game.TurnCount, remove_pipe_count, construct_pipe_count);
+        FacebookManager.Instance.LogEventLevelEnd(GameCache.Instance.mode == 2 ? GameCache.Instance.challengeLevelSelected : GameCache.Instance.simpleLevelSelected, type, GameData.Instance.dayOfDailyChallenge, game.DurationSecs, game.TurnCount, remove_pipe_count, construct_pipe_count);
         if (unlock_level) FirebaseManager.Instance.SetUserProperties(GameData.Instance.unlockLevel);
-    }
-
-    private void onLevelSelectChange(object param)
-    {
-        txtLevel.text = GameCache.Instance.levelSelected.ToString();
     }
 
     private void onCoinChange(object param)
@@ -323,29 +317,55 @@ public class GamePlaySceneController : MonoBehaviour
     {
         if (GameCache.Instance.mode == 1)
         {
-            if (GameCache.Instance.levelSelected == GameConfig.NUMBER_OF_SIMPLE_LEVEL)
+            if (GameCache.Instance.simpleLevelSelected == GameConfig.NUMBER_OF_SIMPLE_LEVEL)
             {
                 GameCache.Instance.lastLevel = true;
                 LoadSceneManager.Instance.LoadScene("SimpleLevel");
             }
             else
             {
-                GameCache.Instance.levelSelected++;
+                GameCache.Instance.simpleLevelSelected++;
                 game.destroy();
                 newGameLevel(1);
             }
         }
         else if (GameCache.Instance.mode == 2)
         {
-            if (GameCache.Instance.levelSelected == 8)
+            if (GameData.Instance.challengeRewardStatus)
             {
-                LoadSceneManager.Instance.LoadScene("ChallengeLevel");
+                if(GameCache.Instance.challengeLevelSelected == 8)
+                {
+                    LoadSceneManager.Instance.LoadScene("ChallengeLevel");
+                }
+                else
+                {
+                    GameCache.Instance.challengeLevelSelected++;
+                    game.destroy();
+                    newGameLevel(2);
+                }
             }
             else
             {
-                GameCache.Instance.levelSelected++;
-                game.destroy();
-                newGameLevel(2);
+                int target_level = 0;
+                for (int i = 1; i < 8; i++)
+                {
+                    int index = (GameCache.Instance.challengeLevelSelected - 1 + i) % 8;
+                    if (GameData.Instance.dailyChallengeProgess[index] == 0)
+                    {
+                        target_level = index + 1;
+                        break;
+                    }
+                }
+                if (target_level != 0)
+                {
+                    GameCache.Instance.challengeLevelSelected = target_level;
+                    game.destroy();
+                    newGameLevel(2);
+                }
+                else
+                {
+                    LoadSceneManager.Instance.LoadScene("ChallengeLevel");
+                }
             }
         }
     }
@@ -457,7 +477,6 @@ public class GamePlaySceneController : MonoBehaviour
     private void OnDestroy()
     {
         EventDispatcher.Instance.RemoveListener(EventID.OnCoinChange, onCoinChange);
-        EventDispatcher.Instance.RemoveListener(EventID.OnLevelSelectChange, onLevelSelectChange);
         EventDispatcher.Instance.RemoveListener(EventID.OnPointChange, onPointChange);
         EventDispatcher.Instance.RemoveListener(EventID.PipeAnimationEnd, endGame);
         EventDispatcher.Instance.RemoveListener(EventID.PipeAnimationStart, AnimationStart);

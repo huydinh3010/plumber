@@ -69,7 +69,7 @@ public class ScrollviewLevelController : MonoBehaviour, IBeginDragHandler, IEndD
         content = scroll.content;
         btnArrowRight.onClick.AddListener(() => { btnArrowRightOnClick(); });
         btnArrowLeft.onClick.AddListener(() => { btnArrowLeftOnClick(); });
-        int startPage = (GameCache.Instance.levelSelected - 1) / 16;
+        int startPage = (GameCache.Instance.simpleLevelSelected - 1) / 16;
         content.anchoredPosition = new Vector3(-startPage * 1100 - 600, 0, 0);
         txtPackNumber.text = "PACK " + (startPage + 1).ToString() + "/35";
     }

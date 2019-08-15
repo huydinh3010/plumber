@@ -73,12 +73,12 @@ public class PopupPassLevel : MonoBehaviour, IPopup
 
     public void OnDisplayed()
     {
-        isShow = true;
         on_Displayed?.Invoke();
         StartCoroutine(fadeInEffect(middleGroup, () =>
         {
             StartCoroutine(fadeInEffect(bottomGroup, () =>
             {
+                isShow = true;
                 middleGroup.interactable = true;
                 bottomGroup.interactable = true;
             }));
@@ -151,8 +151,8 @@ public class PopupPassLevel : MonoBehaviour, IPopup
                 else content = "You are rewarded " + reward + " coins. You have watched all video of today!";
                 PopupManager.Instance.ShowNotification(content, coin, 2f);
             });
-            FirebaseManager.Instance.LogEventRequestRewardedVideo("x5_coins", hasVideo, GameCache.Instance.levelSelected);
-            FacebookManager.Instance.LogEventRequestRewardedVideo("x5_coins", hasVideo, GameCache.Instance.levelSelected);
+            FirebaseManager.Instance.LogEventRequestRewardedVideo("x5_coins", hasVideo, GameCache.Instance.mode == 2 ? GameCache.Instance.challengeLevelSelected : GameCache.Instance.simpleLevelSelected);
+            FacebookManager.Instance.LogEventRequestRewardedVideo("x5_coins", hasVideo, GameCache.Instance.mode == 2 ? GameCache.Instance.challengeLevelSelected : GameCache.Instance.simpleLevelSelected);
             btn_Watch_Video_Callback?.Invoke();
         }
     }

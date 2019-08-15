@@ -446,7 +446,7 @@ public class GameData
                 break;
             }
         }
-        GameCache.Instance.levelSelected = unlockLevel;
+        GameCache.Instance.simpleLevelSelected = unlockLevel;
     }
 
     public void LoadData()

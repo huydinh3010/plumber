@@ -128,7 +128,7 @@ public class ChallengeLevelSceneController : MonoBehaviour
     {
         AudioManager.Instance.Play("button_sound");
         GameCache.Instance.mode = 2;
-        GameCache.Instance.levelSelected = k;
+        GameCache.Instance.challengeLevelSelected = k;
         LoadSceneManager.Instance.LoadScene("GamePlay");
     }
 

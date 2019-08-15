@@ -36,15 +36,14 @@ public class PopupNextLevel : MonoBehaviour, IPopup
 
     public void OnDisplayed()
     {
-        isShow = true;
         on_Displayed?.Invoke();
         StartCoroutine(fadeInEffect(middleGroup, () =>
             {
                 StartCoroutine(fadeInEffect(bottomGroup, () =>
                     {
+                        isShow = true;
                         middleGroup.interactable = true;
                         bottomGroup.interactable = true;
-                        
                     }));
             }));
     }

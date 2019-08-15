@@ -162,8 +162,8 @@ public class PopupAddCoin : MonoBehaviour, IPopup
                 PopupManager.Instance.ShowNotification(content, coin, 2f);
                 setWatchVideoTimer();
             });
-            FirebaseManager.Instance.LogEventRequestRewardedVideo("4_coins", hasVideo, GameCache.Instance.levelSelected);
-            FacebookManager.Instance.LogEventRequestRewardedVideo("4_coins", hasVideo, GameCache.Instance.levelSelected);
+            FirebaseManager.Instance.LogEventRequestRewardedVideo("4_coins", hasVideo, GameCache.Instance.mode == 2 ? GameCache.Instance.challengeLevelSelected : GameCache.Instance.simpleLevelSelected);
+            FacebookManager.Instance.LogEventRequestRewardedVideo("4_coins", hasVideo, GameCache.Instance.mode == 2 ? GameCache.Instance.challengeLevelSelected : GameCache.Instance.simpleLevelSelected);
             btn_Watch_Video_Callback?.Invoke();
         }
     }

@@ -97,7 +97,7 @@ public class OneLoadController : MonoBehaviour
             GameData.Instance.listLevelStars[GameData.Instance.listLevelStars.Count - 1] = 3;
             GameData.Instance.listLevelStars.Add(0);
             GameData.Instance.unlockLevel++;
-            GameCache.Instance.levelSelected = GameData.Instance.unlockLevel;
+            GameCache.Instance.simpleLevelSelected = GameData.Instance.unlockLevel;
             GameData.Instance.unlockLvState.NewLevelState();
         }
     }
@@ -110,7 +110,7 @@ public class OneLoadController : MonoBehaviour
             for (int i = 0; i < 15; i++) GameData.Instance.listLevelStars.Add(3);
             GameData.Instance.listLevelStars.Add(0);
             GameData.Instance.unlockLevel += 16;
-            GameCache.Instance.levelSelected = GameData.Instance.unlockLevel;
+            GameCache.Instance.simpleLevelSelected = GameData.Instance.unlockLevel;
             GameData.Instance.unlockLvState.NewLevelState();
         }
     }

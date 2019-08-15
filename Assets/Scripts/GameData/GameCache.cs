@@ -8,7 +8,8 @@ public class GameCache
     {
 
     }
-    public int levelSelected;
+    public int simpleLevelSelected;
+    public int challengeLevelSelected;
     public int mode;
     public bool firstGameLoad;
     public bool lastLevel;

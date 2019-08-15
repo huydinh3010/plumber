@@ -143,7 +143,7 @@ public class SimpleLevelSceneController : MonoBehaviour
     public void BtnLevelOnScrollViewOnClick(int level)
     {
         AudioManager.Instance.Play("button_sound");
-        GameCache.Instance.levelSelected = level;
+        GameCache.Instance.simpleLevelSelected = level;
         GameCache.Instance.mode = 1;
         LoadSceneManager.Instance.LoadScene("GamePlay");
     }
