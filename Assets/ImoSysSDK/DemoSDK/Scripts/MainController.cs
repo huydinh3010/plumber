@@ -25,7 +25,7 @@ public class MainController : MonoBehaviour
     }
 
     public void GetLeaderboardClick() {
-        GameServices.Instance.FetchLeaderboard(2342368, GameServices.LeaderboardTypes.LifeTime, 10, (success, items) => {
+        GameServices.Instance.FetchLeaderboard(2342368, GameServices.LeaderboardTypes.LifeTime, 10, 1, (success, items) => {
             Debug.Log("IMO get leaderboard: " + success);
             if(items  != null) {
                 for (int i = 0; i < items.Length; i++) {

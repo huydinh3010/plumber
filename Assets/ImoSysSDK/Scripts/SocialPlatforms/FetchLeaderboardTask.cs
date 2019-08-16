@@ -26,29 +26,14 @@ namespace ImoSysSDK.SocialPlatforms {
             this.onFetchLeaderboardSuccess = onFetchLeaderboardSuccess;
         }
 
-        public void Fetch(string scope, int limit) {
-            Fetch(scope, false, null, limit);
-        }
-
-        public void Fetch(string scope, int limit, string countryCode) {
-            Fetch(scope, false, countryCode, limit);
-        }
-
-        public void FetchFriends(string scope, int limit) {
-            Fetch(scope, true, null, limit);
-        }
-
-        public void FetchFriends(string scope, int limit, string countryCode) {
-            Fetch(scope, true, countryCode, limit);
-        }
-
-        public void Fetch(string scope, bool onlyFriends, string countryCode, int limit) {
+        public void Fetch(string scope, bool onlyFriends, string countryCode, int limit, int aboveCount) {
             string path = string.Format(onlyFriends ? PATH_FRIENDS : PATH, leaderboardId, scope);
             Dictionary<string, string> queryParams = new Dictionary<string, string>();
             if (countryCode != null) {
                 queryParams.Add("country", countryCode);
             }
             queryParams.Add("limit", limit.ToString());
+            queryParams.Add("aboveCount", aboveCount.ToString());
             queryParams.Add("playerId", GameServices.Instance.PlayerId);
             RestClient.SendGetRequest(path, queryParams, OnRequestFinished);
         }

@@ -60,30 +60,30 @@ namespace ImoSysSDK.SocialPlatforms {
             updateScore.AddScore(score);
         }
 
-        public void FetchLeaderboard(int leaderboardId, string scope, int limit, Action<bool, LeaderboardItem[]> callback) {
-            FetchLeaderboard(leaderboardId, scope, false, null, limit, callback);
+        public void FetchLeaderboard(int leaderboardId, string scope, int limit, int aboveCount, Action<bool, LeaderboardItem[]> callback) {
+            FetchLeaderboard(leaderboardId, scope, false, null, limit, aboveCount, callback);
         }
 
-        public void FetchLeaderboard(int leaderboardId, string scope, int limit, string countryCode, Action<bool, LeaderboardItem[]> callback) {
-            FetchLeaderboard(leaderboardId, scope, false, countryCode, limit, callback);
+        public void FetchLeaderboard(int leaderboardId, string scope, int limit, int aboveCount, string countryCode, Action<bool, LeaderboardItem[]> callback) {
+            FetchLeaderboard(leaderboardId, scope, false, countryCode, limit, aboveCount, callback);
         }
 
-        public void FetchFriendLeaderboard(int leaderboardId, string scope, int limit, Action<bool, LeaderboardItem[]> callback) {
-            FetchLeaderboard(leaderboardId, scope, true, null, limit, callback);
+        public void FetchFriendLeaderboard(int leaderboardId, string scope, int limit, int aboveCount, Action<bool, LeaderboardItem[]> callback) {
+            FetchLeaderboard(leaderboardId, scope, true, null, limit, aboveCount, callback);
         }
 
-        public void FetchFriendLeaderboard(int leaderboardId, string scope, int limit, string countryCode, Action<bool, LeaderboardItem[]> callback) {
-            FetchLeaderboard(leaderboardId, scope, true, countryCode, limit, callback);
+        public void FetchFriendLeaderboard(int leaderboardId, string scope, int limit, int aboveCount, string countryCode, Action<bool, LeaderboardItem[]> callback) {
+            FetchLeaderboard(leaderboardId, scope, true, countryCode, limit, aboveCount, callback);
         }
 
-        private void FetchLeaderboard(int leaderboardId, string scope, bool onlyFriends, string countryCode, int limit, Action<bool, LeaderboardItem[]> callback) {
+        private void FetchLeaderboard(int leaderboardId, string scope, bool onlyFriends, string countryCode, int limit, int aboveCount, Action<bool, LeaderboardItem[]> callback) {
             FetchLeaderboardTask fetchLeaderboardTask = new FetchLeaderboardTask(leaderboardId, (message) => {
                 callback(false, null);
             },
             (items) => {
                 callback(true, items);
             });
-            fetchLeaderboardTask.Fetch(scope, onlyFriends, countryCode, limit);
+            fetchLeaderboardTask.Fetch(scope, onlyFriends, countryCode, limit, aboveCount);
         }
     }
 }

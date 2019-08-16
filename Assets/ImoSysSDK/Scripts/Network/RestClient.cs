@@ -5,7 +5,6 @@ using UnityEngine.Networking;
 namespace ImoSysSDK.Network
 {
     using Core;
-    using System;
     using System.Collections.Generic;
 
     public class RestClient
@@ -32,27 +31,19 @@ namespace ImoSysSDK.Network
         {
             if (deviceId == null)
             {
-                try
-                {
 #if UNITY_ANDROID
-                    AndroidJavaClass pluginClass = new AndroidJavaClass("com.imosys.core.ImoSysIdentifier");
-                    AndroidJavaObject imosysIdentifierObject = pluginClass.CallStatic<AndroidJavaObject>("getInstance");
-                    imosysIdentifierObject.Call("getDeviceIdAsync", new ImoSysIdentifierPluginCallback((deviceId) =>
-                    {
-                        RestClient.deviceId = deviceId;
-                        SendRequest(RestClient.deviceId, method, path, queryParams, sJson, onRequestFinished);
-                    }));
+                AndroidJavaClass pluginClass = new AndroidJavaClass("com.imosys.core.ImoSysIdentifier");
+                AndroidJavaObject imosysIdentifierObject = pluginClass.CallStatic<AndroidJavaObject>("getInstance");
+                imosysIdentifierObject.Call("getDeviceIdAsync", new ImoSysIdentifierPluginCallback((deviceId) =>
+                {
+                    RestClient.deviceId = deviceId;
+                    SendRequest(RestClient.deviceId, method, path, queryParams, sJson, onRequestFinished);
+                }));
 
 #elif UNITY_IOS
                 deviceId = ImoSysSDK.Instance.DeviceId;
                 SendRequest(deviceId, method, path, queryParams, sJson, onRequestFinished);
 #endif
-                }
-                catch (Exception e)
-                {
-                    Debug.Log("__________________RestClient Exception: " + e.ToString());
-                }
-
             } else
             {
                 SendRequest(deviceId, method, path, queryParams, sJson, onRequestFinished);
