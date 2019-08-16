@@ -179,6 +179,7 @@ public class GamePlaySceneController : MonoBehaviour
                         }
                         GameData.Instance.unlockLvState.NewLevelState();
                     };
+                    AudioManager.Instance.Play("winning_popup");
                     PopupManager.Instance.ShowPopup(PopupName.PassLevel,
                         new Dictionary<PopupButtonEvent, Action>() {
                             { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
@@ -219,6 +220,7 @@ public class GamePlaySceneController : MonoBehaviour
                         GameData.Instance.increaseCoin(GameConfig.PASS_LEVEL_COIN_REWARD[star - 1]);
                         GameData.Instance.increasePoint(GameConfig.PASS_LEVEL_POINT_REWARD[star - 1]);
                     };
+                    AudioManager.Instance.Play("winning_popup");
                     PopupManager.Instance.ShowPopup(PopupName.PassLevel,
                             new Dictionary<PopupButtonEvent, Action>() {
                             { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
