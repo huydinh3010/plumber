@@ -179,7 +179,7 @@ public class GamePlaySceneController : MonoBehaviour
                         }
                         GameData.Instance.unlockLvState.NewLevelState();
                     };
-                    AudioManager.Instance.Play("winning_popup");
+                    AudioManager.Instance.Play(AudioManager.SoundName.WINNING_POPUP);
                     PopupManager.Instance.ShowPopup(PopupName.PassLevel,
                         new Dictionary<PopupButtonEvent, Action>() {
                             { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
@@ -220,7 +220,7 @@ public class GamePlaySceneController : MonoBehaviour
                         GameData.Instance.increaseCoin(GameConfig.PASS_LEVEL_COIN_REWARD[star - 1]);
                         GameData.Instance.increasePoint(GameConfig.PASS_LEVEL_POINT_REWARD[star - 1]);
                     };
-                    AudioManager.Instance.Play("winning_popup");
+                    AudioManager.Instance.Play(AudioManager.SoundName.WINNING_POPUP);
                     PopupManager.Instance.ShowPopup(PopupName.PassLevel,
                             new Dictionary<PopupButtonEvent, Action>() {
                             { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
@@ -376,7 +376,7 @@ public class GamePlaySceneController : MonoBehaviour
     {
         GameData.Instance.isSoundOn = !GameData.Instance.isSoundOn;
         AudioManager.Instance.setMute(!GameData.Instance.isSoundOn);
-        AudioManager.Instance.Play("button_sound");
+        AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
         if (GameData.Instance.isSoundOn)
         {
             btnSound.GetComponent<Image>().sprite = s_Sounds[1];
@@ -427,7 +427,7 @@ public class GamePlaySceneController : MonoBehaviour
     {
         if (!animPlaying)
         {
-            AudioManager.Instance.Play("button_sound");
+            AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
             PopupManager.Instance.ShowPopup(PopupName.AddCoin, null);
         }
     }
@@ -435,7 +435,7 @@ public class GamePlaySceneController : MonoBehaviour
     public void btnBackOnClick()
     {
         game.StopTime = true;
-        AudioManager.Instance.Play("button_sound");
+        AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
         switch (GameCache.Instance.mode)
         {
             case 0:
@@ -485,7 +485,7 @@ public class GamePlaySceneController : MonoBehaviour
         AdManager.Instance.ClearBannerCallback();
         try
         {
-            AudioManager.Instance.Stop("water");
+            AudioManager.Instance.Stop(AudioManager.SoundName.WATER);
             PopupManager.Instance.ForceClosePopup();
         }
         catch (Exception e)

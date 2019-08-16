@@ -71,7 +71,7 @@ public class SimpleLevelSceneController : MonoBehaviour
 
     public void BtnSound()
     {
-        AudioManager.Instance.Play("button_sound");
+        AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
     }
 
     private void OnCoinChange(object param)
@@ -136,13 +136,13 @@ public class SimpleLevelSceneController : MonoBehaviour
 
     public void BtnBackOnClick()
     {
-        AudioManager.Instance.Play("button_sound");
+        AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
         LoadSceneManager.Instance.LoadScene("MainMenu");
     }
 
     public void BtnLevelOnScrollViewOnClick(int level)
     {
-        AudioManager.Instance.Play("button_sound");
+        AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
         GameCache.Instance.simpleLevelSelected = level;
         GameCache.Instance.mode = 1;
         LoadSceneManager.Instance.LoadScene("GamePlay");
@@ -150,7 +150,7 @@ public class SimpleLevelSceneController : MonoBehaviour
 
     public void BtnAddCoinOnClick()
     {
-        AudioManager.Instance.Play("button_sound");
+        AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
         PopupManager.Instance.ShowPopup(PopupName.AddCoin, null);
     }
     

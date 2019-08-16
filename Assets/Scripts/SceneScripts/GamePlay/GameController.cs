@@ -249,7 +249,7 @@ public abstract class GameController : MonoBehaviour
     {
         EventDispatcher.Instance.PostEvent(EventID.PipeAnimationStart, this);
         AudioManager.Instance.PlayValveSound();
-        AudioManager.Instance.Play("water");
+        AudioManager.Instance.Play(AudioManager.SoundName.WATER);
         animPlaying = true;
         stopTime = true;
         for (int i = 0; i < list_results.Count - 1; i++)
