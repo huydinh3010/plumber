@@ -48,7 +48,7 @@ public class ScrollviewLevelController : MonoBehaviour, IBeginDragHandler, IEndD
    
     private void btnArrowLeftOnClick()
     {
-        AudioManager.Instance.Play("button_sound");
+        AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
         target = new Vector2(Mathf.Clamp(((int)(-50 - scroll.content.anchoredPosition.x) / 1100 - 1) * -1100 - 600, -38000, -600), 0f);
         txtPackNumber.text = "PACK " + ((int)(-600 - target.x) / 1100 + 1).ToString() + "/35";
         lerp = true;
@@ -56,7 +56,7 @@ public class ScrollviewLevelController : MonoBehaviour, IBeginDragHandler, IEndD
 
     private void btnArrowRightOnClick()
     {
-        AudioManager.Instance.Play("button_sound");
+        AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
         target = new Vector2(Mathf.Clamp(((int)(-50 - scroll.content.anchoredPosition.x) / 1100 + 1) * -1100 - 600, -38000, -600), 0f);
         txtPackNumber.text = "PACK " + ((int)(-600 - target.x) / 1100 + 1).ToString() + "/35";
         lerp = true;

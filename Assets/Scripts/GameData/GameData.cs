@@ -39,7 +39,7 @@ public class GameData
     {
         coins += value;
         EventDispatcher.Instance.PostEvent(EventID.OnCoinChange, null, value);
-        AudioManager.Instance.Play("coins_reward");
+        AudioManager.Instance.Play(AudioManager.SoundName.COIN_REWARD);
     }
 
     public bool decreaseCoin(int value)
@@ -48,7 +48,7 @@ public class GameData
         {
             coins -= value;
             EventDispatcher.Instance.PostEvent(EventID.OnCoinChange, null, -value);
-            AudioManager.Instance.Play("coins_decrease");
+            AudioManager.Instance.Play(AudioManager.SoundName.COIN_DECREASE);
             return true;
         }
         return false;

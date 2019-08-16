@@ -128,7 +128,7 @@ public class PopupPassLevel : MonoBehaviour, IPopup
     {
         if (isShow)
         {
-            AudioManager.Instance.Play("button_sound");
+            AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
             Close();
             btn_Close_Callback?.Invoke();
         }
@@ -138,7 +138,7 @@ public class PopupPassLevel : MonoBehaviour, IPopup
     {
         if (isShow)
         {
-            AudioManager.Instance.Play("button_sound");
+            AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
             bool hasVideo = AdManager.Instance.ShowRewardVideo(() =>
             {
                 int reward = 5 * GameConfig.PASS_LEVEL_COIN_REWARD[value - 1];
@@ -161,7 +161,7 @@ public class PopupPassLevel : MonoBehaviour, IPopup
     {
         if (isShow)
         {
-            AudioManager.Instance.Play("button_sound");
+            AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
             Close();
             btn_Next_Callback?.Invoke();
         }

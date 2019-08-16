@@ -27,7 +27,7 @@ public class PipeAnimationEvent : MonoBehaviour
     public void endOfPipeLines()
     {
         EventDispatcher.Instance.PostEvent(EventID.PipeAnimationEnd, null);
-        AudioManager.Instance.Stop("water");
+        AudioManager.Instance.Stop(AudioManager.SoundName.WATER);
     }
 
     private void speedUp(object param)

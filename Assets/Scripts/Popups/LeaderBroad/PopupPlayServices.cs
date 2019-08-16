@@ -165,7 +165,7 @@ public class PopupPlayServices : MonoBehaviour, IPopup
     {
         if (isShow)
         {
-            AudioManager.Instance.Play("button_sound");
+            AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
             Close();
             btn_Close_Callback?.Invoke();
         }
