@@ -158,6 +158,7 @@ public class GamePlaySceneController : MonoBehaviour
                         int n_star = star;
                         if (n_star > c_star) GameData.Instance.listLevelStars[GameCache.Instance.simpleLevelSelected - 1] = n_star;
                     };
+                    AudioManager.Instance.Play(AudioManager.SoundName.WINNING_POPUP);
                     PopupManager.Instance.ShowPopup(PopupName.NextLevel,
                         new Dictionary<PopupButtonEvent, Action>() {
                             { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
@@ -207,6 +208,7 @@ public class GamePlaySceneController : MonoBehaviour
             {
                 if (GameData.Instance.dailyChallengeProgess[GameCache.Instance.challengeLevelSelected - 1] == 1)
                 {
+                    AudioManager.Instance.Play(AudioManager.SoundName.WINNING_POPUP);
                     PopupManager.Instance.ShowPopup(PopupName.NextLevel,
                         new Dictionary<PopupButtonEvent, Action>() {
                             { PopupButtonEvent.ClosePressed, CloseLevelPopupCallback },
