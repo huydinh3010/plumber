@@ -3147,6 +3147,12 @@ MonoBehaviour:
     pitch: 1
     loop: 1
     source: {fileID: 0}
+  - name: winning_popup
+    clip: {fileID: 8300000, guid: 20abb673252935944a1eb67cfbfbbc83, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!114 &2147130560
 MonoBehaviour:
   m_ObjectHideFlags: 0
