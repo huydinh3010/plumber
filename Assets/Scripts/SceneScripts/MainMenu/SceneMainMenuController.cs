@@ -50,37 +50,37 @@ public class SceneMainMenuController : MonoBehaviour
 
     public void BtnPlayOnClick()
     {
-        AudioManager.Instance.Play("button_sound");
+        AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
         LoadSceneManager.Instance.LoadScene("SimpleLevel");
     }
 
     public void BtnDailyChallengeOnClick()
     {
-        AudioManager.Instance.Play("button_sound");
+        AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
         LoadSceneManager.Instance.LoadScene("ChallengeLevel");
     }
 
     public void BtnAchievementOnClick()
     {
-        AudioManager.Instance.Play("button_sound");
+        AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
         PopupManager.Instance.ShowPopup(PopupName.Achievement, null);
     }
 
     public void BtnRateOnClick()
     {
-        AudioManager.Instance.Play("button_sound");
+        AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
         PopupManager.Instance.ShowPopup(PopupName.Rate, null);
     }
 
     public void BtnPlayServicesOnClick()
     {
-        AudioManager.Instance.Play("button_sound");
+        AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
         PopupManager.Instance.ShowPopup(PopupName.PlayServices, null);
     }
 
     public void BtnHelpOnClick()
     {
-        AudioManager.Instance.Play("button_sound");
+        AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
         GameCache.Instance.levelSelected = 1;
         GameCache.Instance.mode = 0;
         LoadSceneManager.Instance.LoadScene("GamePlay");
@@ -88,7 +88,7 @@ public class SceneMainMenuController : MonoBehaviour
 
     public void BtnShopOnClick()
     {
-        AudioManager.Instance.Play("button_sound");
+        AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
         PopupManager.Instance.ShowPopup(PopupName.Shop, null);
     }
 

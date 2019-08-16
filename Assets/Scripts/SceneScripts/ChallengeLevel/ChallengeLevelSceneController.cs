@@ -70,7 +70,7 @@ public class ChallengeLevelSceneController : MonoBehaviour
 
     public void btnBackOnClick()
     {
-        AudioManager.Instance.Play("button_sound");
+        AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
         LoadSceneManager.Instance.LoadScene("MainMenu");
     }
 
@@ -126,7 +126,7 @@ public class ChallengeLevelSceneController : MonoBehaviour
 
     public void btnLevelOnClick(int k)
     {
-        AudioManager.Instance.Play("button_sound");
+        AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
         GameCache.Instance.mode = 2;
         GameCache.Instance.levelSelected = k;
         LoadSceneManager.Instance.LoadScene("GamePlay");
@@ -152,7 +152,7 @@ public class ChallengeLevelSceneController : MonoBehaviour
 
     public void btnAddCoinOnClick()
     {
-        AudioManager.Instance.Play("button_sound");
+        AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
         PopupManager.Instance.ShowPopup(PopupName.AddCoin, null);
     }
 

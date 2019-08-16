@@ -89,7 +89,7 @@ public class PopupShop : MonoBehaviour, IPopup
     {
         if (isShow)
         {
-            AudioManager.Instance.Play("button_sound");
+            AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
             btn_Buy_Callback?.Invoke();
         }
     }
@@ -98,7 +98,7 @@ public class PopupShop : MonoBehaviour, IPopup
     {
         if (isShow)
         {
-            AudioManager.Instance.Play("button_sound");
+            AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
             Close();
             btn_Close_Callback?.Invoke();
         }
