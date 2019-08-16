@@ -89,7 +89,6 @@ public class PopupShop : MonoBehaviour, IPopup
     {
         if (isShow)
         {
-            AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
             btn_Buy_Callback?.Invoke();
         }
     }

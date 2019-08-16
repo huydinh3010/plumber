@@ -76,7 +76,6 @@ public class PopupRate : MonoBehaviour, IPopup
     {
         if (isShow)
         {
-            AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
 #if UNITY_ANDROID
             Application.OpenURL("market://details?id=com.waterline.pipeman");
 #elif UNITY_IPHONE

@@ -138,7 +138,6 @@ public class PopupPassLevel : MonoBehaviour, IPopup
     {
         if (isShow)
         {
-            AudioManager.Instance.Play(AudioManager.SoundName.BUTTON);
             bool hasVideo = AdManager.Instance.ShowRewardVideo(() =>
             {
                 int reward = 5 * GameConfig.PASS_LEVEL_COIN_REWARD[value - 1];
