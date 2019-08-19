@@ -2994,7 +2994,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.15686275, g: 0.5882353, b: 0.078431375, a: 0.19607843}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.5882353}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -3060,6 +3060,7 @@ MonoBehaviour:
   - {fileID: 3623495599857719477}
   - {fileID: 3623495598635181069}
   - {fileID: 3623495598819546984}
+  coin: {fileID: 21300000, guid: 5565bc7d656ad534fb21c2d90d8bd5f4, type: 3}
 --- !u!1 &3623495598985937248
 GameObject:
   m_ObjectHideFlags: 0
@@ -3559,7 +3560,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -59.9, y: -42.6}
+  m_AnchoredPosition: {x: -59.899994, y: -42.6}
   m_SizeDelta: {x: 105, y: 143}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3623495599519549144
