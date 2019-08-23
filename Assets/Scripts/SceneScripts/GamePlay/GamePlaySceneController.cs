@@ -6,6 +6,7 @@ using System;
 
 public class GamePlaySceneController : MonoBehaviour
 {
+    [SerializeField] RectTransform canvas;
     [SerializeField] RectTransform bottom;
     [SerializeField] Button btnBack;
     [SerializeField] Button btnSound;
@@ -71,7 +72,7 @@ public class GamePlaySceneController : MonoBehaviour
         normalPlayZonePos = playZone.anchoredPosition;
         normalPlayZoneSize = new Vector2(playZone.rect.width, playZone.rect.height);
         normalBottomPos = bottom.anchoredPosition;
-        float bannerHeight = AdManager.Instance.GetBannerHeight();
+        float bannerHeight = (AdManager.Instance.GetBannerHeight() / Screen.height) * canvas.sizeDelta.y;
         playZone.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, normalPlayZoneSize.y - bannerHeight);
         playZone.anchoredPosition += new Vector2(0, bannerHeight / 2);
         bottom.anchoredPosition += new Vector2(0, bannerHeight);
@@ -301,7 +302,7 @@ public class GamePlaySceneController : MonoBehaviour
 
     private void onBannerShow()
     {
-        float bannerHeight = AdManager.Instance.GetBannerHeight();
+        float bannerHeight = (AdManager.Instance.GetBannerHeight() / Screen.height) * canvas.sizeDelta.y;
         playZone.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, normalPlayZoneSize.y - bannerHeight);
         playZone.anchoredPosition = normalPlayZonePos + new Vector2(0, bannerHeight / 2);
         bottom.anchoredPosition = normalBottomPos + new Vector2(0, bannerHeight);

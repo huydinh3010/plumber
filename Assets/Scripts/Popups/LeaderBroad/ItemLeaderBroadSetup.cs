@@ -27,7 +27,8 @@ public class ItemLeaderBroadSetup : MonoBehaviour
         textRank.text = rank.ToString();
         textName.text = name;
         textScore.text = score.ToString();
-        country_code = (country_code != null && country_code.Length > 0) ? country_code : "zz";
-        imageFlag.sprite = Resources.Load<Sprite>("Flags/" + country_code);
+        Sprite flag = Resources.Load<Sprite>("Flags/" + country_code);
+        if(flag == null) flag = Resources.Load<Sprite>("Flags/zz");
+        imageFlag.sprite = flag;
     }
 }

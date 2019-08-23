@@ -2283,6 +2283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 795fbac48ec03a54e9529c9b1148de55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 1592425304}
   bottom: {fileID: 1810223771}
   btnBack: {fileID: 841087805}
   btnSound: {fileID: 603014761}

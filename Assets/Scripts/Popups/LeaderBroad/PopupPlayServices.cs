@@ -80,8 +80,9 @@ public class PopupPlayServices : MonoBehaviour, IPopup
                     {
                         textPlayerName.text = items[i].name;
                         textPlayerScore.text = items[i].score.ToString();
-                        string c_code = (items[i].countryCode != null && items[i].countryCode.Length > 0) ? items[i].countryCode : "zz";
-                        imagePlayerFlag.sprite = Resources.Load<Sprite>("Flags/" + c_code);
+                        Sprite flag = Resources.Load<Sprite>("Flags/" + items[i].countryCode);
+                        if (flag == null) flag = Resources.Load<Sprite>("Flags/zz");
+                        imagePlayerFlag.sprite = flag;
                         int rank = items[i].rank;
                         if (rank <= 0) textPlayerRank.text = "";
                         else if (rank < 1000) textPlayerRank.text = rank.ToString();

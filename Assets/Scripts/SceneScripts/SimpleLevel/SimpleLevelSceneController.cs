@@ -38,16 +38,16 @@ public class SimpleLevelSceneController : MonoBehaviour
                         switch (GameData.Instance.listLevelStars[p * 16 + i * 4 + j])
                         {
                             case 0:
-                                go = Instantiate(UnlockLv, new Vector3(), Quaternion.identity, goGridClone.transform);
+                                go = Instantiate(UnlockLv, Vector3.zero, Quaternion.identity, goGridClone.transform);
                                 break;
                             case 1:
-                                go = Instantiate(OneStarLv, new Vector3(), Quaternion.identity, goGridClone.transform);
+                                go = Instantiate(OneStarLv, Vector3.zero, Quaternion.identity, goGridClone.transform);
                                 break;
                             case 2:
-                                go = Instantiate(TwoStarsLv, new Vector3(), Quaternion.identity, goGridClone.transform);
+                                go = Instantiate(TwoStarsLv, Vector3.zero, Quaternion.identity, goGridClone.transform);
                                 break;
                             case 3:
-                                go = Instantiate(ThreeStarsLv, new Vector3(), Quaternion.identity, goGridClone.transform);
+                                go = Instantiate(ThreeStarsLv, Vector3.zero, Quaternion.identity, goGridClone.transform);
                                 break;
                             default:
                                 break;
@@ -56,8 +56,9 @@ public class SimpleLevelSceneController : MonoBehaviour
                     }
                     else
                     {
-                        go = Instantiate(LockLv, new Vector3(), Quaternion.identity, goGridClone.transform);
+                        go = Instantiate(LockLv, Vector3.zero, Quaternion.identity, goGridClone.transform);
                     }
+                    go.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
                 }
             }
         }

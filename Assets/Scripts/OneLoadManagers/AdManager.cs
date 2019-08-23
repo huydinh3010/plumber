@@ -213,7 +213,7 @@ public class AdManager : MonoBehaviour
 
     private void HandleOnBannerAdsLoaded(object sender, EventArgs args)
     {
-        bannerHeight = bannerView.GetHeightInPixels() + 20;
+        bannerHeight = bannerView.GetHeightInPixels();
         // 
         bannerView.Show();
         //
