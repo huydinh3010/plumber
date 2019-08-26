@@ -44,10 +44,12 @@ public class FacebookManager : MonoBehaviour
         if (!isGameShown)
         {
             Time.timeScale = 0;
+            AudioManager.Instance.setMute(true);
         }
         else
         {
             Time.timeScale = 1;
+            AudioManager.Instance.setMute(!GameData.Instance.isSoundOn);
         }
     }
     private void FBLogin()
