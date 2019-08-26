@@ -40,11 +40,11 @@ public class OneLoadController : MonoBehaviour
         }
     }
 
-   
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
         AudioManager.Instance.Initialize();
         //Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After Audio Initialize");
         //IAPManager.Instance.InitializePurchasing();
@@ -56,10 +56,10 @@ public class OneLoadController : MonoBehaviour
         AdManager.Instance.Initialize();
         //Debug.Log("Time: " + DateTime.Now.TimeOfDay + "--After Admob Initialize");
     }
- 
+
     private void Update()
     {
-        
+
     }
 
     private void OnApplicationPause(bool pause)
@@ -68,6 +68,22 @@ public class OneLoadController : MonoBehaviour
         {
             PlayerPrefs.Save();
         }
+    }
+
+    private void OnApplicationFocus(bool focus)
+    {
+#if UNITY_IPHONE
+        if(focus)
+        {
+            Time.timeScale = 1;
+            AudioManager.Instance.setMute(!GameData.Instance.isSoundOn);
+        }
+        else
+        {
+            Time.timeScale = 0;
+            AudioManager.Instance.setMute(true);
+        }
+#endif
     }
 
     public void BtnShowLogOnClick()

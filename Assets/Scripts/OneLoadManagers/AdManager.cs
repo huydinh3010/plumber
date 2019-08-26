@@ -27,7 +27,7 @@ public class AdManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     private void Update()
@@ -52,10 +52,11 @@ public class AdManager : MonoBehaviour
 #else
         string appId = "unexpected_platform";
 #endif
+
+        MobileAds.SetiOSAppPauseOnBackground(true);
         // Initialize the Google Mobile Ads SDK.
         MobileAds.Initialize(appId);
         this.rewardBasedVideo = RewardBasedVideoAd.Instance;
-        
         rewardBasedVideo.OnAdRewarded += HandleRewardBasedVideoRewarded;
         rewardBasedVideo.OnAdClosed += HandleRewardBasedVideoClosed;
         this.RequestRewardBasedVideo();
