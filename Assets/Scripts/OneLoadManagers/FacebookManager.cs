@@ -26,6 +26,7 @@ public class FacebookManager : MonoBehaviour
     public void Initialize()
     {
         FB.Init(SetInit, OnHideUnity);
+       
     }
 
     private void SetInit()
@@ -65,6 +66,7 @@ public class FacebookManager : MonoBehaviour
         }
         else
         {
+            
             Debug.Log("FB login fail");
             ShareFailedCallback?.Invoke();
         }
@@ -75,10 +77,15 @@ public class FacebookManager : MonoBehaviour
         ShareFailedCallback = onFailed;
         if (FB.IsLoggedIn)
         {
-            FB.FeedShare(
-                link: new System.Uri("https://play.google.com/store/apps/details?id=com.waterline.pipeman"),
-                callback: ShareCallback
-                );
+           
+
+                FB.Mobile.ShareDialogMode = ShareDialogMode.FEED;
+                FB.ShareLink(
+                    contentURL: new System.Uri("https://play.google.com/store/apps/details?id=com.waterline.pipeman"),
+                    callback: ShareCallback
+                    );
+
+
         }
         else
         {
@@ -88,14 +95,21 @@ public class FacebookManager : MonoBehaviour
 
     private void ShareCallback(IShareResult result)
     {
+        Debug.Log("Result.Error = " + result.Error);
+        Debug.Log("Result.Cancelled = " + result.Cancelled);
+        Debug.Log("Result.PostID = " + result.PostId);
+        Debug.Log("Result.RawResutl = " + result.RawResult);
         if(!result.Cancelled && string.IsNullOrEmpty(result.Error))
         {
             SharedCallback?.Invoke();
+            Debug.Log("Share fb done");
         }
         else
         {
             ShareFailedCallback?.Invoke();
+            Debug.Log("Share failed");
         }
+        Debug.Log("-----------------");
     }
 
     public void LogEventLevelStart(int level, string type, int day)

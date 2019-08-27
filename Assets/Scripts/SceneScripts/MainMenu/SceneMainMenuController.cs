@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 public class SceneMainMenuController : MonoBehaviour
 {
+    [SerializeField] RectTransform safeArea;
     [SerializeField] Sprite achievement;
     private bool firstFrame;
     private void Awake()
