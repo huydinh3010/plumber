@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System;
 public class OneLoadController : MonoBehaviour
 {
+    [SerializeField] RectTransform safeArea;
     [SerializeField] Text txtLog;
     [SerializeField] GameObject scrollViewLog;
     [SerializeField] GameObject btn_Test;

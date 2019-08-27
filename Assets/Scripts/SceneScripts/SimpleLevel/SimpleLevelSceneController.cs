@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 public class SimpleLevelSceneController : MonoBehaviour
 {
+    [SerializeField] RectTransform safeArea;
     [SerializeField] GameObject Grid;
     [SerializeField] GameObject OneStarLv;
     [SerializeField] GameObject TwoStarsLv;

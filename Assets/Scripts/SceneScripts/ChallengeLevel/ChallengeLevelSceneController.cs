@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 public class ChallengeLevelSceneController : MonoBehaviour
 {
+    [SerializeField] RectTransform safeArea;
     [SerializeField] Image[] imageLevels;
     [SerializeField] Image imageState;
     [SerializeField] Button btnPool;

@@ -99,6 +99,7 @@ public class PopupPlayServices : MonoBehaviour, IPopup
         }
         else
         {
+            Debug.Log("Items null");
             //PopupManager.Instance.ShowNotification("Cannot load leaderbroad. Make sure you are connected to the internet and try again!", error, 1.5f);
         }
     }
