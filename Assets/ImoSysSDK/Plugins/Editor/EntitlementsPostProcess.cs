@@ -5,8 +5,6 @@ using UnityEditor.Callbacks;
 using UnityEditor.iOS.Xcode;
 #endif
 using System.Collections;
-using System.IO;
-
 
 public class EntitlementsPostProcess : ScriptableObject
 {
@@ -36,7 +34,7 @@ public class EntitlementsPostProcess : ScriptableObject
         var target_name = PBXProject.GetUnityTargetName();
         var target_guid = proj.TargetGuidByName(target_name);
         var src = AssetDatabase.GetAssetPath(file);
-        var file_name = Path.GetFileName(src);
+        var file_name = System.IO.Path.GetFileName(src);
         var dst = buildPath + "/" + target_name + "/" + file_name;
         FileUtil.CopyFileOrDirectory(src, dst);
         proj.AddFile(target_name + "/" + file_name, file_name);

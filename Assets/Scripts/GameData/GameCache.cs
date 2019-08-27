@@ -17,4 +17,5 @@ public class GameCache
     public int unlockAchievementProgress;
     public bool avatarLoaded;
     public int showAddCoinCount;
+    public bool connectedToServer;
 }

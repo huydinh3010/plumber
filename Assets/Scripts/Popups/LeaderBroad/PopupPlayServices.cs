@@ -21,11 +21,13 @@ public class PopupPlayServices : MonoBehaviour, IPopup
     [SerializeField] GameObject avatar;
     [SerializeField] Sprite error;
     [SerializeField] Sprite fb;
+    [SerializeField] GameObject textContent;
     private List<GameObject> go_items = new List<GameObject>();
     private LeaderboardItem[] leaderboardItems;
     private Action btn_Close_Callback;
     private bool isShow;
     private const int LEADER_BROAD_LIMIT_ITEM = 10;
+    private bool textEffectStop;
     // Start is called before the first frame update
     void Start()
     {
@@ -53,10 +55,25 @@ public class PopupPlayServices : MonoBehaviour, IPopup
         callback();
     }
 
-    private void setupLeaderBroad(bool success, LeaderboardItem[] items)
+    IEnumerator textLoadingEffect(Text text)
     {
-        if (items != null)
+        textEffectStop = false;
+        string temp = text.text;
+        int k = 0;
+        while (!textEffectStop)
         {
+            k++;
+            text.text = k < 4 ? text.text + "." : temp;
+            k = k % 4;
+            yield return new WaitForSeconds(0.3f);
+        }
+    }
+
+    private void setupLeaderBroad(bool success, LeaderboardResponse res)
+    {
+        if (res != null)
+        {
+            LeaderboardItem[] items = res.items;
             leaderboardItems = items;
             Action action = () =>
             {
@@ -95,10 +112,19 @@ public class PopupPlayServices : MonoBehaviour, IPopup
                     }
                 }
             };
+            textEffectStop = true;
+            textContent.SetActive(false);
+            GameCache.Instance.connectedToServer = true;
             StartCoroutine(loadingEffect(action));
         }
         else
         {
+            if (!GameCache.Instance.connectedToServer)
+            {
+                textEffectStop = true;
+                textContent.SetActive(true);
+                textContent.GetComponent<Text>().text = "Cannot connect to server. Try again later!";
+            }
             //PopupManager.Instance.ShowNotification("Cannot load leaderbroad. Make sure you are connected to the internet and try again!", error, 1.5f);
         }
     }
@@ -122,6 +148,16 @@ public class PopupPlayServices : MonoBehaviour, IPopup
     private void Setup()
     {
         isShow = false;
+        if (!GameCache.Instance.connectedToServer)
+        {
+            textContent.SetActive(true);
+            textContent.GetComponent<Text>().text = "Connecting to server";
+            StartCoroutine(textLoadingEffect(textContent.GetComponent<Text>()));
+        }
+        else
+        {
+            textContent.SetActive(false);
+        }
         content.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
         if (FacebookHelper.Instance.IsLoggedIn)
         {

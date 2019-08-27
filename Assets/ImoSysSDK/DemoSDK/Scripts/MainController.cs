@@ -19,17 +19,24 @@ public class MainController : MonoBehaviour
     }
 
     public void UpdateLeaderboardClick() {
-        GameServices.Instance.UpdateScore(2342368, 1000, (success) => {
+        Debug.Log("update leaderboard");
+        GameServices.Instance.UpdateScore(2342368, 1000, "{\"name\":\"Tuan\"}", (success) => {
             Debug.Log("IMO update leaderboard: " + success);
         });
     }
 
     public void GetLeaderboardClick() {
-        GameServices.Instance.FetchLeaderboard(2342368, GameServices.LeaderboardTypes.LifeTime, 10, 1, (success, items) => {
+        GameServices.Instance.FetchLeaderboard(2342368, GameServices.LeaderboardTypes.LifeTime, 10, 1, (success, leaderboard) => {
             Debug.Log("IMO get leaderboard: " + success);
+            string status = leaderboard.status;
+            Debug.Log("IMO leaderboard status: " + status);
+            LeaderboardItem[] items = leaderboard.items;
             if(items  != null) {
                 for (int i = 0; i < items.Length; i++) {
                     Debug.Log("leaderboard i(" + i + "): " + items[i].name + " - " + items[i].score);
+                    if (items[i].metadata != null && items[i].metadata["name"] != null) {
+                        Debug.Log("metadata: " + items[i].metadata.Value<string>("name"));
+                    }
                 }
             }
         });

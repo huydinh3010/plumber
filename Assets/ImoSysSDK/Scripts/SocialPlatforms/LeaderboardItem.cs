@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace ImoSysSDK.SocialPlatforms {
 
@@ -12,5 +14,6 @@ namespace ImoSysSDK.SocialPlatforms {
         public int score;
         public int rank;
         public string countryCode;
+        public JObject metadata;
     }
 }

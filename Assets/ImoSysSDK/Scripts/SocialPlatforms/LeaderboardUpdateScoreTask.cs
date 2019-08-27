@@ -2,6 +2,7 @@
 using System.Collections;
 using ImoSysSDK.Network;
 using System;
+using Newtonsoft.Json.Linq;
 
 namespace ImoSysSDK.SocialPlatforms {
 
@@ -24,12 +25,21 @@ namespace ImoSysSDK.SocialPlatforms {
             this.onUpdateScoreSuccess = onUpdateScoreSuccess;
         }
 
-        public void AddScore(int score) {
-            UpdateScoreBody body = new UpdateScoreBody(GameServices.Instance.PlayerId, score);
-            RestClient.SendPostRequest(string.Format(PATH, this.leaderboardId), JsonUtility.ToJson(body), OnRequestFinished);
+        public void UpdateScore(int score, int? clazz, string jsonMetadata) {
+            JObject body = new JObject();
+            body["playerId"] = GameServices.Instance.PlayerId;
+            body["score"] = score;
+            if (jsonMetadata != null) {
+                body["metadata"] = JObject.Parse(jsonMetadata);
+            }
+            if (clazz != null) {
+                body["class"] = clazz;
+            }
+            RestClient.SendPostRequest(string.Format(PATH, this.leaderboardId), body.ToString(), OnRequestFinished);
         }
 
         private void OnRequestFinished(long statusCode, string message, string data) {
+            Debug.Log("status code: " + statusCode);
             if (statusCode == 200) {
                 OnUpdateScoreSuccessCallback();
             } else {
@@ -51,14 +61,5 @@ namespace ImoSysSDK.SocialPlatforms {
             }
         }
 
-        private class UpdateScoreBody {
-            public string playerId;
-            public int score;
-
-            public UpdateScoreBody(string playerId, int score) {
-                this.playerId = playerId;
-                this.score = score;
-            }
-        }
     }
 }
