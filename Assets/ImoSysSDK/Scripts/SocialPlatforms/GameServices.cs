@@ -131,10 +131,24 @@ namespace ImoSysSDK.SocialPlatforms {
 
         private void FetchLeaderboard(int leaderboardId, string scope, int? clazz, bool onlyFriends, string countryCode, int limit, int aboveCount, Action<bool, LeaderboardResponse> callback) {
             FetchLeaderboardTask fetchLeaderboardTask = new FetchLeaderboardTask(leaderboardId, (message) => {
-                callback(false, null);
+                try
+                {
+                    callback(false, null);
+                }
+                catch
+                {
+                
+                }
             },
             (items) => {
-                callback(true, items);
+                try
+                {
+                    callback(true, items);
+                }
+                catch
+                {
+                
+                }
             });
             fetchLeaderboardTask.Fetch(scope, clazz, onlyFriends, countryCode, limit, aboveCount);
         }

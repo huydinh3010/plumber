@@ -111,11 +111,21 @@ public class PopupPlayServices : MonoBehaviour, IPopup
                         }
                     }
                 }
+                GameCache.Instance.connectedToServer = true;
             };
-            textEffectStop = true;
-            textContent.SetActive(false);
-            GameCache.Instance.connectedToServer = true;
-            StartCoroutine(loadingEffect(action));
+            try
+            {
+                if(transform.gameObject.active)
+                {
+                    textEffectStop = true;
+                    textContent.SetActive(false);
+                    StartCoroutine(loadingEffect(action));
+                }  
+            }
+            catch
+            {
+                
+            }
         }
         else
         {
@@ -145,9 +155,16 @@ public class PopupPlayServices : MonoBehaviour, IPopup
         www = null;
     }
 
+    IEnumerator wait(float seconds, Action callback)
+    {
+        yield return new WaitForSeconds(seconds);
+        callback();
+    }
+
     private void Setup()
     {
         isShow = false;
+        mask.SetActive(false);
         if (!GameCache.Instance.connectedToServer)
         {
             textContent.SetActive(true);
@@ -171,7 +188,7 @@ public class PopupPlayServices : MonoBehaviour, IPopup
         }
         try
         {
-            GameServices.Instance.UpdateScore(GameConfig.LEADERBROAD_ID, GameData.Instance.points, null);
+            //GameServices.Instance.UpdateScore(GameConfig.LEADERBROAD_ID, GameData.Instance.points, null);
             GameServices.Instance.FetchLeaderboard(GameConfig.LEADERBROAD_ID, GameServices.LeaderboardTypes.LifeTime, LEADER_BROAD_LIMIT_ITEM, 0, setupLeaderBroad);
         }
         catch
@@ -232,7 +249,9 @@ public class PopupPlayServices : MonoBehaviour, IPopup
             //
             GameServices.Instance.UpdateScore(GameConfig.LEADERBROAD_ID, GameData.Instance.points, null);
             //
-            GameServices.Instance.FetchLeaderboard(GameConfig.LEADERBROAD_ID, GameServices.LeaderboardTypes.LifeTime, LEADER_BROAD_LIMIT_ITEM, 0, setupLeaderBroad);
+            StartCoroutine(wait(1f, () => {
+                GameServices.Instance.FetchLeaderboard(GameConfig.LEADERBROAD_ID, GameServices.LeaderboardTypes.LifeTime, LEADER_BROAD_LIMIT_ITEM, 0, setupLeaderBroad);    
+            }));
         }
         catch
         {
