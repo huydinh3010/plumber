@@ -1,4 +1,4 @@
-﻿using IMOSimpleJSON;
+﻿using Newtonsoft.Json.Linq;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
@@ -179,10 +179,10 @@ namespace ImoSysSDK.Purchasing
         private string getPurchaseToken(string sReceipt)
         {
             string purchaseToken = "";
-            JSONNode jMessage = null;
+            JObject jMessage = null;
             try
             {
-                jMessage = JSON.Parse(sReceipt);
+                jMessage = JObject.Parse(sReceipt);
 
             }
             catch (Exception ex)
@@ -193,16 +193,16 @@ namespace ImoSysSDK.Purchasing
 
             if (jMessage != null && jMessage.Count > 0)
             {
-                string sPayload = jMessage["Payload"];
+                string sPayload = jMessage["Payload"].Value<string>();
 #if UNITY_IOS
                 purchaseToken = sPayload;
 
 #elif UNITY_ANDROID
-                JSONNode jPayload = JSON.Parse(sPayload);
-                string sJson = jPayload["json"];
+                JObject jPayload = JObject.Parse(sPayload);
+                string sJson = jPayload["json"].Value<string>();
 
-                JSONNode jJson = JSON.Parse(sJson);
-                purchaseToken = jJson["purchaseToken"];
+                JObject jJson = JObject.Parse(sJson);
+                purchaseToken = jJson["purchaseToken"].Value<string>();
 #endif
             }
 

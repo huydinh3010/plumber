@@ -31,6 +31,10 @@ namespace ImoSysSDK.Network
         {
             if (deviceId == null)
             {
+#if UNITY_EDITOR
+                deviceId = ImoSysSDK.Instance.DeviceId;
+                SendRequest(deviceId, method, path, queryParams, sJson, onRequestFinished);
+#else
 #if UNITY_ANDROID
                 AndroidJavaClass pluginClass = new AndroidJavaClass("com.imosys.core.ImoSysIdentifier");
                 AndroidJavaObject imosysIdentifierObject = pluginClass.CallStatic<AndroidJavaObject>("getInstance");
@@ -43,6 +47,7 @@ namespace ImoSysSDK.Network
 #elif UNITY_IOS
                 deviceId = ImoSysSDK.Instance.DeviceId;
                 SendRequest(deviceId, method, path, queryParams, sJson, onRequestFinished);
+#endif
 #endif
             } else
             {
@@ -88,7 +93,11 @@ namespace ImoSysSDK.Network
         private static void AddRequiredHeaders(UnityWebRequest request, string deviceId)
         {
             request.SetRequestHeader("pn", Application.identifier);
-            request.SetRequestHeader("p", Application.platform == RuntimePlatform.Android ? "1" : "2");
+#if UNITY_ANDROID
+            request.SetRequestHeader("p", "1");
+#else
+            request.SetRequestHeader("p", "2");
+#endif
             request.SetRequestHeader("d", deviceId);
         }
     }

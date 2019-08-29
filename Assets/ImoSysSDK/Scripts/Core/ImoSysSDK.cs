@@ -64,11 +64,18 @@ namespace ImoSysSDK.Core
             {
                 if (this.deviceId == null)
                 {
+#if UNITY_EDITOR
+                    this.deviceId = PlayerPrefs.GetString("editor_device_id");
+                    if (string.IsNullOrEmpty(deviceId)) {
+                        this.deviceId = "uid:" + System.Guid.NewGuid().ToString();
+                        PlayerPrefs.SetString("editor_device_id", this.deviceId);
+                    }
+#else
 #if UNITY_IOS
                 if (Application.platform == RuntimePlatform.IPhonePlayer)
                 {
                     IntPtr deviceIdPtr = IOSGetDeviceId();
-                    return Marshal.PtrToStringAnsi(deviceIdPtr);
+                    this.deviceId = Marshal.PtrToStringAnsi(deviceIdPtr);
                 }
 #elif UNITY_ANDROID
                     if (Application.platform == RuntimePlatform.Android)
@@ -77,6 +84,7 @@ namespace ImoSysSDK.Core
                         AndroidJavaObject imosysIdentifierObject = pluginClass.CallStatic<AndroidJavaObject>("getInstance");
                         this.deviceId = imosysIdentifierObject.Call<string>("getDeviceIdSync");
                     }
+#endif
 #endif
                 }
                 return deviceId;

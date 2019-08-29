@@ -196,13 +196,7 @@ public class AdManager : MonoBehaviour
 
     private void HandleOnBannerAdsFailedToLoad(object sender, AdFailedToLoadEventArgs e)
     {
-        StartCoroutine(waitToLoadBanner());
-    }
-
-    IEnumerator waitToLoadBanner()
-    {
-        yield return new WaitForSeconds(5f);
-        RequestBanner();
+        
     }
 
     private void HandleOnBannerAdsClosed(object sender, EventArgs args)
