@@ -6,6 +6,7 @@ using System;
 
 public class GamePlaySceneController : MonoBehaviour
 {
+    [SerializeField] RectTransform safeArea;
     [SerializeField] RectTransform canvas;
     [SerializeField] RectTransform bottom;
     [SerializeField] Button btnBack;

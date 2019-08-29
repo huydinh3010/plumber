@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Facebook.Unity;
@@ -11,7 +11,7 @@ public class FacebookManager : MonoBehaviour
     private Action ShareFailedCallback;
     void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
             //DontDestroyOnLoad(this.gameObject);
@@ -20,7 +20,7 @@ public class FacebookManager : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
     public void Initialize()
@@ -36,7 +36,7 @@ public class FacebookManager : MonoBehaviour
         }
         else
         {
-           
+
         }
     }
     private void OnHideUnity(bool isGameShown)
@@ -44,10 +44,12 @@ public class FacebookManager : MonoBehaviour
         if (!isGameShown)
         {
             Time.timeScale = 0;
+            AudioManager.Instance.setMute(true);
         }
         else
         {
             Time.timeScale = 1;
+            AudioManager.Instance.setMute(!GameData.Instance.isSoundOn);
         }
     }
     private void FBLogin()
@@ -73,10 +75,18 @@ public class FacebookManager : MonoBehaviour
         ShareFailedCallback = onFailed;
         if (FB.IsLoggedIn)
         {
+#if UNITY_IPHONE
+            FB.Mobile.ShareDialogMode = ShareDialogMode.FEED;
+            FB.ShareLink(
+                contentURL: new System.Uri("https://play.google.com/store/apps/details?id=com.waterline.pipeman"),
+                callback: ShareCallback
+                );
+#else
             FB.FeedShare(
                 link: new System.Uri("https://play.google.com/store/apps/details?id=com.waterline.pipeman"),
                 callback: ShareCallback
                 );
+#endif
         }
         else
         {
@@ -86,14 +96,21 @@ public class FacebookManager : MonoBehaviour
 
     private void ShareCallback(IShareResult result)
     {
+        Debug.Log("Result.Error = " + result.Error);
+        Debug.Log("Result.Cancelled = " + result.Cancelled);
+        Debug.Log("Result.PostID = " + result.PostId);
+        Debug.Log("Result.RawResutl = " + result.RawResult);
         if(!result.Cancelled && string.IsNullOrEmpty(result.Error))
         {
             SharedCallback?.Invoke();
+            Debug.Log("Share fb done");
         }
         else
         {
             ShareFailedCallback?.Invoke();
+            Debug.Log("Share failed");
         }
+        Debug.Log("-----------------");
     }
 
     public void LogEventLevelStart(int level, string type, int day)

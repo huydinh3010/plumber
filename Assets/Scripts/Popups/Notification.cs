@@ -8,6 +8,7 @@ public class Notification : MonoBehaviour
     [SerializeField] Text textContent;
     [SerializeField] Image image;
     [SerializeField] float timeDuration;
+    [SerializeField] GameObject MaskOutSideSafeAreaOnTop;
     private Action btn_Callback;
     private bool closed;
     // Start is called before the first frame update
@@ -24,6 +25,7 @@ public class Notification : MonoBehaviour
 
     public void Show(string content, Sprite s_image, float duration, Action action = null)
     {
+        MaskOutSideSafeAreaOnTop.SetActive(true);
         closed = false;
         textContent.text = content;
         if (s_image == null)
@@ -42,6 +44,7 @@ public class Notification : MonoBehaviour
 
     public void OnHided()
     {
+        MaskOutSideSafeAreaOnTop.SetActive(false);
         GetComponent<RectTransform>().gameObject.SetActive(false);
     }
 

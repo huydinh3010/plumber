@@ -53,7 +53,7 @@ namespace ImoSysSDK.Core
 
         private void Initialize()
         {
-#if UNITY_IOS
+#if UNITY_IOS && !UNITY_EDITOR
         IOSInitialize();
 #endif
         }
