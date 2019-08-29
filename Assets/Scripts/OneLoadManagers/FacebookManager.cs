@@ -11,7 +11,7 @@ public class FacebookManager : MonoBehaviour
     private Action ShareFailedCallback;
     void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
             //DontDestroyOnLoad(this.gameObject);
@@ -20,13 +20,13 @@ public class FacebookManager : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
     public void Initialize()
     {
         FB.Init(SetInit, OnHideUnity);
-       
+
     }
 
     private void SetInit()
@@ -37,7 +37,7 @@ public class FacebookManager : MonoBehaviour
         }
         else
         {
-           
+
         }
     }
     private void OnHideUnity(bool isGameShown)
@@ -66,7 +66,7 @@ public class FacebookManager : MonoBehaviour
         }
         else
         {
-            
+
             Debug.Log("FB login fail");
             ShareFailedCallback?.Invoke();
         }
@@ -77,15 +77,18 @@ public class FacebookManager : MonoBehaviour
         ShareFailedCallback = onFailed;
         if (FB.IsLoggedIn)
         {
-           
-
-                FB.Mobile.ShareDialogMode = ShareDialogMode.FEED;
-                FB.ShareLink(
-                    contentURL: new System.Uri("https://play.google.com/store/apps/details?id=com.waterline.pipeman"),
-                    callback: ShareCallback
-                    );
-
-
+#if UNITY_IPHONE
+            FB.Mobile.ShareDialogMode = ShareDialogMode.FEED;
+            FB.ShareLink(
+                contentURL: new System.Uri("https://play.google.com/store/apps/details?id=com.waterline.pipeman"),
+                callback: ShareCallback
+                );
+#else
+            FB.FeedShare(
+                link: new System.Uri("https://play.google.com/store/apps/details?id=com.waterline.pipeman"),
+                callback: ShareCallback
+                );
+#endif
         }
         else
         {

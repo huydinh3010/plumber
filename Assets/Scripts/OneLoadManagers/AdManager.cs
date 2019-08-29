@@ -52,8 +52,9 @@ public class AdManager : MonoBehaviour
 #else
         string appId = "unexpected_platform";
 #endif
-
+#if UNITY_IPHONE
         MobileAds.SetiOSAppPauseOnBackground(true);
+#endif
         // Initialize the Google Mobile Ads SDK.
         MobileAds.Initialize(appId);
         this.rewardBasedVideo = RewardBasedVideoAd.Instance;

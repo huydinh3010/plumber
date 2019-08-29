@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SafeArea : MonoBehaviour
 {
+    [SerializeField] RectTransform outSideSafeAreaTop;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +18,11 @@ public class SafeArea : MonoBehaviour
         anchorMax.y /= Screen.height;
         safeArea.anchorMin = anchorMin;
         safeArea.anchorMax = anchorMax;
+        if(outSideSafeAreaTop != null)
+        {
+            float height = Screen.height - Screen.height * anchorMax.y;
+            outSideSafeAreaTop.sizeDelta = new Vector2(outSideSafeAreaTop.sizeDelta.x, height);
+        }
     }
 
     // Update is called once per frame
