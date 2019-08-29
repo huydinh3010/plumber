@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Facebook.Unity;
@@ -26,7 +26,6 @@ public class FacebookManager : MonoBehaviour
     public void Initialize()
     {
         FB.Init(SetInit, OnHideUnity);
-
     }
 
     private void SetInit()
@@ -66,7 +65,6 @@ public class FacebookManager : MonoBehaviour
         }
         else
         {
-
             Debug.Log("FB login fail");
             ShareFailedCallback?.Invoke();
         }

@@ -1,4 +1,4 @@
-﻿using GoogleMobileAds.Api;
+using GoogleMobileAds.Api;
 using System;
 using System.Collections;
 using System.Collections.Generic;
