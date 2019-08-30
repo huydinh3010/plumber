@@ -78,7 +78,7 @@ public class FacebookManager : MonoBehaviour
 #if UNITY_IPHONE
             FB.Mobile.ShareDialogMode = ShareDialogMode.FEED;
             FB.ShareLink(
-                contentURL: new System.Uri("https://play.google.com/store/apps/details?id=com.waterline.pipeman"),
+                contentURL: new System.Uri("https://itunes.apple.com/app/com.waterline.pipeman"),
                 callback: ShareCallback
                 );
 #else

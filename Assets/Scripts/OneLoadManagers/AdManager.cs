@@ -45,7 +45,7 @@ public class AdManager : MonoBehaviour
 #endif
 #elif UNITY_IPHONE
 #if ENV_PROD
-        string appId = "";
+        string appId = "ca-app-pub-3999038896043116~5097050916";
 #else
         string appId = "ca-app-pub-3940256099942544~1458002511";
 #endif
@@ -80,7 +80,11 @@ public class AdManager : MonoBehaviour
         string adUnitId = "ca-app-pub-3940256099942544/1033173712";
 #endif
 #elif UNITY_IPHONE
+#if ENV_PROD
+        string adUnitId = "ca-app-pub-3999038896043116/2831933930";
+#else
         string adUnitId = "ca-app-pub-3940256099942544/4411468910";
+#endif
 #else
         string adUnitId = "unexpected_platform";
 #endif
@@ -129,7 +133,7 @@ public class AdManager : MonoBehaviour
 #elif UNITY_IPHONE
         
 #if ENV_PROD
-        string adUnitId = "";
+        string adUnitId = "ca-app-pub-3999038896043116/7914785945";
 #else
         string adUnitId = "ca-app-pub-3940256099942544/1712485313";
 #endif
@@ -178,7 +182,7 @@ public class AdManager : MonoBehaviour
 #endif
 #elif UNITY_IPHONE
 #if ENV_PROD
-        string adUnitId = "";
+        string adUnitId = "ca-app-pub-3999038896043116/7176419347";
 #else
         string adUnitId = "ca-app-pub-3940256099942544/2934735716";
 #endif
@@ -202,18 +206,21 @@ public class AdManager : MonoBehaviour
 
     private void HandleOnBannerAdsClosed(object sender, EventArgs args)
     {
+        /*
         BannerClosedCallback?.Invoke();
         bannerHeight = 0;
         RequestBanner();
+        */
     }
 
     private void HandleOnBannerAdsLoaded(object sender, EventArgs args)
     {
+        bool callAction = bannerHeight == 0;
         bannerHeight = bannerView.GetHeightInPixels();
         // 
         bannerView.Show();
         //
-        BannerLoadedCallback?.Invoke();
+        if (callAction) BannerLoadedCallback?.Invoke();
     }
 
     public bool isBannerShowing()

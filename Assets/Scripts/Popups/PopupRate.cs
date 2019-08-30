@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 public class PopupRate : MonoBehaviour, IPopup
 {
+    [SerializeField] Text content;
     private Action btn_Close_Callback;
     private Action btn_Not_Now_Callback;
     private Action btn_Rate_Callback;
@@ -12,7 +13,11 @@ public class PopupRate : MonoBehaviour, IPopup
     // Start is called before the first frame update
     void Start()
     {
-        
+#if UNITY_ANDROID
+        content.text = "If you like our game, please press the rate button and rate it on Google Play.";
+#elif UNITY_IPHONE
+        content.text = "If you like our game, please press the rate button and rate it on AppStore.";
+#endif
     }
 
     // Update is called once per frame
@@ -79,7 +84,7 @@ public class PopupRate : MonoBehaviour, IPopup
 #if UNITY_ANDROID
             Application.OpenURL("market://details?id=com.waterline.pipeman");
 #elif UNITY_IPHONE
- Application.OpenURL("itms-apps://itunes.apple.com/app/idYOUR_ID");
+            Application.OpenURL("itms-apps://itunes.apple.com/app/com.waterline.pipeman");
 #endif
             GameData.Instance.isRateOn = false;
             btn_Rate_Callback?.Invoke();

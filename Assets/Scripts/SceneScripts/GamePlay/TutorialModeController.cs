@@ -157,7 +157,17 @@ public class TutorialModeController : GameController
     public override void resizeObjectWithPlayZone()
     {
         base.resizeObjectWithPlayZone();
-        hand.GetComponent<RectTransform>().anchoredPosition3D = m_Clones[pos_y[h_len], pos_x[h_len]].GetComponent<RectTransform>().anchoredPosition3D;
+        try
+        {
+            if (hand != null)
+            {
+                hand.GetComponent<RectTransform>().anchoredPosition3D = m_Clones[pos_y[h_len], pos_x[h_len]].GetComponent<RectTransform>().anchoredPosition3D;
+            }
+        }
+        catch
+        {
+            
+        }
     }
 
     public override void destroy()
