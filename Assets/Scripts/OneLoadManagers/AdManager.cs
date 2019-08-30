@@ -240,7 +240,10 @@ public class AdManager : MonoBehaviour
 
     public void CloseBanner()
     {
-        bannerView.Destroy();
+        if(bannerView != null)
+        {
+            bannerView.Destroy();
+        }
         bannerHeight = 0f;
         BannerClosedCallback?.Invoke();
     }
