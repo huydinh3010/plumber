@@ -39,10 +39,18 @@ public class IAPManager : MonoBehaviour
 
     public void OnIAPNoAdsCompleted(Product product, int instanceId)
     {
+        if (GameData.Instance.isAdsOn) PopupManager.Instance.ShowNotification("Thanks for buying. Now the game will not show ads!", noAds, 2.5f);
         GameData.Instance.isAdsOn = false;
         AdManager.Instance.CloseBanner();
-        PopupManager.Instance.ShowNotification("Thanks for buying. Now the game will not show ads!", noAds, 2.5f);
-        noAdsCallback?.Invoke();
+        try
+        {
+            noAdsCallback?.Invoke();
+        }
+        catch
+        {
+        
+        }
+
     }
 
     public void OnIAPBuy100CoinsCompleted(Product product, int instanceId)
